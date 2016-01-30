@@ -75,7 +75,6 @@ function lintGulpfile() {
 }
 
 function buildJavaScript() {
-  var newExt = productionMode ? '.min.js' : '.js';
   var firstBuild = true;
 
   return gulp.src(path.join('client-src', config.entryFileName + '.js'))
@@ -101,8 +100,6 @@ function buildJavaScript() {
       }
       firstBuild = false;
     }))
-    // The rest of this stream minifies the application when we're deploying to production
-    .pipe($.if(productionMode, $.rename(exportFileName + newExt)))
     .pipe($.if(productionMode, $.sourcemaps.init({ loadMaps: true })))
     .pipe($.if(productionMode, $.uglify()))
     .pipe($.if(productionMode, $.sourcemaps.write('./')))
