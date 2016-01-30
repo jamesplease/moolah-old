@@ -69,6 +69,8 @@
   "dependencies": {
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
+    "history": "^1.17.0",
+    "react-router": "^1.0.3",
     "run-sequence": "^1.1.5"
   }
 }
