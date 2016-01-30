@@ -9,8 +9,7 @@
     "test-browser": "gulp test-browser",
     "watch": "gulp watch",
     "build": "gulp build",
-    "coverage": "gulp coverage",
-    "start": "node server/index.js"
+    "coverage": "gulp coverage"
   },
   "repository": {
     "type": "git",
