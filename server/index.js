@@ -6,11 +6,15 @@ const exphbs = require('express-handlebars');
 // on Heroku, we assume that we're developing locally.
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const BASE_DIR = __dirname;
+const PROJECT_ROOT = path.normalize(BASE_DIR + '/..');
+const ASSETS_PATH = path.join(PROJECT_ROOT, 'client-dist');
 const VIEWS_DIR = path.join(BASE_DIR, 'views');
 
 const app = express();
 
 app.set('env', NODE_ENV);
+
+app.use(express.static(ASSETS_PATH));
 
 // Configure the templating engine
 const hbsOptions = {
