@@ -15,6 +15,8 @@ import manifest  from './package.json';
 // Load all of our Gulp plugins
 const $ = loadPlugins();
 
+const productionMode = process.env.NODE_ENV === 'production';
+
 // Gather the library data from `package.json`
 const config = manifest.babelBoilerplateOptions;
 const mainFile = manifest.main;
@@ -24,7 +26,7 @@ const exportFileName = path.basename(mainFile, path.extname(mainFile));
 function stylus() {
   return gulp.src('client-src/stylus/index.styl')
     .pipe($.stylus({
-      compress: true
+      compress: productionMode
     }))
     .pipe($.rename('style.css'))
     .pipe(gulp.dest('client-dist'));
@@ -68,6 +70,8 @@ function lintGulpfile() {
 }
 
 function buildJavaScript() {
+  var newExt = productionMode ? '.min.js' : '.js';
+
   return gulp.src(path.join('client-src', config.entryFileName + '.js'))
     .pipe($.plumber())
     .pipe(webpackStream({
@@ -81,10 +85,11 @@ function buildJavaScript() {
       },
       devtool: 'source-map'
     }))
-    .pipe($.rename(exportFileName + '.min.js'))
-    .pipe($.sourcemaps.init({ loadMaps: true }))
-    .pipe($.uglify())
-    .pipe($.sourcemaps.write('./'))
+    // The rest of this stream minifies the application when we're deploying to production
+    .pipe($.if(productionMode, $.rename(exportFileName + newExt)))
+    .pipe($.if(productionMode, $.sourcemaps.init({ loadMaps: true })))
+    .pipe($.if(productionMode, $.uglify()))
+    .pipe($.if(productionMode, $.sourcemaps.write('./')))
     .pipe(gulp.dest(destinationFolder));
 }
 

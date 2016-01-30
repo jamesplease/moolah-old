@@ -10,7 +10,8 @@
     "watch-tests": "gulp watch",
     "build": "gulp build",
     "coverage": "gulp coverage",
-    "work": "heroku local -r worker"
+    "work": "heroku local -r worker",
+    "postinstall": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
     "gulp-filter": "^3.0.0",
+    "gulp-if": "^2.0.0",
     "gulp-istanbul": "^0.10.3",
     "gulp-jscs": "^3.0.0",
     "gulp-livereload": "^3.8.1",
