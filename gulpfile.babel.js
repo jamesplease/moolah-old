@@ -20,6 +20,15 @@ const mainFile = manifest.main;
 const destinationFolder = path.dirname(mainFile);
 const exportFileName = path.basename(mainFile, path.extname(mainFile));
 
+function stylus() {
+  return gulp.src('src/stylus/index.styl')
+    .pipe($.stylus({
+      compress: true
+    }))
+    .pipe($.rename('style.css'))
+    .pipe(gulp.dest('client-dist/assets/css'));
+}
+
 function cleanDist(done) {
   del([destinationFolder]).then(() => done());
 }
@@ -185,6 +194,9 @@ gulp.task('lint', ['lint-src', 'lint-test', 'lint-gulpfile']);
 
 // Build two versions of the library
 gulp.task('build', ['lint', 'clean'], build);
+
+// Builds the CSS
+gulp.task('stylus', stylus);
 
 // Lint and run our tests
 gulp.task('test', ['lint'], test);
