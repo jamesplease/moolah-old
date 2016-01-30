@@ -10,7 +10,7 @@
     "watch-tests": "gulp watch-tests",
     "build": "gulp build",
     "coverage": "gulp coverage",
-    "work": "gulp work",
+    "work": "gulp work & heroku local web",
     "postinstall": "gulp build"
   },
   "repository": {
@@ -30,6 +30,7 @@
     "babel-loader": "^6.2.0",
     "babel-polyfill": "^6.3.14",
     "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
     "babel-register": "^6.3.13",
     "chai": "^3.4.1",
     "del": "^2.2.0",
@@ -53,6 +54,8 @@
     "isparta": "^4.0.0",
     "json-loader": "^0.5.3",
     "mocha": "^2.3.4",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
     "vinyl-source-stream": "^1.1.0",
@@ -60,12 +63,16 @@
     "webpack-stream": "^3.1.0"
   },
   "babelBoilerplateOptions": {
-    "entryFileName": "finance-app",
+    "entryFileName": "index",
     "mainVarName": "financeApp"
   },
   "dependencies": {
+    "babel-polyfill": "^6.3.14",
+    "compression": "^1.6.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
+    "history": "^1.17.0",
+    "react-router": "^1.0.3",
     "run-sequence": "^1.1.5"
   }
 }
