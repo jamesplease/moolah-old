@@ -67,6 +67,7 @@
     "mainVarName": "financeApp"
   },
   "dependencies": {
+    "babel-polyfill": "^6.3.14",
     "compression": "^1.6.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
