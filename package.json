@@ -63,7 +63,7 @@
     "webpack-stream": "^3.1.0"
   },
   "babelBoilerplateOptions": {
-    "entryFileName": "finance-app",
+    "entryFileName": "index",
     "mainVarName": "financeApp"
   },
   "dependencies": {

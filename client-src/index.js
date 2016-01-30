@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import {Router, Route, IndexRoute} from 'react-router';
 
 import Layout from './components/layout';
@@ -11,7 +11,7 @@ const routes = (
   <Router history={createBrowserHistory()}>
     <Route path='/' component={Layout}>
       <IndexRoute component={HomePage} />
-      <Route path="*" component={NotFound}/>
+      <Route path='*' component={NotFound}/>
     </Route>
   </Router>
 );
