@@ -4,4 +4,6 @@ const financeApp = {
   }
 };
 
+console.log(financeApp.greet());
+
 export default financeApp;
