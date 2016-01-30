@@ -30,7 +30,8 @@ app.engine('.hbs', exphbs(hbsOptions));
 const port = process.env.PORT || 5000;
 app.set('port', port);
 
-app.get('/', function(req, res) {
+// Every route is served by our JS app
+app.get('*', function(req, res) {
   res.locals.devMode = res.app.get('env') === 'development';
   return res.render('index');
 });
