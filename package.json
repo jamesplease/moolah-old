@@ -10,7 +10,7 @@
     "watch-tests": "gulp watch-tests",
     "build": "gulp build",
     "coverage": "gulp coverage",
-    "work": "gulp work",
+    "work": "gulp work & heroku local web",
     "postinstall": "gulp build"
   },
   "repository": {
