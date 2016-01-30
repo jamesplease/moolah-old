@@ -2,10 +2,15 @@ const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
 
+// Heroku sets NODE_ENV to production by default. So if we're not
+// on Heroku, we assume that we're developing locally.
+const NODE_ENV = process.env.NODE_ENV || 'development';
 const BASE_DIR = __dirname;
 const VIEWS_DIR = path.join(BASE_DIR, 'views');
 
 const app = express();
+
+app.set('env', NODE_ENV);
 
 // Configure the templating engine
 const hbsOptions = {
@@ -22,6 +27,7 @@ const port = process.env.PORT || 4321;
 app.set('port', port);
 
 app.get('/', function(req, res) {
+  res.locals.devMode = res.app.get('env') === 'development';
   return res.render('index');
 });
 
