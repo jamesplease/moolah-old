@@ -23,13 +23,16 @@ const mainFile = manifest.main;
 const destinationFolder = path.dirname(mainFile);
 const exportFileName = path.basename(mainFile, path.extname(mainFile));
 
+var working = false;
+
 function stylus() {
   return gulp.src('client-src/stylus/index.styl')
     .pipe($.stylus({
       compress: productionMode
     }))
     .pipe($.rename('style.css'))
-    .pipe(gulp.dest('client-dist'));
+    .pipe(gulp.dest('client-dist'))
+    .pipe($.livereload());
 }
 
 function cleanDist(done) {
@@ -126,7 +129,7 @@ function coverage(done) {
 const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintrc', '.jscsrc'];
 
 // Run the headless unit tests as you make changes.
-function watch() {
+function watchTests() {
   gulp.watch(watchFiles, ['test']);
 }
 
@@ -184,6 +187,17 @@ function build(done) {
   );
 }
 
+function watch(done) {
+  gulp.watch('client-src/stylus/**/*.{styl,css}', ['stylus']);
+  $.livereload.listen();
+  done();
+}
+
+function work(done) {
+  working = true;
+  runSequence('watch', 'build', done);
+}
+
 // Remove the built files
 gulp.task('clean', cleanDist);
 
@@ -208,6 +222,12 @@ gulp.task('build-javascript', buildJavaScript);
 // Build a production version of the application
 gulp.task('build', build);
 
+// Run our build tasks as changes are made to the source files
+gulp.task('watch', watch);
+
+// Set up the application to be developed
+gulp.task('work', work);
+
 // Builds the CSS
 gulp.task('stylus', stylus);
 
@@ -221,7 +241,7 @@ gulp.task('coverage', ['lint'], coverage);
 gulp.task('test-browser', ['lint', 'clean-tmp'], testBrowser);
 
 // Run the headless unit tests as you make changes.
-gulp.task('watch', watch);
+gulp.task('watch-tests', watch);
 
 // An alias of test
 gulp.task('default', ['test']);
