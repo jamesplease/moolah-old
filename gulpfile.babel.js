@@ -7,6 +7,7 @@ import {Instrumenter} from 'isparta';
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
 import source  from 'vinyl-source-stream';
+import runSequence from 'run-sequence';
 
 import mochaGlobals from './test/setup/.globals';
 import manifest  from './package.json';
@@ -19,6 +20,15 @@ const config = manifest.babelBoilerplateOptions;
 const mainFile = manifest.main;
 const destinationFolder = path.dirname(mainFile);
 const exportFileName = path.basename(mainFile, path.extname(mainFile));
+
+function stylus() {
+  return gulp.src('client-src/stylus/index.styl')
+    .pipe($.stylus({
+      compress: true
+    }))
+    .pipe($.rename('style.css'))
+    .pipe(gulp.dest('client-dist'));
+}
 
 function cleanDist(done) {
   del([destinationFolder]).then(() => done());
@@ -46,7 +56,7 @@ function lint(files) {
 }
 
 function lintSrc() {
-  return lint('src/**/*.js');
+  return lint('client-src/**/*.js');
 }
 
 function lintTest() {
@@ -57,14 +67,12 @@ function lintGulpfile() {
   return lint('gulpfile.babel.js');
 }
 
-function build() {
-  return gulp.src(path.join('src', config.entryFileName + '.js'))
+function buildJavaScript() {
+  return gulp.src(path.join('client-src', config.entryFileName + '.js'))
     .pipe($.plumber())
     .pipe(webpackStream({
       output: {
-        filename: exportFileName + '.js',
-        libraryTarget: 'umd',
-        library: config.mainVarName
+        filename: exportFileName + '.js'
       },
       module: {
         loaders: [
@@ -73,8 +81,6 @@ function build() {
       },
       devtool: 'source-map'
     }))
-    .pipe(gulp.dest(destinationFolder))
-    .pipe($.filter(['*', '!**/*.js.map']))
     .pipe($.rename(exportFileName + '.min.js'))
     .pipe($.sourcemaps.init({ loadMaps: true }))
     .pipe($.uglify())
@@ -102,7 +108,7 @@ function test() {
 
 function coverage(done) {
   _registerBabel();
-  gulp.src(['src/**/*.js'])
+  gulp.src(['client-src/**/*.js'])
     .pipe($.istanbul({ instrumenter: Instrumenter }))
     .pipe($.istanbul.hookRequire())
     .on('finish', () => {
@@ -112,7 +118,7 @@ function coverage(done) {
     });
 }
 
-const watchFiles = ['src/**/*', 'test/**/*', 'package.json', '**/.eslintrc', '.jscsrc'];
+const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintrc', '.jscsrc'];
 
 // Run the headless unit tests as you make changes.
 function watch() {
@@ -165,6 +171,14 @@ function testBrowser() {
     .pipe(gulp.dest('./tmp'));
 }
 
+function build(done) {
+  runSequence(
+    ['lint', 'clean'],
+    ['stylus', 'build-javascript'],
+    done
+  );
+}
+
 // Remove the built files
 gulp.task('clean', cleanDist);
 
@@ -183,8 +197,14 @@ gulp.task('lint-gulpfile', lintGulpfile);
 // Lint everything
 gulp.task('lint', ['lint-src', 'lint-test', 'lint-gulpfile']);
 
-// Build two versions of the library
-gulp.task('build', ['lint', 'clean'], build);
+// Build *just* the JavaScript app
+gulp.task('build-javascript', buildJavaScript);
+
+// Build a production version of the application
+gulp.task('build', build);
+
+// Builds the CSS
+gulp.task('stylus', stylus);
 
 // Lint and run our tests
 gulp.task('test', ['lint'], test);

@@ -2,7 +2,7 @@
   "name": "finance-app",
   "version": "0.0.1",
   "description": "Track your finances.",
-  "main": "dist/finance-app.js",
+  "main": "client-dist/app.js",
   "scripts": {
     "test": "gulp",
     "lint": "gulp lint",
@@ -45,6 +45,7 @@
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-stylus": "^2.3.0",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "isparta": "^4.0.0",
@@ -62,6 +63,7 @@
   },
   "dependencies": {
     "express": "^4.13.4",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "run-sequence": "^1.1.5"
   }
 }
