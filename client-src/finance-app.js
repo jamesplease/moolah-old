@@ -15,5 +15,5 @@ const routes = (
 
 ReactDOM.render(
   routes,
-  document.querySelector('main')
+  document.querySelector('body')
 );
