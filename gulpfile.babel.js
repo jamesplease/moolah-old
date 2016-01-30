@@ -27,10 +27,12 @@ var working = false;
 
 function stylus() {
   return gulp.src('client-src/stylus/index.styl')
+    .pipe($.sourcemaps.init())
     .pipe($.stylus({
       compress: productionMode
     }))
     .pipe($.rename('style.css'))
+    .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('client-dist'))
     .pipe($.livereload());
 }
