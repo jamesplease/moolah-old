@@ -23,13 +23,16 @@ const mainFile = manifest.main;
 const destinationFolder = path.dirname(mainFile);
 const exportFileName = path.basename(mainFile, path.extname(mainFile));
 
+var working = false;
+
 function stylus() {
   return gulp.src('client-src/stylus/index.styl')
     .pipe($.stylus({
       compress: productionMode
     }))
     .pipe($.rename('style.css'))
-    .pipe(gulp.dest('client-dist'));
+    .pipe(gulp.dest('client-dist'))
+    .pipe($.livereload());
 }
 
 function cleanDist(done) {
@@ -71,10 +74,12 @@ function lintGulpfile() {
 
 function buildJavaScript() {
   var newExt = productionMode ? '.min.js' : '.js';
+  var firstBuild = true;
 
   return gulp.src(path.join('client-src', config.entryFileName + '.js'))
     .pipe($.plumber())
     .pipe(webpackStream({
+      watch: working,
       output: {
         filename: exportFileName + '.js'
       },
@@ -84,6 +89,15 @@ function buildJavaScript() {
         ]
       },
       devtool: 'source-map'
+    }, null, function() {
+      if (!working) { return; }
+      if (firstBuild) {
+        $.livereload.listen({port: 35729, host: 'localhost', start: true});
+        watch();
+      } else {
+        $.livereload.reload('http://localhost:5000');
+      }
+      firstBuild = false;
     }))
     // The rest of this stream minifies the application when we're deploying to production
     .pipe($.if(productionMode, $.rename(exportFileName + newExt)))
@@ -126,7 +140,7 @@ function coverage(done) {
 const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintrc', '.jscsrc'];
 
 // Run the headless unit tests as you make changes.
-function watch() {
+function watchTests() {
   gulp.watch(watchFiles, ['test']);
 }
 
@@ -184,6 +198,16 @@ function build(done) {
   );
 }
 
+function watch() {
+  gulp.watch('client-src/stylus/**/*.{styl,css}', ['stylus']);
+  $.livereload.listen();
+}
+
+function work(done) {
+  working = true;
+  runSequence('build', done);
+}
+
 // Remove the built files
 gulp.task('clean', cleanDist);
 
@@ -208,6 +232,9 @@ gulp.task('build-javascript', buildJavaScript);
 // Build a production version of the application
 gulp.task('build', build);
 
+// Set up the application to be developed
+gulp.task('work', work);
+
 // Builds the CSS
 gulp.task('stylus', stylus);
 
@@ -221,7 +248,7 @@ gulp.task('coverage', ['lint'], coverage);
 gulp.task('test-browser', ['lint', 'clean-tmp'], testBrowser);
 
 // Run the headless unit tests as you make changes.
-gulp.task('watch', watch);
+gulp.task('watch-tests', watch);
 
 // An alias of test
 gulp.task('default', ['test']);
