@@ -23,7 +23,7 @@ app.set('view engine', '.hbs');
 app.set('views', VIEWS_DIR);
 app.engine('.hbs', exphbs(hbsOptions));
 
-const port = process.env.PORT || 4321;
+const port = process.env.PORT || 5000;
 app.set('port', port);
 
 app.get('/', function(req, res) {
