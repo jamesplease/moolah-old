@@ -15,5 +15,5 @@ const routes = (
 
 ReactDOM.render(
   routes,
-  document.querySelector('body')
+  document.querySelector('.app-container')
 );
