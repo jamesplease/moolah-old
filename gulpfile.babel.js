@@ -74,10 +74,12 @@ function lintGulpfile() {
 
 function buildJavaScript() {
   var newExt = productionMode ? '.min.js' : '.js';
+  var firstBuild = true;
 
   return gulp.src(path.join('client-src', config.entryFileName + '.js'))
     .pipe($.plumber())
     .pipe(webpackStream({
+      watch: working,
       output: {
         filename: exportFileName + '.js'
       },
@@ -87,6 +89,15 @@ function buildJavaScript() {
         ]
       },
       devtool: 'source-map'
+    }, null, function() {
+      if (!working) { return; }
+      if (firstBuild) {
+        $.livereload.listen({port: 35729, host: 'localhost', start: true});
+        watch();
+      } else {
+        $.livereload.reload('http://localhost:5000');
+      }
+      firstBuild = false;
     }))
     // The rest of this stream minifies the application when we're deploying to production
     .pipe($.if(productionMode, $.rename(exportFileName + newExt)))
@@ -187,15 +198,14 @@ function build(done) {
   );
 }
 
-function watch(done) {
+function watch() {
   gulp.watch('client-src/stylus/**/*.{styl,css}', ['stylus']);
   $.livereload.listen();
-  done();
 }
 
 function work(done) {
   working = true;
-  runSequence('watch', 'build', done);
+  runSequence('build', done);
 }
 
 // Remove the built files
@@ -221,9 +231,6 @@ gulp.task('build-javascript', buildJavaScript);
 
 // Build a production version of the application
 gulp.task('build', build);
-
-// Run our build tasks as changes are made to the source files
-gulp.task('watch', watch);
 
 // Set up the application to be developed
 gulp.task('work', work);
