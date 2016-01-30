@@ -7,6 +7,7 @@ import {Instrumenter} from 'isparta';
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
 import source  from 'vinyl-source-stream';
+import runSequence from 'run-sequence';
 
 import mochaGlobals from './test/setup/.globals';
 import manifest  from './package.json';
@@ -66,7 +67,7 @@ function lintGulpfile() {
   return lint('gulpfile.babel.js');
 }
 
-function build() {
+function buildJavaScript() {
   return gulp.src(path.join('client-src', config.entryFileName + '.js'))
     .pipe($.plumber())
     .pipe(webpackStream({
@@ -174,6 +175,15 @@ function testBrowser() {
     .pipe(gulp.dest('./tmp'));
 }
 
+
+function build(done) {
+  runSequence(
+    ['lint', 'clean'],
+    ['stylus', 'build-javascript'],
+    done
+  );
+}
+
 // Remove the built files
 gulp.task('clean', cleanDist);
 
@@ -192,8 +202,11 @@ gulp.task('lint-gulpfile', lintGulpfile);
 // Lint everything
 gulp.task('lint', ['lint-src', 'lint-test', 'lint-gulpfile']);
 
-// Build two versions of the library
-gulp.task('build', ['lint', 'clean'], build);
+// Build *just* the JavaScript app
+gulp.task('build-javascript', buildJavaScript);
+
+// Build a production version of the application
+gulp.task('build', build);
 
 // Builds the CSS
 gulp.task('stylus', stylus);
