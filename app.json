@@ -2,5 +2,11 @@
   "name": "Finance App",
   "description": "Track your finances.",
   "repository": "https://github.com/jmeas/finance-app",
-  "keywords": ["finances"]
+  "keywords": ["finances"],
+  "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "Ensures that all dependencies on installed during deployment.",
+      "value": "false"
+    }
+  }
 }
