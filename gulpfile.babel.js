@@ -21,7 +21,7 @@ const destinationFolder = path.dirname(mainFile);
 const exportFileName = path.basename(mainFile, path.extname(mainFile));
 
 function stylus() {
-  return gulp.src('src/stylus/index.styl')
+  return gulp.src('client-src/stylus/index.styl')
     .pipe($.stylus({
       compress: true
     }))
@@ -55,7 +55,7 @@ function lint(files) {
 }
 
 function lintSrc() {
-  return lint('src/**/*.js');
+  return lint('client-src/**/*.js');
 }
 
 function lintTest() {
@@ -67,7 +67,7 @@ function lintGulpfile() {
 }
 
 function build() {
-  return gulp.src(path.join('src', config.entryFileName + '.js'))
+  return gulp.src(path.join('client-src', config.entryFileName + '.js'))
     .pipe($.plumber())
     .pipe(webpackStream({
       output: {
@@ -111,7 +111,7 @@ function test() {
 
 function coverage(done) {
   _registerBabel();
-  gulp.src(['src/**/*.js'])
+  gulp.src(['client-src/**/*.js'])
     .pipe($.istanbul({ instrumenter: Instrumenter }))
     .pipe($.istanbul.hookRequire())
     .on('finish', () => {
@@ -121,7 +121,7 @@ function coverage(done) {
     });
 }
 
-const watchFiles = ['src/**/*', 'test/**/*', 'package.json', '**/.eslintrc', '.jscsrc'];
+const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintrc', '.jscsrc'];
 
 // Run the headless unit tests as you make changes.
 function watch() {

@@ -1,4 +1,4 @@
-import financeApp from '../../src/finance-app';
+import financeApp from '../../client-src/finance-app';
 
 describe('financeApp', () => {
   describe('Greet function', () => {

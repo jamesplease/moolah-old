@@ -2,7 +2,7 @@
   "name": "finance-app",
   "version": "0.0.1",
   "description": "Track your finances.",
-  "main": "dist/finance-app.js",
+  "main": "client-dist/app.js",
   "scripts": {
     "test": "gulp",
     "lint": "gulp lint",
