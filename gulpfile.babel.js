@@ -26,7 +26,7 @@ function stylus() {
       compress: true
     }))
     .pipe($.rename('style.css'))
-    .pipe(gulp.dest('client-dist/assets/css'));
+    .pipe(gulp.dest('client-dist'));
 }
 
 function cleanDist(done) {
