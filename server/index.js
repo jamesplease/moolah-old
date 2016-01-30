@@ -4,6 +4,8 @@ const exphbs = require('express-handlebars');
 const compress = require('compression');
 const throng = require('throng');
 
+const api = require('./api');
+
 // Heroku sets NODE_ENV to production by default. So if we're not
 // on Heroku, we assume that we're developing locally.
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -21,6 +23,8 @@ function start() {
 
   app.use(compress());
   app.use(express.static(ASSETS_PATH));
+
+  app.use('/', api);
 
   // Configure the templating engine
   const hbsOptions = {
