@@ -1,33 +1,19 @@
 const express = require('express');
 const pg = require('pg');
 
+const errors = require('./errors');
+
 const router = express.Router();
 
 // SSL must be used to connect to the DB
 const DB_URL = process.env.DATABASE_URL + '?ssl=true';
-
-// A catch-all error
-function generateGenericError() {
-  return {
-    title: "Server Error",
-    description: "There was an error while processing your request."
-  };
-}
-
-// Generates an error for a 404 resource
-function generateNotFoundError() {
-  return {
-    title: "Not Found",
-    detail: "Resource not found."
-  };
-}
 
 // Retrieve a list of every `test` resource
 router.get('/tests', (req, res) => {
   pg.connect(DB_URL, (err, client, done) => {
     if (err) {
       res.send(500, {
-        errors: [generateGenericError()]
+        errors: [errors.generateGenericError()]
       });
       console.error(err);
       return;
@@ -36,7 +22,7 @@ router.get('/tests', (req, res) => {
       if (err) {
         console.error(err);
         res.send(500, {
-          errors: [generateGenericError()]
+          errors: [errors.generateGenericError()]
         });
       } else {
         res.send({
@@ -52,7 +38,7 @@ router.get('/tests/:id', (req, res) => {
   pg.connect(DB_URL, (err, client, done) => {
     if (err) {
       res.send(500, {
-        errors: [generateGenericError()]
+        errors: [errors.generateGenericError()]
       });
       console.error(err);
       return;
@@ -61,12 +47,12 @@ router.get('/tests/:id', (req, res) => {
       if (err) {
         console.error(err);
         res.send(500, {
-          errors: [generateGenericError()]
+          errors: [errors.generateGenericError()]
         });
       } else {
         if (!result.rows.length) {
           res.status(404).send({
-            errors: [generateNotFoundError()]
+            errors: [errors.generateNotFoundError()]
           });
         } else {
           res.send({
