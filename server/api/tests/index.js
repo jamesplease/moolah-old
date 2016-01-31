@@ -26,20 +26,20 @@ router.get('/', (req, res) => {
   });
 });
 
-// Create a new "test" resource
+// Create a new `test` resource
 router.post('/', (req, res) => {
   const id = req.body.id;
   const name = req.body.name;
 
   // Ensure that the user has submitted the required fields
   var errors = [];
-  if (!id) {
+  if (typeof id === 'undefined') {
     errors.push({
       title: "Missing Field",
       description: "An id attribute is required."
     });
   }
-  if (!name) {
+  if (typeof name === 'undefined') {
     errors.push({
       title: "Missing Field",
       description: "A name attribute is required."
@@ -60,9 +60,7 @@ router.post('/', (req, res) => {
             errors: [generateErrors.generateGenericError()]
           });
         } else {
-          res.send({
-            data: result.rows[0]
-          });
+          res.end();
         }
       });
     });
@@ -94,6 +92,38 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// Update a `test` resource
+router.patch('/:id', (req, res) => {
+  const id = req.params.id;
+  const name = req.body.name;
+
+  if (typeof name === 'undefined') {
+    res.status(400).send({
+      errors: [{
+        title: "Missing Field",
+        description: "An name attribute is required."
+      }]
+    });
+  }
+
+  dbConnect(res, (client, done) => {
+    client.query(`UPDATE ${TABLE_NAME} SET name = '${name}' WHERE id = ${id}`, (err, result) => {
+      done();
+      if (err) {
+        console.error(err);
+        res.status(500).send({
+          errors: [generateErrors.generateGenericError()]
+        });
+      } else {
+        res.send({
+          data: result.rows[0]
+        });
+      }
+    });
+  });
+});
+
+// Delete a `test` resource
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
 
