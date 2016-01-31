@@ -1,5 +1,7 @@
 import React from 'react';
 
+import TransactionsList from '../transactions-list';
+
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,7 @@ export default class HomePage extends React.Component {
   }
 
   // We set unmounted so that we can ignore data requests
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.unmounted = true;
   }
 
@@ -39,7 +41,7 @@ export default class HomePage extends React.Component {
   render() {
     return (
       <div>
-        {!this.state.fetched ? 'Loading...' : `Fetched ${this.state.transactions.length} items!`}
+        {!this.state.fetched ? 'Loading...' : <TransactionsList transactions={this.state.transactions}/>}
       </div>
     );
   }
