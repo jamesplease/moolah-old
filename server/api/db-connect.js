@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-const errors = require('./errors');
+const generateErrors = require('./generate-errors');
 
 // SSL must be used to connect to the DB
 const DB_URL = process.env.DATABASE_URL + '?ssl=true';
@@ -11,7 +11,7 @@ module.exports = function(res, cb) {
   pg.connect(DB_URL, (err, client, done) => {
     if (err) {
       res.send(500, {
-        errors: [errors.generateGenericError()]
+        errors: [generateErrors.generateGenericError()]
       });
       console.error(err);
     } else {

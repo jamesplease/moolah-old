@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
+    "body-parser": "^1.14.2",
     "compression": "^1.6.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
