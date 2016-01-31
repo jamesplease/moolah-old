@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
 const compress = require('compression');
+const bodyParser = require('body-parser');
 const throng = require('throng');
 
 const api = require('./api');
@@ -21,6 +22,8 @@ function start() {
 
   app.set('env', NODE_ENV);
 
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended: true}));
   app.use(compress());
   app.use(express.static(ASSETS_PATH));
 

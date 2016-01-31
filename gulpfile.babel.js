@@ -25,13 +25,28 @@ const exportFileName = path.basename(mainFile, path.extname(mainFile));
 
 var working = false;
 
+const stylusPaths = [
+  // Load our entrypoint first. This gives us an opportunity to load 3rd-party libraries,
+  // or whatever else needs to be loaded first
+  './client-src/index.styl',
+  // Next, we load the common stylus files. These might be depended upon by other files
+  './client-src/pods/common/stylus/**/*.styl',
+  // Lastly, we pull in the stylus out of every pod. Variables are always loaded first, so
+  // that each pod can define its own variables
+  './client-src/pods/**/variables.styl',
+  './client-src/pods/**/*.styl'
+];
+
 function stylus() {
-  return gulp.src('client-src/stylus/index.styl')
+  return gulp.src(stylusPaths)
     .pipe($.sourcemaps.init())
     .pipe($.stylus({
+      'include css': true,
+      paths: ['node_modules'],
+      import: ['nib/index', 'stylus/variables'],
       compress: productionMode
     }))
-    .pipe($.rename('style.css'))
+    .pipe($.concat('style.css'))
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('client-dist'))
     .pipe($.livereload());
@@ -202,7 +217,7 @@ function build(done) {
 }
 
 function watch() {
-  gulp.watch('client-src/stylus/**/*.{styl,css}', ['stylus']);
+  gulp.watch('./client-src/**/*.styl', ['stylus']);
   $.livereload.listen();
 }
 
