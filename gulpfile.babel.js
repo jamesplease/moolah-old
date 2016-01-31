@@ -62,7 +62,11 @@ function lint(files) {
     .on('error', onError);
 }
 
-function lintSrc() {
+function lintServer() {
+  return lint('server/**/*.js');
+}
+
+function lintClient() {
   return lint('client-src/**/*.js');
 }
 
@@ -77,12 +81,12 @@ function lintGulpfile() {
 function buildJavaScript() {
   var firstBuild = true;
 
-  return gulp.src(path.join('client-src', config.entryFileName + '.js'))
+  return gulp.src(path.join('client-src', `${config.entryFileName}.js`))
     .pipe($.plumber())
     .pipe(webpackStream({
       watch: working,
       output: {
-        filename: exportFileName + '.js'
+        filename: `${exportFileName}.js`
       },
       module: {
         loaders: [
@@ -213,8 +217,11 @@ gulp.task('clean', cleanDist);
 // Remove our temporary files
 gulp.task('clean-tmp', cleanTmp);
 
-// Lint our source code
-gulp.task('lint-src', lintSrc);
+// Lint our client source code
+gulp.task('lint-client', lintClient);
+
+// Lint the server code
+gulp.task('lint-server', lintTest);
 
 // Lint our test code
 gulp.task('lint-test', lintTest);
@@ -223,7 +230,7 @@ gulp.task('lint-test', lintTest);
 gulp.task('lint-gulpfile', lintGulpfile);
 
 // Lint everything
-gulp.task('lint', ['lint-src', 'lint-test', 'lint-gulpfile']);
+gulp.task('lint', ['lint-client', 'lint-server', 'lint-test', 'lint-gulpfile']);
 
 // Build *just* the JavaScript app
 gulp.task('build-javascript', buildJavaScript);
