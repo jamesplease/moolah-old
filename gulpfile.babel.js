@@ -41,6 +41,9 @@ function stylus() {
   return gulp.src(stylusPaths)
     .pipe($.sourcemaps.init())
     .pipe($.stylus({
+      'include css': true,
+      paths: ['node_modules'],
+      import: ['nib/index', 'stylus/variables'],
       compress: productionMode
     }))
     .pipe($.concat('style.css'))
