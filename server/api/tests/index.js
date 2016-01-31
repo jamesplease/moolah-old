@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
       if (err) {
         console.error(err);
         res.status(500).send({
-          errors: [generateErrors.generateGenericError()]
+          errors: [generateErrors.genericError()]
         });
       } else {
         res.send({
@@ -39,10 +39,10 @@ router.post('/', (req, res) => {
   // Ensure that the user has submitted the required fields
   var errors = [];
   if (typeof id === 'undefined') {
-    errors.push(generateErrors.generateMissingAttribute('id'));
+    errors.push(generateErrors.missingAttribute('id'));
   }
   if (typeof name === 'undefined') {
-    errors.push(generateErrors.generateMissingAttribute('name'));
+    errors.push(generateErrors.missingAttribute('name'));
   }
 
   if (errors.length) {
@@ -62,7 +62,7 @@ router.post('/', (req, res) => {
         if (err) {
           console.error(err);
           res.status(500).send({
-            errors: [generateErrors.generateGenericError()]
+            errors: [generateErrors.genericError()]
           });
         } else {
           res.end();
@@ -86,12 +86,12 @@ router.get('/:id', (req, res) => {
       if (err) {
         console.error(err);
         res.status(500).send({
-          errors: [generateErrors.generateGenericError()]
+          errors: [generateErrors.genericError()]
         });
       } else {
         if (!result.rows.length) {
           res.status(404).send({
-            errors: [generateErrors.generateNotFoundError()]
+            errors: [generateErrors.notFoundError()]
           });
         } else {
           res.send({
@@ -110,7 +110,7 @@ router.patch('/:id', (req, res) => {
 
   if (typeof name === 'undefined') {
     res.status(400).send({
-      errors: [generateErrors.generateMissingAttribute('name')]
+      errors: [generateErrors.missingAttribute('name')]
     });
   } else {
     const query = {
@@ -125,7 +125,7 @@ router.patch('/:id', (req, res) => {
         if (err) {
           console.error(err);
           res.status(500).send({
-            errors: [generateErrors.generateGenericError()]
+            errors: [generateErrors.genericError()]
           });
         } else {
           res.send({
@@ -153,7 +153,7 @@ router.delete('/:id', (req, res) => {
       if (err) {
         console.error(err);
         res.status(500).send({
-          errors: [generateErrors.generateGenericError()]
+          errors: [generateErrors.genericError()]
         });
       } else {
         res.end();

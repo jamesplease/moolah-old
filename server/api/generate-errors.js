@@ -1,5 +1,5 @@
 // A catch-all error
-function generateGenericError() {
+function genericError() {
   return {
     title: "Server Error",
     detail: "There was an error while processing your request."
@@ -7,7 +7,7 @@ function generateGenericError() {
 }
 
 // Generates an error for a 404 resource
-function generateNotFoundError() {
+function notFoundError() {
   return {
     title: "Not Found",
     detail: "Resource not found."
@@ -15,7 +15,7 @@ function generateNotFoundError() {
 }
 
 // When a field is missing
-function generateMissingAttribute(fieldName) {
+function missingAttribute(fieldName) {
   return {
     title: "Missing Attribute",
     detail: `The attribute "${fieldName}" is required.`
@@ -23,7 +23,7 @@ function generateMissingAttribute(fieldName) {
 }
 
 module.exports = {
-  generateNotFoundError,
-  generateGenericError,
-  generateMissingAttribute
+  notFoundError,
+  genericError,
+  missingAttribute
 };

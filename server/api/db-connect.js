@@ -11,7 +11,7 @@ module.exports = function(res, cb) {
   pg.connect(DB_URL, (err, client, done) => {
     if (err) {
       res.send(500, {
-        errors: [generateErrors.generateGenericError()]
+        errors: [generateErrors.genericError()]
       });
       console.error(err);
     } else {
