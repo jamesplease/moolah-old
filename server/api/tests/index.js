@@ -52,7 +52,6 @@ router.post('/', (req, res) => {
     });
   } else {
     dbConnect(res, (client, done) => {
-      console.log('wat', id, name);
       client.query(`INSERT INTO ${TABLE_NAME} VALUES (${id}, '${name}')`, (err, result) => {
         done();
         if (err) {
@@ -90,6 +89,24 @@ router.get('/:id', (req, res) => {
             data: result.rows[0]
           });
         }
+      }
+    });
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
+
+  dbConnect(res, (client, done) => {
+    client.query(`DELETE FROM ${TABLE_NAME} WHERE id = ${id}`, (err, result) => {
+      done();
+      if (err) {
+        console.error(err);
+        res.status(500).send({
+          errors: [generateErrors.generateGenericError()]
+        });
+      } else {
+        res.end();
       }
     });
   });
