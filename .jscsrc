@@ -1,6 +1,33 @@
 {
   "preset": "google",
-  "maximumLineLength": null,
+  "maximumLineLength": 100,
   "esnext": true,
-  "disallowSpacesInsideObjectBrackets": null
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+  "disallowSpacesInsideObjectBrackets": null,
+  "disallowMultipleVarDecl": "exceptUndefined",
+  "disallowKeywordsOnNewLine": null,
+  "requireCommaBeforeLineBreak": true,
+  "disallowEmptyBlocks": true,
+  "disallowKeywordsInComments": true,
+  "disallowNamedUnassignedFunctions": true,
+  "disallowPaddingNewlinesInBlocks": true,
+  "disallowQuotedKeysInObjects": true,
+  "requireSpaceAfterLineComment": true,
+  "disallowSpaceBeforeComma": true,
+  "requireBlocksOnNewline": 1,
+  "requireDollarBeforejQueryAssignment": true,
+  "requireTemplateStrings": true,
+  "safeContextKeyword": ["self"],
+  "jsDoc": {
+    "checkAnnotations": "jsdoc3",
+    "checkParamNames": true,
+    "requireParamTypes": true,
+    "checkRedundantParams": true,
+    "checkReturnTypes": true,
+    "checkRedundantReturns": true,
+    "requireReturnTypes": true,
+    "checkTypes": "strictNativeCase",
+    "checkRedundantAccess": true,
+    "requireNewlineAfterDescription": true
+  }
 }

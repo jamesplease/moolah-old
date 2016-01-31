@@ -81,12 +81,12 @@ function lintGulpfile() {
 function buildJavaScript() {
   var firstBuild = true;
 
-  return gulp.src(path.join('client-src', config.entryFileName + '.js'))
+  return gulp.src(path.join('client-src', `${config.entryFileName}.js`))
     .pipe($.plumber())
     .pipe(webpackStream({
       watch: working,
       output: {
-        filename: exportFileName + '.js'
+        filename: `${exportFileName}.js`
       },
       module: {
         loaders: [
