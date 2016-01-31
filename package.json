@@ -37,6 +37,7 @@
     "glob": "^6.0.3",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
+    "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.1.1",
     "gulp-filter": "^3.0.0",
     "gulp-if": "^2.0.0",

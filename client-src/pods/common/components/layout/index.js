@@ -3,13 +3,21 @@ import React from 'react';
 const Layout = ({children}) => (
   <div>
     <header>
-      Finance App
+      <div className="container">
+        <h1>
+          Finance App
+        </h1>
+      </div>
     </header>
     <main>
-      {children}
+      <div className="container">
+        {children}
+      </div>
     </main>
     <footer>
-      Created by Jmeas. Source code available on GitHub.
+      <div className="container">
+        Created by Jmeas. Source code available on <a href="https://github.com/jmeas/finance-app">GitHub</a>.
+      </div>
     </footer>
   </div>
 );
