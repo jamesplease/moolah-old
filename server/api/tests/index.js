@@ -39,16 +39,10 @@ router.post('/', (req, res) => {
   // Ensure that the user has submitted the required fields
   var errors = [];
   if (typeof id === 'undefined') {
-    errors.push({
-      title: "Missing Field",
-      description: "An id attribute is required."
-    });
+    errors.push(generateErrors.generateMissingAttribute('id'));
   }
   if (typeof name === 'undefined') {
-    errors.push({
-      title: "Missing Field",
-      description: "A name attribute is required."
-    });
+    errors.push(generateErrors.generateMissingAttribute('name'));
   }
 
   if (errors.length) {
@@ -116,10 +110,7 @@ router.patch('/:id', (req, res) => {
 
   if (typeof name === 'undefined') {
     res.status(400).send({
-      errors: [{
-        title: "Missing Field",
-        description: "An name attribute is required."
-      }]
+      errors: [generateErrors.generateMissingAttribute('name')]
     });
   } else {
     const query = {

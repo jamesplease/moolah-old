@@ -2,7 +2,7 @@
 function generateGenericError() {
   return {
     title: "Server Error",
-    description: "There was an error while processing your request."
+    detail: "There was an error while processing your request."
   };
 }
 
@@ -14,7 +14,16 @@ function generateNotFoundError() {
   };
 }
 
+// When a field is missing
+function generateMissingAttribute(fieldName) {
+  return {
+    title: "Missing Attribute",
+    detail: `The attribute "${fieldName}" is required.`
+  };
+}
+
 module.exports = {
   generateNotFoundError,
-  generateGenericError
+  generateGenericError,
+  generateMissingAttribute
 };
