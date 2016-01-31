@@ -12,9 +12,7 @@ export default class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    window.setTimeout(() => {
-      this.fetchData();
-    }, 1000);
+    this.fetchData();
   }
 
   // We set unmounted so that we can ignore data requests
