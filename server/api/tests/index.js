@@ -9,8 +9,13 @@ const TABLE_NAME = 'test_table';
 
 // Retrieve a list of every `test` resource
 router.get('/', (req, res) => {
+  const query = {
+    name: 'tests_get_all',
+    text: `SELECT * FROM ${TABLE_NAME}`
+  };
+
   dbConnect(res, (client, done) => {
-    client.query(`SELECT * FROM ${TABLE_NAME}`, (err, result) => {
+    client.query(query, (err, result) => {
       done();
       if (err) {
         console.error(err);
@@ -51,8 +56,14 @@ router.post('/', (req, res) => {
       errors
     });
   } else {
+    const query = {
+      name: 'tests_create_one',
+      text: `INSERT INTO ${TABLE_NAME} VALUES ($1, $2)`,
+      values: [id, name]
+    };
+
     dbConnect(res, (client, done) => {
-      client.query(`INSERT INTO ${TABLE_NAME} VALUES (${id}, '${name}')`, (err, result) => {
+      client.query(query, (err, result) => {
         done();
         if (err) {
           console.error(err);
@@ -69,8 +80,14 @@ router.post('/', (req, res) => {
 
 // Return a single `test` resource
 router.get('/:id', (req, res) => {
+  const query = {
+    name: 'tests_get_one',
+    text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
+    values: [req.params.id]
+  };
+
   dbConnect(res, (client, done) => {
-    client.query(`SELECT * FROM ${TABLE_NAME} WHERE id = ${req.params.id}`, (err, result) => {
+    client.query(query, (err, result) => {
       done();
       if (err) {
         console.error(err);
@@ -104,31 +121,43 @@ router.patch('/:id', (req, res) => {
         description: "An name attribute is required."
       }]
     });
-  }
+  } else {
+    const query = {
+      name: 'tests_update_one',
+      text: `UPDATE ${TABLE_NAME} SET name = $1 WHERE id = $2`,
+      values: [name, id]
+    };
 
-  dbConnect(res, (client, done) => {
-    client.query(`UPDATE ${TABLE_NAME} SET name = '${name}' WHERE id = ${id}`, (err, result) => {
-      done();
-      if (err) {
-        console.error(err);
-        res.status(500).send({
-          errors: [generateErrors.generateGenericError()]
-        });
-      } else {
-        res.send({
-          data: result.rows[0]
-        });
-      }
+    dbConnect(res, (client, done) => {
+      client.query(query, (err, result) => {
+        done();
+        if (err) {
+          console.error(err);
+          res.status(500).send({
+            errors: [generateErrors.generateGenericError()]
+          });
+        } else {
+          res.send({
+            data: result.rows[0]
+          });
+        }
+      });
     });
-  });
+  }
 });
 
 // Delete a `test` resource
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
 
+  const query = {
+    name: 'tests_delete_one',
+    text: `DELETE FROM ${TABLE_NAME} WHERE id = $1`,
+    values: [id]
+  };
+
   dbConnect(res, (client, done) => {
-    client.query(`DELETE FROM ${TABLE_NAME} WHERE id = ${id}`, (err, result) => {
+    client.query(query, (err, result) => {
       done();
       if (err) {
         console.error(err);
