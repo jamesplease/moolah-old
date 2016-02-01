@@ -1,5 +1,6 @@
 import React from 'react';
 
+import NewTransaction from '../new-transaction';
 import Transaction from '../transaction';
 
 class TransactionsList extends React.Component {
@@ -8,6 +9,7 @@ class TransactionsList extends React.Component {
     this.state = props;
   }
 
+  // Deletes an existing transaction
   deleteTransaction(id) {
     // Optimistically remove the item from the state
     this.setState({
@@ -15,9 +17,25 @@ class TransactionsList extends React.Component {
     });
   }
 
+  // Creates a new transaction
+  createTransaction(newTransaction) {
+    newTransaction = {
+      id: 3,
+      name: 'Test'
+    };
+
+    var clonedTransactions = this.state.transactions.slice();
+    clonedTransactions.push(newTransaction)
+
+    this.setState({
+      transactions: clonedTransactions
+    });
+  }
+
   render() {
     return (
       <div>
+        <NewTransaction createFn={this.createTransaction.bind(this)}/>
         <ul>
           {this.state.transactions.map(({id, name}) => (
             <Transaction key={id} id={id} name={name} deleteFn={this.deleteTransaction.bind(this)}/>
