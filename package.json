@@ -11,7 +11,8 @@
     "build": "gulp build",
     "coverage": "gulp coverage",
     "work": "gulp work & heroku local web",
-    "postinstall": "gulp build"
+    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets; fi",
+    "build-assets": "gulp build"
   },
   "repository": {
     "type": "git",
