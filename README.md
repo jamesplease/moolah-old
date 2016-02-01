@@ -1,5 +1,8 @@
 # finance-app
 
+[![Dependency Status](https://david-dm.org/jmeas/finance-app.svg)](https://david-dm.org/jmeas/finance-app)
+[![devDependency Status](https://david-dm.org/jmeas/finance-app/dev-status.svg)](https://david-dm.org/jmeas/finance-app#info=devDependencies)
+
 Track your finances.
 
 ### Deploying
