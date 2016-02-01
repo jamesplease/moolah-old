@@ -3,10 +3,17 @@
   "description": "Track your finances.",
   "repository": "https://github.com/jmeas/finance-app",
   "keywords": ["finances"],
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ],
   "env": {
     "NPM_CONFIG_PRODUCTION": {
       "description": "Ensures that all dependencies on installed during deployment.",
       "value": "false"
+    },
+    "BUILD_ASSETS": {
+      "description": "Ensures that Heroku builds the app on deploy.",
+      "value": "true"
     }
   }
 }
