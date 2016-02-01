@@ -25,7 +25,7 @@ class TransactionsList extends React.Component {
     };
 
     var clonedTransactions = this.state.transactions.slice();
-    clonedTransactions.push(newTransaction)
+    clonedTransactions.push(newTransaction);
 
     this.setState({
       transactions: clonedTransactions
