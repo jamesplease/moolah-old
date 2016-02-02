@@ -37,8 +37,10 @@ class TransactionsList extends React.Component {
       <div>
         <NewTransaction createFn={this.createTransaction.bind(this)}/>
         <ul>
-          {this.state.transactions.map(({id, name}) => (
-            <Transaction key={id} id={id} name={name} deleteFn={this.deleteTransaction.bind(this)}/>
+          {this.state.transactions.map(({id, description, value, date}) => (
+            <Transaction key={id}
+              id={id} description={description} value={value} date={date}
+              deleteFn={this.deleteTransaction.bind(this)}/>
           ))}
         </ul>
       </div>
