@@ -18,6 +18,14 @@ The preferred way to deploy this app is through Heroku. Just click the button be
 
 ### Developing
 
+#### Pre-requisites
+
+- [Node](https://nodejs.org/en/) v5+
+- [npm](https://docs.npmjs.com/getting-started/installing-node) v3+
+- [Postgres](https://wiki.postgresql.org/wiki/Detailed_installation_guides) v9.4
+
+You must also make sure that a superuser named `postgres` exists (this is required for running the API integration tests locally).
+
 #### Installation
 
 Clone this repository.
