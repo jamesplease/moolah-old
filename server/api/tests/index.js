@@ -1,4 +1,5 @@
 const express = require('express');
+const validator = require('is-my-json-valid');
 
 const generateErrors = require('../generate-errors');
 const dbConnect = require('../db-connect');
@@ -35,6 +36,26 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const id = req.body.id;
   const name = req.body.name;
+
+  var validate = validator({
+    type: 'object',
+    properties: {
+      id: {
+        required: true,
+        type: 'number'
+      },
+      name: {
+        required: true,
+        type: 'string'
+      }
+    }
+  }, {
+    greedy: true
+  });
+
+  if (!validate(req.body)) {
+    console.log(validate.errors);
+  }
 
   // Ensure that the user has submitted the required fields
   var errors = [];
