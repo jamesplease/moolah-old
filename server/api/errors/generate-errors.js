@@ -14,16 +14,7 @@ function notFoundError() {
   };
 }
 
-// When a field is missing
-function missingAttribute(fieldName) {
-  return {
-    title: "Missing Attribute",
-    detail: `The attribute "${fieldName}" is required.`
-  };
-}
-
 module.exports = {
   notFoundError,
-  genericError,
-  missingAttribute
+  genericError
 };
