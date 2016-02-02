@@ -2,6 +2,7 @@ const express = require('express');
 const validator = require('is-my-json-valid');
 
 const generateErrors = require('../generate-errors');
+const requestErrorMap = require('../request-error-map');
 const dbConnect = require('../db-connect');
 
 const router = express.Router();
@@ -54,21 +55,8 @@ router.post('/', (req, res) => {
   });
 
   if (!validate(req.body)) {
-    console.log(validate.errors);
-  }
-
-  // Ensure that the user has submitted the required fields
-  var errors = [];
-  if (typeof id === 'undefined') {
-    errors.push(generateErrors.missingAttribute('id'));
-  }
-  if (typeof name === 'undefined') {
-    errors.push(generateErrors.missingAttribute('name'));
-  }
-
-  if (errors.length) {
     res.status(400).send({
-      errors
+      errors: requestErrorMap(validate.errors)
     });
   } else {
     const query = {
@@ -129,9 +117,21 @@ router.patch('/:id', (req, res) => {
   const id = req.params.id;
   const name = req.body.name;
 
-  if (typeof name === 'undefined') {
+  var validate = validator({
+    type: 'object',
+    properties: {
+      name: {
+        required: true,
+        type: 'string'
+      }
+    }
+  }, {
+    greedy: true
+  });
+
+  if (!validate(req.body)) {
     res.status(400).send({
-      errors: [generateErrors.missingAttribute('name')]
+      errors: requestErrorMap(validate.errors)
     });
   } else {
     const query = {
