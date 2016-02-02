@@ -125,6 +125,19 @@ function buildJavaScript() {
     .pipe(gulp.dest(destinationFolder));
 }
 
+function _mochaApiIntegration() {
+  return gulp.src([
+      'test/setup/node.js',
+      'test/integration/api/index.js',
+      'test/integration/**/*.js'
+    ], {read: false})
+    .pipe($.mocha({
+      reporter: 'dot',
+      globals: Object.keys(mochaGlobals.globals),
+      ignoreLeaks: false
+    }));
+}
+
 function _mocha() {
   return gulp.src(['test/setup/node.js', 'test/unit/**/*.js'], {read: false})
     .pipe($.mocha({
@@ -136,6 +149,11 @@ function _mocha() {
 
 function _registerBabel() {
   require('babel-register');
+}
+
+function testApiIntegration() {
+  _registerBabel();
+  return _mochaApiIntegration();
 }
 
 function test() {
@@ -261,6 +279,9 @@ gulp.task('stylus', stylus);
 
 // Lint and run our tests
 gulp.task('test', ['lint'], test);
+
+// Lint and run our API integration tests
+gulp.task('test:api:integration', testApiIntegration);
 
 // Set up coverage and run tests
 gulp.task('coverage', ['lint'], coverage);

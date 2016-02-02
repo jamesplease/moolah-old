@@ -4,8 +4,8 @@
   "description": "Track your finances.",
   "main": "client-dist/app.js",
   "scripts": {
-    "test": "gulp",
-    "test:api": "echo hello",
+    "test": "gulp && npm run test:api",
+    "test:api": "gulp test:api:integration",
     "pretest:api": "dropdb test_finance_app -U postgres || true && createdb test_finance_app -U postgres",
     "lint": "gulp lint",
     "test-browser": "gulp test-browser",
