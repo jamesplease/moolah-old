@@ -9,7 +9,7 @@ const kapowAttrs = ['message', 'title'];
 
 function createTitle(originalError) {
   originalError = originalError ? originalError : {};
-  return '"' + originalError.field.slice(5) + '" ' + originalError.message;
+  return `"${originalError.field.slice(5)}" ${originalError.message}`;
 }
 
 // Maps an error from `is-my-json-valid` to a message for `Kapow`

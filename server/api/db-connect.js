@@ -3,7 +3,7 @@ const pg = require('pg');
 const generateErrors = require('./errors/generate-errors');
 
 // SSL must be used to connect to the DB
-const DB_URL = process.env.DATABASE_URL + '?ssl=true';
+const DB_URL = `${process.env.DATABASE_URL}?ssl=true`;
 
 // Retrieve a client connection from the pg pool. An error response
 // will automatically be sent if there's an error.
