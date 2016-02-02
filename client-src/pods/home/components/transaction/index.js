@@ -5,7 +5,9 @@ class Transaction extends React.Component {
     super(props);
     this.state = {
       id: props.id,
-      name: props.name
+      description: props.description,
+      value: props.value,
+      date: props.date
     };
 
     this.deleteFn = props.deleteFn;
@@ -15,13 +17,13 @@ class Transaction extends React.Component {
     return (
       <li className="transaction-row" key={this.state.id}>
         <div className="transaction-list-cell transaction-date-cell">
-          03/01
+          {this.state.date}
         </div>
         <div className="transaction-list-cell transaction-name-cell">
-          {this.state.name}
+          {this.state.description}
         </div>
         <div className="transaction-list-cell transaction-value-cell">
-          $0.00
+          {this.state.value}
         </div>
         <div className="transaction-list-cell transaction-delete-cell">
           <i className="zmdi zmdi-delete delete-transaction" onClick={this.deleteFn.bind(this, this.state.id)}></i>
@@ -33,7 +35,9 @@ class Transaction extends React.Component {
 
 Transaction.propTypes = {
   id: React.PropTypes.number,
-  name: React.PropTypes.string,
+  description: React.PropTypes.string,
+  value: React.PropTypes.string,
+  date: React.PropTypes.string,
   deleteFn: React.PropTypes.func
 };
 

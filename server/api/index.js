@@ -1,11 +1,13 @@
 const express = require('express');
 
+const migrate = require('./util/migrate');
 const dbConnect = require('./db-connect');
+const transactions = require('./pods/transactions');
+
+migrate.up();
 
 const router = express.Router();
 
-// Our test resource
-const tests = require('./tests');
-router.use('/tests', tests);
+router.use('/transactions', transactions);
 
 module.exports = router;

@@ -1,18 +1,19 @@
+const _ = require('lodash');
 const express = require('express');
 const validator = require('is-my-json-valid');
 
-const generateErrors = require('../errors/generate-errors');
-const requestErrorMap = require('../errors/bad-request-map');
-const dbConnect = require('../db-connect');
+const generateErrors = require('../../errors/generate-errors');
+const requestErrorMap = require('../../errors/bad-request-map');
+const dbConnect = require('../../db-connect');
 
 const router = express.Router();
 
-const TABLE_NAME = 'test_table';
+const TABLE_NAME = 'transaction';
 
-// Retrieve a list of every `test` resource
+// Retrieve a list of every `transaction` resource
 router.get('/', (req, res) => {
   const query = {
-    name: 'tests_get_all',
+    name: 'transactions_get_all',
     text: `SELECT * FROM ${TABLE_NAME}`
   };
 
@@ -33,36 +34,35 @@ router.get('/', (req, res) => {
   });
 });
 
-// Create a new `test` resource
+// Create a new `transaction` resource
 router.post('/', (req, res) => {
-  const id = req.body.id;
-  const name = req.body.name;
+  const body = _.pick(req.body, [
+    'description', 'value', 'date',
+  ]);
 
   var validate = validator({
     type: 'object',
     properties: {
-      id: {
-        required: true,
-        type: 'number'
+      value: {
+        required: true
       },
-      name: {
-        required: true,
-        type: 'string'
+      date: {
+        format: 'date'
       }
     }
   }, {
     greedy: true
   });
 
-  if (!validate(req.body)) {
+  if (!validate(body)) {
     res.status(400).send({
       errors: requestErrorMap(validate.errors)
     });
   } else {
     const query = {
-      name: 'tests_create_one',
-      text: `INSERT INTO ${TABLE_NAME} VALUES ($1, $2)`,
-      values: [id, name]
+      name: 'transactions_create_one',
+      text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3)`,
+      values: [body.description, body.value, body.date]
     };
 
     dbConnect(res, (client, done) => {
@@ -81,10 +81,10 @@ router.post('/', (req, res) => {
   }
 });
 
-// Return a single `test` resource
+// Return a single `transaction` resource
 router.get('/:id', (req, res) => {
   const query = {
-    name: 'tests_get_one',
+    name: 'transactions_get_one',
     text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
     values: [req.params.id]
   };
@@ -112,32 +112,34 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// Update a `test` resource
+// Update a `transaction` resource
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
-  const name = req.body.name;
+
+  const body = _.pick(req.body, [
+    'description', 'value', 'date',
+  ]);
 
   var validate = validator({
     type: 'object',
     properties: {
-      name: {
-        required: true,
-        type: 'string'
+      date: {
+        format: 'date'
       }
     }
   }, {
     greedy: true
   });
 
-  if (!validate(req.body)) {
+  if (!validate(body)) {
     res.status(400).send({
       errors: requestErrorMap(validate.errors)
     });
   } else {
     const query = {
-      name: 'tests_update_one',
-      text: `UPDATE ${TABLE_NAME} SET name = $1 WHERE id = $2`,
-      values: [name, id]
+      name: 'transactions_update_one',
+      text: `UPDATE ${TABLE_NAME} SET description = $1, value = $2, date = $3 WHERE id = $4`,
+      values: [body.description, body.value, body.date, id]
     };
 
     dbConnect(res, (client, done) => {
@@ -158,12 +160,12 @@ router.patch('/:id', (req, res) => {
   }
 });
 
-// Delete a `test` resource
+// Delete a `transaction` resource
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
 
   const query = {
-    name: 'tests_delete_one',
+    name: 'transactions_delete_one',
     text: `DELETE FROM ${TABLE_NAME} WHERE id = $1`,
     values: [id]
   };

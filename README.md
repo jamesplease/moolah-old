@@ -8,6 +8,8 @@ Track your finances.
 
 ### Deploying
 
+> This app is in very early development, so there's not much to see if you deploy it right now.
+
 The preferred way to deploy this app is through Heroku. Just click the button below.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/jmeas/finance-app/tree/master)

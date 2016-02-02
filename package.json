@@ -12,7 +12,11 @@
     "coverage": "gulp coverage",
     "work": "gulp work & heroku local web",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets; fi",
-    "build-assets": "gulp build"
+    "build-assets": "gulp build",
+    "migrate": "careen",
+    "migrate:up": "careen -A -e",
+    "migrate:down": "careen -R -e",
+    "migrate:create": "careen -C"
   },
   "repository": {
     "type": "git",
@@ -71,6 +75,7 @@
   "dependencies": {
     "babel-polyfill": "^6.3.14",
     "body-parser": "^1.14.2",
+    "careen": "^0.1.1",
     "compression": "^1.6.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
