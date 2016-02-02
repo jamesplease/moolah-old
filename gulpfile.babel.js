@@ -236,7 +236,7 @@ gulp.task('clean-tmp', cleanTmp);
 gulp.task('lint-client', lintClient);
 
 // Lint the server code
-gulp.task('lint-server', lintTest);
+gulp.task('lint-server', lintServer);
 
 // Lint our test code
 gulp.task('lint-test', lintTest);

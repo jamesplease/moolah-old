@@ -11,7 +11,7 @@ const api = require('./api');
 // on Heroku, we assume that we're developing locally.
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const BASE_DIR = __dirname;
-const PROJECT_ROOT = path.normalize(BASE_DIR + '/..');
+const PROJECT_ROOT = path.normalize(`${BASE_DIR}/..`);
 const ASSETS_PATH = path.join(PROJECT_ROOT, 'client-dist');
 const VIEWS_DIR = path.join(BASE_DIR, 'views');
 
@@ -32,8 +32,8 @@ function start() {
   // Configure the templating engine
   const hbsOptions = {
     extname: '.hbs',
-    layoutsDir: VIEWS_DIR + '/layouts',
-    partialsDir: VIEWS_DIR + '/partials',
+    layoutsDir: `${VIEWS_DIR}/layouts`,
+    partialsDir: `${VIEWS_DIR}/partials`,
     defaultLayout: 'main'
   };
   app.set('view engine', '.hbs');
@@ -50,7 +50,7 @@ function start() {
   });
 
   app.listen(port, function() {
-    console.log('Node app is running at localhost:' + port);
+    console.log(`Node app is running at localhost:${port}`);
   });
 }
 
