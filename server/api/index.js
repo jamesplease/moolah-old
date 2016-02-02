@@ -8,7 +8,7 @@ migrate.up();
 const router = express.Router();
 
 // Our test resource
-const tests = require('./tests');
+const tests = require('./pods/tests');
 router.use('/tests', tests);
 
 module.exports = router;

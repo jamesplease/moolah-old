@@ -1,9 +1,9 @@
 const express = require('express');
 const validator = require('is-my-json-valid');
 
-const generateErrors = require('../errors/generate-errors');
-const requestErrorMap = require('../errors/bad-request-map');
-const dbConnect = require('../db-connect');
+const generateErrors = require('../../errors/generate-errors');
+const requestErrorMap = require('../../errors/bad-request-map');
+const dbConnect = require('../../db-connect');
 
 const router = express.Router();
 
