@@ -2,6 +2,10 @@ language: node_js
 node_js:
   - "4"
   - "stable"
+addons:
+  postgresql: "9.4"
+services:
+  - postgresql
 sudo: false
 script: "gulp coverage"
 after_success:
