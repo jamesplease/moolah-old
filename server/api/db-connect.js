@@ -10,7 +10,7 @@ const DB_URL = `${process.env.DATABASE_URL}?ssl=true`;
 module.exports = function(res, cb) {
   pg.connect(DB_URL, (err, client, done) => {
     if (err) {
-      res.send(500, {
+      res.status(500).send({
         errors: [generateErrors.genericError()]
       });
       console.error(err);
