@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-const generateErrors = require('./generate-errors');
+const generateErrors = require('./errors/generate-errors');
 
 // SSL must be used to connect to the DB
 const DB_URL = process.env.DATABASE_URL + '?ssl=true';
