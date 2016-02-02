@@ -1,6 +1,9 @@
 const express = require('express');
 
+const migrate = require('./util/migrate');
 const dbConnect = require('./db-connect');
+
+migrate.up();
 
 const router = express.Router();
 
