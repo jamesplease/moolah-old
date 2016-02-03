@@ -1,5 +1,4 @@
 import migrate from '../../../server/api/util/migrate';
-import dbConnect from '../../../server/api/db-connect';
 
 // This needs to run SQL to insert things
 function loadMock(file) {
