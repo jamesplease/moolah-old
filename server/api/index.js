@@ -1,7 +1,6 @@
 const express = require('express');
 
 const migrate = require('./util/migrate');
-const dbConnect = require('./db-connect');
 const transactions = require('./pods/transactions');
 
 migrate.up();
