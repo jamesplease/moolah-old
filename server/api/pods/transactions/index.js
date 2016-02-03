@@ -166,9 +166,7 @@ router.delete('/:id', (req, res) => {
   pgp(dbConfig())
     .none(query)
     .then(result => {
-      res.send({
-        data: result
-      });
+      res.end();
     })
     .catch(e => {
       console.error(e);
