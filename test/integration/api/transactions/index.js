@@ -50,7 +50,7 @@ describe('Transactions', () => {
         .get('/transactions')
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function(err, res){
+        .end(function(err, res) {
           if (err) { return done(err); }
           done();
         });
@@ -67,7 +67,7 @@ describe('Transactions', () => {
             return new Error('The length of the array was not 2.');
           }
         })
-        .end(function(err, res){
+        .end(function(err, res) {
           if (err) { return done(err); }
           done();
         });
