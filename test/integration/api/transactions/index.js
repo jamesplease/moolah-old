@@ -39,6 +39,11 @@ describe('Transactions', () => {
     return Promise.all(queries.map(q => db.none(q)));
   });
 
+  // Ensures the tests immediately exit
+  afterEach(() => {
+    pgp.end();
+  });
+
   describe('/transactions', () => {
     it('should return 200', done => {
       request(app())
