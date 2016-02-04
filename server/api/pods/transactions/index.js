@@ -5,7 +5,7 @@ const validator = require('is-my-json-valid');
 
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
-const dbConfig = require('../../util/db-config');
+const dbConfig = require('../../../../config/db-config');
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     text: `SELECT * FROM ${TABLE_NAME}`
   };
 
-  pgp(dbConfig())
+  pgp(dbConfig)
     .any(query)
     .then(result => {
       res.send({
@@ -64,7 +64,7 @@ router.post('/', (req, res) => {
       values: [body.description, body.value, body.date]
     };
 
-    pgp(dbConfig())
+    pgp(dbConfig)
       .none(query)
       .then(result => {
         res.end();
@@ -86,7 +86,7 @@ router.get('/:id', (req, res) => {
     values: [req.params.id]
   };
 
-  pgp(dbConfig())
+  pgp(dbConfig)
     .oneOrNone(query)
     .then(result => {
       if (!result) {
@@ -137,7 +137,7 @@ router.patch('/:id', (req, res) => {
       values: [body.description, body.value, body.date, id]
     };
 
-    pgp(dbConfig())
+    pgp(dbConfig)
       .one(query)
       .then(result => {
         res.send({
@@ -163,7 +163,7 @@ router.delete('/:id', (req, res) => {
     values: [id]
   };
 
-  pgp(dbConfig())
+  pgp(dbConfig)
     .none(query)
     .then(result => {
       res.end();

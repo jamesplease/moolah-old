@@ -1,6 +1,6 @@
 import pg from 'pg-promise';
 import request from 'supertest';
-import dbConfig from '../../../../server/api/util/db-config';
+import dbConfig from '../../../../config/db-config';
 import app from '../../../../server/app';
 
 const pgp = pg();
@@ -35,7 +35,7 @@ describe('Transactions', () => {
       getInsertQuery({ value: '1000.20', description: 'test'})
     ];
 
-    const db = pgp(dbConfig());
+    const db = pgp(dbConfig);
     return Promise.all(queries.map(q => db.none(q)));
   });
 
