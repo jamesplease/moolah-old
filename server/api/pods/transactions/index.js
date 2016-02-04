@@ -22,7 +22,12 @@ router.get('/', (req, res) => {
     .any(query)
     .then(result => {
       res.send({
-        data: result
+        data: _.map(result, r => _.pick(r, [
+          'id',
+          'description',
+          'value',
+          'date'
+        ]))
       });
     })
     .catch(e => {
@@ -95,7 +100,12 @@ router.get('/:id', (req, res) => {
         });
       } else {
         res.send({
-          data: result
+          data: _.pick(result, [
+            'id',
+            'description',
+            'value',
+            'date'
+          ])
         });
       }
     })
