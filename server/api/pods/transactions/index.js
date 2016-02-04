@@ -1,10 +1,11 @@
 const _ = require('lodash');
+const pgp = require('pg-promise')();
 const express = require('express');
 const validator = require('is-my-json-valid');
 
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
-const dbConnect = require('../../db-connect');
+const dbConfig = require('../../util/db-config');
 
 const router = express.Router();
 
@@ -17,21 +18,19 @@ router.get('/', (req, res) => {
     text: `SELECT * FROM ${TABLE_NAME}`
   };
 
-  dbConnect(res, (client, done) => {
-    client.query(query, (err, result) => {
-      done();
-      if (err) {
-        console.error(err);
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
-      } else {
-        res.send({
-          data: result.rows
-        });
-      }
+  pgp(dbConfig())
+    .any(query)
+    .then(result => {
+      res.send({
+        data: result
+      });
+    })
+    .catch(e => {
+      console.error(e);
+      res.status(500).send({
+        errors: [generateErrors.genericError()]
+      });
     });
-  });
 });
 
 // Create a new `transaction` resource
@@ -65,19 +64,17 @@ router.post('/', (req, res) => {
       values: [body.description, body.value, body.date]
     };
 
-    dbConnect(res, (client, done) => {
-      client.query(query, (err, result) => {
-        done();
-        if (err) {
-          console.error(err);
-          res.status(500).send({
-            errors: [generateErrors.genericError()]
-          });
-        } else {
-          res.end();
-        }
+    pgp(dbConfig())
+      .none(query)
+      .then(result => {
+        res.end();
+      })
+      .catch(e => {
+        console.error(e);
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
+        });
       });
-    });
   }
 });
 
@@ -89,27 +86,25 @@ router.get('/:id', (req, res) => {
     values: [req.params.id]
   };
 
-  dbConnect(res, (client, done) => {
-    client.query(query, (err, result) => {
-      done();
-      if (err) {
-        console.error(err);
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
+  pgp(dbConfig())
+    .oneOrNone(query)
+    .then(result => {
+      if (!result) {
+        res.status(404).send({
+          errors: [generateErrors.notFoundError()]
         });
       } else {
-        if (!result.rows.length) {
-          res.status(404).send({
-            errors: [generateErrors.notFoundError()]
-          });
-        } else {
-          res.send({
-            data: result.rows[0]
-          });
-        }
+        res.send({
+          data: result
+        });
       }
+    })
+    .catch(e => {
+      console.error(e);
+      res.status(500).send({
+        errors: [generateErrors.genericError()]
+      });
     });
-  });
 });
 
 // Update a `transaction` resource
@@ -142,21 +137,19 @@ router.patch('/:id', (req, res) => {
       values: [body.description, body.value, body.date, id]
     };
 
-    dbConnect(res, (client, done) => {
-      client.query(query, (err, result) => {
-        done();
-        if (err) {
-          console.error(err);
-          res.status(500).send({
-            errors: [generateErrors.genericError()]
-          });
-        } else {
-          res.send({
-            data: result.rows[0]
-          });
-        }
+    pgp(dbConfig())
+      .one(query)
+      .then(result => {
+        res.send({
+          data: result
+        });
+      })
+      .catch(e => {
+        console.error(e);
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
+        });
       });
-    });
   }
 });
 
@@ -170,19 +163,17 @@ router.delete('/:id', (req, res) => {
     values: [id]
   };
 
-  dbConnect(res, (client, done) => {
-    client.query(query, (err, result) => {
-      done();
-      if (err) {
-        console.error(err);
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
-      } else {
-        res.end();
-      }
+  pgp(dbConfig())
+    .none(query)
+    .then(result => {
+      res.end();
+    })
+    .catch(e => {
+      console.error(e);
+      res.status(500).send({
+        errors: [generateErrors.genericError()]
+      });
     });
-  });
 });
 
 module.exports = router;
