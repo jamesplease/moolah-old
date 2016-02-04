@@ -1,11 +1,15 @@
 const _ = require('lodash');
-const pgp = require('pg-promise')();
+const pgp = require('pg-promise')({
+  // initialization options;
+}});
 const express = require('express');
 const validator = require('is-my-json-valid');
 
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
 const dbConfig = require('../../../../config/db-config');
+
+const db = pgp(dbConfig());
 
 const router = express.Router();
 
@@ -15,10 +19,10 @@ const TABLE_NAME = 'transaction';
 router.get('/', (req, res) => {
   const query = {
     name: 'transactions_get_all',
-    text: `SELECT * FROM ${TABLE_NAME}`
+    text: pgp.as.format('SELECT * FROM $1~', TABLE_NAME)
   };
 
-  pgp(dbConfig)
+  db
     .any(query)
     .then(result => {
       res.send({
@@ -26,7 +30,7 @@ router.get('/', (req, res) => {
       });
     })
     .catch(e => {
-      console.error(e);
+      console.error(e.message || e);
       res.status(500).send({
         errors: [generateErrors.genericError()]
       });
@@ -64,13 +68,13 @@ router.post('/', (req, res) => {
       values: [body.description, body.value, body.date]
     };
 
-    pgp(dbConfig)
+    db
       .none(query)
       .then(result => {
         res.status(204).end();
       })
       .catch(e => {
-        console.error(e);
+        console.error(e.message || e);
         res.status(500).send({
           errors: [generateErrors.genericError()]
         });
@@ -86,7 +90,7 @@ router.get('/:id', (req, res) => {
     values: [req.params.id]
   };
 
-  pgp(dbConfig)
+  db
     .oneOrNone(query)
     .then(result => {
       if (!result) {
@@ -100,7 +104,7 @@ router.get('/:id', (req, res) => {
       }
     })
     .catch(e => {
-      console.error(e);
+      console.error(e.message || e);
       res.status(500).send({
         errors: [generateErrors.genericError()]
       });
@@ -137,7 +141,7 @@ router.patch('/:id', (req, res) => {
       values: [body.description, body.value, body.date, id]
     };
 
-    pgp(dbConfig)
+    db
       .one(query)
       .then(result => {
         res.send({
@@ -145,7 +149,7 @@ router.patch('/:id', (req, res) => {
         });
       })
       .catch(e => {
-        console.error(e);
+        console.error(e.message || e);
         res.status(500).send({
           errors: [generateErrors.genericError()]
         });
@@ -163,13 +167,13 @@ router.delete('/:id', (req, res) => {
     values: [id]
   };
 
-  pgp(dbConfig)
+  db
     .none(query)
     .then(result => {
       res.status(204).end();
     })
     .catch(e => {
-      console.error(e);
+      console.error(e.message || e);
       res.status(500).send({
         errors: [generateErrors.genericError()]
       });
