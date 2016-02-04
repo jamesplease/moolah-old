@@ -67,7 +67,7 @@ router.post('/', (req, res) => {
     pgp(dbConfig)
       .none(query)
       .then(result => {
-        res.end();
+        res.status(204).end();
       })
       .catch(e => {
         console.error(e);
@@ -166,7 +166,7 @@ router.delete('/:id', (req, res) => {
   pgp(dbConfig)
     .none(query)
     .then(result => {
-      res.end();
+      res.status(204).end();
     })
     .catch(e => {
       console.error(e);
