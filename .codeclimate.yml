@@ -1,4 +1,11 @@
-languages:
-  JavaScript: true
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
 exclude_paths:
 - "gulpfile.js"
+- "careen.js"
+- "config/**/*"
+- "test/**/*"
