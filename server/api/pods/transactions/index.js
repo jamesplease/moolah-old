@@ -9,6 +9,28 @@ const dbConfig = require('../../../../config/db-config');
 
 const router = express.Router();
 
+// Takes a JS Date object, and returns it in the format
+// "2016-10-05"
+function formatDate(d) {
+  if (!d) { return d; }
+  return d.toISOString().substring(0, 10);
+}
+
+// This transforms the data from the format that it is in the
+// database to the one we need for our endpoint
+function formatTransaction(t) {
+  return _.chain(t)
+    .pick(['id', 'description', 'value', 'date'])
+    .transform((result, val, key) => {
+      if (key === 'date') {
+        result[key] = formatDate(val);
+      } else {
+        result[key] = val;
+      }
+    }, {})
+    .value();
+}
+
 const TABLE_NAME = 'transaction';
 
 // Retrieve a list of every `transaction` resource
@@ -22,12 +44,7 @@ router.get('/', (req, res) => {
     .any(query)
     .then(result => {
       res.send({
-        data: _.map(result, r => _.pick(r, [
-          'id',
-          'description',
-          'value',
-          'date'
-        ]))
+        data: _.map(result, r => formatTransaction(r))
       });
     })
     .catch(e => {
@@ -100,12 +117,7 @@ router.get('/:id', (req, res) => {
         });
       } else {
         res.send({
-          data: _.pick(result, [
-            'id',
-            'description',
-            'value',
-            'date'
-          ])
+          data: formatTransaction(result)
         });
       }
     })

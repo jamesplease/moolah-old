@@ -87,7 +87,7 @@ describe('Transactions', () => {
     describe('when there is data', () => {
       beforeEach(() => {
         const queries = [
-          getInsertQuery({value: '10.20'}),
+          getInsertQuery({value: '10.20', date: '2016-01-10'}),
           getInsertQuery({value: '1000.20', description: 'test'})
         ];
 
@@ -130,7 +130,7 @@ describe('Transactions', () => {
             id: 1,
             value: '10.20',
             description: null,
-            date: null
+            date: '2016-01-10'
           },
           {
             id: 2,
@@ -169,7 +169,7 @@ describe('Transactions', () => {
     describe('when the resource exists', () => {
       beforeEach(() => {
         const queries = [
-          getInsertQuery({value: '10.20'}),
+          getInsertQuery({value: '10.20', date: '2015-12-12'}),
           getInsertQuery({value: '1000.20', description: 'test'})
         ];
 
@@ -206,7 +206,7 @@ describe('Transactions', () => {
           id: 1,
           value: '10.20',
           description: null,
-          date: null
+          date: '2015-12-12'
         };
 
         request(app())
