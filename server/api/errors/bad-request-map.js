@@ -5,7 +5,7 @@ const Kapow = require('kapow');
 const code = 400;
 
 // These are the attrs we want from the Kapow Objects
-const kapowAttrs = ['message', 'title'];
+const kapowAttrs = ['message', 'title', 'httpStatus'];
 
 function createTitle(originalError) {
   originalError = originalError ? originalError : {};
@@ -24,7 +24,8 @@ function createErrors(originalErrors) {
     var kapowError = _.pick(Kapow(code, message), kapowAttrs);
     return {
       title: kapowError.title,
-      detail: kapowError.message
+      detail: kapowError.message,
+      statusCode: kapowError.httpStatus
     };
   });
 }

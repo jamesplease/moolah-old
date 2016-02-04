@@ -25,6 +25,7 @@ describe('requestErrorMap', () => {
       }];
 
       var expected = [{
+        statusCode: '400',
         title: 'Bad Request',
         detail: '"hello" is required'
       }];
@@ -44,9 +45,11 @@ describe('requestErrorMap', () => {
       }];
 
       var expected = [{
+        statusCode: '400',
         title: 'Bad Request',
         detail: '"hello" is required'
       }, {
+        statusCode: '400',
         title: 'Bad Request',
         detail: '"id" is the wrong type'
       }];
