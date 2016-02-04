@@ -4,8 +4,16 @@ engines:
     config:
       languages:
       - javascript
+ratings:
+   paths:
+   - "**.js"
 exclude_paths:
-- "gulpfile.js"
+- "gulpfile.babel.js"
 - "careen.js"
+- "README.md"
+- "Procfile"
+- "app.json"
+- "package.json"
+- "migrations/**/*"
 - "config/**/*"
 - "test/**/*"
