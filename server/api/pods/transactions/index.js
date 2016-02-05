@@ -214,20 +214,25 @@ router.delete('/:id', (req, res) => {
 
   const query = {
     name: 'transactions_delete_one',
-    text: `DELETE FROM ${TABLE_NAME} WHERE id = $1`,
+    text: `DELETE FROM ${TABLE_NAME} WHERE id = $1 RETURNING *`,
     values: [id]
   };
 
   pgp(dbConfig)
-    .none(query)
+    .one(query)
     .then(result => {
       res.status(204).end();
     })
     .catch(e => {
-      console.error(e);
-      res.status(500).send({
-        errors: [generateErrors.genericError()]
-      });
+      if (e.message === 'No data returned from the query.') {
+        return res.status(404).send({
+          errors: [generateErrors.notFoundError()]
+        });
+      } else {
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
+        });
+      }
     });
 });
 

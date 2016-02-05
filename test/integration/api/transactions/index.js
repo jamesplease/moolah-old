@@ -56,7 +56,7 @@ function errorsEquals(obj, res) {
 }
 
 function isEmpty(res) {
-  if (res.body) {
+  if (_.size(res.body)) {
     return new Error('Response body was not empty.');
   }
 }
@@ -358,6 +358,45 @@ describe('Transactions', () => {
               done();
             });
         });
+      });
+    });
+  });
+
+  describe('DELETE /transactions/:id', () => {
+    describe("when the resource doesn't exist", () => {
+      it('should return 404', done => {
+        request(app())
+          .delete('/transactions/1000')
+          .set('Accept', 'application/json')
+          .expect(404)
+          .expect(_.partial(errorsEquals, [generateErrors.notFoundError()]))
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
+      });
+    });
+
+    describe('when the resource exists', () => {
+      beforeEach(() => {
+        const queries = [
+          getInsertQuery({value: '10.20', date: '2015-12-12'})
+        ];
+
+        const db = pgp(dbConfig);
+        return Promise.all(queries.map(q => db.none(q)));
+      });
+
+      it('should return 204', done => {
+        request(app())
+          .delete('/transactions/1')
+          .set('Accept', 'application/json')
+          .expect(204)
+          .expect(isEmpty)
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
       });
     });
   });
