@@ -51,7 +51,8 @@ function dataEquals(obj, res) {
 
 function errorsEquals(obj, res) {
   if (!_.isEqual(res.body.errors, obj)) {
-    return new Error('The error did not match.');
+    console.log('wat', res.body.errors, obj);
+    return new Error('The errors did not match.');
   }
 }
 
@@ -320,6 +321,38 @@ describe('Transactions', () => {
             .set('Accept', 'application/json')
             .send({value: '5.00'})
             .expect(_.partial(dataEquals, data))
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
+      });
+
+      describe('and the request fails validation', () => {
+        it('should return 400', done => {
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .send({date: 'not a date lol'})
+            .expect(400)
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
+
+        it('should return the correct error', done => {
+          const errors = [{
+            statusCode: '400',
+            title: 'Bad Request',
+            detail: '"date" must be date format'
+          }];
+
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .send({date: 'not a date lol'})
+            .expect(_.partial(errorsEquals, errors))
             .end(function(err, res) {
               if (err) { return done(err); }
               done();

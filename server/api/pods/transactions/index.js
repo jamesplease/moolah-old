@@ -95,15 +95,9 @@ router.post('/', (req, res) => {
         });
       })
       .catch(e => {
-        if (e.message === 'No data returned from the query.') {
-          return res.status(404).send({
-            errors: [generateErrors.notFoundError()]
-          });
-        } else {
-          res.status(500).send({
-            errors: [generateErrors.genericError()]
-          });
-        }
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
+        });
       });
   }
 });
