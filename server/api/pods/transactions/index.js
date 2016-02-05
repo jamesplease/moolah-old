@@ -150,7 +150,37 @@ router.patch('/:id', (req, res) => {
     greedy: true
   });
 
-  if (!validate(body)) {
+  // If there is no body, then we can just retrieve the
+  // current resource, as no update will be made. This is
+  // copy + pasted from the GET middleware for this endpoint...
+  // so we absolutely need to abstract it to DRY things up.
+  if (!_.size(body)) {
+    let query = {
+      name: 'transactions_get_one',
+      text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
+      values: [id]
+    };
+
+    pgp(dbConfig)
+      .oneOrNone(query)
+      .then(result => {
+        if (!result) {
+          res.status(404).send({
+            errors: [generateErrors.notFoundError()]
+          });
+        } else {
+          res.send({
+            data: formatTransaction(result)
+          });
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
+        });
+      });
+  } else if (!validate(body)) {
     res.status(400).send({
       errors: requestErrorMap(validate.errors)
     });

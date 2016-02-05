@@ -263,7 +263,38 @@ describe('Transactions', () => {
         return Promise.all(queries.map(q => db.none(q)));
       });
 
-      describe('and the request is valid', () => {
+      describe('and the request body is empty', () => {
+        it('should return 200', done => {
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
+
+        it('should return the unmodified resource', done => {
+          const data = {
+            id: 1,
+            value: '10.20',
+            date: '2015-12-12',
+            description: null
+          };
+
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .expect(_.partial(dataEquals, data))
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
+      });
+
+      describe('and the request is completely valid', () => {
         it('should return 200', done => {
           request(app())
             .patch('/transactions/1')
@@ -288,6 +319,39 @@ describe('Transactions', () => {
             .patch('/transactions/1')
             .set('Accept', 'application/json')
             .send({value: '5.00'})
+            .expect(_.partial(dataEquals, data))
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
+      });
+
+      describe('and the request body has both valid and invalid attributes', () => {
+        it('should return 200', done => {
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .send({description: 'chocolate', salmon: true, pasta: 'face'})
+            .expect(200)
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
+
+        it('should return the modified resource', done => {
+          const data = {
+            id: 1,
+            value: '10.20',
+            date: '2015-12-12',
+            description: 'chocolate'
+          };
+
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .send({description: 'chocolate', salmon: true, pasta: 'face'})
             .expect(_.partial(dataEquals, data))
             .end(function(err, res) {
               if (err) { return done(err); }
