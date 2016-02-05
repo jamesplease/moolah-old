@@ -3,8 +3,11 @@ import pg from 'pg-promise';
 import request from 'supertest';
 import dbConfig from '../../../../config/db-config';
 import app from '../../../../server/app';
+import generateErrors from '../../../../server/api/errors/generate-errors';
 
-const pgp = pg();
+const pgp = pg({
+  error: function() {}
+});
 
 const TABLE_NAME = 'transaction';
 
@@ -42,7 +45,19 @@ function dataIsSingleObj(res) {
 
 function dataEquals(obj, res) {
   if (!_.isEqual(res.body.data, obj)) {
-    return new Error('The data did not match');
+    return new Error('The data did not match.');
+  }
+}
+
+function errorsEquals(obj, res) {
+  if (!_.isEqual(res.body.errors, obj)) {
+    return new Error('The error did not match.');
+  }
+}
+
+function isEmpty(res) {
+  if (res.body) {
+    return new Error('Response body was not empty.');
   }
 }
 
@@ -52,7 +67,7 @@ describe('Transactions', () => {
     pgp.end();
   });
 
-  describe('/transactions', () => {
+  describe('GET /transactions', () => {
     describe("when there's no data", () => {
       it('should return 200', done => {
         request(app())
@@ -152,13 +167,14 @@ describe('Transactions', () => {
     });
   });
 
-  describe('/transactions/:id', () => {
+  describe('GET /transactions/:id', () => {
     describe("when the resource doesn't exist", () => {
-      it('should return 404', done => {
+      it('should return a 404', done => {
         request(app())
           .get('/transactions/2')
           .set('Accept', 'application/json')
           .expect(404)
+          .expect(_.partial(errorsEquals, [generateErrors.notFoundError()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -219,5 +235,67 @@ describe('Transactions', () => {
           });
       });
     });
+  });
+
+  describe('PATCH /transactions/:id', () => {
+    describe("when the resource doesn't exist", () => {
+      it('should return 500', done => {
+        request(app())
+          .patch('/transactions/2')
+          .set('Accept', 'application/json')
+          .send({value: '5.00'})
+          .expect(500)
+          .expect(_.partial(errorsEquals, [generateErrors.genericError()]))
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
+      });
+    });
+
+    // I need to fix the endpoint for this test
+    // describe('when the resource exists', () => {
+    //   beforeEach(() => {
+    //     const queries = [
+    //       getInsertQuery({value: '10.20', date: '2015-12-12'})
+    //     ];
+
+    //     const db = pgp(dbConfig);
+    //     return Promise.all(queries.map(q => db.none(q)));
+    //   });
+
+    //   describe('and the request is valid', () => {
+    //     it('should return 200', done => {
+    //       request(app())
+    //         .patch('/transactions/1')
+    //         .set('Accept', 'application/json')
+    //         .send({value: '5.00'})
+    //         .expect(200)
+    //         .end(function(err, res) {
+    //           if (err) { return done(err); }
+    //           done();
+    //         });
+    //     });
+
+    //     it('should return the modified resource', done => {
+    //       const data = {
+    //         id: 1,
+    //         value: '5.00',
+    //         date: '2015-12-12',
+    //         description: null
+    //       };
+
+    //       request(app())
+    //         .patch('/transactions/1')
+    //         .set('Accept', 'application/json')
+    //         .send({value: '5.00'})
+    //         .expect(_.partial(dataEquals, data))
+    //         .end(function(err, res) {
+    //           if (err) { return done(err); }
+    //           done();
+    //         });
+    //     });
+    //   });
+    // });
   });
 });
