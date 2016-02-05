@@ -30,17 +30,22 @@ function buildValue(key) {
 // useful for PATCHing a resource.
 function updateBuilder(options) {
   // The start of our query
-  var queryStart = `UPDATE ${options.tableName} SET`;
+  const queryStart = `UPDATE ${options.tableName} SET`;
 
-  var values = _.pick(options.values, options.validValues);
+  const values = _.pick(options.values, options.validValues);
 
-  var updateString = _.chain(values)
+  const updateString = _.chain(values)
     .toPairs()
     .map(v => buildValue(v))
     .join(', ')
     .value();
 
-  var queryString = `${queryStart} ${updateString} WHERE id = $<id>`;
+  // This ensures that the UPDATE returns the updated resource,
+  // rather than the number of rows updated
+  const valuesString = _.join(_.concat(options.validValues, 'id'), ', ');
+  const returnString = `RETURNING ${valuesString}`;
+
+  const queryString = `${queryStart} ${updateString} WHERE id = $<id> ${returnString}`;
 
   return [queryString, _.assign(values, {id: options.id})];
 }

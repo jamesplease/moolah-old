@@ -5,6 +5,7 @@ const validator = require('is-my-json-valid');
 
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
+const updateBuilder = require('../../util/update-builder');
 const dbConfig = require('../../../../config/db-config');
 
 const router = express.Router();
@@ -132,6 +133,7 @@ router.get('/:id', (req, res) => {
 // Update a `transaction` resource
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
+  const validValues = ['description', 'value', 'date'];
 
   const body = _.pick(req.body, [
     'description', 'value', 'date',
@@ -153,17 +155,18 @@ router.patch('/:id', (req, res) => {
       errors: requestErrorMap(validate.errors)
     });
   } else {
-    const query = {
-      name: 'transactions_update_one',
-      text: `UPDATE ${TABLE_NAME} SET description = $1, value = $2, date = $3 WHERE id = $4`,
-      values: [body.description, body.value, body.date, id]
-    };
+    const query = updateBuilder({
+      tableName: TABLE_NAME,
+      validValues: validValues,
+      values: body,
+      id: id
+    });
 
     pgp(dbConfig)
-      .one(query)
+      .one(query[0], query[1])
       .then(result => {
-        res.send({
-          data: result
+        res.status(200).send({
+          data: formatTransaction(result)
         });
       })
       .catch(e => {

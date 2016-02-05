@@ -254,48 +254,48 @@ describe('Transactions', () => {
     });
 
     // I need to fix the endpoint for this test
-    // describe('when the resource exists', () => {
-    //   beforeEach(() => {
-    //     const queries = [
-    //       getInsertQuery({value: '10.20', date: '2015-12-12'})
-    //     ];
+    describe('when the resource exists', () => {
+      beforeEach(() => {
+        const queries = [
+          getInsertQuery({value: '10.20', date: '2015-12-12'})
+        ];
 
-    //     const db = pgp(dbConfig);
-    //     return Promise.all(queries.map(q => db.none(q)));
-    //   });
+        const db = pgp(dbConfig);
+        return Promise.all(queries.map(q => db.none(q)));
+      });
 
-    //   describe('and the request is valid', () => {
-    //     it('should return 200', done => {
-    //       request(app())
-    //         .patch('/transactions/1')
-    //         .set('Accept', 'application/json')
-    //         .send({value: '5.00'})
-    //         .expect(200)
-    //         .end(function(err, res) {
-    //           if (err) { return done(err); }
-    //           done();
-    //         });
-    //     });
+      describe('and the request is valid', () => {
+        it('should return 200', done => {
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .send({value: '5.00'})
+            .expect(200)
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
 
-    //     it('should return the modified resource', done => {
-    //       const data = {
-    //         id: 1,
-    //         value: '5.00',
-    //         date: '2015-12-12',
-    //         description: null
-    //       };
+        it('should return the modified resource', done => {
+          const data = {
+            id: 1,
+            value: '5.00',
+            date: '2015-12-12',
+            description: null
+          };
 
-    //       request(app())
-    //         .patch('/transactions/1')
-    //         .set('Accept', 'application/json')
-    //         .send({value: '5.00'})
-    //         .expect(_.partial(dataEquals, data))
-    //         .end(function(err, res) {
-    //           if (err) { return done(err); }
-    //           done();
-    //         });
-    //     });
-    //   });
-    // });
+          request(app())
+            .patch('/transactions/1')
+            .set('Accept', 'application/json')
+            .send({value: '5.00'})
+            .expect(_.partial(dataEquals, data))
+            .end(function(err, res) {
+              if (err) { return done(err); }
+              done();
+            });
+        });
+      });
+    });
   });
 });

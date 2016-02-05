@@ -1,3 +1,4 @@
+// jscs:disable maximumLineLength
 import updateBuilder from '../../../server/api/util/update-builder';
 
 describe('updateBuilder', () => {
@@ -18,7 +19,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name> WHERE id = $<id>',
+        'UPDATE sandwiches SET name = $<name> WHERE id = $<id> RETURNING name, date, value, id',
         { name: 'pasta', id: 5 }
       ];
       expect(result).to.deep.equal(expected);
@@ -40,7 +41,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name> WHERE id = $<id>',
+        'UPDATE sandwiches SET name = $<name> WHERE id = $<id> RETURNING name, date, value, id',
         { name: 'james', id: 10 }
       ];
       expect(result).to.deep.equal(expected);
@@ -71,7 +72,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id>',
+        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id> RETURNING name, date, value, id',
         {
           name: 'james',
           date: '2015-10-10',
@@ -101,7 +102,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id>',
+        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id> RETURNING name, date, value, id',
         {
           name: 'james',
           date: '2015-10-10',
