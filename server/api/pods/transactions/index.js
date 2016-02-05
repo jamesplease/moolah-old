@@ -200,10 +200,15 @@ router.patch('/:id', (req, res) => {
         });
       })
       .catch(e => {
-        console.error(e);
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
+        if (e.message === 'No data returned from the query.') {
+          return res.status(404).send({
+            errors: [generateErrors.notFoundError()]
+          });
+        } else {
+          res.status(500).send({
+            errors: [generateErrors.genericError()]
+          });
+        }
       });
   }
 });

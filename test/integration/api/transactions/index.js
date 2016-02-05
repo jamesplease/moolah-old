@@ -239,13 +239,13 @@ describe('Transactions', () => {
 
   describe('PATCH /transactions/:id', () => {
     describe("when the resource doesn't exist", () => {
-      it('should return 500', done => {
+      it('should return 404', done => {
         request(app())
           .patch('/transactions/2')
           .set('Accept', 'application/json')
           .send({value: '5.00'})
-          .expect(500)
-          .expect(_.partial(errorsEquals, [generateErrors.genericError()]))
+          .expect(404)
+          .expect(_.partial(errorsEquals, [generateErrors.notFoundError()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
