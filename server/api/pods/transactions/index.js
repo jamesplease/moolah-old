@@ -83,20 +83,27 @@ router.post('/', (req, res) => {
   } else {
     const query = {
       name: 'transactions_create_one',
-      text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3)`,
+      text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3) RETURNING *`,
       values: [body.description, body.value, body.date]
     };
 
     pgp(dbConfig)
-      .none(query)
+      .one(query)
       .then(result => {
-        res.status(204).end();
+        res.status(201).send({
+          data: formatTransaction(result)
+        });
       })
       .catch(e => {
-        console.error(e);
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
+        if (e.message === 'No data returned from the query.') {
+          return res.status(404).send({
+            errors: [generateErrors.notFoundError()]
+          });
+        } else {
+          res.status(500).send({
+            errors: [generateErrors.genericError()]
+          });
+        }
       });
   }
 });
