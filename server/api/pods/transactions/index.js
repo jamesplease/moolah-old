@@ -5,9 +5,32 @@ const validator = require('is-my-json-valid');
 
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
+const updateBuilder = require('../../util/update-builder');
 const dbConfig = require('../../../../config/db-config');
 
 const router = express.Router();
+
+// Takes a JS Date object, and returns it in the format
+// "2016-10-05"
+function formatDate(d) {
+  if (!d) { return d; }
+  return d.toISOString().substring(0, 10);
+}
+
+// This transforms the data from the format that it is in the
+// database to the one we need for our endpoint
+function formatTransaction(t) {
+  return _.chain(t)
+    .pick(['id', 'description', 'value', 'date'])
+    .transform((result, val, key) => {
+      if (key === 'date') {
+        result[key] = formatDate(val);
+      } else {
+        result[key] = val;
+      }
+    }, {})
+    .value();
+}
 
 const TABLE_NAME = 'transaction';
 
@@ -22,7 +45,7 @@ router.get('/', (req, res) => {
     .any(query)
     .then(result => {
       res.send({
-        data: result
+        data: _.map(result, r => formatTransaction(r))
       });
     })
     .catch(e => {
@@ -60,17 +83,18 @@ router.post('/', (req, res) => {
   } else {
     const query = {
       name: 'transactions_create_one',
-      text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3)`,
+      text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3) RETURNING *`,
       values: [body.description, body.value, body.date]
     };
 
     pgp(dbConfig)
-      .none(query)
+      .one(query)
       .then(result => {
-        res.status(204).end();
+        res.status(201).send({
+          data: formatTransaction(result)
+        });
       })
       .catch(e => {
-        console.error(e);
         res.status(500).send({
           errors: [generateErrors.genericError()]
         });
@@ -95,7 +119,7 @@ router.get('/:id', (req, res) => {
         });
       } else {
         res.send({
-          data: result
+          data: formatTransaction(result)
         });
       }
     })
@@ -110,6 +134,7 @@ router.get('/:id', (req, res) => {
 // Update a `transaction` resource
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
+  const validValues = ['description', 'value', 'date'];
 
   const body = _.pick(req.body, [
     'description', 'value', 'date',
@@ -126,29 +151,65 @@ router.patch('/:id', (req, res) => {
     greedy: true
   });
 
-  if (!validate(body)) {
-    res.status(400).send({
-      errors: requestErrorMap(validate.errors)
-    });
-  } else {
-    const query = {
-      name: 'transactions_update_one',
-      text: `UPDATE ${TABLE_NAME} SET description = $1, value = $2, date = $3 WHERE id = $4`,
-      values: [body.description, body.value, body.date, id]
+  // If there is no body, then we can just retrieve the
+  // current resource, as no update will be made. This is
+  // copy + pasted from the GET middleware for this endpoint...
+  // so we absolutely need to abstract it to DRY things up.
+  if (!_.size(body)) {
+    let query = {
+      name: 'transactions_get_one',
+      text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
+      values: [id]
     };
 
     pgp(dbConfig)
-      .one(query)
+      .oneOrNone(query)
       .then(result => {
-        res.send({
-          data: result
-        });
+        if (!result) {
+          res.status(404).send({
+            errors: [generateErrors.notFoundError()]
+          });
+        } else {
+          res.send({
+            data: formatTransaction(result)
+          });
+        }
       })
       .catch(e => {
         console.error(e);
         res.status(500).send({
           errors: [generateErrors.genericError()]
         });
+      });
+  } else if (!validate(body)) {
+    res.status(400).send({
+      errors: requestErrorMap(validate.errors)
+    });
+  } else {
+    const query = updateBuilder({
+      tableName: TABLE_NAME,
+      validValues: validValues,
+      values: body,
+      id: id
+    });
+
+    pgp(dbConfig)
+      .one(query[0], query[1])
+      .then(result => {
+        res.status(200).send({
+          data: formatTransaction(result)
+        });
+      })
+      .catch(e => {
+        if (e.message === 'No data returned from the query.') {
+          return res.status(404).send({
+            errors: [generateErrors.notFoundError()]
+          });
+        } else {
+          res.status(500).send({
+            errors: [generateErrors.genericError()]
+          });
+        }
       });
   }
 });
@@ -159,20 +220,25 @@ router.delete('/:id', (req, res) => {
 
   const query = {
     name: 'transactions_delete_one',
-    text: `DELETE FROM ${TABLE_NAME} WHERE id = $1`,
+    text: `DELETE FROM ${TABLE_NAME} WHERE id = $1 RETURNING *`,
     values: [id]
   };
 
   pgp(dbConfig)
-    .none(query)
+    .one(query)
     .then(result => {
       res.status(204).end();
     })
     .catch(e => {
-      console.error(e);
-      res.status(500).send({
-        errors: [generateErrors.genericError()]
-      });
+      if (e.message === 'No data returned from the query.') {
+        return res.status(404).send({
+          errors: [generateErrors.notFoundError()]
+        });
+      } else {
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
+        });
+      }
     });
 });
 
