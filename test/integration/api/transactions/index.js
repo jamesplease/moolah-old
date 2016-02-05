@@ -434,79 +434,79 @@ describe('Transactions', () => {
   });
 
   describe('POST /transactions', () => {
-    describe("when the request is empty, thus failing validation", () => {
+    describe('when the request is empty, thus failing validation', () => {
       it('should return 400', done => {
-          request(app())
-            .post('/transactions')
-            .set('Accept', 'application/json')
-            .expect(400)
-            .end(function(err, res) {
-              if (err) { return done(err); }
-              done();
-            });
-        });
+        request(app())
+          .post('/transactions')
+          .set('Accept', 'application/json')
+          .expect(400)
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
+      });
 
-        it('should return the correct error', done => {
-          const errors = [{
-            statusCode: '400',
-            title: 'Bad Request',
-            detail: '"value" is required'
-          }];
+      it('should return the correct error', done => {
+        const errors = [{
+          statusCode: '400',
+          title: 'Bad Request',
+          detail: '"value" is required'
+        }];
 
-          request(app())
-            .post('/transactions')
-            .set('Accept', 'application/json')
-            .expect(_.partial(errorsEquals, errors))
-            .end(function(err, res) {
-              if (err) { return done(err); }
-              done();
-            });
-        });
+        request(app())
+          .post('/transactions')
+          .set('Accept', 'application/json')
+          .expect(_.partial(errorsEquals, errors))
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
+      });
     });
 
-    describe("when the date fails validation", () => {
+    describe('when the date fails validation', () => {
       it('should return 400', done => {
-          request(app())
-            .post('/transactions')
-            .set('Accept', 'application/json')
-            .send({value: '20.04', date: 'not a date'})
-            .expect(400)
-            .end(function(err, res) {
-              if (err) { return done(err); }
-              done();
-            });
-        });
+        request(app())
+          .post('/transactions')
+          .set('Accept', 'application/json')
+          .send({value: '20.04', date: 'not a date'})
+          .expect(400)
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
+      });
 
-        it('should return the correct error', done => {
-          const errors = [{
-            statusCode: '400',
-            title: 'Bad Request',
-            detail: '"date" must be date format'
-          }];
+      it('should return the correct error', done => {
+        const errors = [{
+          statusCode: '400',
+          title: 'Bad Request',
+          detail: '"date" must be date format'
+        }];
 
-          request(app())
-            .post('/transactions')
-            .set('Accept', 'application/json')
-            .send({value: '20.04', date: 'not a date'})
-            .expect(_.partial(errorsEquals, errors))
-            .end(function(err, res) {
-              if (err) { return done(err); }
-              done();
-            });
-        });
+        request(app())
+          .post('/transactions')
+          .set('Accept', 'application/json')
+          .send({value: '20.04', date: 'not a date'})
+          .expect(_.partial(errorsEquals, errors))
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
+      });
     });
 
-    describe("when the request is valid", () => {
+    describe('when the request is valid', () => {
       it('should return 201', done => {
-          request(app())
-            .post('/transactions')
-            .set('Accept', 'application/json')
-            .send({value: '20.04', date: '2015-10-12'})
-            .expect(201)
-            .end(function(err, res) {
-              if (err) { return done(err); }
-              done();
-            });
+        request(app())
+          .post('/transactions')
+          .set('Accept', 'application/json')
+          .send({value: '20.04', date: '2015-10-12'})
+          .expect(201)
+          .end(function(err, res) {
+            if (err) { return done(err); }
+            done();
+          });
       });
 
       it('should return the created resource', done => {
