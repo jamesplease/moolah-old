@@ -42,8 +42,7 @@ function updateBuilder(options) {
 
   // This ensures that the UPDATE returns the updated resource,
   // rather than the number of rows updated
-  const valuesString = _.join(_.concat(options.validValues, 'id'), ', ');
-  const returnString = `RETURNING ${valuesString}`;
+  const returnString = `RETURNING *`;
 
   const queryString = `${queryStart} ${updateString} WHERE id = $<id> ${returnString}`;
 

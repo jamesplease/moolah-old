@@ -19,7 +19,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name> WHERE id = $<id> RETURNING name, date, value, id',
+        'UPDATE sandwiches SET name = $<name> WHERE id = $<id> RETURNING *',
         { name: 'pasta', id: 5 }
       ];
       expect(result).to.deep.equal(expected);
@@ -41,7 +41,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name> WHERE id = $<id> RETURNING name, date, value, id',
+        'UPDATE sandwiches SET name = $<name> WHERE id = $<id> RETURNING *',
         { name: 'james', id: 10 }
       ];
       expect(result).to.deep.equal(expected);
@@ -72,7 +72,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id> RETURNING name, date, value, id',
+        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id> RETURNING *',
         {
           name: 'james',
           date: '2015-10-10',
@@ -102,7 +102,7 @@ describe('updateBuilder', () => {
 
       const result = updateBuilder(options);
       const expected = [
-        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id> RETURNING name, date, value, id',
+        'UPDATE sandwiches SET name = $<name>, date = $<date>, value = $<value> WHERE id = $<id> RETURNING *',
         {
           name: 'james',
           date: '2015-10-10',
