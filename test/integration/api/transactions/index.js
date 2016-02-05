@@ -253,7 +253,6 @@ describe('Transactions', () => {
       });
     });
 
-    // I need to fix the endpoint for this test
     describe('when the resource exists', () => {
       beforeEach(() => {
         const queries = [
