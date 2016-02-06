@@ -8,6 +8,7 @@ const validator = require('is-my-json-valid');
 const Controller = require('./controller');
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
+const catchRejectedQuery = require('../../util/catch-rejected-query');
 const dbConfig = require('../../../../config/db-config');
 
 const TABLE_NAME = 'transaction';
@@ -49,11 +50,7 @@ router.get('/', (req, res) => {
         data: _.map(result, r => formatTransaction(r))
       });
     })
-    .catch(e => {
-      res.status(500).send({
-        errors: [generateErrors.genericError()]
-      });
-    });
+    .catch(_.partial(catchRejectedQuery, res));
 });
 
 // Create a new `transaction` resource
@@ -87,11 +84,7 @@ router.post('/', (req, res) => {
           data: formatTransaction(result)
         });
       })
-      .catch(e => {
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
-      });
+      .catch(_.partial(catchRejectedQuery, res));
   }
 });
 
@@ -103,17 +96,7 @@ router.get('/:id', (req, res) => {
         data: formatTransaction(result)
       });
     })
-    .catch(e => {
-      if (e.message === 'No data returned from the query.') {
-        res.status(404).send({
-          errors: [generateErrors.notFoundError()]
-        });
-      } else {
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
-      }
-    });
+    .catch(_.partial(catchRejectedQuery, res));
 });
 
 // Update a `transaction` resource
@@ -147,17 +130,7 @@ router.patch('/:id', (req, res) => {
           data: formatTransaction(result)
         });
       })
-      .catch(e => {
-        if (e.message === 'No data returned from the query.') {
-          return res.status(404).send({
-            errors: [generateErrors.notFoundError()]
-          });
-        } else {
-          res.status(500).send({
-            errors: [generateErrors.genericError()]
-          });
-        }
-      });
+      .catch(_.partial(catchRejectedQuery, res));
   }
 });
 
@@ -167,17 +140,7 @@ router.delete('/:id', (req, res) => {
     .then(result => {
       res.status(204).end();
     })
-    .catch(e => {
-      if (e.message === 'No data returned from the query.') {
-        return res.status(404).send({
-          errors: [generateErrors.notFoundError()]
-        });
-      } else {
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
-      }
-    });
+    .catch(_.partial(catchRejectedQuery, res));
 });
 
 module.exports = router;
