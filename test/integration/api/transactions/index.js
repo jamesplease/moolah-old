@@ -4,6 +4,7 @@ import request from 'supertest';
 import dbConfig from '../../../../config/db-config';
 import app from '../../../../server/app';
 import generateErrors from '../../../../server/api/errors/generate-errors';
+import responseValidation from '../utils/response-validation';
 
 const pgp = pg({
   error: function() {}
@@ -17,48 +18,6 @@ function getInsertQuery(values) {
     text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3)`,
     values: [values.description, values.value, values.date]
   };
-}
-
-function hasAttr(attr, res) {
-  if (!(attr in res.body)) {
-    throw new Error('Response missing `${attr}` attribute.');
-  }
-}
-
-function doesNotHaveAttr(attr, res) {
-  if (attr in res.body) {
-    throw new Error('Response has `${attr}` attribute.');
-  }
-}
-
-function dataIsArray(res) {
-  if (!Array.isArray(res.body.data)) {
-    return new Error('The `data` attribute is not an array.');
-  }
-}
-
-function dataIsSingleObj(res) {
-  if (!_.isObject(res.body.data) || _.isArray(res.body.data)) {
-    return new Error('The `data` attribute is not a non-Array Object.');
-  }
-}
-
-function dataEquals(obj, res) {
-  if (!_.isEqual(res.body.data, obj)) {
-    return new Error('The data did not match.');
-  }
-}
-
-function errorsEquals(obj, res) {
-  if (!_.isEqual(res.body.errors, obj)) {
-    return new Error('The errors did not match.');
-  }
-}
-
-function isEmpty(res) {
-  if (_.size(res.body)) {
-    return new Error('Response body was not empty.');
-  }
 }
 
 describe('Transactions', () => {
@@ -84,9 +43,9 @@ describe('Transactions', () => {
         request(app())
           .get('/transactions')
           .set('Accept', 'application/json')
-          .expect(_.partial(hasAttr, 'data'))
-          .expect(_.partial(doesNotHaveAttr, 'errors'))
-          .expect(dataIsArray)
+          .expect(_.partial(responseValidation.hasAttr, 'data'))
+          .expect(_.partial(responseValidation.doesNotHaveAttr, 'errors'))
+          .expect(responseValidation.dataIsArray)
           .expect(res => {
             if (res.body.data.length !== 0) {
               return new Error('The length of the array was not 0.');
@@ -125,9 +84,9 @@ describe('Transactions', () => {
         request(app())
           .get('/transactions')
           .set('Accept', 'application/json')
-          .expect(_.partial(hasAttr, 'data'))
-          .expect(_.partial(doesNotHaveAttr, 'errors'))
-          .expect(dataIsArray)
+          .expect(_.partial(responseValidation.hasAttr, 'data'))
+          .expect(_.partial(responseValidation.doesNotHaveAttr, 'errors'))
+          .expect(responseValidation.dataIsArray)
           .expect(res => {
             if (res.body.data.length !== 2) {
               return new Error('The length of the array was not 2.');
@@ -158,7 +117,7 @@ describe('Transactions', () => {
         request(app())
           .get('/transactions')
           .set('Accept', 'application/json')
-          .expect(_.partial(dataEquals, data))
+          .expect(_.partial(responseValidation.dataEquals, data))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -174,7 +133,7 @@ describe('Transactions', () => {
           .get('/transactions/2')
           .set('Accept', 'application/json')
           .expect(404)
-          .expect(_.partial(errorsEquals, [generateErrors.notFoundError()]))
+          .expect(_.partial(responseValidation.errorsEquals, [generateErrors.notFoundError()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -208,9 +167,9 @@ describe('Transactions', () => {
         request(app())
           .get('/transactions/1')
           .set('Accept', 'application/json')
-          .expect(_.partial(hasAttr, 'data'))
-          .expect(_.partial(doesNotHaveAttr, 'errors'))
-          .expect(dataIsSingleObj)
+          .expect(_.partial(responseValidation.hasAttr, 'data'))
+          .expect(_.partial(responseValidation.doesNotHaveAttr, 'errors'))
+          .expect(responseValidation.dataIsSingleObj)
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -228,7 +187,7 @@ describe('Transactions', () => {
         request(app())
           .get('/transactions/1')
           .set('Accept', 'application/json')
-          .expect(_.partial(dataEquals, data))
+          .expect(_.partial(responseValidation.dataEquals, data))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -245,7 +204,7 @@ describe('Transactions', () => {
           .set('Accept', 'application/json')
           .send({value: '5.00'})
           .expect(404)
-          .expect(_.partial(errorsEquals, [generateErrors.notFoundError()]))
+          .expect(_.partial(responseValidation.errorsEquals, [generateErrors.notFoundError()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -286,7 +245,7 @@ describe('Transactions', () => {
           request(app())
             .patch('/transactions/1')
             .set('Accept', 'application/json')
-            .expect(_.partial(dataEquals, data))
+            .expect(_.partial(responseValidation.dataEquals, data))
             .end(function(err, res) {
               if (err) { return done(err); }
               done();
@@ -319,7 +278,7 @@ describe('Transactions', () => {
             .patch('/transactions/1')
             .set('Accept', 'application/json')
             .send({value: '5.00'})
-            .expect(_.partial(dataEquals, data))
+            .expect(_.partial(responseValidation.dataEquals, data))
             .end(function(err, res) {
               if (err) { return done(err); }
               done();
@@ -351,7 +310,7 @@ describe('Transactions', () => {
             .patch('/transactions/1')
             .set('Accept', 'application/json')
             .send({date: 'not a date lol'})
-            .expect(_.partial(errorsEquals, errors))
+            .expect(_.partial(responseValidation.errorsEquals, errors))
             .end(function(err, res) {
               if (err) { return done(err); }
               done();
@@ -384,7 +343,7 @@ describe('Transactions', () => {
             .patch('/transactions/1')
             .set('Accept', 'application/json')
             .send({description: 'chocolate', salmon: true, pasta: 'face'})
-            .expect(_.partial(dataEquals, data))
+            .expect(_.partial(responseValidation.dataEquals, data))
             .end(function(err, res) {
               if (err) { return done(err); }
               done();
@@ -401,7 +360,7 @@ describe('Transactions', () => {
           .delete('/transactions/1000')
           .set('Accept', 'application/json')
           .expect(404)
-          .expect(_.partial(errorsEquals, [generateErrors.notFoundError()]))
+          .expect(_.partial(responseValidation.errorsEquals, [generateErrors.notFoundError()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -424,7 +383,7 @@ describe('Transactions', () => {
           .delete('/transactions/1')
           .set('Accept', 'application/json')
           .expect(204)
-          .expect(isEmpty)
+          .expect(responseValidation.isEmpty)
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -456,7 +415,7 @@ describe('Transactions', () => {
         request(app())
           .post('/transactions')
           .set('Accept', 'application/json')
-          .expect(_.partial(errorsEquals, errors))
+          .expect(_.partial(responseValidation.errorsEquals, errors))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -488,7 +447,7 @@ describe('Transactions', () => {
           .post('/transactions')
           .set('Accept', 'application/json')
           .send({value: '20.04', date: 'not a date'})
-          .expect(_.partial(errorsEquals, errors))
+          .expect(_.partial(responseValidation.errorsEquals, errors))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -521,7 +480,7 @@ describe('Transactions', () => {
           .post('/transactions')
           .set('Accept', 'application/json')
           .send({value: '20.04', date: '2015-10-12'})
-          .expect(_.partial(dataEquals, data))
+          .expect(_.partial(responseValidation.dataEquals, data))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
