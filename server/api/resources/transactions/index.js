@@ -50,7 +50,6 @@ router.get('/', (req, res) => {
       });
     })
     .catch(e => {
-      console.error(e.message || e);
       res.status(500).send({
         errors: [generateErrors.genericError()]
       });
@@ -123,7 +122,6 @@ router.get('/:id', (req, res) => {
       }
     })
     .catch(e => {
-      console.error(e.message || e);
       res.status(500).send({
         errors: [generateErrors.genericError()]
       });
@@ -175,7 +173,6 @@ router.patch('/:id', (req, res) => {
         }
       })
       .catch(e => {
-        console.error(e.message || e);
         res.status(500).send({
           errors: [generateErrors.genericError()]
         });
