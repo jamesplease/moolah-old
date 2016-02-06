@@ -31,6 +31,7 @@ function dataIsSingleObj(res) {
 
 function dataEquals(obj, res) {
   if (!_.isEqual(res.body.data, obj)) {
+    console.log('res:', res.body.data, '\nexpected:', obj);
     return new Error('The data did not match.');
   }
 }

@@ -5,14 +5,20 @@ const pgp = require('pg-promise')();
 const express = require('express');
 const validator = require('is-my-json-valid');
 
+const Controller = require('./controller');
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
 const updateBuilder = require('../../util/update-builder');
 const dbConfig = require('../../../../config/db-config');
 
-const db = pgp(dbConfig);
+const TABLE_NAME = 'transaction';
 
+const db = pgp(dbConfig);
 const router = express.Router();
+const controller = new Controller({
+  store: db,
+  table: TABLE_NAME
+});
 
 // Takes a JS Date object, and returns it in the format
 // "2016-10-05"
@@ -36,16 +42,9 @@ function formatTransaction(t) {
     .value();
 }
 
-const TABLE_NAME = 'transaction';
-
 // Retrieve a list of every `transaction` resource
 router.get('/', (req, res) => {
-  const query = {
-    name: 'transactions_get_all',
-    text: `SELECT * FROM ${TABLE_NAME}`
-  };
-
-  db.any(query)
+  controller.read()
     .then(result => {
       res.send({
         data: _.map(result, r => formatTransaction(r))
@@ -105,13 +104,7 @@ router.post('/', (req, res) => {
 
 // Return a single `transaction` resource
 router.get('/:id', (req, res) => {
-  const query = {
-    name: 'transactions_get_one',
-    text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
-    values: [req.params.id]
-  };
-
-  db.oneOrNone(query)
+  controller.read(req.params.id)
     .then(result => {
       if (!result) {
         res.status(404).send({
@@ -155,13 +148,7 @@ router.patch('/:id', (req, res) => {
   // copy + pasted from the GET middleware for this endpoint...
   // so we absolutely need to abstract it to DRY things up.
   if (!_.size(body)) {
-    let query = {
-      name: 'transactions_get_one',
-      text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
-      values: [id]
-    };
-
-    db.oneOrNone(query)
+    controller.read(id)
       .then(result => {
         if (!result) {
           res.status(404).send({
