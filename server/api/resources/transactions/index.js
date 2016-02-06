@@ -8,7 +8,6 @@ const validator = require('is-my-json-valid');
 const Controller = require('./controller');
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
-const updateBuilder = require('../../util/update-builder');
 const dbConfig = require('../../../../config/db-config');
 
 const TABLE_NAME = 'transaction';
@@ -100,20 +99,20 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   controller.read(req.params.id)
     .then(result => {
-      if (!result) {
+      res.send({
+        data: formatTransaction(result)
+      });
+    })
+    .catch(e => {
+      if (e.message === 'No data returned from the query.') {
         res.status(404).send({
           errors: [generateErrors.notFoundError()]
         });
       } else {
-        res.send({
-          data: formatTransaction(result)
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
         });
       }
-    })
-    .catch(e => {
-      res.status(500).send({
-        errors: [generateErrors.genericError()]
-      });
     });
 });
 
@@ -137,43 +136,14 @@ router.patch('/:id', (req, res) => {
     greedy: true
   });
 
-  // If there is no body, then we can just retrieve the
-  // current resource, as no update will be made. This is
-  // copy + pasted from the GET middleware for this endpoint...
-  // so we absolutely need to abstract it to DRY things up.
-  if (!_.size(body)) {
-    controller.read(id)
-      .then(result => {
-        if (!result) {
-          res.status(404).send({
-            errors: [generateErrors.notFoundError()]
-          });
-        } else {
-          res.send({
-            data: formatTransaction(result)
-          });
-        }
-      })
-      .catch(e => {
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
-      });
-  } else if (!validate(body)) {
+  if (!validate(body)) {
     res.status(400).send({
       errors: requestErrorMap(validate.errors)
     });
   } else {
-    const query = updateBuilder({
-      tableName: TABLE_NAME,
-      validValues: validValues,
-      values: body,
-      id: id
-    });
-
-    db.one(query[0], query[1])
+    controller.update(id, body)
       .then(result => {
-        res.status(200).send({
+        res.send({
           data: formatTransaction(result)
         });
       })

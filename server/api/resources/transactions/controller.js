@@ -1,7 +1,13 @@
 const _ = require('lodash');
 
+const updateBuilder = require('../../util/update-builder');
+
 // The options that can be passed into a Controller
 const validOptions = ['table', 'store'];
+
+// This list also exists in the routes file...but this duplication
+// won't last for long!
+const validValues = ['description', 'value', 'date'];
 
 // A controller represents an interface to the data
 // stored in our database. Eventually, this might be
@@ -30,11 +36,26 @@ Object.assign(Controller.prototype, {
       query += ' WHERE id = $1';
     }
 
-    const method = singular ? 'oneOrNone' : 'any';
+    const method = singular ? 'one' : 'any';
     return this.store[method](query, id);
   },
 
-  update() {},
+  update(id, data) {
+    // If we've got nothing to update, then we can just return
+    // a GET for this resource
+    if (!_.size(data)) {
+      return this.read(id);
+    }
+
+    // Otherwise, we return an update query
+    const query = updateBuilder({
+      id, validValues,
+      tableName: this.table,
+      values: data
+    });
+
+    return this.store.one(query[0], query[1]);
+  },
 
   delete(id) {
     if (!id) {
