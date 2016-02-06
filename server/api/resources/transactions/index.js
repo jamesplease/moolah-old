@@ -5,14 +5,19 @@ const pgp = require('pg-promise')();
 const express = require('express');
 const validator = require('is-my-json-valid');
 
+const Controller = require('./controller');
 const generateErrors = require('../../errors/generate-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
-const updateBuilder = require('../../util/update-builder');
 const dbConfig = require('../../../../config/db-config');
 
-const db = pgp(dbConfig);
+const TABLE_NAME = 'transaction';
 
+const db = pgp(dbConfig);
 const router = express.Router();
+const controller = new Controller({
+  store: db,
+  table: TABLE_NAME
+});
 
 // Takes a JS Date object, and returns it in the format
 // "2016-10-05"
@@ -36,16 +41,9 @@ function formatTransaction(t) {
     .value();
 }
 
-const TABLE_NAME = 'transaction';
-
 // Retrieve a list of every `transaction` resource
 router.get('/', (req, res) => {
-  const query = {
-    name: 'transactions_get_all',
-    text: `SELECT * FROM ${TABLE_NAME}`
-  };
-
-  db.any(query)
+  controller.read()
     .then(result => {
       res.send({
         data: _.map(result, r => formatTransaction(r))
@@ -83,13 +81,7 @@ router.post('/', (req, res) => {
       errors: requestErrorMap(validate.errors)
     });
   } else {
-    const query = {
-      name: 'transactions_create_one',
-      text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3) RETURNING *`,
-      values: [body.description, body.value, body.date]
-    };
-
-    db.one(query)
+    controller.create(body)
       .then(result => {
         res.status(201).send({
           data: formatTransaction(result)
@@ -105,28 +97,22 @@ router.post('/', (req, res) => {
 
 // Return a single `transaction` resource
 router.get('/:id', (req, res) => {
-  const query = {
-    name: 'transactions_get_one',
-    text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
-    values: [req.params.id]
-  };
-
-  db.oneOrNone(query)
+  controller.read(req.params.id)
     .then(result => {
-      if (!result) {
+      res.send({
+        data: formatTransaction(result)
+      });
+    })
+    .catch(e => {
+      if (e.message === 'No data returned from the query.') {
         res.status(404).send({
           errors: [generateErrors.notFoundError()]
         });
       } else {
-        res.send({
-          data: formatTransaction(result)
+        res.status(500).send({
+          errors: [generateErrors.genericError()]
         });
       }
-    })
-    .catch(e => {
-      res.status(500).send({
-        errors: [generateErrors.genericError()]
-      });
     });
 });
 
@@ -150,49 +136,14 @@ router.patch('/:id', (req, res) => {
     greedy: true
   });
 
-  // If there is no body, then we can just retrieve the
-  // current resource, as no update will be made. This is
-  // copy + pasted from the GET middleware for this endpoint...
-  // so we absolutely need to abstract it to DRY things up.
-  if (!_.size(body)) {
-    let query = {
-      name: 'transactions_get_one',
-      text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
-      values: [id]
-    };
-
-    db.oneOrNone(query)
-      .then(result => {
-        if (!result) {
-          res.status(404).send({
-            errors: [generateErrors.notFoundError()]
-          });
-        } else {
-          res.send({
-            data: formatTransaction(result)
-          });
-        }
-      })
-      .catch(e => {
-        res.status(500).send({
-          errors: [generateErrors.genericError()]
-        });
-      });
-  } else if (!validate(body)) {
+  if (!validate(body)) {
     res.status(400).send({
       errors: requestErrorMap(validate.errors)
     });
   } else {
-    const query = updateBuilder({
-      tableName: TABLE_NAME,
-      validValues: validValues,
-      values: body,
-      id: id
-    });
-
-    db.one(query[0], query[1])
+    controller.update(id, body)
       .then(result => {
-        res.status(200).send({
+        res.send({
           data: formatTransaction(result)
         });
       })
@@ -212,15 +163,7 @@ router.patch('/:id', (req, res) => {
 
 // Delete a `transaction` resource
 router.delete('/:id', (req, res) => {
-  const id = req.params.id;
-
-  const query = {
-    name: 'transactions_delete_one',
-    text: `DELETE FROM ${TABLE_NAME} WHERE id = $1 RETURNING *`,
-    values: [id]
-  };
-
-  db.one(query)
+  controller.delete(req.params.id)
     .then(result => {
       res.status(204).end();
     })
