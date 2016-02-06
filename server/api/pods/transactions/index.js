@@ -8,6 +8,8 @@ const requestErrorMap = require('../../errors/bad-request-map');
 const updateBuilder = require('../../util/update-builder');
 const dbConfig = require('../../../../config/db-config');
 
+const db = pgp(dbConfig);
+
 const router = express.Router();
 
 // Takes a JS Date object, and returns it in the format
@@ -41,15 +43,14 @@ router.get('/', (req, res) => {
     text: `SELECT * FROM ${TABLE_NAME}`
   };
 
-  pgp(dbConfig)
-    .any(query)
+  db.any(query)
     .then(result => {
       res.send({
         data: _.map(result, r => formatTransaction(r))
       });
     })
     .catch(e => {
-      console.error(e);
+      console.error(e.message || e);
       res.status(500).send({
         errors: [generateErrors.genericError()]
       });
@@ -87,8 +88,7 @@ router.post('/', (req, res) => {
       values: [body.description, body.value, body.date]
     };
 
-    pgp(dbConfig)
-      .one(query)
+    db.one(query)
       .then(result => {
         res.status(201).send({
           data: formatTransaction(result)
@@ -110,8 +110,7 @@ router.get('/:id', (req, res) => {
     values: [req.params.id]
   };
 
-  pgp(dbConfig)
-    .oneOrNone(query)
+  db.oneOrNone(query)
     .then(result => {
       if (!result) {
         res.status(404).send({
@@ -124,7 +123,7 @@ router.get('/:id', (req, res) => {
       }
     })
     .catch(e => {
-      console.error(e);
+      console.error(e.message || e);
       res.status(500).send({
         errors: [generateErrors.genericError()]
       });
@@ -162,8 +161,7 @@ router.patch('/:id', (req, res) => {
       values: [id]
     };
 
-    pgp(dbConfig)
-      .oneOrNone(query)
+    db.oneOrNone(query)
       .then(result => {
         if (!result) {
           res.status(404).send({
@@ -176,7 +174,7 @@ router.patch('/:id', (req, res) => {
         }
       })
       .catch(e => {
-        console.error(e);
+        console.error(e.message || e);
         res.status(500).send({
           errors: [generateErrors.genericError()]
         });
@@ -193,8 +191,7 @@ router.patch('/:id', (req, res) => {
       id: id
     });
 
-    pgp(dbConfig)
-      .one(query[0], query[1])
+    db.one(query[0], query[1])
       .then(result => {
         res.status(200).send({
           data: formatTransaction(result)
@@ -224,8 +221,7 @@ router.delete('/:id', (req, res) => {
     values: [id]
   };
 
-  pgp(dbConfig)
-    .one(query)
+  db.one(query)
     .then(result => {
       res.status(204).end();
     })
