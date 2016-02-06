@@ -1,7 +1,9 @@
+'use strict';
+
 const express = require('express');
 
 const migrate = require('./util/migrate');
-const transactions = require('./pods/transactions');
+const transactions = require('./resources/transactions');
 
 migrate.up();
 

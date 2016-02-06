@@ -1,3 +1,5 @@
+'use strict';
+
 // This applies our migrations each time that the server resets
 // This is a shim until https://github.com/programble/careen/issues/1 is resolved
 

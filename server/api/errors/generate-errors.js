@@ -1,3 +1,5 @@
+'use strict';
+
 // A catch-all error
 function genericError() {
   return {
