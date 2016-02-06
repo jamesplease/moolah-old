@@ -5,19 +5,25 @@ import dbConfig from '../../../../config/db-config';
 import app from '../../../../server/app';
 import generateErrors from '../../../../server/api/errors/generate-errors';
 import responseValidation from '../utils/response-validation';
+import Inserts from '../utils/concatenate-inserts';
 
-const pgp = pg({
-  error: function() {}
-});
+const pgp = pg();
 
 const TABLE_NAME = 'transaction';
 
 function getInsertQuery(values) {
-  return {
-    name: 'transactions_create_one',
-    text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3)`,
-    values: [values.description, values.value, values.date]
-  };
+  // Ensure that each key exists – even if it's null. pg-promise
+  // will error otherwise. For more, reference:
+  // https://github.com/vitaly-t/pg-promise#named-parameters
+  values = _.map(values, v => {
+    return _.defaults(v, {
+      date: null,
+      description: null,
+      value: null
+    });
+  });
+  var formattedValues = new Inserts('${date}, ${description}, ${value}', values);
+  return ['INSERT INTO transaction(date, description, value) VALUES $1', formattedValues];
 }
 
 describe('Transactions', () => {
@@ -60,13 +66,15 @@ describe('Transactions', () => {
 
     describe('when there is data', () => {
       beforeEach(() => {
-        const queries = [
-          getInsertQuery({value: '10.20', date: '2016-01-10'}),
-          getInsertQuery({value: '1000.20', description: 'test'})
+        const db = pgp(dbConfig);
+
+        const values = [
+          {value: '10.20', date: '2016-01-10'},
+          {value: '1000.20', description: 'test'}
         ];
 
-        const db = pgp(dbConfig);
-        return Promise.all(queries.map(q => db.none(q)));
+        const query = getInsertQuery(values);
+        return db.none(query[0], query[1]);
       });
 
       it('should return 200', done => {
@@ -143,13 +151,15 @@ describe('Transactions', () => {
 
     describe('when the resource exists', () => {
       beforeEach(() => {
-        const queries = [
-          getInsertQuery({value: '10.20', date: '2015-12-12'}),
-          getInsertQuery({value: '1000.20', description: 'test'})
+        const db = pgp(dbConfig);
+
+        const values = [
+          {value: '10.20', date: '2015-12-12'},
+          {value: '1000.20', description: 'test'}
         ];
 
-        const db = pgp(dbConfig);
-        return Promise.all(queries.map(q => db.none(q)));
+        const query = getInsertQuery(values);
+        return db.none(query[0], query[1]);
       });
 
       it('should return 200', done => {
@@ -214,12 +224,15 @@ describe('Transactions', () => {
 
     describe('when the resource exists', () => {
       beforeEach(() => {
-        const queries = [
-          getInsertQuery({value: '10.20', date: '2015-12-12'})
+        const db = pgp(dbConfig);
+
+        const values = [
+          {value: '10.20', date: '2015-12-12'},
+          {value: '1000.20', description: 'test'}
         ];
 
-        const db = pgp(dbConfig);
-        return Promise.all(queries.map(q => db.none(q)));
+        const query = getInsertQuery(values);
+        return db.none(query[0], query[1]);
       });
 
       describe('and the request body is empty', () => {
@@ -370,12 +383,15 @@ describe('Transactions', () => {
 
     describe('when the resource exists', () => {
       beforeEach(() => {
-        const queries = [
-          getInsertQuery({value: '10.20', date: '2015-12-12'})
+        const db = pgp(dbConfig);
+
+        const values = [
+          {value: '10.20', date: '2016-12-12'},
+          {value: '1000.20', description: 'test'}
         ];
 
-        const db = pgp(dbConfig);
-        return Promise.all(queries.map(q => db.none(q)));
+        const query = getInsertQuery(values);
+        return db.none(query[0], query[1]);
       });
 
       it('should return 204', done => {
