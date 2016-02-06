@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 
 const migrate = require('./util/migrate');

@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 
 // This is the secret to the below method's power

@@ -1,3 +1,5 @@
+'use strict';
+
 const _ = require('lodash');
 const pgp = require('pg-promise')();
 const express = require('express');
@@ -152,9 +154,8 @@ router.patch('/:id', (req, res) => {
   // current resource, as no update will be made. This is
   // copy + pasted from the GET middleware for this endpoint...
   // so we absolutely need to abstract it to DRY things up.
-  var query;
   if (!_.size(body)) {
-    query = {
+    let query = {
       name: 'transactions_get_one',
       text: `SELECT * FROM ${TABLE_NAME} WHERE id = $1`,
       values: [id]
