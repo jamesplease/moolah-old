@@ -4,7 +4,9 @@ const _ = require('lodash');
 const validOptions = ['table', 'store'];
 
 // A controller represents an interface to the data
-// stored in our database
+// stored in our database. Eventually, this might be
+// turned into a separate library, rather than part of this
+// app specifically
 function Controller(options) {
   Object.assign(this, _.pick(options, validOptions));
 }

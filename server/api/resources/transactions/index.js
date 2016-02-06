@@ -82,13 +82,7 @@ router.post('/', (req, res) => {
       errors: requestErrorMap(validate.errors)
     });
   } else {
-    const query = {
-      name: 'transactions_create_one',
-      text: `INSERT INTO ${TABLE_NAME} (description, value, date) VALUES ($1, $2, $3) RETURNING *`,
-      values: [body.description, body.value, body.date]
-    };
-
-    db.one(query)
+    controller.create(body)
       .then(result => {
         res.status(201).send({
           data: formatTransaction(result)
