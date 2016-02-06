@@ -199,15 +199,7 @@ router.patch('/:id', (req, res) => {
 
 // Delete a `transaction` resource
 router.delete('/:id', (req, res) => {
-  const id = req.params.id;
-
-  const query = {
-    name: 'transactions_delete_one',
-    text: `DELETE FROM ${TABLE_NAME} WHERE id = $1 RETURNING *`,
-    values: [id]
-  };
-
-  db.one(query)
+  controller.delete(req.params.id)
     .then(result => {
       res.status(204).end();
     })
