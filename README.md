@@ -47,7 +47,11 @@ cd finance-app && npm install
 This project uses the same database in production as it does for developing locally ([for now](https://github.com/jmeas/finance-app/issues/50)). Therefore, you must first deploy the
 application before you can begin developing on it. To deploy the app, follow the [instructions above](#deploying).
 
-Next, run `heroku config -s` from the project's root directory. Copy and paste the entire line beginning with `DATABASE_URL=` into a file
+Next, you'll need to hook up your local repository with the Heroku app that you just created by adding the app
+as a remote. [This guide](https://devcenter.heroku.com/articles/git#creating-a-heroku-remote) can help you
+do that.
+
+Lastly, run `heroku config -s` from the project's root directory. Copy and paste the entire line beginning with `DATABASE_URL=` into a file
 in the root directory of this project called `.env`. This will allow you to connect to the remote database when you run `npm run work`.
 
 #### Developer Scripts
