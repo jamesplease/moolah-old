@@ -35,6 +35,21 @@ function formatTransaction(t) {
     .value();
 }
 
+// `query` is an async function that attempts to hit the store. If it fails,
+// the correct HTTP response will be configured and this method will return the
+// Error object. Otherwise, on a success the results of the query will be
+// returned.
+async function attemptQuery(query, res) {
+  let result;
+  try {
+    result = await query();
+  } catch (e) {
+    catchRejectedQuery(res, e);
+    result = e;
+  }
+  return result;
+}
+
 // A controller represents an interface to the data
 // stored in our database. Eventually, this might be
 // turned into a separate library, rather than part of this
@@ -50,7 +65,7 @@ function Controller(options) {
 }
 
 Object.assign(Controller.prototype, {
-  create(req, res) {
+  create: async function(req, res) {
     const body = _.pick(req.body, [
       'description', 'value', 'date',
     ]);
@@ -74,33 +89,33 @@ Object.assign(Controller.prototype, {
         errors: requestErrorMap(validate.errors)
       });
     } else {
-      this._requestHandler.create(body)
-        .then(result => {
-          res.status(201).send({
-            data: formatTransaction(result)
-          });
-        })
-        .catch(_.partial(catchRejectedQuery, res));
+      let query = () => this._requestHandler.create(body);
+      let result = await attemptQuery(query, res);
+      if (result instanceof Error) { return; }
+      res.status(201).send({
+        data: formatTransaction(result)
+      });
     }
   },
 
-  read(req, res) {
-    this._requestHandler.read(req.params.id)
-      .then(result => {
-        var formattedResult;
-        if (!Array.isArray(result)) {
-          formattedResult = formatTransaction(result);
-        } else {
-          formattedResult = _.map(result, formatTransaction);
-        }
-        res.send({
-          data: formattedResult
-        });
-      })
-      .catch(_.partial(catchRejectedQuery, res));
+  read: async function(req, res) {
+    let query = () => this._requestHandler.read(req.params.id);
+    let result = await attemptQuery(query, res);
+
+    if (result instanceof Error) { return; }
+
+    var formattedResult;
+    if (!Array.isArray(result)) {
+      formattedResult = formatTransaction(result);
+    } else {
+      formattedResult = _.map(result, formatTransaction);
+    }
+    res.send({
+      data: formattedResult
+    });
   },
 
-  update(req, res) {
+  update: async function(req, res) {
     const id = req.params.id;
 
     const body = _.pick(req.body, [
@@ -123,22 +138,20 @@ Object.assign(Controller.prototype, {
         errors: requestErrorMap(validate.errors)
       });
     } else {
-      this._requestHandler.update(id, body)
-        .then(result => {
-          res.send({
-            data: formatTransaction(result)
-          });
-        })
-        .catch(_.partial(catchRejectedQuery, res));
+      let query = () => this._requestHandler.update(id, body);
+      let result = await attemptQuery(query, res);
+      if (result instanceof Error) { return; }
+      res.send({
+        data: formatTransaction(result)
+      });
     }
   },
 
-  delete(req, res) {
-    this._requestHandler.delete(req.params.id)
-      .then(result => {
-        res.status(204).end();
-      })
-      .catch(_.partial(catchRejectedQuery, res));
+  delete: async function(req, res) {
+    let query = () => this._requestHandler.delete(req.params.id);
+    let result = await attemptQuery(query, res);
+    if (result instanceof Error) { return; }
+    res.status(204).end();
   }
 });
 
