@@ -5,7 +5,6 @@ global.sinon = require('sinon');
 global.chai.use(require('sinon-chai'));
 
 require('babel-core/register');
-require('babel-polyfill');
 require('./setup')();
 
 /*
