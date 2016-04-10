@@ -2,24 +2,29 @@
 
 const _ = require('lodash');
 const express = require('express');
+const routeBuilder = require('express-routebuilder');
 
 const controller = require('./controller');
 
 const router = express.Router();
 
-// Retrieve a list of every `transaction` resource
-router.get('/', controller.read);
+const routes = {
+  post: {
+    '/': controller.create
+  },
 
-// Create a new `transaction` resource
-router.post('/', controller.create);
+  get: {
+    '/': controller.read,
+    '/:id': controller.read
+  },
 
-// Return a single `transaction` resource
-router.get('/:id', controller.read);
+  patch: {
+    '/:id': controller.update
+  },
 
-// Update a `transaction` resource
-router.patch('/:id', controller.update);
+  delete: {
+    '/:id': controller.delete
+  }
+};
 
-// Delete a `transaction` resource
-router.delete('/:id', controller.delete);
-
-module.exports = router;
+module.exports = routeBuilder(router, routes);

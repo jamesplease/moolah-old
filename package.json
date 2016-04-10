@@ -83,6 +83,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
+    "express-routebuilder": "2.1.0",
     "history": "^1.17.0",
     "is-my-json-valid": "^2.12.4",
     "kapow": "^1.0.0",
