@@ -3,8 +3,9 @@ const pgp = require('pg-promise')();
 const validator = require('is-my-json-valid');
 
 const RequestHandler = require('./lib/request-handler');
+const serverErrors = require('../../errors/server-errors');
 const requestErrorMap = require('../../errors/bad-request-map');
-const catchRejectedQuery = require('../../util/catch-rejected-query');
+const getErrorFromPgpCode = require('../../errors/get-error-from-pgp-code');
 const dbConfig = require('../../../../config/db-config');
 
 const db = pgp(dbConfig);
@@ -33,6 +34,26 @@ function formatTransaction(t) {
       }
     }, {})
     .value();
+}
+
+// This is the function called when a query fails.
+function handleQueryError(res, e) {
+  var serverError;
+
+  // First, check to see if it's a pgp QueryResultError. If it
+  // is, we generate the appropriate server error.
+  if (e instanceof pgp.errors.QueryResultError) {
+    serverError = getErrorFromPgpCode(e.code);
+  }
+
+  // If it's not a pgp QueryResultError, we send over tbe generic server error.
+  else {
+    serverError = serverErrors.generic;
+  }
+
+  res.status(serverError.code).send({
+    errors: [serverError.body()]
+  });
 }
 
 // A controller represents an interface to the data
@@ -80,7 +101,7 @@ Object.assign(Controller.prototype, {
             data: formatTransaction(result)
           });
         })
-        .catch(_.partial(catchRejectedQuery, res));
+        .catch(_.partial(handleQueryError, res));
     }
   },
 
@@ -97,7 +118,7 @@ Object.assign(Controller.prototype, {
           data: formattedResult
         });
       })
-      .catch(_.partial(catchRejectedQuery, res));
+      .catch(_.partial(handleQueryError, res));
   },
 
   update(req, res) {
@@ -129,7 +150,7 @@ Object.assign(Controller.prototype, {
             data: formatTransaction(result)
           });
         })
-        .catch(_.partial(catchRejectedQuery, res));
+        .catch(_.partial(handleQueryError, res));
     }
   },
 
@@ -138,7 +159,7 @@ Object.assign(Controller.prototype, {
       .then(result => {
         res.status(204).end();
       })
-      .catch(_.partial(catchRejectedQuery, res));
+      .catch(_.partial(handleQueryError, res));
   }
 });
 

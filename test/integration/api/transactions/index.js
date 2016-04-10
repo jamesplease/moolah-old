@@ -3,7 +3,7 @@ import pg from 'pg-promise';
 import request from 'supertest';
 import dbConfig from '../../../../config/db-config';
 import app from '../../../../server/app';
-import generateErrors from '../../../../server/api/errors/generate-errors';
+import serverErrors from '../../../../server/api/errors/server-errors';
 import responseValidation from '../utils/response-validation';
 import Inserts from '../utils/concatenate-inserts';
 
@@ -141,7 +141,7 @@ describe('Transactions', () => {
           .get('/transactions/2')
           .set('Accept', 'application/json')
           .expect(404)
-          .expect(_.partial(responseValidation.errorsEquals, [generateErrors.notFoundError()]))
+          .expect(_.partial(responseValidation.errorsEquals, [serverErrors.notFound.body()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -214,7 +214,7 @@ describe('Transactions', () => {
           .set('Accept', 'application/json')
           .send({value: '5.00'})
           .expect(404)
-          .expect(_.partial(responseValidation.errorsEquals, [generateErrors.notFoundError()]))
+          .expect(_.partial(responseValidation.errorsEquals, [serverErrors.notFound.body()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -314,7 +314,7 @@ describe('Transactions', () => {
 
         it('should return the correct error', done => {
           const errors = [{
-            statusCode: '400',
+            status: '400',
             title: 'Bad Request',
             detail: '"date" must be date format'
           }];
@@ -373,7 +373,7 @@ describe('Transactions', () => {
           .delete('/transactions/1000')
           .set('Accept', 'application/json')
           .expect(404)
-          .expect(_.partial(responseValidation.errorsEquals, [generateErrors.notFoundError()]))
+          .expect(_.partial(responseValidation.errorsEquals, [serverErrors.notFound.body()]))
           .end(function(err, res) {
             if (err) { return done(err); }
             done();
@@ -423,7 +423,7 @@ describe('Transactions', () => {
 
       it('should return the correct error', done => {
         const errors = [{
-          statusCode: '400',
+          status: '400',
           title: 'Bad Request',
           detail: '"value" is required'
         }];
@@ -454,7 +454,7 @@ describe('Transactions', () => {
 
       it('should return the correct error', done => {
         const errors = [{
-          statusCode: '400',
+          status: '400',
           title: 'Bad Request',
           detail: '"date" must be date format'
         }];
