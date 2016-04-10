@@ -1,14 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const express = require('express');
-const routeBuilder = require('express-routebuilder');
-
 const controller = require('./controller');
 
-const router = express.Router();
-
-const routes = {
+exports.location = '/transactions';
+exports.routes = {
   post: {
     '/': controller.create
   },
@@ -26,5 +21,3 @@ const routes = {
     '/:id': controller.delete
   }
 };
-
-module.exports = routeBuilder(router, routes);
