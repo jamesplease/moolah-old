@@ -1,11 +1,16 @@
 'use strict';
 
 const controller = require('./controller');
+const validator = require('./lib/validator');
+const validations = require('./validations');
 
 exports.location = '/transactions';
 exports.routes = {
   post: {
-    '/': controller.create
+    '/': [
+      validator(validations.create),
+      controller.create
+    ]
   },
 
   get: {
@@ -14,7 +19,10 @@ exports.routes = {
   },
 
   patch: {
-    '/:id': controller.update
+    '/:id': [
+      validator(validations.update),
+      controller.update
+    ]
   },
 
   delete: {
