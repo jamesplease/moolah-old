@@ -27,7 +27,7 @@ function createErrors(originalErrors) {
     return {
       title: kapowError.title,
       detail: kapowError.message,
-      statusCode: kapowError.httpStatus
+      status: kapowError.httpStatus
     };
   });
 }

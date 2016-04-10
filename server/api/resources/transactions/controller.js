@@ -4,7 +4,7 @@ const validator = require('is-my-json-valid');
 
 const RequestHandler = require('./lib/request-handler');
 const requestErrorMap = require('../../errors/bad-request-map');
-const catchRejectedQuery = require('../../util/catch-rejected-query');
+const mapPgPromiseErrors = require('../../errors/map-pg-promise-errors');
 const dbConfig = require('../../../../config/db-config');
 
 const db = pgp(dbConfig);
@@ -80,7 +80,12 @@ Object.assign(Controller.prototype, {
             data: formatTransaction(result)
           });
         })
-        .catch(_.partial(catchRejectedQuery, res));
+        .catch(e => {
+          var serverError = mapPgPromiseErrors[e.code];
+          res.status(serverError.code).send({
+            errors: [serverError.body()]
+          });
+        });
     }
   },
 
@@ -97,7 +102,12 @@ Object.assign(Controller.prototype, {
           data: formattedResult
         });
       })
-      .catch(_.partial(catchRejectedQuery, res));
+      .catch(e => {
+        var serverError = mapPgPromiseErrors[e.code];
+        res.status(serverError.code).send({
+          errors: [serverError.body()]
+        });
+      });
   },
 
   update(req, res) {
@@ -129,7 +139,12 @@ Object.assign(Controller.prototype, {
             data: formatTransaction(result)
           });
         })
-        .catch(_.partial(catchRejectedQuery, res));
+        .catch(e => {
+          var serverError = mapPgPromiseErrors[e.code];
+          res.status(serverError.code).send({
+            errors: [serverError.body()]
+          });
+        });
     }
   },
 
@@ -138,7 +153,12 @@ Object.assign(Controller.prototype, {
       .then(result => {
         res.status(204).end();
       })
-      .catch(_.partial(catchRejectedQuery, res));
+      .catch(e => {
+        var serverError = mapPgPromiseErrors[e.code];
+        res.status(serverError.code).send({
+          errors: [serverError.body()]
+        });
+      });
   }
 });
 
