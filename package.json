@@ -80,6 +80,7 @@
     "body-parser": "^1.14.2",
     "careen": "^0.1.1",
     "compression": "^1.6.1",
+    "cors": "^2.7.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "history": "^1.17.0",

@@ -26,7 +26,7 @@ module.exports = function() {
   app.use(compress());
   app.use(express.static(ASSETS_PATH));
 
-  app.use('/', api);
+  app.use(api);
 
   // Configure the templating engine
   const hbsOptions = {
