@@ -1,25 +1,20 @@
 const _ = require('lodash');
 
-const updateBuilder = require('../../../util/update-builder');
+const baseSql = require('../../../util/base-sql');
 
 // The options that can be passed into a Controller
 const validOptions = ['table', 'store'];
 
-// This list also exists in the controller file...but this duplication
-// won't last for long!
-const validValues = ['description', 'value', 'date'];
-
-// A RequestHandler manages access to the DB. Eventually, this might be
-// turned into a separate library, rather than part of this
-// app specifically
+// A RequestHandler manages access to the DB.
 function RequestHandler(options) {
   Object.assign(this, _.pick(options, validOptions));
 }
 
 Object.assign(RequestHandler.prototype, {
   create(data) {
-    const query = `INSERT INTO ${this.table} (description, value, date) VALUES ($1, $2, $3) RETURNING *`;
-    return this.store.one(query, [data.description, data.value, data.date]);
+    const fields = Object.keys(data);
+    const query = baseSql.create(this.table, fields);
+    return this.store.one(query, data);
   },
 
   read(id) {
@@ -27,16 +22,10 @@ Object.assign(RequestHandler.prototype, {
     // or all. This coercion is fine because SERIALs start at 1
     const singular = Boolean(id);
 
-    // Our base query
-    var query = `SELECT * FROM ${this.table}`;
-
-    // If we're looking for one, we modify the query string
-    if (singular) {
-      query += ' WHERE id = $1';
-    }
+    const query = baseSql.read(this.table, '*', {singular});
 
     const method = singular ? 'one' : 'any';
-    return this.store[method](query, id);
+    return this.store[method](query, {id});
   },
 
   update(id, data) {
@@ -46,14 +35,12 @@ Object.assign(RequestHandler.prototype, {
       return this.read(id);
     }
 
-    // Otherwise, we return an update query
-    const query = updateBuilder({
-      id, validValues,
-      tableName: this.table,
-      values: data
-    });
+    const fields = Object.keys(data);
+    const query = baseSql.update(this.table, fields);
 
-    return this.store.one(query[0], query[1]);
+    const queryData = Object.assign({id}, data);
+
+    return this.store.one(query, queryData);
   },
 
   delete(id) {
@@ -61,8 +48,8 @@ Object.assign(RequestHandler.prototype, {
       return Promise.reject(new TypeError('id was undefined'));
     }
 
-    const query = `DELETE FROM ${this.table} WHERE id = $1 RETURNING *`;
-    return this.store.one(query, id);
+    const query = baseSql.delete(this.table);
+    return this.store.one(query, {id});
   }
 });
 
