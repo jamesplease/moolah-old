@@ -37,7 +37,6 @@ function dataEquals(obj, res) {
 
 function errorsEquals(obj, res) {
   if (!_.isEqual(res.body.errors, obj)) {
-    // console.log('hello', res.body.errors, obj);
     return new Error('The errors did not match.');
   }
 }
