@@ -88,7 +88,7 @@
     "kapow": "^1.0.0",
     "lodash": "^4.1.0",
     "nib": "^1.1.0",
-    "pg-promise": "^3.1.6",
+    "pg-promise": "3.7.2",
     "react-router": "^1.0.3",
     "run-sequence": "^1.1.5",
     "throng": "^1.0.1"
