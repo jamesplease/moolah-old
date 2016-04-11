@@ -32,11 +32,11 @@ describe('Transactions', () => {
     pgp.end();
   });
 
-  describe('GET /transactions', () => {
+  describe('GET /api/v1/transactions', () => {
     describe("when there's no data", () => {
       it('should return 200', done => {
         request(app())
-          .get('/transactions')
+          .get('/api/v1/transactions')
           .set('Accept', 'application/json')
           .expect(200)
           .end(function(err, res) {
@@ -47,7 +47,7 @@ describe('Transactions', () => {
 
       it('should have a data attribute that is an array of length 0', done => {
         request(app())
-          .get('/transactions')
+          .get('/api/v1/transactions')
           .set('Accept', 'application/json')
           .expect(_.partial(responseValidation.hasAttr, 'data'))
           .expect(_.partial(responseValidation.doesNotHaveAttr, 'errors'))
@@ -79,7 +79,7 @@ describe('Transactions', () => {
 
       it('should return 200', done => {
         request(app())
-          .get('/transactions')
+          .get('/api/v1/transactions')
           .set('Accept', 'application/json')
           .expect(200)
           .end(function(err, res) {
@@ -90,7 +90,7 @@ describe('Transactions', () => {
 
       it('should have a data attribute that is an array of length 2', done => {
         request(app())
-          .get('/transactions')
+          .get('/api/v1/transactions')
           .set('Accept', 'application/json')
           .expect(_.partial(responseValidation.hasAttr, 'data'))
           .expect(_.partial(responseValidation.doesNotHaveAttr, 'errors'))
@@ -123,7 +123,7 @@ describe('Transactions', () => {
         ];
 
         request(app())
-          .get('/transactions')
+          .get('/api/v1/transactions')
           .set('Accept', 'application/json')
           .expect(_.partial(responseValidation.dataEquals, data))
           .end(function(err, res) {
@@ -134,11 +134,11 @@ describe('Transactions', () => {
     });
   });
 
-  describe('GET /transactions/:id', () => {
+  describe('GET /api/v1/transactions/:id', () => {
     describe("when the resource doesn't exist", () => {
       it('should return a 404', done => {
         request(app())
-          .get('/transactions/2')
+          .get('/api/v1/transactions/2')
           .set('Accept', 'application/json')
           .expect(404)
           .expect(_.partial(responseValidation.errorsEquals, [serverErrors.notFound.body()]))
@@ -164,7 +164,7 @@ describe('Transactions', () => {
 
       it('should return 200', done => {
         request(app())
-          .get('/transactions/1')
+          .get('/api/v1/transactions/1')
           .set('Accept', 'application/json')
           .expect(200)
           .end(function(err, res) {
@@ -175,7 +175,7 @@ describe('Transactions', () => {
 
       it('should have a data attribute that is an Object', done => {
         request(app())
-          .get('/transactions/1')
+          .get('/api/v1/transactions/1')
           .set('Accept', 'application/json')
           .expect(_.partial(responseValidation.hasAttr, 'data'))
           .expect(_.partial(responseValidation.doesNotHaveAttr, 'errors'))
@@ -195,7 +195,7 @@ describe('Transactions', () => {
         };
 
         request(app())
-          .get('/transactions/1')
+          .get('/api/v1/transactions/1')
           .set('Accept', 'application/json')
           .expect(_.partial(responseValidation.dataEquals, data))
           .end(function(err, res) {
@@ -206,11 +206,11 @@ describe('Transactions', () => {
     });
   });
 
-  describe('PATCH /transactions/:id', () => {
+  describe('PATCH /api/v1/transactions/:id', () => {
     describe("when the resource doesn't exist", () => {
       it('should return 404', done => {
         request(app())
-          .patch('/transactions/2')
+          .patch('/api/v1/transactions/2')
           .set('Accept', 'application/json')
           .send({value: '5.00'})
           .expect(404)
@@ -238,7 +238,7 @@ describe('Transactions', () => {
       describe('and the request body is empty', () => {
         it('should return 200', done => {
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .expect(200)
             .end(function(err, res) {
@@ -256,7 +256,7 @@ describe('Transactions', () => {
           };
 
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .expect(_.partial(responseValidation.dataEquals, data))
             .end(function(err, res) {
@@ -269,7 +269,7 @@ describe('Transactions', () => {
       describe('and the request is completely valid', () => {
         it('should return 200', done => {
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .send({value: '5.00'})
             .expect(200)
@@ -288,7 +288,7 @@ describe('Transactions', () => {
           };
 
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .send({value: '5.00'})
             .expect(_.partial(responseValidation.dataEquals, data))
@@ -302,7 +302,7 @@ describe('Transactions', () => {
       describe('and the request fails validation', () => {
         it('should return 400', done => {
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .send({date: 'not a date lol'})
             .expect(400)
@@ -320,7 +320,7 @@ describe('Transactions', () => {
           }];
 
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .send({date: 'not a date lol'})
             .expect(_.partial(responseValidation.errorsEquals, errors))
@@ -334,7 +334,7 @@ describe('Transactions', () => {
       describe('and the request body has both valid and invalid attributes', () => {
         it('should return 200', done => {
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .send({description: 'chocolate', salmon: true, pasta: 'face'})
             .expect(200)
@@ -353,7 +353,7 @@ describe('Transactions', () => {
           };
 
           request(app())
-            .patch('/transactions/1')
+            .patch('/api/v1/transactions/1')
             .set('Accept', 'application/json')
             .send({description: 'chocolate', salmon: true, pasta: 'face'})
             .expect(_.partial(responseValidation.dataEquals, data))
@@ -366,11 +366,11 @@ describe('Transactions', () => {
     });
   });
 
-  describe('DELETE /transactions/:id', () => {
+  describe('DELETE /api/v1/transactions/:id', () => {
     describe("when the resource doesn't exist", () => {
       it('should return 404', done => {
         request(app())
-          .delete('/transactions/1000')
+          .delete('/api/v1/transactions/1000')
           .set('Accept', 'application/json')
           .expect(404)
           .expect(_.partial(responseValidation.errorsEquals, [serverErrors.notFound.body()]))
@@ -396,7 +396,7 @@ describe('Transactions', () => {
 
       it('should return 204', done => {
         request(app())
-          .delete('/transactions/1')
+          .delete('/api/v1/transactions/1')
           .set('Accept', 'application/json')
           .expect(204)
           .expect(responseValidation.isEmpty)
@@ -408,11 +408,11 @@ describe('Transactions', () => {
     });
   });
 
-  describe('POST /transactions', () => {
+  describe('POST /api/v1/transactions', () => {
     describe('when the request is empty, thus failing validation', () => {
       it('should return 400', done => {
         request(app())
-          .post('/transactions')
+          .post('/api/v1/transactions')
           .set('Accept', 'application/json')
           .expect(400)
           .end(function(err, res) {
@@ -429,7 +429,7 @@ describe('Transactions', () => {
         }];
 
         request(app())
-          .post('/transactions')
+          .post('/api/v1/transactions')
           .set('Accept', 'application/json')
           .expect(_.partial(responseValidation.errorsEquals, errors))
           .end(function(err, res) {
@@ -442,7 +442,7 @@ describe('Transactions', () => {
     describe('when the date fails validation', () => {
       it('should return 400', done => {
         request(app())
-          .post('/transactions')
+          .post('/api/v1/transactions')
           .set('Accept', 'application/json')
           .send({value: '20.04', date: 'not a date'})
           .expect(400)
@@ -460,7 +460,7 @@ describe('Transactions', () => {
         }];
 
         request(app())
-          .post('/transactions')
+          .post('/api/v1/transactions')
           .set('Accept', 'application/json')
           .send({value: '20.04', date: 'not a date'})
           .expect(_.partial(responseValidation.errorsEquals, errors))
@@ -474,7 +474,7 @@ describe('Transactions', () => {
     describe('when the request is valid', () => {
       it('should return 201', done => {
         request(app())
-          .post('/transactions')
+          .post('/api/v1/transactions')
           .set('Accept', 'application/json')
           .send({value: '20.04', date: '2015-10-12'})
           .expect(201)
@@ -493,7 +493,7 @@ describe('Transactions', () => {
         };
 
         request(app())
-          .post('/transactions')
+          .post('/api/v1/transactions')
           .set('Accept', 'application/json')
           .send({value: '20.04', date: '2015-10-12'})
           .expect(_.partial(responseValidation.dataEquals, data))

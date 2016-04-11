@@ -4,7 +4,7 @@ const controller = require('./controller');
 const validator = require('../../util/validator');
 const validations = require('./validations');
 
-exports.location = '/transactions';
+exports.location = '/v1/transactions';
 exports.routes = {
   post: {
     '/': [

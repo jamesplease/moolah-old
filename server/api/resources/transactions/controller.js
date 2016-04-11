@@ -3,7 +3,6 @@ const pgp = require('pg-promise')();
 
 const RequestHandler = require('../../util/request-handler');
 const serverErrors = require('../../errors/server-errors');
-const requestErrorMap = require('../../errors/bad-request-map');
 const getErrorFromPgpCode = require('../../errors/get-error-from-pgp-code');
 const dbConfig = require('../../../../config/db-config');
 

@@ -22,7 +22,7 @@ export default class HomePage extends React.Component {
   }
 
   fetchData() {
-    fetch('/transactions')
+    fetch('/api/v1/transactions')
       .then(
         res => res.json()
       )
