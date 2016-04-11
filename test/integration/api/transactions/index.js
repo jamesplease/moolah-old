@@ -316,7 +316,7 @@ describe('Transactions', () => {
           const errors = [{
             status: '400',
             title: 'Bad Request',
-            detail: '"date" must be date format'
+            detail: '"body.date" must be date format'
           }];
 
           request(app())
@@ -425,7 +425,7 @@ describe('Transactions', () => {
         const errors = [{
           status: '400',
           title: 'Bad Request',
-          detail: '"value" is required'
+          detail: '"body.value" is required'
         }];
 
         request(app())
@@ -456,7 +456,7 @@ describe('Transactions', () => {
         const errors = [{
           status: '400',
           title: 'Bad Request',
-          detail: '"date" must be date format'
+          detail: '"body.date" must be date format'
         }];
 
         request(app())
