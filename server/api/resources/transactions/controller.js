@@ -1,12 +1,11 @@
 const _ = require('lodash');
-const pgp = require('pg-promise')();
+const pgp = require('pg-promise');
 
+const db = require('../../services/db');
 const baseSql = require('../../util/base-sql');
 const serverErrors = require('../../util/server-errors');
 const mapPgError = require('../../util/map-pg-error');
-const dbConfig = require('../../../../config/db-config');
 
-const db = pgp(dbConfig);
 const TABLE_NAME = 'transaction';
 
 // The options that can be passed into a Controller
