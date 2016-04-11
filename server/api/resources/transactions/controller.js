@@ -2,8 +2,8 @@ const _ = require('lodash');
 const pgp = require('pg-promise')();
 
 const baseSql = require('../../util/base-sql');
-const serverErrors = require('../../errors/server-errors');
-const getErrorFromPgpCode = require('../../errors/get-error-from-pgp-code');
+const serverErrors = require('../../util/server-errors');
+const getErrorFromPgpCode = require('../../util/get-error-from-pgp-code');
 const dbConfig = require('../../../../config/db-config');
 
 const db = pgp(dbConfig);
