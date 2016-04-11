@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const pgp = require('pg-promise')();
-const validator = require('is-my-json-valid');
 
 const RequestHandler = require('./lib/request-handler');
 const serverErrors = require('../../errors/server-errors');
@@ -76,33 +75,13 @@ Object.assign(Controller.prototype, {
       'description', 'value', 'date',
     ]);
 
-    var validate = validator({
-      type: 'object',
-      properties: {
-        value: {
-          required: true
-        },
-        date: {
-          format: 'date'
-        }
-      }
-    }, {
-      greedy: true
-    });
-
-    if (!validate(body)) {
-      res.status(400).send({
-        errors: requestErrorMap(validate.errors)
-      });
-    } else {
-      this._requestHandler.create(body)
-        .then(result => {
-          res.status(201).send({
-            data: formatTransaction(result)
-          });
-        })
-        .catch(_.partial(handleQueryError, res));
-    }
+    this._requestHandler.create(body)
+      .then(result => {
+        res.status(201).send({
+          data: formatTransaction(result)
+        });
+      })
+      .catch(_.partial(handleQueryError, res));
   },
 
   read(req, res) {
@@ -128,30 +107,13 @@ Object.assign(Controller.prototype, {
       'description', 'value', 'date',
     ]);
 
-    var validate = validator({
-      type: 'object',
-      properties: {
-        date: {
-          format: 'date'
-        }
-      }
-    }, {
-      greedy: true
-    });
-
-    if (!validate(body)) {
-      res.status(400).send({
-        errors: requestErrorMap(validate.errors)
-      });
-    } else {
-      this._requestHandler.update(id, body)
-        .then(result => {
-          res.send({
-            data: formatTransaction(result)
-          });
-        })
-        .catch(_.partial(handleQueryError, res));
-    }
+    this._requestHandler.update(id, body)
+      .then(result => {
+        res.send({
+          data: formatTransaction(result)
+        });
+      })
+      .catch(_.partial(handleQueryError, res));
   },
 
   delete(req, res) {
