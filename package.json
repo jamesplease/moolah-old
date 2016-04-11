@@ -16,7 +16,6 @@
     "local-server": "heroku local web",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets; fi",
     "build-assets": "gulp build",
-    "migrate": "careen",
     "migrate:up": "careen -A -e",
     "migrate:down": "careen -R -e",
     "migrate:create": "careen -C"

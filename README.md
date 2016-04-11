@@ -64,3 +64,6 @@ in the root directory of this project called `.env`. This will allow you to conn
 - `npm run watch-tests`: Run the tests in Node. Then start a watch task to re-run them if you make any changes.
 - `npm run build`: Build a production version of the application
 - `npm run coverage`: Generate a coverage report
+- `npm run migrate:up`: Applies migrations
+- `npm run migrate:down`: Reverts migrations
+- `npm run migrate:create`: Create a new migration
