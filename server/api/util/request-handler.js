@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-const baseSql = require('../../../util/base-sql');
+const baseSql = require('./base-sql');
 
 // The options that can be passed into a Controller
 const validOptions = ['table', 'store'];

@@ -1,7 +1,7 @@
 'use strict';
 
 const controller = require('./controller');
-const validator = require('./lib/validator');
+const validator = require('../../util/validator');
 const validations = require('./validations');
 
 exports.location = '/transactions';

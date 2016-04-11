@@ -1,5 +1,5 @@
 const validator = require('is-my-json-valid');
-const requestErrorMap = require('../../../errors/bad-request-map');
+const requestErrorMap = require('../errors/bad-request-map');
 
 module.exports = function(schema) {
   return function(req, res, next) {
