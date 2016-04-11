@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const pgp = require('pg-promise')();
 
-const RequestHandler = require('../../util/request-handler');
+const baseSql = require('../../util/base-sql');
 const serverErrors = require('../../errors/server-errors');
 const getErrorFromPgpCode = require('../../errors/get-error-from-pgp-code');
 const dbConfig = require('../../../../config/db-config');
@@ -60,11 +60,6 @@ function handleQueryError(res, e) {
 // app specifically
 function Controller(options) {
   Object.assign(this, _.pick(options, validOptions));
-  this._requestHandler = new RequestHandler({
-    store: this.store,
-    table: TABLE_NAME
-  });
-
   _.bindAll(this, ['create', 'read', 'update', 'delete']);
 }
 
@@ -74,7 +69,10 @@ Object.assign(Controller.prototype, {
       'description', 'value', 'date',
     ]);
 
-    this._requestHandler.create(body)
+    const fields = Object.keys(body);
+    const query = baseSql.create(this.table, fields);
+
+    this.store.one(query, body)
       .then(result => {
         res.status(201).send({
           data: formatTransaction(result)
@@ -84,7 +82,15 @@ Object.assign(Controller.prototype, {
   },
 
   read(req, res) {
-    this._requestHandler.read(req.params.id)
+    const id = req.params.id;
+
+    // `singular` is whether or not we're looking for 1
+    // or all. This coercion is fine because SERIALs start at 1
+    const singular = Boolean(id);
+    const query = baseSql.read(this.table, '*', {singular});
+    const method = singular ? 'one' : 'any';
+
+    this.store[method](query, {id})
       .then(result => {
         var formattedResult;
         if (!Array.isArray(result)) {
@@ -101,12 +107,27 @@ Object.assign(Controller.prototype, {
 
   update(req, res) {
     const id = req.params.id;
-
     const body = _.pick(req.body, [
       'description', 'value', 'date',
     ]);
 
-    this._requestHandler.update(id, body)
+    const fields = Object.keys(body);
+
+    let query;
+
+    // If there's nothing to update, we can use a read query
+    if (!fields.length) {
+      query = baseSql.read(this.table, '*', {singular: true});
+    }
+
+    // Otherwise, we get the update query.
+    else {
+      query = baseSql.update(this.table, fields);
+    }
+
+    const queryData = Object.assign({id}, body);
+
+    this.store.one(query, queryData)
       .then(result => {
         res.send({
           data: formatTransaction(result)
@@ -116,7 +137,14 @@ Object.assign(Controller.prototype, {
   },
 
   delete(req, res) {
-    this._requestHandler.delete(req.params.id)
+    const id = req.params.id;
+    if (!id) {
+      return Promise.reject(new TypeError('id was undefined'));
+    }
+
+    const query = baseSql.delete(this.table);
+
+    this.store.one(query, {id})
       .then(() => {
         res.status(204).end();
       })
