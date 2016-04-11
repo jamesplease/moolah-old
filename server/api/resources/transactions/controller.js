@@ -3,7 +3,7 @@ const pgp = require('pg-promise')();
 
 const baseSql = require('../../util/base-sql');
 const serverErrors = require('../../util/server-errors');
-const getErrorFromPgpCode = require('../../util/get-error-from-pgp-code');
+const mapPgError = require('../../util/map-pg-error');
 const dbConfig = require('../../../../config/db-config');
 
 const db = pgp(dbConfig);
@@ -41,7 +41,7 @@ function handleQueryError(res, e) {
   // First, check to see if it's a pgp QueryResultError. If it
   // is, we generate the appropriate server error.
   if (e instanceof pgp.errors.QueryResultError) {
-    serverError = getErrorFromPgpCode(e.code);
+    serverError = mapPgError(e.code);
   }
 
   // If it's not a pgp QueryResultError, we send over tbe generic server error.
