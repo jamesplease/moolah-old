@@ -21,4 +21,16 @@ resources.forEach(resource => {
   ));
 });
 
+router.get('/', (req, res) => {
+  res.send({
+    version: 'v1',
+    endpoints: resources.map(resource => {
+      return {
+        route: resource.location,
+        methods: Object.keys(resource.routes)
+      };
+    })
+  });
+});
+
 module.exports = router;
