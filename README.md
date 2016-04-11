@@ -56,7 +56,8 @@ in the root directory of this project called `.env`. This will allow you to conn
 
 #### Developer Scripts
 
-- `npm run work`: Starts a local development server. Automatically restarts the server if it dies.
+- `npm run work`: Builds the client-side assets, and sets up a watcher for them.
+- `npm run local-server`: Starts the development web server. Restarts the server if it dies.
 - `npm run test`: Run the unit tests
 - `npm run lint`: Lint the JavaScript files
 - `npm run test-browser`: Builds the app to run the tests in a local browser

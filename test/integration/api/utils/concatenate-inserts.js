@@ -13,7 +13,7 @@ function Inserts(template, data) {
   }
   this._rawDBType = true;
   this.formatDBType = function() {
-    return data.map(d=>`(${pgp.as.format(template, d)})`).join(',');
+    return data.map(d => `(${pgp.as.format(template, d)})`).join(',');
   };
 }
 

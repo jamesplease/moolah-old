@@ -117,7 +117,7 @@ Object.assign(Controller.prototype, {
 
   delete(req, res) {
     this._requestHandler.delete(req.params.id)
-      .then(result => {
+      .then(() => {
         res.status(204).end();
       })
       .catch(_.partial(handleQueryError, res));

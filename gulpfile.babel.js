@@ -1,16 +1,15 @@
-import gulp  from 'gulp';
+import gulp from 'gulp';
 import loadPlugins from 'gulp-load-plugins';
-import del  from 'del';
-import glob  from 'glob';
-import path  from 'path';
+import del from 'del';
+import glob from 'glob';
+import path from 'path';
 import {Instrumenter} from 'isparta';
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
-import source  from 'vinyl-source-stream';
 import runSequence from 'run-sequence';
 
 import mochaGlobals from './test/setup/.globals';
-import manifest  from './package.json';
+import manifest from './package.json';
 
 // Load all of our Gulp plugins
 const $ = loadPlugins();
@@ -109,7 +108,7 @@ function buildJavaScript() {
         ]
       },
       devtool: 'source-map'
-    }, null, function() {
+    }, null, () => {
       if (!working) { return; }
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
@@ -214,10 +213,10 @@ function testBrowser() {
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })
       ],
       devtool: 'inline-source-map'
-    }, null, function() {
+    }, null, () => {
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
-        var watcher = gulp.watch(watchFiles, ['lint']);
+        gulp.watch(watchFiles, ['lint']);
       } else {
         $.livereload.reload('./tmp/__spec-build.js');
       }
@@ -279,6 +278,8 @@ gulp.task('stylus', stylus);
 
 // Lint and run our tests
 gulp.task('test', ['lint'], test);
+
+gulp.task('watch:test', ['lint'], watchTests);
 
 // Lint and run our API integration tests
 gulp.task('test:api:integration', testApiIntegration);

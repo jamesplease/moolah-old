@@ -1,5 +1,3 @@
-'use strict';
-
 const controller = require('./controller');
 const validator = require('../../util/validator');
 const validations = require('./validations');
