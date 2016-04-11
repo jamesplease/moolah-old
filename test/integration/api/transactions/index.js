@@ -3,7 +3,7 @@ import pg from 'pg-promise';
 import request from 'supertest';
 import dbConfig from '../../../../config/db-config';
 import app from '../../../../server/app';
-import serverErrors from '../../../../server/api/errors/server-errors';
+import serverErrors from '../../../../server/api/util/server-errors';
 import responseValidation from '../utils/response-validation';
 import Inserts from '../utils/concatenate-inserts';
 

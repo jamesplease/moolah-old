@@ -1,4 +1,4 @@
-import requestErrorMap from '../../../server/api/errors/bad-request-map';
+import requestErrorMap from '../../../server/api/util/bad-request-map';
 
 describe('requestErrorMap', () => {
   it('should be a function', () => {
