@@ -108,7 +108,7 @@ function buildJavaScript() {
         ]
       },
       devtool: 'source-map'
-    }, null, function() {
+    }, null, () => {
       if (!working) { return; }
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
@@ -213,7 +213,7 @@ function testBrowser() {
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })
       ],
       devtool: 'inline-source-map'
-    }, null, function() {
+    }, null, () => {
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
         gulp.watch(watchFiles, ['lint']);

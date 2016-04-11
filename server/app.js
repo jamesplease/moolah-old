@@ -41,13 +41,13 @@ module.exports = function() {
   app.set('port', port);
 
   // Every route is served by our JS app
-  app.get('*', function(req, res) {
+  app.get('*', (req, res) => {
     res.locals.devMode = res.app.get('env') === 'development';
     return res.render('index');
   });
 
   if (!global.TESTING) {
-    app.listen(port, function() {
+    app.listen(port, () => {
       console.log(`Node app is running at localhost:${port}`);
     });
   }
