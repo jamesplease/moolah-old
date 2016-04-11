@@ -15,7 +15,10 @@ exports.routes = {
 
   get: {
     '/': controller.read,
-    '/:id': controller.read
+    '/:id': [
+      validator(validations.readOne),
+      controller.read
+    ]
   },
 
   patch: {
@@ -26,6 +29,9 @@ exports.routes = {
   },
 
   delete: {
-    '/:id': controller.delete
+    '/:id': [
+      validator(validations.destroy),
+      controller.delete
+    ]
   }
 };
