@@ -1,3 +1,5 @@
+'use strict';
+
 const requireId = {
   anyOf: [
     { type: 'integer' },
