@@ -1,0 +1,15 @@
+{
+  "globals": {
+    "Promise": true,
+  },
+  "rules": {
+    "strict": ["error", "global"]
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "script"
+  },
+  "env": {
+    "node": true
+  }
+}

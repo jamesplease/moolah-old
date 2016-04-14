@@ -1,3 +1,5 @@
+'use strict';
+
 const validator = require('is-my-json-valid');
 const requestErrorMap = require('./bad-request-map');
 

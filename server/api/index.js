@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const routeBuilder = require('express-routebuilder');
 const cors = require('cors');

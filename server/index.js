@@ -1,3 +1,5 @@
+'use strict';
+
 const throng = require('throng');
 
 const app = require('./app');

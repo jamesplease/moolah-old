@@ -1,3 +1,5 @@
+'use strict';
+
 const pgp = require('pg-promise');
 const _ = require('lodash');
 
