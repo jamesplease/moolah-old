@@ -1,14 +1,15 @@
-import React from 'react';
-import {IndexLink} from 'react-router';
+import yo from 'yo-yo';
 
-const Header = () => (
-  <header>
-    <div className="container">
-      <h1>
-        <IndexLink to="/">Finance App</IndexLink>
-      </h1>
-    </div>
-  </header>
-);
-
-export default Header;
+export default function() {
+  return yo`
+    <header className="app-header">
+      <div className="container">
+        <h1 className="app-logo">
+          <a href="/" className="app-logo-link">
+            Finance App
+          </a>
+        </h1>
+      </div>
+    </header>
+  `;
+}

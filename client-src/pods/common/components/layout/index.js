@@ -1,18 +1,24 @@
-import React from 'react';
+import yo from 'yo-yo';
 
 import Header from '../header';
 import Footer from '../footer';
+import Transactions from '../../../home/components/transactions';
 
-const Layout = ({children}) => (
-  <div>
-    <Header/>
-    <main>
-      <div className="container">
-        {children}
-      </div>
-    </main>
-    <Footer/>
-  </div>
-);
+export default function(transactionsList = []) {
+  const header = new Header();
+  const footer = new Footer();
 
-export default Layout;
+  const transactions = new Transactions(transactionsList);
+
+  return yo`
+    <div>
+      ${header}
+      <main>
+        <div className="container">
+          ${transactions}
+        </div>
+      </main>
+      ${footer}
+    </div>
+  `;
+}

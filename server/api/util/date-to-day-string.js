@@ -1,3 +1,5 @@
+'use strict';
+
 // Takes a JS Date object, and returns it in the format
 // "2016-10-05"
 module.exports = function(date) {
