@@ -4,6 +4,7 @@ const _ = require('lodash');
 const pgp = require('pg-promise');
 
 const db = require('../../services/db');
+const dateToDayString = require('../../util/date-to-day-string');
 const baseSql = require('../../util/base-sql');
 const serverErrors = require('../../util/server-errors');
 const mapPgError = require('../../util/map-pg-error');
@@ -13,13 +14,6 @@ const TABLE_NAME = 'transaction';
 // The options that can be passed into a Controller
 const validOptions = ['table', 'store'];
 
-// Takes a JS Date object, and returns it in the format
-// "2016-10-05"
-function formatDate(d) {
-  if (!d) { return d; }
-  return d.toISOString().substring(0, 10);
-}
-
 // This transforms the data from the format that it is in the
 // database to the one we need for our endpoint
 function formatTransaction(t) {
@@ -27,7 +21,7 @@ function formatTransaction(t) {
     .pick(['id', 'description', 'value', 'date'])
     .transform((result, val, key) => {
       if (key === 'date') {
-        result[key] = formatDate(val);
+        result[key] = dateToDayString(val);
       } else {
         result[key] = val;
       }
