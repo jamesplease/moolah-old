@@ -6,6 +6,10 @@ export function createTransaction(data) {
 
     fetch('/api/v1/transactions', {
       method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(data)
     })
       .then(resp => resp.json())
@@ -43,7 +47,7 @@ export function updateTransaction(transactionId, data) {
   return dispatch => {
     dispatch({type: actionTypes.UPDATE_TRANSACTION, transactionId});
 
-    fetch('/api/v1/transactions/${transactionId}', {
+    fetch(`/api/v1/transactions/${transactionId}`, {
       method: 'PUT',
       body: JSON.stringify(data)
     })
@@ -64,7 +68,7 @@ export function deleteTransaction(transactionId) {
   return dispatch => {
     dispatch({type: actionTypes.DELETE_TRANSACTION, transactionId});
 
-    fetch('/api/v1/transactions/${transactionId}', {method: 'DELETE'})
+    fetch(`/api/v1/transactions/${transactionId}`, {method: 'DELETE'})
       .then(() => {
         dispatch({
           type: actionTypes.DELETE_TRANSACTION_SUCCESS,

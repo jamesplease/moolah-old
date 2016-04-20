@@ -97,7 +97,7 @@ export default (state = initialState, action) => {
 
     case actionTypes.UPDATE_TRANSACTION_SUCCESS: {
       let current = state.currentlyUpdating;
-      let id = action.action.transactionId;
+      let id = action.transactionId;
       let currentlyUpdating = _.without(current, id);
       currentlyUpdating.push(action.transaction);
       return Object.assign({
@@ -110,7 +110,7 @@ export default (state = initialState, action) => {
 
     case actionTypes.UPDATE_TRANSACTION_FAILURE: {
       let current = state.currentlyUpdating;
-      let id = action.action.transactionId;
+      let id = action.transactionId;
       let currentlyUpdating = _.without(current, id);
       return Object.assign({
         ...state,
@@ -147,20 +147,24 @@ export default (state = initialState, action) => {
 
     case actionTypes.DELETE_TRANSACTION_SUCCESS: {
       let current = state.currentlyDeleting;
-      let id = action.action.transactionId;
+      let id = action.transactionId;
       let currentlyDeleting = _.without(current, id);
       currentlyDeleting.push(action.transaction);
+
+      const rejectionFn = val => val.id === action.transactionId;
+      let transactions = _.reject(state.transactions, rejectionFn);
       return Object.assign({
         ...state,
         deletingTransaction: false,
         deleteTransactionSuccess: true,
-        currentlyDeleting
+        currentlyDeleting,
+        transactions
       });
     }
 
     case actionTypes.DELETE_TRANSACTION_FAILURE: {
       let current = state.currentlyDeleting;
-      let id = action.action.transactionId;
+      let id = action.transactionId;
       let currentlyDeleting = _.without(current, id);
       return Object.assign({
         ...state,
