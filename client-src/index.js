@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import yo from 'yo-yo';
 
-import Layout from './pods/common/components/layout';
+import Layout from './common/components/layout';
 
 const layout = Layout();
 
