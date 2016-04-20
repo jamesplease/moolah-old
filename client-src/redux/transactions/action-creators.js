@@ -28,7 +28,6 @@ export function retrieveTransactions() {
     fetch('/api/v1/transactions')
       .then(resp => resp.json())
       .then(resp => {
-        console.log('wat', resp);
         dispatch({
           type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
           transactions: resp.data
