@@ -63,6 +63,7 @@
     "isparta": "^4.0.0",
     "json-loader": "^0.5.3",
     "mocha": "^2.3.4",
+    "run-sequence": "1.1.5",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
     "supertest": "^1.1.0",
@@ -82,16 +83,12 @@
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "express-routebuilder": "2.1.0",
-    "history": "^1.17.0",
     "is-my-json-valid": "^2.12.4",
     "kapow": "^1.0.0",
     "lodash": "^4.1.0",
     "nib": "^1.1.0",
     "pg-promise": "3.7.5",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "react-router": "^1.0.3",
-    "run-sequence": "^1.1.5",
-    "throng": "3.0.0"
+    "throng": "3.0.0",
+    "yo-yo": "1.1.1"
   }
 }

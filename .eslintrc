@@ -1,20 +1,6 @@
 {
   "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "ecmaFeatures": {
-    "jsx": true
-  },
   "rules": {
-    "react/jsx-uses-vars": "error",
-    "react/jsx-uses-react": "error",
-
     "comma-dangle": "off",
     "no-cond-assign": "error",
     "no-console": "off",

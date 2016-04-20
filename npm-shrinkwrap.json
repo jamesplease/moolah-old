@@ -713,6 +713,11 @@
       "from": "beeper@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/beeper/-/beeper-1.1.0.tgz"
     },
+    "bel": {
+      "version": "4.3.1",
+      "from": "bel@>=4.0.0 <5.0.0",
+      "resolved": "https://registry.npmjs.org/bel/-/bel-4.3.1.tgz"
+    },
     "big.js": {
       "version": "3.1.3",
       "from": "big.js@>=3.1.3 <4.0.0",
@@ -1240,6 +1245,11 @@
           "resolved": "https://registry.npmjs.org/entities/-/entities-1.1.1.tgz"
         }
       }
+    },
+    "dom-walk": {
+      "version": "0.1.1",
+      "from": "dom-walk@>=0.1.0 <0.2.0",
+      "resolved": "https://registry.npmjs.org/dom-walk/-/dom-walk-0.1.1.tgz"
     },
     "domain-browser": {
       "version": "1.1.7",
@@ -2448,6 +2458,18 @@
       "from": "glob2base@>=0.0.12 <0.0.13",
       "resolved": "https://registry.npmjs.org/glob2base/-/glob2base-0.0.12.tgz"
     },
+    "global": {
+      "version": "4.3.0",
+      "from": "global@>=4.3.0 <5.0.0",
+      "resolved": "https://registry.npmjs.org/global/-/global-4.3.0.tgz",
+      "dependencies": {
+        "process": {
+          "version": "0.5.2",
+          "from": "process@>=0.5.1 <0.6.0",
+          "resolved": "https://registry.npmjs.org/process/-/process-0.5.2.tgz"
+        }
+      }
+    },
     "globals": {
       "version": "8.18.0",
       "from": "globals@>=8.3.0 <9.0.0",
@@ -2601,6 +2623,16 @@
       "version": "0.0.0",
       "from": "https-browserify@0.0.0",
       "resolved": "https://registry.npmjs.org/https-browserify/-/https-browserify-0.0.0.tgz"
+    },
+    "hyperscript-attribute-to-property": {
+      "version": "1.0.0",
+      "from": "hyperscript-attribute-to-property@>=1.0.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/hyperscript-attribute-to-property/-/hyperscript-attribute-to-property-1.0.0.tgz"
+    },
+    "hyperx": {
+      "version": "2.0.2",
+      "from": "hyperx@>=2.0.2 <3.0.0",
+      "resolved": "https://registry.npmjs.org/hyperx/-/hyperx-2.0.2.tgz"
     },
     "i": {
       "version": "0.3.4",
@@ -3429,6 +3461,11 @@
       "from": "mime-types@>=2.1.10 <2.2.0",
       "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.10.tgz"
     },
+    "min-document": {
+      "version": "2.18.0",
+      "from": "min-document@>=2.6.1 <3.0.0",
+      "resolved": "https://registry.npmjs.org/min-document/-/min-document-2.18.0.tgz"
+    },
     "mini-lr": {
       "version": "0.1.9",
       "from": "mini-lr@>=0.1.8 <0.2.0",
@@ -3519,6 +3556,11 @@
           "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-1.2.0.tgz"
         }
       }
+    },
+    "morphdom": {
+      "version": "1.3.0",
+      "from": "morphdom@>=1.1.2 <2.0.0",
+      "resolved": "https://registry.npmjs.org/morphdom/-/morphdom-1.3.0.tgz"
     },
     "ms": {
       "version": "0.7.1",
@@ -5033,6 +5075,11 @@
       "version": "3.10.0",
       "from": "yargs@>=3.10.0 <3.11.0",
       "resolved": "https://registry.npmjs.org/yargs/-/yargs-3.10.0.tgz"
+    },
+    "yo-yo": {
+      "version": "1.1.1",
+      "from": "yo-yo@*",
+      "resolved": "https://registry.npmjs.org/yo-yo/-/yo-yo-1.1.1.tgz"
     }
   }
 }
