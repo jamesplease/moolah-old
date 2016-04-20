@@ -99,7 +99,7 @@ export default (state = initialState, action) => {
       let current = state.currentlyUpdating;
       let id = action.action.transactionId;
       let currentlyUpdating = _.without(current, id);
-      transactions.push(action.transaction);
+      currentlyUpdating.push(action.transaction);
       return Object.assign({
         ...state,
         updatingTransaction: false,
@@ -149,7 +149,7 @@ export default (state = initialState, action) => {
       let current = state.currentlyDeleting;
       let id = action.action.transactionId;
       let currentlyDeleting = _.without(current, id);
-      transactions.push(action.transaction);
+      currentlyDeleting.push(action.transaction);
       return Object.assign({
         ...state,
         deletingTransaction: false,
