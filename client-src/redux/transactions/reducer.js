@@ -99,12 +99,21 @@ export default (state = initialState, action) => {
       let current = state.currentlyUpdating;
       let id = action.transactionId;
       let currentlyUpdating = _.without(current, id);
-      currentlyUpdating.push(action.transaction);
+
+      let transactions = ([...state.transactions]).map(t => {
+        if (t.id !== action.transactionId) {
+          return t;
+        } else {
+          return action.transaction;
+        }
+      });
+
       return Object.assign({
         ...state,
         updatingTransaction: false,
         updateTransactionSuccess: true,
-        currentlyUpdating
+        currentlyUpdating,
+        transactions
       });
     }
 

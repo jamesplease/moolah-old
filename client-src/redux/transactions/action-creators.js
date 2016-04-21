@@ -48,13 +48,19 @@ export function updateTransaction(transactionId, data) {
     dispatch({type: actionTypes.UPDATE_TRANSACTION, transactionId});
 
     fetch(`/api/v1/transactions/${transactionId}`, {
-      method: 'PUT',
+      method: 'PATCH',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(data)
     })
-      .then(() => {
+      .then(resp => resp.json())
+      .then(resp => {
         dispatch({
           type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
-          transactionId
+          transactionId,
+          transaction: resp.data
         });
       })
       .catch(() => dispatch({
