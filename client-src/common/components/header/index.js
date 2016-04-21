@@ -11,10 +11,13 @@ function onClickNew() {
 }
 
 export default function() {
+  const online = store.getState().connection;
+  const disabled = online ? false : true;
+
   return yo`
     <header className="app-header">
       <div className="container">
-        <button className="create-new-transaction" onclick=${onClickNew}>
+        <button className="create-new-transaction" onclick=${onClickNew} disabled=${disabled}>
           + New Transaction
         </button>
       </div>
