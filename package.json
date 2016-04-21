@@ -84,6 +84,7 @@
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "express-routebuilder": "2.1.0",
+    "form-serialize": "0.7.1",
     "is-my-json-valid": "^2.12.4",
     "kapow": "^1.0.0",
     "keymirror": "0.1.1",
