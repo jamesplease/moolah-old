@@ -19,7 +19,7 @@ export default function(transaction) {
 
   return yo`
     <li className="transaction">
-      <form id="${id}">
+      <form id="${id}" className="transaction-form">
         <input className="transaction-date" value="${transaction.date}" name="date"/>
         <input className="transaction-description" value="${transaction.description}" name="description"/>
         <input className="transaction-value" value="${transaction.value}" name="value"/>
