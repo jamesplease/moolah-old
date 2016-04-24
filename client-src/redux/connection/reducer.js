@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
       return false;
     }
     default: {
-      return initialState;
+      return state;
     }
   }
 };
