@@ -5,9 +5,21 @@ export default function() {
     <footer>
       <nav>
         <ul>
-          <li>Transactions</li>
-          <li>Analytics</li>
-          <li>Profile</li>
+          <li>
+            <a href="/transactions">
+              Transactions
+            </a>
+          </li>
+          <li>
+            <a href="/analytics">
+              Analytics
+            </a>
+          </li>
+          <li>
+            <a href="/profile">
+              Profile
+            </a>
+          </li>
         </ul>
       </nav>
     </footer>

@@ -93,6 +93,7 @@
     "pg-promise": "3.7.5",
     "redux": "3.5.0",
     "redux-thunk": "2.0.1",
+    "sheet-router": "2.0.4",
     "throng": "3.0.0",
     "yo-yo": "1.1.1"
   }
