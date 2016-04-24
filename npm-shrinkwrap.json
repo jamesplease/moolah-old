@@ -947,6 +947,11 @@
       "from": "chokidar@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-1.4.3.tgz"
     },
+    "classnames": {
+      "version": "2.2.3",
+      "from": "classnames@*",
+      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.2.3.tgz"
+    },
     "cli-cursor": {
       "version": "1.0.2",
       "from": "cli-cursor@>=1.0.1 <2.0.0",

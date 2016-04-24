@@ -79,6 +79,7 @@
     "babel-polyfill": "^6.3.14",
     "body-parser": "^1.14.2",
     "careen": "^0.1.1",
+    "classnames": "2.2.3",
     "compression": "^1.6.1",
     "cors": "^2.7.1",
     "express": "^4.13.4",
