@@ -16,6 +16,11 @@ import store from './redux/store';
 import * as transactionsActions from './redux/transactions/action-creators';
 import * as historyActions from './redux/history/action-creators';
 
+function redirect(router, href) {
+  window.history.pushState({}, null, href);
+  return router(href);
+}
+
 const router = sheetRouter('/404', (r) => {
   return [
     r('/', () => layout({
@@ -33,6 +38,13 @@ const router = sheetRouter('/404', (r) => {
     r('/profile', () => layout({
       header: profileHeader,
       content: profile
+    })),
+    r('/redirect', () => {
+      return redirect(router, '/login');
+    }),
+    r('/login', () => layout({
+      header: () => yo`login time`,
+      content: () => yo`login here`
     })),
     r('/404', () => layout({
       header: () => yo`404 :(`,
