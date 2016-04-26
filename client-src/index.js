@@ -16,7 +16,7 @@ import store from './redux/store';
 import * as transactionsActions from './redux/transactions/action-creators';
 import * as historyActions from './redux/history/action-creators';
 
-const router = sheetRouter((r) => {
+const router = sheetRouter('/404', (r) => {
   return [
     r('/', () => layout({
       header: () => yo`Home header`,
@@ -33,7 +33,11 @@ const router = sheetRouter((r) => {
     r('/profile', () => layout({
       header: profileHeader,
       content: profile
-    }))
+    })),
+    r('/404', () => layout({
+      header: () => yo`404 :(`,
+      content: () => yo`Woops – this page doesn't exist`
+    })),
   ];
 });
 
