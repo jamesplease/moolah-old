@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import yo from 'yo-yo';
 import sheetRouter from 'sheet-router';
 import history from 'sheet-router/history';
-import href from 'sheet-router/href';
+// import href from 'sheet-router/href';
 
 import layout from './common/components/layout';
 import profileHeader from './profile/components/header';
@@ -12,9 +12,17 @@ import analytics from './analytics/components/analytics';
 import transactionsHeader from './transactions/components/header';
 import transactions from './transactions/components/transactions';
 import connectivityService from './common/services/connectivity-service';
+import './common/services/google-auth';
 import store from './redux/store';
 import * as transactionsActions from './redux/transactions/action-creators';
 import * as historyActions from './redux/history/action-creators';
+import loadFromInitialState from './auth/util/load-from-initial-state';
+import ensureLoggedIn from './auth/util/ensure-logged-in';
+import linkIntercept from './routing/util/link-intercept';
+
+window.store = store;
+
+loadFromInitialState();
 
 function redirect(router, href) {
   window.history.pushState({}, null, href);
@@ -23,28 +31,37 @@ function redirect(router, href) {
 
 const router = sheetRouter('/404', (r) => {
   return [
-    r('/', () => layout({
-      header: () => yo`Home header`,
-      content: () => yo`Welcome home!`
-    })),
-    r('/transactions', () => layout({
-      header: transactionsHeader,
-      content: transactions
-    })),
-    r('/analytics', () => layout({
-      header: analyticsHeader,
-      content: analytics
-    })),
-    r('/profile', () => layout({
-      header: profileHeader,
-      content: profile
-    })),
-    r('/redirect', () => {
-      return redirect(router, '/login');
-    }),
+    r('/', ensureLoggedIn(
+      () => redirect(router, '/login'),
+      () => layout({
+        header: () => yo`Home header`,
+        content: () => yo`Welcome home!`
+      }))
+    ),
+    r('/transactions', ensureLoggedIn(
+      () => redirect(router, '/login'),
+      () => layout({
+        header: transactionsHeader,
+        content: transactions
+      }))
+    ),
+    r('/analytics', ensureLoggedIn(
+      () => redirect(router, '/login'),
+      () => layout({
+        header: analyticsHeader,
+        content: analytics
+      }))
+    ),
+    r('/profile', ensureLoggedIn(
+        () => redirect(router, '/login'),
+        () => layout({
+        header: profileHeader,
+        content: profile
+      }))
+    ),
     r('/login', () => layout({
       header: () => yo`login time`,
-      content: () => yo`login here`
+      content: () => yo`<a className="sign-in" href="/login/google" data-bypass>Sign in With Google</a>`
     })),
     r('/404', () => layout({
       header: () => yo`404 :(`,
@@ -57,7 +74,7 @@ const appContainer = document.querySelector('.app-container');
 
 appContainer.appendChild(router(document.location.href));
 
-href(href => store.dispatch(historyActions.navigate(href)));
+linkIntercept(href => store.dispatch(historyActions.navigate(href)));
 history(href => store.dispatch(historyActions.navigate(href)));
 
 store.subscribe(() => {
