@@ -98,6 +98,7 @@
     "nib": "^1.1.0",
     "passport": "0.3.2",
     "passport-google-oauth20": "1.0.0",
+    "pg": "4.5.5",
     "pg-promise": "3.7.5",
     "redux": "3.5.0",
     "redux-thunk": "2.0.1",
