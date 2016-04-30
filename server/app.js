@@ -70,15 +70,14 @@ module.exports = function() {
   const port = process.env.PORT || 5000;
   app.set('port', port);
 
-  app.get('/login/google',
-    passport.authenticate('google', {scope: ['profile']}));
+  const googleSettings = {scope: ['profile']};
+  app.get('/login/google', passport.authenticate('google', googleSettings));
 
-  app.get('/auth/google/callback',
-    passport.authenticate('google', {failureRedirect: '/login'}),
-    (req, res) => {
-      // Successful authentication, redirect home.
-      res.redirect('/');
-    });
+  const redirects = {
+    successRedirect: '/success',
+    failureRedirect: '/failure'
+  };
+  app.get('/auth/google/callback', passport.authenticate('google', redirects));
 
   app.get('/logout', (req, res) => {
     req.logout();
@@ -87,7 +86,6 @@ module.exports = function() {
 
   // Every route is served by our JS app
   app.get('*', (req, res) => {
-    console.log(req.session);
     res.locals.devMode = res.app.get('env') === 'development';
     res.locals.initialData = JSON.stringify({
       user: req.user
