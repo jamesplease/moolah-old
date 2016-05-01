@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const pg = require('pg');
 const path = require('path');
 const express = require('express');
@@ -30,7 +31,7 @@ module.exports = function() {
   const app = express();
   const PgSession = PgSessionFactory(session);
   const sessionStore = new PgSession({
-    pg: pg,
+    pg,
     conString: dbConfig
   });
 
@@ -86,6 +87,8 @@ module.exports = function() {
 
   // Every route is served by our JS app
   app.get('*', (req, res) => {
+    const authenticated = _.result(req, 'isAuthenticated');
+    console.log(`route: ${req.path} authenticated: ${authenticated}`);
     res.locals.devMode = res.app.get('env') === 'development';
     res.locals.initialData = JSON.stringify({
       user: req.user

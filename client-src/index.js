@@ -97,6 +97,6 @@ var data = JSON.parse(initial.text);
 console.log('logged in:', Boolean(data.user));
 
 var link = document.createElement('a');
-link.href = "/login/google";
+link.href = '/login/google';
 link.innerHTML = 'Log in with Google';
 document.body.appendChild(link);
