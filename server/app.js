@@ -1,10 +1,21 @@
 'use strict';
 
+const _ = require('lodash');
+const pgp = require('pg-promise');
 const path = require('path');
 const express = require('express');
+const passport = require('passport');
+const favicon = require('serve-favicon');
+const cors = require('cors');
 const exphbs = require('express-handlebars');
 const compress = require('compression');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const configurePassport = require('./utils/configure-passport');
+const PgSessionFactory = require('connect-pg-simple');
+require('dotenv').config();
+
+const dbConfig = require('../config/db-config');
 
 const api = require('./api');
 
@@ -18,13 +29,33 @@ const VIEWS_DIR = path.join(BASE_DIR, 'views');
 
 module.exports = function() {
   const app = express();
+  const PgSession = PgSessionFactory(session);
+  const sessionStore = new PgSession({
+    pg: pgp.pg,
+    conString: dbConfig
+  });
 
   app.set('env', NODE_ENV);
 
+  app.all('*', cors());
+  app.use(favicon(`${__dirname}/favicon.ico`));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(compress());
   app.use(express.static(ASSETS_PATH));
+
+  app.use(session({
+    store: sessionStore,
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }
+  }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  configurePassport();
 
   app.use('/api', api);
 
@@ -42,9 +73,34 @@ module.exports = function() {
   const port = process.env.PORT || 5000;
   app.set('port', port);
 
+  app.get('*', (req, res, next) => {
+    console.log(`\n-----New request ${req.path}`);
+    next();
+  });
+
+  const googleSettings = {scope: ['profile']};
+  app.get('/login/google', passport.authenticate('google', googleSettings));
+
+  const redirects = {
+    successRedirect: '/success',
+    failureRedirect: '/failure'
+  };
+  app.get('/auth/google/callback', passport.authenticate('google', redirects));
+
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login');
+  });
+
   // Every route is served by our JS app
   app.get('*', (req, res) => {
+    const authenticated = _.result(req, 'isAuthenticated');
+    // console.log('testing', Object.keys(_.result(global, 'sandwiches.user') || {}), Object.keys(req.user || {}));
+    console.log(`authenticated: ${authenticated}`);
     res.locals.devMode = res.app.get('env') === 'development';
+    res.locals.initialData = JSON.stringify({
+      user: req.user
+    });
     return res.render('index');
   });
 
