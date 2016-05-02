@@ -19,11 +19,9 @@ module.exports = function() {
   function passportCallback(accessToken, refreshToken, profile, done) {
     const googleId = profile.id;
 
-    console.log('about to fetch from DB');
     findUser(googleId)
       .then(
         result => {
-          console.log('PP CB: retrieved user from DB');
           done(null, result);
         },
         err => {
@@ -39,9 +37,11 @@ module.exports = function() {
                 return done(null, result);
               }, err => {
                 console.log('fucked up while making an account', err);
+                return done(null, false);
               })
           } else {
             console.log('General query error..doing nothing', err);
+            return done(null, false);
           }
         }
       );
@@ -57,6 +57,7 @@ module.exports = function() {
 
   // Takes a `user_account` from the DB, and maps it to just the ID
   passport.serializeUser((user, done) => {
+    console.log('serializing');
     done(null, user.id);
   });
 

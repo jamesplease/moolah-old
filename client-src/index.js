@@ -100,3 +100,9 @@ var link = document.createElement('a');
 link.href = '/login/google';
 link.innerHTML = 'Log in with Google';
 document.body.appendChild(link);
+
+link = document.createElement('a');
+link.href = '/logout';
+link.innerHTML = 'Logout';
+
+document.body.appendChild(link);
