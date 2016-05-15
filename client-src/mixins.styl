@@ -1,0 +1,42 @@
+ellipsis()
+  overflow hidden
+  white-space no-wrap
+  text-overflow ellipsis
+
+// `$width` must be a predefined variable defined in `variables.styl`.
+// This is a block mixin. To use it, prefix it with `+`. i.e.:
+// `+respond-to($l-screen)`
+respond-to($width)
+  if $lg-screen is $width
+    media = 'all and (min-width: %s)' % $width
+    @media media
+      {block}
+  else
+    media = 'all and (max-width: %s)' % $width
+    @media media
+      {block}
+
+// `$width` must be a predefined variable defined in `variables.styl`.
+// This is a block mixin. To use it, prefix it with `+`. i.e.:
+// `+respond-from($l-screen)`
+respond-from($width)
+  media = 'all and (min-width: %s)' % $width
+  @media media
+    {block}
+
+// `$width` must be a predefined variable defined in `variables.styl`.
+// This is a block mixin. To use it, prefix it with `+`. i.e.:
+// `+respond-as($l-screen)`
+respond-as($width)
+  if $width is $l-screen
+    media = 'all and (min-width: %s)' % $l-screen-min
+    @media media
+      {block}
+  if $width is $m-screen
+    media = '(min-width: %s) and (max-width: %s)' % ($m-screen-min $m-screen-max)
+    @media media
+      {block}
+  if $width is $s-screen
+    media = 'all and (max-width: %s)' % $s-screen-max
+    @media media
+      {block}
