@@ -62,21 +62,12 @@ function cleanTmp(done) {
   del(['tmp']).then(() => done());
 }
 
-function onError() {
-  $.util.beep();
-}
-
 // Lint a set of files
 function lint(files) {
   return gulp.src(files)
-    .pipe($.plumber())
     .pipe($.eslint())
     .pipe($.eslint.format())
-    .pipe($.eslint.failOnError())
-    .pipe($.jscs())
-    .pipe($.jscs.reporter())
-    .pipe($.jscs.reporter('fail'))
-    .on('error', onError);
+    .pipe($.eslint.failAfterError());
 }
 
 function lintServer() {
