@@ -1,5 +1,12 @@
 {
   "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
   "rules": {
     "comma-dangle": "off",
     "no-cond-assign": "error",

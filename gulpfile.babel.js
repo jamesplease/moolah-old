@@ -86,6 +86,11 @@ function lintGulpfile() {
   return lint('gulpfile.babel.js');
 }
 
+function watch() {
+  gulp.watch('./client-src/**/*.styl', ['stylus']);
+  $.livereload.listen();
+}
+
 function buildJavaScript() {
   var firstBuild = true;
 
@@ -225,11 +230,6 @@ function build(done) {
     ['stylus', 'build-javascript'],
     done
   );
-}
-
-function watch() {
-  gulp.watch('./client-src/**/*.styl', ['stylus']);
-  $.livereload.listen();
 }
 
 function work(done) {
