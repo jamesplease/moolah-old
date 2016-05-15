@@ -1,7 +1,7 @@
 {
   "name": "Finance App",
   "description": "Track your finances.",
-  "repository": "https://github.com/jmeas/finance-app",
+  "repository": "https://github.com/jmeas/moolah",
   "keywords": ["finances"],
   "addons": [
     "heroku-postgresql:hobby-dev"

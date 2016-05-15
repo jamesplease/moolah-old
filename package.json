@@ -1,5 +1,5 @@
 {
-  "name": "finance-app",
+  "name": "moolah",
   "version": "0.0.1",
   "description": "Track your finances.",
   "main": "client-dist/app.js",
@@ -22,15 +22,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jmeas/finance-app.git"
+    "url": "https://github.com/jmeas/moolah.git"
   },
   "keywords": [],
   "author": "Jmeas <jellyes2@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jmeas/finance-app/issues"
+    "url": "https://github.com/jmeas/moolah/issues"
   },
-  "homepage": "https://github.com/jmeas/finance-app",
+  "homepage": "https://github.com/jmeas/moolah",
   "devDependencies": {
     "babel-core": "^6.3.26",
     "babel-eslint": "6.0.2",
