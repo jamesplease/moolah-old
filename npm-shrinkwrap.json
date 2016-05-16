@@ -1237,7 +1237,14 @@
     "express-handlebars": {
       "version": "3.0.0",
       "from": "express-handlebars@>=3.0.0 <4.0.0",
-      "resolved": "https://registry.npmjs.org/express-handlebars/-/express-handlebars-3.0.0.tgz"
+      "resolved": "https://registry.npmjs.org/express-handlebars/-/express-handlebars-3.0.0.tgz",
+      "dependencies": {
+        "glob": {
+          "version": "6.0.4",
+          "from": "glob@>=6.0.4 <7.0.0",
+          "resolved": "https://registry.npmjs.org/glob/-/glob-6.0.4.tgz"
+        }
+      }
     },
     "express-routebuilder": {
       "version": "2.1.0",
@@ -3742,9 +3749,9 @@
       "resolved": "https://registry.npmjs.org/shebang-regex/-/shebang-regex-1.0.0.tgz"
     },
     "sheet-router": {
-      "version": "2.0.4",
-      "from": "sheet-router@2.0.4",
-      "resolved": "https://registry.npmjs.org/sheet-router/-/sheet-router-2.0.4.tgz"
+      "version": "2.0.5",
+      "from": "sheet-router@>=2.0.5 <3.0.0",
+      "resolved": "https://registry.npmjs.org/sheet-router/-/sheet-router-2.0.5.tgz"
     },
     "shelljs": {
       "version": "0.6.0",

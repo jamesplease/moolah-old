@@ -1,16 +1,28 @@
 .alert
-  display none
+  // display none
   position fixed
-  top 40px
+  top 96px
   left 0
-  height 40px
+  height 48px
   width 100%
   padding 0 15px
-  line-height 40px
-  background-color #f3dfdf
-  border-bottom 1px solid #ebb0b0
-  color #c15e5e
+  line-height 48px
+  text-align center
+  color #fff
+  z-index 100
+
+  &.warning
+    background radial-gradient(circle at top right, #ffa648, #ff7f1b)
+
+  &.danger
+    background radial-gradient(circle at top right, #f06565, #f43636)
+
+  &.success
+    background radial-gradient(circle at top right, #a6d659, #37b645)
 
   &.visible
     display block
     opacity 1
+
+  .alert-icon
+    margin-right 3px

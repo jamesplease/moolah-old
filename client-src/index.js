@@ -24,7 +24,7 @@ const router = sheetRouter((r) => {
   return [
     r('/', () => layout({
       header: dashboardSubheader,
-      content: dashboardSubheader
+      content: dashboard
     })),
     r('/transactions', () => layout({
       header: transactionsSubheader,
