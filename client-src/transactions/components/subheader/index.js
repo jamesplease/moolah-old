@@ -21,7 +21,7 @@ export default function() {
           Transactions
         </h1>
         <button
-          className="subheader-action create-new-transaction"
+          className="subheader-action"
           onclick=${onClickNew}
           disabled=${disabled}>
           + Transaction

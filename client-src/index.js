@@ -5,11 +5,13 @@ import history from 'sheet-router/history';
 import href from 'sheet-router/href';
 
 import layout from './common/components/layout';
-import profileHeader from './profile/components/header';
+import dashboardSubheader from './dashboard/components/subheader';
+import dashboard from './dashboard/components/dashboard';
+import profileSubheader from './profile/components/subheader';
 import profile from './profile/components/profile';
-import analyticsHeader from './analytics/components/header';
+import analyticsSubheader from './analytics/components/subheader';
 import analytics from './analytics/components/analytics';
-import transactionsHeader from './transactions/components/header';
+import transactionsSubheader from './transactions/components/subheader';
 import transactions from './transactions/components/transactions';
 import connectivityService from './common/services/connectivity-service';
 import store from './redux/store';
@@ -19,19 +21,19 @@ import * as historyActions from './redux/history/action-creators';
 const router = sheetRouter((r) => {
   return [
     r('/', () => layout({
-      header: () => yo`Home header`,
-      content: () => yo`Welcome home!`
+      header: dashboardSubheader,
+      content: dashboardSubheader
     })),
     r('/transactions', () => layout({
-      header: transactionsHeader,
+      header: transactionsSubheader,
       content: transactions
     })),
     r('/analytics', () => layout({
-      header: analyticsHeader,
+      header: analyticsSubheader,
       content: analytics
     })),
     r('/profile', () => layout({
-      header: profileHeader,
+      header: profileSubheader,
       content: profile
     }))
   ];
