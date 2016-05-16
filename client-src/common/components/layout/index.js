@@ -1,5 +1,6 @@
 import yo from 'yo-yo';
 
+import Header from '../header';
 import Footer from '../footer';
 import Alert from '../alert';
 
@@ -9,6 +10,7 @@ export default function({ header, content }) {
 
   return yo`
     <div id="root">
+      ${Header()}
       ${header()}
       ${alert}
       <main>

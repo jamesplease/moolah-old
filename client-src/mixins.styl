@@ -5,7 +5,7 @@ ellipsis()
 
 // `$width` must be a predefined variable defined in `variables.styl`.
 // This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-to($l-screen)`
+// `+respond-to($s-screen-max)`
 respond-to($width)
   if $lg-screen is $width
     media = 'all and (min-width: %s)' % $width
@@ -18,7 +18,7 @@ respond-to($width)
 
 // `$width` must be a predefined variable defined in `variables.styl`.
 // This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-from($l-screen)`
+// `+respond-from($l-screen-min)`
 respond-from($width)
   media = 'all and (min-width: %s)' % $width
   @media media

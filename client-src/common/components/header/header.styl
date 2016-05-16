@@ -1,0 +1,60 @@
+header
+  position fixed
+  height 46px
+  width 100%
+  padding 0 20px
+  background-color #fafafa
+  border-bottom 1px solid #eeeeee
+  display flex
+  align-items center
+
+  a
+    text-decoration none
+    font-size 16px
+    color #a1a1a1
+
+  .app-logo
+    display none
+    margin 0
+    margin-right 24px
+    padding 0
+
+    +respond-from($m-screen-min)
+      display block
+
+  .mobile-menu-toggle
+
+    +respond-from($m-screen-min)
+      display none
+
+  .header-main-menu
+    display none
+
+    +respond-from($m-screen-min)
+      display block
+
+  .header-main-menu-list
+    display flex
+
+    li
+      margin-right 27px
+
+      &:last-child
+        margin 0
+
+    a.active
+      color #c7236c
+
+  .header-profile-link
+    margin-left auto
+    display flex
+    align-items center
+
+  .header-name
+    margin-right 10px
+
+  .header-profile-pic
+    width 31px
+    height 31px
+    border-radius 50%
+    border 2px solid #fff
