@@ -20,23 +20,7 @@ export default function() {
   return yo`
     <footer>
       <nav>
-        <ul>
-          <li>
-            <a href="/transactions" className="${transactionsClass}">
-              Transactions
-            </a>
-          </li>
-          <li>
-            <a href="/analytics" className="${analyticsClass}">
-              Analytics
-            </a>
-          </li>
-          <li>
-            <a href="/profile" className="${profileClass}">
-              Profile
-            </a>
-          </li>
-        </ul>
+        © Moolah 2016
       </nav>
     </footer>
   `;

@@ -2,11 +2,14 @@ header
   position fixed
   height 46px
   width 100%
-  padding 0 20px
+  padding 0 10px
   background-color #fafafa
   border-bottom 1px solid #eeeeee
   display flex
   align-items center
+
+  +respond-from($m-screen-min)
+    padding 0 20px
 
   a
     text-decoration none

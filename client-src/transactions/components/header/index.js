@@ -17,8 +17,14 @@ export default function() {
   return yo`
     <div className="sub-header">
       <div className="container">
-        <button className="create-new-transaction" onclick=${onClickNew} disabled=${disabled}>
-          + New Transaction
+        <h1 className="subheader-title">
+          Transactions
+        </h1>
+        <button
+          className="subheader-action create-new-transaction"
+          onclick=${onClickNew}
+          disabled=${disabled}>
+          + Transaction
         </button>
       </div>
     </div>
