@@ -7,6 +7,8 @@ import href from 'sheet-router/href';
 import layout from './common/components/layout';
 import dashboardSubheader from './dashboard/components/subheader';
 import dashboard from './dashboard/components/dashboard';
+import categoriesSubheader from './categories/components/subheader';
+import categories from './categories/components/content';
 import profileSubheader from './profile/components/subheader';
 import profile from './profile/components/profile';
 import analyticsSubheader from './analytics/components/subheader';
@@ -27,6 +29,10 @@ const router = sheetRouter((r) => {
     r('/transactions', () => layout({
       header: transactionsSubheader,
       content: transactions
+    })),
+    r('/categories', () => layout({
+      header: categoriesSubheader,
+      content: categories
     })),
     r('/analytics', () => layout({
       header: analyticsSubheader,

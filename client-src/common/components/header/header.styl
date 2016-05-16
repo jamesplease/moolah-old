@@ -24,12 +24,13 @@ header
 
     a
       font-size 21px
-      color #c7236c
+      primary-gradient-fill()
 
     +respond-from($m-screen-min)
       display block
 
   .mobile-menu-toggle
+    primary-gradient-fill()
 
     +respond-from($m-screen-min)
       display none
@@ -52,8 +53,10 @@ header
     a.active
       color #c7236c
 
-  .header-profile-link
+  .header-profile-container
     margin-left auto
+
+  .header-profile-link
     display flex
     align-items center
 
@@ -65,3 +68,5 @@ header
     height 31px
     border-radius 50%
     border 2px solid #fff
+    background-size cover
+    background-image url('http://lh3.googleusercontent.com/-SFoxuA-9BgQ/AAAAAAAAAAI/AAAAAAAAAAA/ADhl2yoCgd6de7jfz57PsSkdK0WUHJH1IQ/s64-c-mo/photo.jpg')
