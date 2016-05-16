@@ -5,6 +5,12 @@ html, body
   margin 0
   padding 0
 
+body
+  // 45px is the size of the header
+  // 50px is the size of the subheader
+  padding-top 95px
+  min-height 100vh
+
 .container
   max-width $appWidth
   margin 0 auto
@@ -13,13 +19,13 @@ html, body
   +respond-from($m-screen-min)
     padding 0 20px
 
+.content-container
+  display flex
+  flex-direction column
+  // 95px
+  min-height: calc(100vh - 95px);
+
 main
-  // 45px is the size of the header
-  // 50px is the size of the subheader
-  // Together, that's 95px. Add an additional 20px
-  // margin to get 115px
-  padding-top 115px
   margin-bottom 20px
   padding-bottom 20px
-  // Temporary code to test scrolling behavior on mobile
-  min-height 1050px
+  flex 1

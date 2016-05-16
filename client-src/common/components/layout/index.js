@@ -13,12 +13,14 @@ export default function({ header, content }) {
       ${Header()}
       ${header()}
       ${alert}
-      <main>
-        <div className="container">
-          ${content()}
-        </div>
-      </main>
-      ${footer}
+      <div className="content-container">
+        <main>
+          <div className="container">
+            ${content()}
+          </div>
+        </main>
+        ${footer}
+      </div>
     </div>
   `;
 }
