@@ -3,6 +3,7 @@ import yo from 'yo-yo';
 import Header from '../header';
 import Footer from '../footer';
 import Alert from '../alert';
+import MobileNav from '../mobile-nav';
 
 export default function({ header, content }) {
   const footer = new Footer();
@@ -10,8 +11,9 @@ export default function({ header, content }) {
 
   return yo`
     <div id="root">
-      ${Header()}
+      ${new Header()}
       ${header()}
+      ${MobileNav()}
       ${alert}
       <div className="content-container">
         <main>
