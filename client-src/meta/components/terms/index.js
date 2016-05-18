@@ -2,7 +2,7 @@ import yo from 'yo-yo';
 
 export default () => {
   return yo`
-    <div className="terms lots-of-text">
+    <div className="lots-of-text">
     <h1>
       Terms of Service
     </h1>

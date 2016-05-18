@@ -17,6 +17,9 @@ import transactionsSubheader from './transactions/components/subheader';
 import transactions from './transactions/components/transactions';
 import connectivityService from './common/services/connectivity-service';
 import terms from './meta/components/terms';
+import privacy from './meta/components/privacy';
+import about from './meta/components/about';
+import contact from './meta/components/contact';
 import store from './redux/store';
 import * as transactionsActions from './redux/transactions/action-creators';
 import * as historyActions from './redux/history/action-creators';
@@ -45,6 +48,15 @@ const router = sheetRouter((r) => {
     })),
     r('/terms', () => layout({
       content: terms
+    })),
+    r('/privacy', () => layout({
+      content: privacy
+    })),
+    r('/about', () => layout({
+      content: about
+    })),
+    r('/contact', () => layout({
+      content: contact
     }))
   ];
 });
