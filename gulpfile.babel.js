@@ -37,6 +37,7 @@ const stylusPaths = [
   // Ensure that we don't load up the variables file itself, which will error
   // when it tries to import itself
   '!./client-src/variables.styl',
+  '!./client-src/prenib.styl',
   '!./client-src/mixins.styl'
 ];
 
@@ -46,7 +47,7 @@ function stylus() {
     .pipe($.stylus({
       'include css': true,
       paths: ['node_modules'],
-      import: ['nib/index', 'variables', 'mixins'],
+      import: ['prenib', 'nib/index', 'variables', 'mixins'],
       compress: productionMode
     }))
     .pipe($.concat('style.css'))
