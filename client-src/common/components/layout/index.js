@@ -12,10 +12,10 @@ export default function({ header, content }) {
   return yo`
     <div id="root">
       ${new Header()}
-      ${header ? header() : null}
       ${MobileNav()}
       ${alert}
       <div className="content-container">
+        ${header ? header() : null}
         <main>
           <div className="container">
             ${content()}
