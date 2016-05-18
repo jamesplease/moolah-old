@@ -16,6 +16,7 @@ import analytics from './analytics/components/analytics';
 import transactionsSubheader from './transactions/components/subheader';
 import transactions from './transactions/components/transactions';
 import connectivityService from './common/services/connectivity-service';
+import terms from './meta/components/terms';
 import store from './redux/store';
 import * as transactionsActions from './redux/transactions/action-creators';
 import * as historyActions from './redux/history/action-creators';
@@ -41,6 +42,9 @@ const router = sheetRouter((r) => {
     r('/profile', () => layout({
       header: profileSubheader,
       content: profile
+    })),
+    r('/terms', () => layout({
+      content: terms
     }))
   ];
 });
