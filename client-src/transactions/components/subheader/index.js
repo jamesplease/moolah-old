@@ -1,5 +1,6 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import * as transactionsActionsCreators from '../../../redux/transactions/action-creators';
 
 export function TransactionsSubheader({isOnline, transactionsActions}) {

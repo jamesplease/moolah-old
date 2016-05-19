@@ -8,13 +8,13 @@ export default function Transaction(props) {
     deleteTransaction(transaction.id);
   }
 
+  const formId = `transaction-form-${transaction.id}`;
+
   function updateSelf() {
-    let form = document.getElementById(id);
+    let form = document.getElementById(formId);
     let formData = serialize(form, {hash: true});
     updateTransaction(transaction.id, formData);
   }
-
-  const formId = `transaction-form-${transaction.id}`;
 
   return (
     <li className="transaction">
@@ -23,10 +23,10 @@ export default function Transaction(props) {
         <input className="transaction-description" value={transaction.description} name="description"/>
         <input className="transaction-value" value={transaction.value} name="value"/>
       </form>
-      <button className="save-transaction" onclick={updateSelf}>
+      <button className="save-transaction" onClick={updateSelf}>
         Save
       </button>
-      <button className="delete-transaction" onclick={deleteSelf}>
+      <button className="delete-transaction" onClick={deleteSelf}>
         Delete
       </button>
     </li>

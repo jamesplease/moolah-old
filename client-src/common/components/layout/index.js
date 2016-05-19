@@ -4,16 +4,17 @@ import Footer from '../footer';
 import Alert from '../alert';
 import MobileNav from '../mobile-nav';
 
-export default function Layout({children}) {
+export default function Layout({main, subheader}) {
   return (
     <div>
       <Header/>
       <MobileNav/>
       <Alert/>
       <div className="content-container">
+        {subheader}
         <main>
           <div className="container">
-            {children}
+            {main}
           </div>
         </main>
         <Footer/>

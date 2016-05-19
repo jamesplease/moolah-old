@@ -13,6 +13,8 @@
   ],
   "extends": ["plugin:react/recommended"],
   "rules": {
+    "react/prop-types": "off",
+
     "comma-dangle": "off",
     "no-cond-assign": "error",
     "no-console": "off",

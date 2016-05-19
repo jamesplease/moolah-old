@@ -13,7 +13,7 @@ import ProfileSubheader from './profile/components/subheader';
 import Profile from './profile/components/profile';
 import AnalyticsSubheader from './analytics/components/subheader';
 import Analytics from './analytics/components/analytics';
-// import TransactionsSubheader from './transactions/components/subheader';
+import TransactionsSubheader from './transactions/components/subheader';
 import Transactions from './transactions/components/transactions';
 import Layout from './common/components/layout';
 import About from './meta/components/about';
@@ -32,16 +32,16 @@ render((
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Layout}>
-        <IndexRoute component={Dashboard}/>
-        <Route path="/transactions" component={Transactions}/>
-        <Route path="/categories" component={Categories}/>
-        <Route path="/analytics" component={Analytics}/>
-        <Route path="/profile" component={Profile}/>
-        <Route path="/contact" component={Contact}/>
-        <Route path="/privacy" component={Privacy}/>
-        <Route path="/about" component={About}/>
-        <Route path="/terms" component={Terms}/>
-        <Route path="*" component={App}/>
+        <IndexRoute components={{main: Dashboard, subheader: DashboardSubheader}}/>
+        <Route path="/transactions" components={{main: Transactions, subheader: TransactionsSubheader}}/>
+        <Route path="/categories" components={{main: Categories, subheader: CategoriesSubheader}}/>
+        <Route path="/analytics" components={{main: Analytics, subheader: AnalyticsSubheader}}/>
+        <Route path="/profile" components={{main: Profile, subheader: ProfileSubheader}}/>
+        <Route path="/contact" components={{main: Contact}}/>
+        <Route path="/privacy" components={{main: Privacy}}/>
+        <Route path="/about" components={{main: About}}/>
+        <Route path="/terms" components={{main: Terms}}/>
+        <Route path="*" components={{main: App}}/>
       </Route>
     </Router>
   </Provider>

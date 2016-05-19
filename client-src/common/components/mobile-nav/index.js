@@ -14,7 +14,7 @@ export function MobileNav({isMobileMenuVisible}) {
       <Nav/>
     </div>
   );
-};
+}
 
 function mapStateToProps(state) {
   return {isMobileMenuVisible: state.ui.isMobileMenuVisible};
