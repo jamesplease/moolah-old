@@ -1,14 +1,14 @@
-import yo from 'yo-yo';
+import React from 'react';
 
 export default () => {
-  return yo`
+  return (
     <div className="lots-of-text">
-    <h1>
-      About
-    </h1>
-    <p>
-      About placeholder.
-    </p>
-  </div>
-  `;
+      <h1>
+        About
+      </h1>
+      <p>
+        About placeholder.
+      </p>
+    </div>
+  );
 };
