@@ -1,28 +1,44 @@
 footer
-  position fixed
-  bottom 0
-  left 0
+  color #afafaf
+  font-size 14px
   width 100%
-  background-color #fff
-  height 46px
-  line-height 46px
+  min-width 320px
+  background-color #fafafa
+  padding 12px 10px
   border-top 1px solid #e4e4e4
+  display block
 
-  > .container
-    height 49px
-    padding 0 8px
-    line-height 49px
+  +respond-from($m-screen-min)
+    display flex
+    padding-left 20px
+    padding-right 20px
+
+  .footer-copyright
+    font-size 13px
+    margin-bottom 5px
+
+  .footer-nav
+    +respond-from($m-screen-min)
+      margin-left auto
 
   ul
     display flex
 
     li
-      flex 1
+      flex 0
       text-align center
+      padding 0 10px
+
+      &:first-child
+        padding-left 0
+
+      &:last-child
+        padding-right 0
 
     a
       text-decoration none
-      color #aaa
+      color #737373
 
-      &.active
-        color #4cc1fc
+      &:hover
+        text-decoration underline
+        color #6a6a6a

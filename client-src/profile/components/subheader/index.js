@@ -2,10 +2,12 @@ import yo from 'yo-yo';
 
 export default function() {
   return yo`
-    <header className="app-header">
+    <div className="sub-header">
       <div className="container">
-        Analytics
+      <h1 className="subheader-title">
+        Profile
+      </h1>
       </div>
-    </header>
+    </div>
   `;
 }

@@ -1,5 +1,12 @@
 {
-  extends: "./setup/.globals.json",
+  "extends": "./setup/.globals.json",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
   "parser": "babel-eslint",
   "rules": {
     "strict": 0,

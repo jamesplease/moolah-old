@@ -11,6 +11,19 @@ $appPadding = 20px
 $rootFontSize = 15px
 $textColor = #000
 $lightTextColor = #aaa
-$linkColor = #71afcf
+$linkColor = #c7236c
 
 $borderColor = #e7e7e7
+
+// Responsive values. Pass these into the `respond-as()` mixin
+// to target the different screen sizes.
+$l-screen = __LARGE_SCREEN__
+$m-screen = __MEDIUM_SCREEN__
+$s-screen = __SMALL_SCREEN__
+
+// These values are used in the media queries outputted by the `respond-as()`
+// mixin.
+$l-screen-min = 1024px
+$m-screen-max = $l-screen-min - 1px
+$m-screen-min = 768px
+$s-screen-max = $m-screen-min - 1px

@@ -15,12 +15,18 @@ export default function() {
   const disabled = online ? false : true;
 
   return yo`
-    <header className="app-header">
+    <div className="sub-header">
       <div className="container">
-        <button className="create-new-transaction" onclick=${onClickNew} disabled=${disabled}>
-          + New Transaction
+        <h1 className="subheader-title">
+          Transactions
+        </h1>
+        <button
+          className="subheader-action"
+          onclick=${onClickNew}
+          disabled=${disabled}>
+          + Transaction
         </button>
       </div>
-    </header>
+    </div>
   `;
 }

@@ -4,6 +4,7 @@ import initialState from './initial-state';
 const routeMap = {
   '/': 'home',
   '/transactions': 'transactions',
+  '/categories': 'categories',
   '/analytics': 'analytics',
   '/profile': 'profile'
 };

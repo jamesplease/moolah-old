@@ -1,16 +1,29 @@
+*
+  box-sizing border-box
+
 html, body
   margin 0
   padding 0
 
+body
+  // 45px is the size of the header
+  padding-top 46px
+  min-height 100vh
+
 .container
   max-width $appWidth
   margin 0 auto
+  padding 0 10px
+
+  +respond-from($m-screen-min)
+    padding 0 20px
+
+.content-container
+  display flex
+  flex-direction column
+  // 45px for the fixed position header
+  min-height: calc(100vh - 46px);
 
 main
-  // 40px is the size of the header
-  padding-top 40px
-  margin-bottom 20px
-  padding-bottom 20px
-  border-bottom 1px solid #dedede
-  // Temporary code to test scrolling behavior on mobile
-  min-height 750px
+  padding 15px 0 20px
+  flex 1

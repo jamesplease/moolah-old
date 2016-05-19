@@ -2,10 +2,33 @@ html
   font-size $rootFontSize
   color $textColor
   font-family 'Source Sans Pro', sans-serif
+  -webkit-font-smoothing antialiased!important
 
 a
   color $linkColor
 
 h1
-  font-weight normal
   font-size 1.7rem
+
+h2
+  font-size 1.45rem
+
+h1, h2, h3, h4, h5, h6
+  font-weight normal
+
+.lots-of-text
+  color #666
+  line-height 1.8
+
+  p, h1, h2
+    margin-top 0
+
+  p:last-child
+    margin-bottom 0
+
+  h1, h2
+    margin-bottom 10px
+
+  +respond-from($m-screen-min)
+    width 80%
+    max-width 600px

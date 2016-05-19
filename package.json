@@ -1,5 +1,5 @@
 {
-  "name": "finance-app",
+  "name": "moolah",
   "version": "0.0.1",
   "description": "Track your finances.",
   "main": "client-dist/app.js",
@@ -22,15 +22,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jmeas/finance-app.git"
+    "url": "https://github.com/jmeas/moolah.git"
   },
   "keywords": [],
   "author": "Jmeas <jellyes2@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jmeas/finance-app/issues"
+    "url": "https://github.com/jmeas/moolah/issues"
   },
-  "homepage": "https://github.com/jmeas/finance-app",
+  "homepage": "https://github.com/jmeas/moolah",
   "devDependencies": {
     "babel-core": "^6.3.26",
     "babel-eslint": "6.0.2",
@@ -51,7 +51,6 @@
     "gulp-filter": "4.0.0",
     "gulp-if": "^2.0.0",
     "gulp-istanbul": "^0.10.3",
-    "gulp-jscs": "^3.0.0",
     "gulp-livereload": "^3.8.1",
     "gulp-load-plugins": "^1.1.0",
     "gulp-mocha": "^2.2.0",
@@ -60,7 +59,6 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-stylus": "^2.3.0",
     "gulp-uglify": "^1.5.1",
-    "gulp-util": "^3.0.7",
     "isparta": "^4.0.0",
     "json-loader": "^0.5.3",
     "mocha": "^2.3.4",
@@ -94,7 +92,7 @@
     "pg-promise": "3.7.5",
     "redux": "3.5.0",
     "redux-thunk": "2.0.1",
-    "sheet-router": "2.0.4",
+    "sheet-router": "^2.0.5",
     "throng": "3.0.0",
     "yo-yo": "1.1.1"
   }

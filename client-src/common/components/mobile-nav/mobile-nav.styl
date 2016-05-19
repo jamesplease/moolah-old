@@ -1,0 +1,32 @@
+.mobile-nav
+  position fixed
+  // The main nav has z-index 10000
+  z-index 20000
+  top 46px
+  left 0
+  right 0
+  background-color rgba(255, 255, 255, 0.95)
+  -webkit-backdrop-filter blur(2px)
+  height 0
+  overflow hidden
+  transition height 0.2s
+
+  &.visible
+    height calc(100vh - 45px)
+
+  .main-nav
+    margin 0 25px
+
+    li
+      padding 10px 0
+      border-bottom 1px solid #eee
+
+    a
+      color #e86a9a
+      text-decoration none
+      font-size 20px
+      padding 5px 5px
+      transition color 0.05s
+
+      &:hover
+        color #bd4f79

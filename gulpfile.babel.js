@@ -36,7 +36,9 @@ const stylusPaths = [
   './client-src/**/*.styl',
   // Ensure that we don't load up the variables file itself, which will error
   // when it tries to import itself
-  '!./client-src/variables.styl'
+  '!./client-src/variables.styl',
+  '!./client-src/prenib.styl',
+  '!./client-src/mixins.styl'
 ];
 
 function stylus() {
@@ -45,7 +47,7 @@ function stylus() {
     .pipe($.stylus({
       'include css': true,
       paths: ['node_modules'],
-      import: ['nib/index', 'variables'],
+      import: ['prenib', 'nib/index', 'variables', 'mixins'],
       compress: productionMode
     }))
     .pipe($.concat('style.css'))
@@ -62,21 +64,12 @@ function cleanTmp(done) {
   del(['tmp']).then(() => done());
 }
 
-function onError() {
-  $.util.beep();
-}
-
 // Lint a set of files
 function lint(files) {
   return gulp.src(files)
-    .pipe($.plumber())
     .pipe($.eslint())
     .pipe($.eslint.format())
-    .pipe($.eslint.failOnError())
-    .pipe($.jscs())
-    .pipe($.jscs.reporter())
-    .pipe($.jscs.reporter('fail'))
-    .on('error', onError);
+    .pipe($.eslint.failAfterError());
 }
 
 function lintServer() {
@@ -93,6 +86,11 @@ function lintTest() {
 
 function lintGulpfile() {
   return lint('gulpfile.babel.js');
+}
+
+function watch() {
+  gulp.watch('./client-src/**/*.styl', ['stylus']);
+  $.livereload.listen();
 }
 
 function buildJavaScript() {
@@ -175,7 +173,7 @@ function coverage(done) {
     });
 }
 
-const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintrc', '.jscsrc'];
+const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintrc'];
 
 // Run the headless unit tests as you make changes.
 function watchTests() {
@@ -234,11 +232,6 @@ function build(done) {
     ['stylus', 'build-javascript'],
     done
   );
-}
-
-function watch() {
-  gulp.watch('./client-src/**/*.styl', ['stylus']);
-  $.livereload.listen();
 }
 
 function work(done) {
