@@ -11,7 +11,7 @@ export function MobileNav({isMobileMenuVisible}) {
 
   return (
     <div className={mobileNavClass}>
-      <Nav/>
+      <Nav isMobileNav={true}/>
     </div>
   );
 }
