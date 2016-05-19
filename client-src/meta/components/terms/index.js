@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default () => {
+export default function Terms() {
   return (
     <div className="lots-of-text">
       <h1>
@@ -78,4 +78,4 @@ export default () => {
       </p>
     </div>
   );
-};
+}
