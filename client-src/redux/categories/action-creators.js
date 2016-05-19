@@ -1,27 +1,45 @@
 import actionTypes from './action-types';
 
+const mockCategories = [
+  {
+    id: 1,
+    label: 'Food',
+    emoji: 'apple'
+  },
+  {
+    id: 2,
+    label: 'Childcare',
+    emoji: null
+  },
+  {
+    id: 3,
+    label: 'Coffee',
+    emoji: 'coffee'
+  },
+];
+
+let lastId = 3;
+
 export function createCategory(data) {
   return dispatch => {
     dispatch({type: actionTypes.CREATE_CATEGORY});
 
-    fetch('/api/v1/categories', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(resp => resp.json())
-      .then(resp => {
-        dispatch({
-          type: actionTypes.CREATE_CATEGORY_SUCCESS,
-          category: resp.data
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.CREATE_CATEGORY_FAILURE
-      }));
+    const newId = ++lastId;
+
+    // Simulate fake network latency
+    window.setTimeout(() => {
+      const newCategory = {
+        ...data,
+        id: newId
+      };
+
+      mockCategories.push(newCategory);
+
+      dispatch({
+        type: actionTypes.CREATE_CATEGORY_SUCCESS,
+        category: newCategory
+      });
+    }, 1000);
   };
 }
 
@@ -29,17 +47,12 @@ export function retrieveCategories() {
   return dispatch => {
     dispatch({type: actionTypes.RETRIEVE_CATEGORIES});
 
-    fetch('/api/v1/categories')
-      .then(resp => resp.json())
-      .then(resp => {
-        dispatch({
-          type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-          categories: resp.data
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.RETRIEVE_CATEGORIES_FAILURE
-      }));
+    window.setTimeout(() => {
+      dispatch({
+        type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
+        categories: [...mockCategories]
+      });
+    }, 1200);
   };
 }
 
