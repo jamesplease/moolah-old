@@ -4,9 +4,14 @@
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
+      "experimentalObjectRestSpread": true,
+      "jsx": true
     }
   },
+  "plugins": [
+    "react"
+  ],
+  "extends": ["plugin:react/recommended"],
   "rules": {
     "comma-dangle": "off",
     "no-cond-assign": "error",
