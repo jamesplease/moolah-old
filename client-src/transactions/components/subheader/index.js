@@ -1,20 +1,20 @@
-import yo from 'yo-yo';
-import store from '../../../redux/store';
-import {createTransaction} from '../../../redux/transactions/action-creators';
+import React from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as transactionsActionsCreators from '../../../redux/transactions/action-creators';
 
-function onClickNew() {
-  store.dispatch(createTransaction({
-    value: Math.random(),
-    description: 'Hot off the press',
-    date: '2015-10-02'
-  }));
-}
+export function TransactionsSubheader({isOnline, transactionsActions}) {
+  const disabled = isOnline ? false : true;
 
-export default function() {
-  const online = store.getState().connection;
-  const disabled = online ? false : true;
+  function onClickNew() {
+    transactionsActions.createTransaction({
+      value: Math.random(),
+      description: 'Hot off the press',
+      date: '2015-10-02'
+    });
+  }
 
-  return yo`
+  return (
     <div className="sub-header">
       <div className="container">
         <h1 className="subheader-title">
@@ -22,11 +22,25 @@ export default function() {
         </h1>
         <button
           className="subheader-action"
-          onclick=${onClickNew}
-          disabled=${disabled}>
+          onClick={onClickNew}
+          disabled={disabled}>
           + Transaction
         </button>
       </div>
     </div>
-  `;
+  );
 }
+
+function mapStateToProps(state) {
+  return {
+    isOnline: state.connection
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    transactionsActions: bindActionCreators(transactionsActionsCreators, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsSubheader);

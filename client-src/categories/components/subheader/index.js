@@ -1,7 +1,7 @@
-import yo from 'yo-yo';
+import React from 'react';
 
-export default function() {
-  return yo`
+export default function CategoriesSubheader() {
+  return (
     <div className="sub-header">
       <div className="container">
       <h1 className="subheader-title">
@@ -9,5 +9,5 @@ export default function() {
       </h1>
       </div>
     </div>
-  `;
+  );
 }

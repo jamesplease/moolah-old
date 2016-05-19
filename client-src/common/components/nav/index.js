@@ -1,46 +1,42 @@
-import yo from 'yo-yo';
-import classNames from 'classnames';
-import store from '../../../redux/store';
+import React from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import * as uiActionCreators from '../../../redux/ui/action-creators';
 
-function onClickNavItem() {
-  store.dispatch(uiActionCreators.toggleMobileMenu(false));
-}
+export function Nav({uiActions}) {
+  // This ensures that the mobile nav gets closed anytime a link is clicked
+  function onClickNavItem() {
+    uiActions.toggleMobileMenu(false);
+  }
 
-export default () => {
-  const routeName = store.getState().history.routeName;
-
-  const transactionsClass = classNames({
-    active: routeName === 'transactions'
-  });
-
-  const categoriesClass = classNames({
-    active: routeName === 'categories'
-  });
-
-  const analyticsClass = classNames({
-    active: routeName === 'analytics'
-  });
-
-  return yo`
+  return (
     <nav className="main-nav">
       <ul className="main-nav-list">
         <li>
-          <a href="/transactions" className="${transactionsClass}" onclick=${onClickNavItem}>
+          <Link to="/transactions" onClick={onClickNavItem} activeClassName="active">
             Transactions
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/categories" className="${categoriesClass}" onclick=${onClickNavItem}>
+          <Link to="/categories" onClick={onClickNavItem} activeClassName="active">
             Categories
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/analytics" className="${analyticsClass}" onclick=${onClickNavItem}>
+          <Link to="/analytics" onClick={onClickNavItem} activeClassName="active">
             Analytics
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
-  `;
+  );
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    uiActions: bindActionCreators(uiActionCreators, dispatch)
+  };
+}
+
+export default connect(null, mapDispatchToProps, null, {pure: false})(Nav);

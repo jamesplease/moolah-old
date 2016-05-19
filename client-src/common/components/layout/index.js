@@ -1,28 +1,24 @@
-import yo from 'yo-yo';
-
+import React from 'react';
 import Header from '../header';
 import Footer from '../footer';
 import Alert from '../alert';
 import MobileNav from '../mobile-nav';
 
-export default function({ header, content }) {
-  const footer = new Footer();
-  const alert = new Alert();
-
-  return yo`
-    <div id="root">
-      ${new Header()}
-      ${MobileNav()}
-      ${alert}
+export default function Layout({main, subheader}) {
+  return (
+    <div>
+      <Header/>
+      <MobileNav/>
+      <Alert/>
       <div className="content-container">
-        ${header ? header() : null}
+        {subheader}
         <main>
           <div className="container">
-            ${content()}
+            {main}
           </div>
         </main>
-        ${footer}
+        <Footer/>
       </div>
     </div>
-  `;
+  );
 }

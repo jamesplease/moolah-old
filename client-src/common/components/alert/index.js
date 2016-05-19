@@ -1,17 +1,26 @@
-import yo from 'yo-yo';
-import store from '../../../redux/store';
+import React from 'react';
+import classNames from 'classnames';
+import {connect} from 'react-redux';
 
-export default function() {
-  const online = store.getState().connection;
-  var className = 'alert warning';
-  if (!online) {
-    className += ' visible';
-  }
+export function Alert({connection}) {
+  const alertClass = classNames({
+    alert: true,
+    warning: true,
+    visible: !connection
+  });
 
-  return yo`
-    <div className="${className}">
-      <i class="zmdi zmdi-alert-triangle alert-icon"></i>
+  return (
+    <div className={alertClass}>
+      <i className="zmdi zmdi-alert-triangle alert-icon"></i>
       You seem to have lost connection.
     </div>
-  `;
+  );
 }
+
+function mapStateToProps(state) {
+  return {
+    connection: state.connection
+  };
+}
+
+export default connect(mapStateToProps)(Alert);

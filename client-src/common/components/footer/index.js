@@ -1,35 +1,36 @@
-import yo from 'yo-yo';
+import React from 'react';
+import {Link} from 'react-router';
 
-export default function() {
-  return yo`
+export default function Footer() {
+  return (
     <footer>
-    <div className="footer-copyright">
-      Copyright © Moolah 2016. All rights reserved.
-    </div>
-    <nav className="footer-nav">
-      <ul>
-        <li>
-          <a href="/terms">
-            Terms
-          </a>
-        </li>
-        <li>
-          <a href="/privacy">
-            Privacy
-          </a>
-        </li>
-        <li>
-          <a href="/about">
-            About
-          </a>
-        </li>
-        <li>
-          <a href="/contact">
-            Contact
-          </a>
-        </li>
-      </ul>
-    </nav>
+      <div className="footer-copyright">
+        Copyright © Moolah 2016. All rights reserved.
+      </div>
+      <nav className="footer-nav">
+        <ul>
+          <li>
+            <Link to="/terms">
+              Terms
+            </Link>
+          </li>
+          <li>
+            <Link to="/privacy">
+              Privacy
+            </Link>
+          </li>
+          <li>
+            <Link to="/about">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/contact">
+              Contact
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </footer>
-  `;
+  );
 }

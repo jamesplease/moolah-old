@@ -1,35 +1,34 @@
-import yo from 'yo-yo';
+import React from 'react';
 import serialize from 'form-serialize';
 
-import store from '../../../redux/store';
-import {deleteTransaction, updateTransaction} from '../../../redux/transactions/action-creators';
+export default function Transaction(props) {
+  const {transaction, deleteTransaction, updateTransaction} = props;
 
-export default function(transaction) {
   function deleteSelf() {
-    store.dispatch(deleteTransaction(transaction.id));
+    deleteTransaction(transaction.id);
   }
 
-  const id = `transaction-form-${transaction.id}`;
+  const formId = `transaction-form-${transaction.id}`;
 
   function updateSelf() {
-    let form = document.getElementById(id);
+    let form = document.getElementById(formId);
     let formData = serialize(form, {hash: true});
-    store.dispatch(updateTransaction(transaction.id, formData));
+    updateTransaction(transaction.id, formData);
   }
 
-  return yo`
+  return (
     <li className="transaction">
-      <form id="${id}" className="transaction-form">
-        <input className="transaction-date" value="${transaction.date}" name="date"/>
-        <input className="transaction-description" value="${transaction.description}" name="description"/>
-        <input className="transaction-value" value="${transaction.value}" name="value"/>
+      <form id={formId} className="transaction-form">
+        <input className="transaction-date" value={transaction.date} name="date"/>
+        <input className="transaction-description" value={transaction.description} name="description"/>
+        <input className="transaction-value" value={transaction.value} name="value"/>
       </form>
-      <button className="save-transaction" onclick=${updateSelf}>
+      <button className="save-transaction" onClick={updateSelf}>
         Save
       </button>
-      <button className="delete-transaction" onclick=${deleteSelf}>
+      <button className="delete-transaction" onClick={deleteSelf}>
         Delete
       </button>
     </li>
-  `;
+  );
 }
