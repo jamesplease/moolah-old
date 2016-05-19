@@ -14,25 +14,39 @@ function getTransactionsList(transactions, transactionsActions) {
   ));
 }
 
+function getLoadingState() {
+  return (<div>Loading transactions.</div>);
+}
+
 function getEmptyTransactions() {
   return (<div>There are no transactions.</div>);
 }
 
-export function Transactions({transactions, transactionsActions}) {
-  var children;
+export const Transactions = React.createClass({
+  componentDidMount() {
+    const {transactionsActions} = this.props;
+    transactionsActions.retrieveTransactions();
+  },
 
-  if (transactions && transactions.length) {
-    children = getTransactionsList(transactions, transactionsActions);
-  } else {
-    children = getEmptyTransactions();
+  render() {
+    const {transactions, transactionsActions} = this.props;
+    var children;
+
+    if (!transactions) {
+      children = getLoadingState();
+    } else if (!transactions.length) {
+      children = getEmptyTransactions();
+    } else {
+      children = getTransactionsList(transactions, transactionsActions);
+    }
+
+    return (
+      <ul className="transactions">
+        {children}
+      </ul>
+    );
   }
-
-  return (
-    <ul className="transactions">
-      {children}
-    </ul>
-  );
-}
+});
 
 function mapStateToProps(state) {
   return {
