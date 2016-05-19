@@ -1,9 +1,9 @@
-import yo from 'yo-yo';
+import React from 'react';
 
-export default function() {
-  return yo`
-  <div className="dashboard-content">
-    Dashboard is here
-  </div>
-  `;
+export default function Dashboard() {
+  return (
+    <div className="dashboard-content">
+      Dashboard is here
+    </div>
+  );
 }

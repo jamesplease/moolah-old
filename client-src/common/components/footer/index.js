@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 export default function Footer() {
   return (
@@ -9,24 +10,24 @@ export default function Footer() {
       <nav className="footer-nav">
         <ul>
           <li>
-            <a href="/terms">
+            <Link to="/terms">
               Terms
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/privacy">
+            <Link to="/privacy">
               Privacy
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/about">
+            <Link to="/about">
               About
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/contact">
+            <Link to="/contact">
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

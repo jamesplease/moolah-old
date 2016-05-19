@@ -1,9 +1,9 @@
-import yo from 'yo-yo';
+import React from 'react';
 
-export default function() {
-  return yo`
+export default function Profile() {
+  return (
     <div className="profile">
       Profile is here
     </div>
-  `;
+  );
 }

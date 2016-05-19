@@ -1,20 +1,23 @@
-import yo from 'yo-yo';
+import React from 'react';
+import {connect} from 'react-redux';
 import classNames from 'classnames';
 import Nav from '../nav';
-import store from '../../../redux/store';
 
-export default () => {
-  const uiState = store.getState().ui;
-  const isMobileMenuVisible = uiState.isMobileMenuVisible;
-
+export function MobileNav({isMobileMenuVisible}) {
   const mobileNavClass = classNames({
     'mobile-nav': true,
     visible: isMobileMenuVisible
   });
 
-  return yo`
-    <div className="${mobileNavClass}">
-      ${Nav()}
+  return (
+    <div className={mobileNavClass}>
+      <Nav/>
     </div>
-  `;
+  );
 };
+
+function mapStateToProps(state) {
+  return {isMobileMenuVisible: state.ui.isMobileMenuVisible};
+}
+
+export default connect(mapStateToProps)(MobileNav);
