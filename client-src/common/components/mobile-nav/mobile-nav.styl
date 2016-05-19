@@ -1,14 +1,18 @@
 .mobile-nav
-  display none
   position fixed
   // The main nav has z-index 10000
   z-index 20000
   top 46px
   left 0
   right 0
-  min-height calc(100vh - 45px)
   background-color rgba(255, 255, 255, 0.95)
   -webkit-backdrop-filter blur(2px)
+  height 0
+  overflow hidden
+  transition height 0.2s
+
+  &.visible
+    height calc(100vh - 45px)
 
   .main-nav
     margin 0 25px
