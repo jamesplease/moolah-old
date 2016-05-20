@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import {Router, Route, IndexRoute, browserHistory, Redirect} from 'react-router';
 
 import DashboardSubheader from './dashboard/components/subheader';
 import Dashboard from './dashboard/components/dashboard';
@@ -41,6 +41,7 @@ render((
         <Route path="/privacy" components={{main: Privacy}}/>
         <Route path="/about" components={{main: About}}/>
         <Route path="/terms" components={{main: Terms}}/>
+        <Redirect from="/dashboard" to="/" />
         <Route path="*" components={{main: App}}/>
       </Route>
     </Router>

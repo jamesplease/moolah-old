@@ -21,7 +21,7 @@ export function TransactionsSubheader({isOnline, transactionsActions}) {
           Transactions
         </h1>
         <button
-          className="subheader-action"
+          className="subheader-action btn btn-line"
           onClick={onClickNew}
           disabled={disabled}>
           + Transaction
