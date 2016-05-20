@@ -1,5 +1,5 @@
 export default {
-  categories: null,
+  categories: [],
 
   creatingCategory: false,
   createCategorySuccess: false,
