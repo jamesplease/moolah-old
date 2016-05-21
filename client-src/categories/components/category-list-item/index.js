@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function CategoryListItem(props) {
   const {
-    category, categoriesActions,
+    category, categoriesActions, alertActions,
     currentlyDeleting, isOnline
   } = props;
 

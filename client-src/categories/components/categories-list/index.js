@@ -3,7 +3,7 @@ import CategoryListItem from '../category-list-item';
 
 export default function CategoriesList(props) {
   const {
-    categories, categoriesActions,
+    categories, categoriesActions, alertActions,
     currentlyDeleting, isOnline
   } = props;
 
@@ -14,6 +14,7 @@ export default function CategoriesList(props) {
           isOnline={isOnline}
           category={category}
           key={category.id}
+          alertActions={alertActions}
           categoriesActions={categoriesActions}
           currentlyDeleting={currentlyDeleting}/>
       ))}
