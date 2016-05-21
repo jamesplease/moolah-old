@@ -13,21 +13,30 @@ export const Categories = React.createClass({
   },
 
   render() {
-    if (this.props.retrievingCategories) {
+    const {
+      retrievingCategories, categories,
+      categoriesActions, currentlyDeleting
+    } = this.props;
+
+    if (retrievingCategories) {
       return <LoadingCategories/>;
     }
 
-    if (!this.props.categories.length) {
+    if (!categories.length) {
       return <EmptyCategories/>;
     }
 
-    return (<CategoriesList categories={this.props.categories}/>);
+    return (<CategoriesList
+        categories={categories}
+        categoriesActions={categoriesActions}
+        currentlyDeleting={currentlyDeleting}/>);
   }
 });
 
 function mapStateToProps(state) {
   return {
     categories: state.categories.categories,
+    currentlyDeleting: state.categories.currentlyDeleting,
     retrievingCategories: state.categories.retrievingCategories
   };
 }

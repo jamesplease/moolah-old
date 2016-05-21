@@ -158,7 +158,6 @@ export default (state = initialState, action) => {
       let current = state.currentlyDeleting;
       let id = action.categoryId;
       let currentlyDeleting = _.without(current, id);
-      currentlyDeleting.push(action.category);
 
       const rejectionFn = val => val.id === action.categoryId;
       let categories = _.reject(state.categories, rejectionFn);

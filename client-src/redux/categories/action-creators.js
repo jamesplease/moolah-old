@@ -44,26 +44,13 @@ export function updateCategory(categoryId, data) {
   return dispatch => {
     dispatch({type: actionTypes.UPDATE_CATEGORY, categoryId});
 
-    fetch(`/api/v1/categories/${categoryId}`, {
-      method: 'PATCH',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(resp => resp.json())
-      .then(resp => {
-        dispatch({
-          type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-          categoryId,
-          category: resp.data
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.UPDATE_CATEGORY_FAILURE,
+    window.setTimeout(() => {
+      // This needs to send the updated category
+      dispatch({
+        type: actionTypes.UPDATE_CATEGORY_SUCCESS,
         categoryId
-      }));
+      });
+    }, 1000);
   };
 }
 
@@ -71,16 +58,11 @@ export function deleteCategory(categoryId) {
   return dispatch => {
     dispatch({type: actionTypes.DELETE_CATEGORY, categoryId});
 
-    fetch(`/api/v1/categories/${categoryId}`, {method: 'DELETE'})
-      .then(() => {
-        dispatch({
-          type: actionTypes.DELETE_CATEGORY_SUCCESS,
-          categoryId
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.DELETE_CATEGORY_FAILURE,
+    window.setTimeout(() => {
+      dispatch({
+        type: actionTypes.DELETE_CATEGORY_SUCCESS,
         categoryId
-      }));
+      });
+    }, 1000);
   };
 }

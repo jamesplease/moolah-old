@@ -158,7 +158,6 @@ export default (state = initialState, action) => {
       let current = state.currentlyDeleting;
       let id = action.transactionId;
       let currentlyDeleting = _.without(current, id);
-      currentlyDeleting.push(action.transaction);
 
       const rejectionFn = val => val.id === action.transactionId;
       let transactions = _.reject(state.transactions, rejectionFn);
