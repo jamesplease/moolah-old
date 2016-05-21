@@ -5,11 +5,13 @@ import connection from './connection/reducer';
 import categories from './categories/reducer';
 import transactions from './transactions/reducer';
 import history from './history/reducer';
+import alert from './alert/reducer';
 import ui from './ui/reducer';
 
 const reducers = combineReducers({
   transactions, categories,
-  connection, history, ui
+  connection, history, ui,
+  alert
 });
 
 export default createStore(

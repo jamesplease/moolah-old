@@ -15,17 +15,15 @@ export default function Alert(props) {
     visible,
     style,
     icon,
-    text
+    text,
+    undoCallback,
+    isDismissable
   } = props;
-
-  if (!visible) {
-    return null;
-  }
 
   const alertClass = classNames({
     alert: true,
     [style]: true,
-    visible: visible
+    visible
   });
 
   // If the user has passed an `icon`, then we use that value
@@ -38,10 +36,28 @@ export default function Alert(props) {
     [materialIconClass]: true
   });
 
+  let undoText;
+  if (undoCallback) {
+    undoText = (
+      <button className="alert-undo" onClick={undoCallback}>
+        Undo
+      </button>
+    );
+  }
+
+  let dismissIcon;
+  if (isDismissable) {
+    dismissIcon = (
+      <i className="zmdi zmdi-close"/>
+    );
+  }
+
   return (
     <div className={alertClass}>
       <i className={iconClass}></i>
       {text}
+      {undoText}
+      {dismissIcon}
     </div>
   );
 }
