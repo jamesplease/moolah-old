@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 
 export default function CategoryListItem(props) {

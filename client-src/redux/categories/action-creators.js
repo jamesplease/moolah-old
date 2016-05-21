@@ -34,13 +34,13 @@ export function retrieveCategories() {
     window.setTimeout(() => {
       dispatch({
         type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        categories: [...mockCategories]
+        categories: []
       });
     }, 1200);
   };
 }
 
-export function updateCategory(categoryId, data) {
+export function updateCategory(categoryId) {
   return dispatch => {
     dispatch({type: actionTypes.UPDATE_CATEGORY, categoryId});
 
