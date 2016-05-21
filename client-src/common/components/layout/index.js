@@ -5,11 +5,17 @@ import Alert from '../alert';
 import MobileNav from '../mobile-nav';
 
 export default function Layout({main, subheader}) {
+  const alertProps = {
+    visible: true,
+    style: 'info',
+    text: 'An update was installed'
+  };
+
   return (
     <div>
       <Header/>
       <MobileNav/>
-      <Alert/>
+      <Alert {...alertProps}/>
       <div className="content-container">
         {subheader}
         <main>

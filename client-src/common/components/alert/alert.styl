@@ -1,15 +1,16 @@
 .alert
-  display none
   position fixed
   top 46px
   left 0
-  height 48px
+  height 0
+  overflow hidden
   width 100%
   padding 0 15px
   line-height 48px
   text-align center
   color #fff
   z-index 100
+  transition height 0.25s
 
   &.warning
     background radial-gradient(circle at top right, #ffa648, #ff7f1b)
@@ -20,9 +21,13 @@
   &.success
     background radial-gradient(circle at top right, #a6d659, #37b645)
 
+  &.info
+    background radial-gradient(circle at top right, #36c7f4, #6593f0)
+
+  // When this becomes visible, the `content-container` scoots down to make
+  // room. This behavior is specified in `scaffolding.styl`
   &.visible
-    display block
-    opacity 1
+    height 48px
 
   .alert-icon
-    margin-right 3px
+    margin-right 7px

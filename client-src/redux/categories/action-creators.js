@@ -34,7 +34,7 @@ export function retrieveCategories() {
     window.setTimeout(() => {
       dispatch({
         type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        categories: []
+        categories: [...mockCategories]
       });
     }, 1200);
   };
