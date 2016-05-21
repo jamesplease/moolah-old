@@ -1,14 +1,23 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Header from '../header';
 import Footer from '../footer';
 import Alert from '../alert';
 import MobileNav from '../mobile-nav';
 
-export default function Layout({main, subheader}) {
+export function Layout(props) {
+  const {
+    main,
+    subheader,
+    showAlert,
+    alertStyle,
+    alertText
+  } = props;
+
   const alertProps = {
-    visible: true,
-    style: 'info',
-    text: 'An update was installed'
+    visible: showAlert,
+    style: alertStyle,
+    text: alertText
   };
 
   return (
@@ -26,3 +35,13 @@ export default function Layout({main, subheader}) {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    showAlert: state.ui.showAlert,
+    alertStyle: state.ui.alertStyle,
+    alertText: state.ui.alertText
+  };
+}
+
+export default connect(mapStateToProps, null, null, {pure: false})(Layout);

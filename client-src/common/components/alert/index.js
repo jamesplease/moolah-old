@@ -18,6 +18,10 @@ export default function Alert(props) {
     text
   } = props;
 
+  if (!visible) {
+    return null;
+  }
+
   const alertClass = classNames({
     alert: true,
     [style]: true,
