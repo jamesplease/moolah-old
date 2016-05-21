@@ -14,7 +14,7 @@ export default function CategoriesSubheader() {
           Categories
         </h1>
         <button
-          className="subheader-action btn btn-line"
+          className="subheader-action btn"
           onClick={onClickNew}
           disabled={disabled}>
           + Category

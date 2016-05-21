@@ -3,7 +3,6 @@ header
   top 0
   right 0
   left 0
-  min-width 320px
   height 46px
   padding 0 10px
   background-color #fafafa
@@ -30,14 +29,17 @@ header
     font-weight bold
 
     a
-      font-size 21px
       primary-gradient-fill()
+      clip-bg-to-text()
+      font-size 21px
+
 
     +respond-from($m-screen-min)
       display block
 
   .mobile-menu-toggle
     primary-gradient-fill()
+    clip-bg-to-text()
 
     +respond-from($m-screen-min)
       display none
@@ -68,6 +70,8 @@ header
     align-items center
 
   .header-name
+    ellipsis()
+    max-width 150px
     margin-right 10px
 
   .header-profile-pic

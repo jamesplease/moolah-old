@@ -13,9 +13,7 @@ export default function Layout({main, subheader}) {
       <div className="content-container">
         {subheader}
         <main>
-          <div className="container">
-            {main}
-          </div>
+          {main}
         </main>
         <Footer/>
       </div>

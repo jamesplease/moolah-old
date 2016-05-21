@@ -1,24 +1,8 @@
 import actionTypes from './action-types';
+import mockCategories from '../mock/categories';
 
-const mockCategories = [
-  {
-    id: 1,
-    label: 'Food',
-    emoji: 'apple'
-  },
-  {
-    id: 2,
-    label: 'Childcare',
-    emoji: null
-  },
-  {
-    id: 3,
-    label: 'Coffee',
-    emoji: 'coffee'
-  },
-];
-
-let lastId = 3;
+let categoriesLength = mockCategories.length;
+let lastId = mockCategories[categoriesLength - 1].id;
 
 export function createCategory(data) {
   return dispatch => {
