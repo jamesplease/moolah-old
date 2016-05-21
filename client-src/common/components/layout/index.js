@@ -53,14 +53,20 @@ const Layout = React.createClass({
     const {
       main,
       subheader,
-      alertProps
+      alertProps,
+      alertActions
     } = this.props;
+
+    const allAlertProps = {
+      ...alertProps,
+      ...alertActions
+    };
 
     return (
       <div>
         <Header/>
         <MobileNav/>
-        <Alert {...alertProps}/>
+        <Alert {...allAlertProps}/>
         <div className="content-container">
           {subheader}
           <main>

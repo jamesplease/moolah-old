@@ -17,7 +17,8 @@ export default function Alert(props) {
     icon,
     text,
     undoCallback,
-    isDismissable
+    isDismissable,
+    dismissCurrentAlert
   } = props;
 
   const alertClass = classNames({
@@ -47,8 +48,15 @@ export default function Alert(props) {
 
   let dismissIcon;
   if (isDismissable) {
+    // If the modal is being hidden, then we can't dismiss it
+    const dismissDisabled = !visible;
     dismissIcon = (
-      <i className="zmdi zmdi-close alert-dismiss"/>
+      <button
+        className="alert-dismiss"
+        disabled={dismissDisabled}
+        onClick={() => dismissCurrentAlert()}>
+        <i className="zmdi zmdi-close"/>
+      </button>
     );
   }
 
