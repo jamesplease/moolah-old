@@ -2,13 +2,17 @@ import _ from 'lodash';
 import React from 'react';
 
 export default function CategoryListItem(props) {
-  const {category, categoriesActions, currentlyDeleting} = props;
+  const {
+    category, categoriesActions,
+    currentlyDeleting, isOnline
+  } = props;
 
   function onClickDelete() {
     categoriesActions.deleteCategory(category.id);
   }
 
   const isDeleting = _.includes(currentlyDeleting, category.id);
+  const deleteIsDisabled = isDeleting || !isOnline;
 
   return (
     <li className="resource-list-item category-list-item">
@@ -21,7 +25,7 @@ export default function CategoryListItem(props) {
       <button
         className="resource-list-item-delete"
         onClick={onClickDelete}
-        disabled={isDeleting}>
+        disabled={deleteIsDisabled}>
         Delete
       </button>
     </li>

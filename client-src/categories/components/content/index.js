@@ -15,7 +15,8 @@ export const Categories = React.createClass({
   render() {
     const {
       retrievingCategories, categories,
-      categoriesActions, currentlyDeleting
+      categoriesActions, currentlyDeleting,
+      isOnline
     } = this.props;
 
     if (retrievingCategories) {
@@ -27,14 +28,16 @@ export const Categories = React.createClass({
     }
 
     return (<CategoriesList
-        categories={categories}
-        categoriesActions={categoriesActions}
-        currentlyDeleting={currentlyDeleting}/>);
+      isOnline={isOnline}
+      categories={categories}
+      categoriesActions={categoriesActions}
+      currentlyDeleting={currentlyDeleting}/>);
   }
 });
 
 function mapStateToProps(state) {
   return {
+    isOnline: state.connection,
     categories: state.categories.categories,
     currentlyDeleting: state.categories.currentlyDeleting,
     retrievingCategories: state.categories.retrievingCategories
