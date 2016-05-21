@@ -48,15 +48,17 @@ export default function Alert(props) {
   let dismissIcon;
   if (isDismissable) {
     dismissIcon = (
-      <i className="zmdi zmdi-close"/>
+      <i className="zmdi zmdi-close alert-dismiss"/>
     );
   }
 
   return (
     <div className={alertClass}>
-      <i className={iconClass}></i>
-      {text}
-      {undoText}
+      <span className="alert-text">
+        <i className={iconClass}></i>
+        {text}
+        {undoText}
+      </span>
       {dismissIcon}
     </div>
   );

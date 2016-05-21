@@ -27,7 +27,6 @@ export default (state = initialState, action) => {
       else {
         return {
           ...state,
-          isDismissable: null,
           alertId: null,
           visible: false
         };
@@ -40,7 +39,6 @@ export default (state = initialState, action) => {
     case actionTypes.DISMISS_CURRENT_ALERT: {
       return {
         ...state,
-        isDismissable: null,
         alertId: null,
         visible: false
       };
