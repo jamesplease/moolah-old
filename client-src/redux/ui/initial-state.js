@@ -1,3 +1,7 @@
 export default {
-  isMobileMenuVisible: false
+  isMobileMenuVisible: false,
+
+  showAlert: false,
+  alertStyle: 'info',
+  alertText: ''
 };

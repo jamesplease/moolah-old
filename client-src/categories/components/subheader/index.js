@@ -1,11 +1,12 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-export default function CategoriesSubheader() {
+export function CategoriesSubheader({isOnline}) {
   function onClickNew() {
     console.log('clicked');
   }
 
-  const disabled = false;
+  const disabled = !isOnline;
 
   return (
     <div className="sub-header">
@@ -14,7 +15,7 @@ export default function CategoriesSubheader() {
           Categories
         </h1>
         <button
-          className="subheader-action btn btn-line"
+          className="subheader-action btn"
           onClick={onClickNew}
           disabled={disabled}>
           + Category
@@ -23,3 +24,11 @@ export default function CategoriesSubheader() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    isOnline: state.connection
+  };
+}
+
+export default connect(mapStateToProps)(CategoriesSubheader);

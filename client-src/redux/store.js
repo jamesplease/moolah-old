@@ -2,12 +2,16 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import connection from './connection/reducer';
+import categories from './categories/reducer';
 import transactions from './transactions/reducer';
 import history from './history/reducer';
+import alert from './alert/reducer';
 import ui from './ui/reducer';
 
 const reducers = combineReducers({
-  transactions, connection, history, ui
+  transactions, categories,
+  connection, history, ui,
+  alert
 });
 
 export default createStore(

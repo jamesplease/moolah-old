@@ -1,0 +1,29 @@
+.resource-list
+  margin 0
+  padding 0
+
+  .resource-list-item
+    padding 0
+    border-bottom 1px solid #eee
+
+    &:first-child
+      border-top 1px solid #eee
+
+  .resource-list-item-delete
+    font-size 15px
+    color #b5b5b5
+    cursor pointer
+    margin 0 15px 0 auto
+    width 50px
+    flex 0
+    transition color 0.25s
+
+    &[disabled]
+      color #dfdfdf
+
+// Resource list items have a top border. The subheader has a bottom border.
+// This rule makes it so that when the subheader and resource list are
+// visually next to one another, their borders overlap so as not to produce
+// a double-border effect.
+main > .resource-list:first-child
+  margin-top -1px

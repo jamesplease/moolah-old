@@ -22,8 +22,15 @@ body
   display flex
   flex-direction column
   // 45px for the fixed position header
-  min-height: calc(100vh - 46px);
+  min-height calc(100vh - 46px)
+  padding-top 0
+  transition padding 0.25s
+
+// When the alert is visible, we scoot down the content container
+// so that they don't overlap with one another.
+.alert.visible + .content-container
+  padding-top 48px
 
 main
-  padding 15px 0 20px
+  margin-bottom 36px
   flex 1
