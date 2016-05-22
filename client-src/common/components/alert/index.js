@@ -24,7 +24,8 @@ export default function Alert(props) {
   const alertClass = classNames({
     alert: true,
     [style]: true,
-    visible
+    visible,
+    'dismissable-alert': isDismissable
   });
 
   // If the user has passed an `icon`, then we use that value

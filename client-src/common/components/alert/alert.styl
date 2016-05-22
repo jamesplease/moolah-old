@@ -32,9 +32,12 @@
 
   .alert-text
     flex 1
+    padding 0 15px 0 15px
+
+  &.dismissable-alert .alert-text
     // The left padding is so large to account for the space taken up
     // by the `dismiss` icon.
-    padding 0 15px 0 37px
+    padding-left 37px
 
   .alert-icon
     margin-right 7px
