@@ -1,29 +1,58 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Modal from '../../../common/components/modal';
 
-export function CategoriesSubheader({isOnline}) {
-  function onClickNew() {
-    console.log('clicked');
-  }
+const CategoriesSubheader = React.createClass({
+  getInitialState() {
+    return {
+      isModalOpen: false
+    };
+  },
 
-  const disabled = !isOnline;
+  onClickNew() {
+    this.setState({
+      isModalOpen: true
+    });
+  },
 
-  return (
-    <div className="sub-header">
-      <div className="container">
-        <h1 className="subheader-title">
-          Categories
-        </h1>
-        <button
-          className="subheader-action btn"
-          onClick={onClickNew}
-          disabled={disabled}>
-          + Category
-        </button>
+  createModal() {
+    const modalProps = {
+      children: (<div>What whaaaat</div>),
+      // Sets this modal as a "create" modal, which has a particular
+      // set of dimensions.
+      modalClassName: 'create-category-modal'
+    };
+
+    return (<Modal {...modalProps}/>);
+  },
+
+  render() {
+    const {isOnline} = this.props;
+
+    const disabled = !isOnline;
+
+    const modal = this.state.isModalOpen ? this.createModal() : null;
+
+    return (
+      <div className="sub-header">
+        {modal}
+        <div className="container">
+          <h1 className="subheader-title">
+            Categories
+          </h1>
+          <button
+            className="subheader-action btn"
+            onClick={this.onClickNew}
+            disabled={disabled}>
+            + Category
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+});
+
+export {CategoriesSubheader};
 
 function mapStateToProps(state) {
   return {
