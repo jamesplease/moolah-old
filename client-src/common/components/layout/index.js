@@ -54,10 +54,12 @@ const Layout = React.createClass({
       main,
       subheader,
       alertProps,
-      alertActions
+      alertActions,
+      dispatch
     } = this.props;
 
     const allAlertProps = {
+      dispatch,
       ...alertProps,
       ...alertActions
     };
@@ -90,7 +92,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     alertActions: bindActionCreators(alertActionCreators, dispatch),
-    connectionActions: bindActionCreators(connectionActionCreators, dispatch)
+    connectionActions: bindActionCreators(connectionActionCreators, dispatch),
+    dispatch
   };
 }
 

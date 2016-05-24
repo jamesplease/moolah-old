@@ -32,7 +32,7 @@ const CategoriesList = React.createClass({
     categoriesActions.deleteCategory(category.id);
   },
 
-  createModal() {
+  getDeleteModal() {
     const childrenProps = {
       onClickCancel: this.onClickModalCancel,
       onClickDelete: this.onClickModalDelete,
@@ -74,13 +74,13 @@ const CategoriesList = React.createClass({
       categories, currentlyDeleting, isOnline
     } = this.props;
 
-    const modal = this.state.isModalOpen ? this.createModal() : null;
+    const deleteModal = this.state.isModalOpen ? this.getDeleteModal() : null;
 
     const sortedCategories = _.sortBy(categories, 'label');
 
     return (
       <div className="categories-list resource-list-container">
-        {modal}
+        {deleteModal}
         <ul className="resource-list">
           {sortedCategories.map(category => (
             <CategoryListItem
