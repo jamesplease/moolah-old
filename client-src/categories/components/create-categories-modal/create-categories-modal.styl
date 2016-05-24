@@ -1,0 +1,27 @@
+.create-category-modal
+  width 255px
+
+.create-categories-modal
+
+  .create-categories-modal-emoji-select
+    width 34px
+    height 34px
+    line-height 34px
+    margin-right 10px
+    border 1px solid #bbb
+    border-radius 6px
+    text-align center
+    cursor pointer
+
+    &:hover
+      background #fafafa
+
+  .create-categories-modal-create,
+  .create-categories-modal-cancel
+    width 50%
+
+  .new-category-name
+    flex 1
+    // This ensures that the input doesn't force the emoji-select to be
+    // smaller than it needs to be
+    min-width 0
