@@ -13,7 +13,7 @@ export default function DeleteCategoryModal(props) {
   }
 
   return (
-    <div className="delete-categories-modal">
+    <div className="delete-category-modal">
       <h1 className="modal-title">
         Delete "{props.category.label}"?
       </h1>

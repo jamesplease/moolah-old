@@ -38,7 +38,7 @@ const CategoriesList = React.createClass({
 
     const modalProps = {
       children: (<DeleteCategoryModal {...childrenProps}/>),
-      modalClassName: 'delete-category-modal'
+      modalClassName: 'delete-category-modal-container'
     };
 
     return (<Modal {...modalProps}/>);

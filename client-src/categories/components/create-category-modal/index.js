@@ -13,13 +13,13 @@ export default function CreateCategoriesModal(props) {
   }
 
   return (
-    <div className="create-categories-modal">
+    <div className="create-category-modal">
       <h1 className="modal-title">
         New Category
       </h1>
       <form>
         <div className="form-row">
-          <div className="create-categories-modal-emoji-select">
+          <div className="create-category-modal-emoji-select">
             🙃
           </div>
           <input
@@ -28,10 +28,10 @@ export default function CreateCategoriesModal(props) {
             className="text-input new-category-name"/>
         </div>
         <div className="form-row">
-          <button onClick={onClickCancelBtn} className="btn btn-line create-categories-modal-cancel">
+          <button onClick={onClickCancelBtn} className="btn btn-line create-category-modal-cancel">
             Cancel
           </button>
-          <button onClick={onClickCreateBtn} className="btn create-categories-modal-create">
+          <button onClick={onClickCreateBtn} className="btn create-category-modal-confirm">
             Create
           </button>
         </div>

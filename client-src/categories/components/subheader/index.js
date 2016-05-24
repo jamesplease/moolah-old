@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
-import CreateCategoriesModal from '../create-categories-modal';
+import CreateCategoryModal from '../create-category-modal';
 
 const CategoriesSubheader = React.createClass({
   getInitialState() {
@@ -33,10 +33,8 @@ const CategoriesSubheader = React.createClass({
     };
 
     const modalProps = {
-      children: (<CreateCategoriesModal {...childrenProps}/>),
-      // Sets this modal as a "create" modal, which has a particular
-      // set of dimensions.
-      modalClassName: 'create-category-modal'
+      children: (<CreateCategoryModal {...childrenProps}/>),
+      modalClassName: 'create-category-modal-container'
     };
 
     return (<Modal {...modalProps}/>);
