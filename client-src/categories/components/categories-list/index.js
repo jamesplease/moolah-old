@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import CategoryListItem from '../category-list-item';
 import Modal from '../../../common/components/modal';
@@ -75,11 +76,13 @@ const CategoriesList = React.createClass({
 
     const modal = this.state.isModalOpen ? this.createModal() : null;
 
+    const sortedCategories = _.sortBy(categories, 'label');
+
     return (
       <div className="categories-list resource-list-container">
         {modal}
         <ul className="resource-list">
-          {categories.map(category => (
+          {sortedCategories.map(category => (
             <CategoryListItem
               isOnline={isOnline}
               category={category}
