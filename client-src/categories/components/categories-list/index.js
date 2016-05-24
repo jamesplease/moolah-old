@@ -26,14 +26,17 @@ const CategoriesList = React.createClass({
   },
 
   onClickModalDelete() {
-    console.log('deleting', this.state.categoryToDelete);
+    const {categoriesActions} = this.props;
+    const category = this.state.categoryToDelete;
+    categoriesActions.deleteCategory(category.id);
   },
 
   createModal() {
     const childrenProps = {
       onClickCancel: this.onClickModalCancel,
       onClickDelete: this.onClickModalDelete,
-      category: this.state.categoryToDelete
+      category: this.state.categoryToDelete,
+      currentlyDeleting: this.props.currentlyDeleting
     };
 
     const modalProps = {
@@ -42,6 +45,27 @@ const CategoriesList = React.createClass({
     };
 
     return (<Modal {...modalProps}/>);
+  },
+
+  // We check to see if there was a successful delete by comparing props.
+  // If there was, then we close the modal.
+  componentWillReceiveProps(nextProps) {
+    // If the modal isn't open, then there's nothing to check
+    if (this.state.isModalOpen === false) {
+      return;
+    }
+
+    const wasDeleting = this.props.currentlyDeleting;
+    const successfulDelete = nextProps.deleteCategorySuccess;
+
+    // If we were deleting, and the delete is successful, then we can
+    // close the modal.
+    if (wasDeleting && successfulDelete) {
+      this.setState({
+        isModalOpen: false,
+        categoryToDelete: null
+      });
+    }
   },
 
   render() {
