@@ -23,7 +23,7 @@ export default React.createClass({
     const modalClass = classNames({
       modal: true,
       [modalClassProp]: true
-    })
+    });
 
     // This is one component where the base element's class name isn't the
     // name of the component. That's because we need the overlay
