@@ -4,18 +4,25 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import * as uiActionCreators from '../../../redux/ui/action-creators';
 
-export function Nav({uiActions, isMobileNav}) {
+export function Nav({uiActions, isMobileNav, isHidden}) {
   // This ensures that the mobile nav gets closed anytime a link is clicked
   function onClickNavItem() {
     if (!isMobileNav) { return; }
     uiActions.toggleMobileMenu(false);
   }
 
+  // If the nav is hidden, then it cannot be tabbed to
+  const itemTabIndex = isHidden ? -1 : 0;
+
   let dashboardLink;
   if (isMobileNav) {
     dashboardLink = (
       <li>
-        <Link to="/" onClick={onClickNavItem} activeClassName="active">
+        <Link
+          to="/"
+          onClick={onClickNavItem}
+          activeClassName="active"
+          tabIndex={itemTabIndex}>
           Dashboard
         </Link>
       </li>
@@ -27,17 +34,29 @@ export function Nav({uiActions, isMobileNav}) {
       <ul className="main-nav-list">
         {dashboardLink}
         <li>
-          <Link to="/transactions" onClick={onClickNavItem} activeClassName="active">
+          <Link
+            to="/transactions"
+            onClick={onClickNavItem}
+            activeClassName="active"
+            tabIndex={itemTabIndex}>
             Transactions
           </Link>
         </li>
         <li>
-          <Link to="/categories" onClick={onClickNavItem} activeClassName="active">
+          <Link
+            to="/categories"
+            onClick={onClickNavItem}
+            activeClassName="active"
+            tabIndex={itemTabIndex}>
             Categories
           </Link>
         </li>
         <li>
-          <Link to="/analytics" onClick={onClickNavItem} activeClassName="active">
+          <Link
+            to="/analytics"
+            onClick={onClickNavItem}
+            activeClassName="active"
+            tabIndex={itemTabIndex}>
             Analytics
           </Link>
         </li>
