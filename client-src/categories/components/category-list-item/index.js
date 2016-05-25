@@ -3,13 +3,9 @@ import React from 'react';
 
 export default function CategoryListItem(props) {
   const {
-    category, categoriesActions,
-    currentlyDeleting, isOnline
+    category, isOnline, onClickDelete,
+    currentlyDeleting
   } = props;
-
-  function onClickDelete() {
-    categoriesActions.deleteCategory(category.id);
-  }
 
   const isDeleting = _.includes(currentlyDeleting, category.id);
   const deleteIsDisabled = isDeleting || !isOnline;
@@ -24,7 +20,7 @@ export default function CategoryListItem(props) {
       </span>
       <button
         className="resource-list-item-delete"
-        onClick={onClickDelete}
+        onClick={() => onClickDelete(category)}
         disabled={deleteIsDisabled}>
         Delete
       </button>

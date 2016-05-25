@@ -145,40 +145,31 @@ export default (state = initialState, action) => {
 
     // Delete category
     case actionTypes.DELETE_CATEGORY: {
-      let currentlyDeleting = [...state.currentlyDeleting];
-      currentlyDeleting.push(action.categoryId);
       return Object.assign({
         ...state,
         deletingCategory: true,
-        currentlyDeleting
+        currentlyDeleting: true
       });
     }
 
     case actionTypes.DELETE_CATEGORY_SUCCESS: {
-      let current = state.currentlyDeleting;
-      let id = action.categoryId;
-      let currentlyDeleting = _.without(current, id);
-
       const rejectionFn = val => val.id === action.categoryId;
       let categories = _.reject(state.categories, rejectionFn);
       return Object.assign({
         ...state,
         deletingCategory: false,
         deleteCategorySuccess: true,
-        currentlyDeleting,
+        currentlyDeleting: false,
         categories
       });
     }
 
     case actionTypes.DELETE_CATEGORY_FAILURE: {
-      let current = state.currentlyDeleting;
-      let id = action.categoryId;
-      let currentlyDeleting = _.without(current, id);
       return Object.assign({
         ...state,
         deletingCategory: false,
         deleteCategoryFailure: true,
-        currentlyDeleting
+        currentlyDeleting: false
       });
     }
 

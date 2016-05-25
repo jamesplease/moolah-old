@@ -1,29 +1,72 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Modal from '../../../common/components/modal';
+import CreateCategoryModal from '../create-category-modal';
 
-export function CategoriesSubheader({isOnline}) {
-  function onClickNew() {
-    console.log('clicked');
-  }
+const CategoriesSubheader = React.createClass({
+  getInitialState() {
+    return {
+      isModalOpen: false
+    };
+  },
 
-  const disabled = !isOnline;
+  onClickNew() {
+    this.setState({
+      isModalOpen: true
+    });
+  },
 
-  return (
-    <div className="sub-header">
-      <div className="container">
-        <h1 className="subheader-title">
-          Categories
-        </h1>
-        <button
-          className="subheader-action btn"
-          onClick={onClickNew}
-          disabled={disabled}>
-          + Category
-        </button>
+  onClickModalCancel() {
+    this.setState({
+      isModalOpen: false
+    });
+  },
+
+  onClickModalCreate() {
+    console.log('creating');
+  },
+
+  createModal() {
+    const childrenProps = {
+      onClickCancel: this.onClickModalCancel,
+      onClickCreate: this.onClickModalCreate
+    };
+
+    const modalProps = {
+      children: (<CreateCategoryModal {...childrenProps}/>),
+      modalClassName: 'create-category-modal-container'
+    };
+
+    return (<Modal {...modalProps}/>);
+  },
+
+  render() {
+    const {isOnline} = this.props;
+
+    const disabled = !isOnline;
+
+    const modal = this.state.isModalOpen ? this.createModal() : null;
+
+    return (
+      <div className="sub-header">
+        {modal}
+        <div className="container">
+          <h1 className="subheader-title">
+            Categories
+          </h1>
+          <button
+            className="subheader-action btn"
+            onClick={this.onClickNew}
+            disabled={disabled}>
+            + Category
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+});
+
+export {CategoriesSubheader};
 
 function mapStateToProps(state) {
   return {

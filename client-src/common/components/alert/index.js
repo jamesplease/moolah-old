@@ -10,64 +10,82 @@ const defaultIconMap = {
   danger: 'zmdi-alert-circle-o',
 };
 
-export default function Alert(props) {
-  const {
-    visible,
-    style,
-    icon,
-    text,
-    undoCallback,
-    isDismissable,
-    dismissCurrentAlert
-  } = props;
+const Alert = React.createClass({
+  componentWillMount() {
+    // Dismissable alerts will dismiss themselves after 2 seconds
+    if (this.props.isDismissable) {
+      this._autodestruct = window.setTimeout(() => {
+        this.props.dismissCurrentAlert();
+      }, 2000);
+    }
+  },
 
-  const alertClass = classNames({
-    alert: true,
-    [style]: true,
-    visible
-  });
+  componentWillUnmount() {
+    window.clearTimeout(this._autodestruct);
+    this.props.showNextAlert();
+  },
 
-  // If the user has passed an `icon`, then we use that value
-  // for the class of the icon. Otherwise, we use the default value.
-  const materialIconClass = icon ? icon : defaultIconMap[style];
+  render() {
+    const {
+      style,
+      icon,
+      text,
+      alertIsActive,
+      undoCallback,
+      isDismissable,
+      dismissCurrentAlert
+    } = this.props;
 
-  const iconClass = classNames({
-    zmdi: true,
-    'alert-icon': true,
-    [materialIconClass]: true
-  });
+    const alertClass = classNames({
+      alert: true,
+      [style]: true,
+      'dismissable-alert': isDismissable
+    });
 
-  let undoText;
-  if (undoCallback) {
-    undoText = (
-      <button className="alert-undo" onClick={undoCallback}>
-        Undo
-      </button>
+    // If the user has passed an `icon`, then we use that value
+    // for the class of the icon. Otherwise, we use the default value.
+    const materialIconClass = icon ? icon : defaultIconMap[style];
+
+    const iconClass = classNames({
+      zmdi: true,
+      'alert-icon': true,
+      [materialIconClass]: true
+    });
+
+    let undoText;
+    if (undoCallback) {
+      undoText = (
+        <button className="alert-undo" onClick={undoCallback}>
+          Undo
+        </button>
+      );
+    }
+
+    let dismissIcon;
+    if (isDismissable) {
+      // If the modal is being hidden, then we can't dismiss it
+      const dismissDisabled = !alertIsActive;
+      dismissIcon = (
+        <button
+          className="alert-dismiss"
+          disabled={dismissDisabled}
+          onClick={() => dismissCurrentAlert()}>
+          <i className="zmdi zmdi-close"/>
+        </button>
+      );
+    }
+
+    return (
+      <div className={alertClass}>
+        <span className="alert-text">
+          <i className={iconClass}></i>
+          {text}
+          {undoText}
+        </span>
+        {dismissIcon}
+      </div>
     );
   }
+});
 
-  let dismissIcon;
-  if (isDismissable) {
-    // If the modal is being hidden, then we can't dismiss it
-    const dismissDisabled = !visible;
-    dismissIcon = (
-      <button
-        className="alert-dismiss"
-        disabled={dismissDisabled}
-        onClick={() => dismissCurrentAlert()}>
-        <i className="zmdi zmdi-close"/>
-      </button>
-    );
-  }
-
-  return (
-    <div className={alertClass}>
-      <span className="alert-text">
-        <i className={iconClass}></i>
-        {text}
-        {undoText}
-      </span>
-      {dismissIcon}
-    </div>
-  );
-}
+export default Alert;

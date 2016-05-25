@@ -1,7 +1,8 @@
 export default {
-  visible: false,
+  alertIsActive: false,
   isDismissable: null,
   text: '',
   style: '',
-  icon: ''
+  icon: '',
+  queue: []
 };
