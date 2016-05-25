@@ -11,22 +11,34 @@ const defaultIconMap = {
 };
 
 const Alert = React.createClass({
+  componentWillMount() {
+    // Dismissable alerts will dismiss themselves after 2 seconds
+    if (this.props.isDismissable) {
+      this._autodestruct = window.setTimeout(() => {
+        this.props.dismissCurrentAlert();
+      }, 2000);
+    }
+  },
+
+  componentWillUnmount() {
+    window.clearTimeout(this._autodestruct);
+    this.props.showNextAlert();
+  },
+
   render() {
     const {
-      visible,
       style,
       icon,
       text,
+      alertIsActive,
       undoCallback,
       isDismissable,
-      dismissCurrentAlert,
-      dispatch
+      dismissCurrentAlert
     } = this.props;
 
     const alertClass = classNames({
       alert: true,
       [style]: true,
-      visible,
       'dismissable-alert': isDismissable
     });
 
@@ -52,7 +64,7 @@ const Alert = React.createClass({
     let dismissIcon;
     if (isDismissable) {
       // If the modal is being hidden, then we can't dismiss it
-      const dismissDisabled = !visible;
+      const dismissDisabled = !alertIsActive;
       dismissIcon = (
         <button
           className="alert-dismiss"

@@ -2,7 +2,6 @@
   position fixed
   top 46px
   left 0
-  height 0
   overflow hidden
   width 100%
   line-height 48px
@@ -12,6 +11,20 @@
   display flex
   align-items center
   transition height 0.25s
+
+  // These classes are set by the ReactCSSTransitionGroup wrapper
+  &.alert-enter,
+  &.alert-appear,
+  &.alert-leave.alert-leave-active
+    height 0
+
+  // These classes are set by the ReactCSSTransitionGroup wrapper
+  &.alert-enter.alert-enter-active,
+  &.alert-appear.alert-appear-active,
+  &.alert-leave
+    // When this becomes visible, the `content-container` scoots down to make
+    // room. This behavior is specified in `scaffolding.styl`
+    height 48px
 
   &.warning
     background radial-gradient(circle at top right, #ffa648, #ff7f1b)
@@ -24,11 +37,6 @@
 
   &.info
     background radial-gradient(circle at top right, #36c7f4, #6593f0)
-
-  // When this becomes visible, the `content-container` scoots down to make
-  // room. This behavior is specified in `scaffolding.styl`
-  &.visible
-    height 48px
 
   .alert-text
     flex 1

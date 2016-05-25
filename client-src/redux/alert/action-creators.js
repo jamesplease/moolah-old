@@ -10,20 +10,20 @@ export function queueAlert(alertDescription) {
       ...alertDescription,
       alertId
     });
-
-    // Alerts display for 2 seconds unless `persistent` is passed.
-    if (!alertDescription.persistent) {
-      window.setTimeout(() => dispatch({
-        type: actionTypes.DISMISS_ALERT_BY_ID,
-        alertId
-      }), 2000);
-    }
   };
 }
 
-// Dismisses the current alert, showing the queued one, if it exists
+// Dismisses the current alert
 export function dismissCurrentAlert() {
   return {
     type: actionTypes.DISMISS_CURRENT_ALERT
+  };
+}
+
+// This checks if we have any queued alerts. If we do, it
+// shows them.
+export function showNextAlert() {
+  return {
+    type: actionTypes.SHOW_NEXT_ALERT
   };
 }

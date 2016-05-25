@@ -3,19 +3,38 @@ import actionTypes from './action-types';
 import initialState from './initial-state';
 
 const validActionProps = [
-  'text', 'style', 'isDismissable',
+  'text', 'style',
+  'isDismissable',
   'icon', 'alertId'
 ];
 
 export default (state = initialState, action) => {
-  const strippedAction = _.pick(action, validActionProps);
+  const alertAction = _.pick(action, validActionProps);
+
   switch (action.type) {
     case actionTypes.QUEUE_ALERT: {
-      return {
-        ...state,
-        ...strippedAction,
-        visible: true
-      };
+      let queue = [...state.queue];
+
+      // If we already have an alert, then this one
+      // isn't ready to be shown. Add it to the back of the
+      // alert queue, and that's that.
+      if (state.alertIsActive) {
+        queue.push(alertAction);
+        return {
+          ...state,
+          queue
+        }
+      }
+
+      // Otherwise, we can immediately show this alert. No need
+      // to queue!
+      else {
+        return {
+          ...state,
+          ...alertAction,
+          alertIsActive: true
+        }
+      }
     }
 
     case actionTypes.DISMISS_ALERT_BY_ID: {
@@ -28,7 +47,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           alertId: null,
-          visible: false
+          alertIsActive: false
         };
       }
     }
@@ -40,9 +59,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         alertId: null,
-        visible: false
+        alertIsActive: false
       };
     }
+
+    case actionTypes.SHOW_NEXT_ALERT: {
+      let nextAlert = state.queue[0];
+      if (!nextAlert) {
+        return state;
+      } else {
+        return {
+          ...state,
+          ...nextAlert,
+          queue: _.without(state.queue, nextAlert),
+          alertIsActive: true
+        };
+      }
+    }
+
     default: {
       return state;
     }
