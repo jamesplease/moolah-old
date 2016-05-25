@@ -11,7 +11,7 @@ export default function CategoryListItem(props) {
   const deleteIsDisabled = isDeleting || !isOnline;
 
   return (
-    <li className="resource-list-item category-list-item">
+    <div className="resource-list-item category-list-item">
       <span className="category-list-item-emoji">
         {category.emoji}
       </span>
@@ -24,6 +24,6 @@ export default function CategoryListItem(props) {
         disabled={deleteIsDisabled}>
         Delete
       </button>
-    </li>
+    </div>
   );
 }
