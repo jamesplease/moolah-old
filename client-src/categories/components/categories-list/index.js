@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import CategoryListItem from '../category-list-item';
 import Modal from '../../../common/components/modal';
 import DeleteCategoryModal from '../delete-category-modal';
@@ -60,11 +61,18 @@ const CategoriesList = React.createClass({
     const successfulDelete = nextProps.deleteCategorySuccess;
 
     // If we were deleting, and the delete is successful, then we can
-    // close the modal.
+    // close the modal and queue an alert.
     if (wasDeleting && successfulDelete) {
       this.setState({
         isModalOpen: false,
         categoryToDelete: null
+      });
+
+      this.props.alertActions.queueAlert({
+        text: 'Category deleted',
+        style: 'success',
+        isDismissable: true,
+        persistent: false
       });
     }
   },
@@ -78,19 +86,27 @@ const CategoriesList = React.createClass({
 
     const sortedCategories = _.sortBy(categories, 'label');
 
+    const transitionGroupProps = {
+      transitionName: 'resource-list-item',
+      transitionEnterTimeout: 250,
+      transitionLeaveTimeout: 250
+    };
+
     return (
       <div className="categories-list resource-list-container">
         {deleteModal}
-        <ul className="resource-list">
-          {sortedCategories.map(category => (
-            <CategoryListItem
-              isOnline={isOnline}
-              category={category}
-              key={category.id}
-              onClickDelete={this.onClickDelete}
-              currentlyDeleting={currentlyDeleting}/>
-          ))}
-        </ul>
+        <div className="resource-list">
+          <ReactCSSTransitionGroup {...transitionGroupProps}>
+            {sortedCategories.map(category => (
+              <CategoryListItem
+                isOnline={isOnline}
+                category={category}
+                key={category.id}
+                onClickDelete={this.onClickDelete}
+                currentlyDeleting={currentlyDeleting}/>
+            ))}
+          </ReactCSSTransitionGroup>
+        </div>
       </div>
     );
   }

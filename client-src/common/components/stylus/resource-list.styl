@@ -5,6 +5,19 @@
   .resource-list-item
     padding 0
     border-bottom 1px solid #eee
+    height 35px
+    transition height 0.25s
+    overflow hidden
+    display flex
+    align-items center
+
+    &.resource-list-item-enter,
+    &.resource-list-item-leave.resource-list-item-leave-active
+      height 0
+
+    &.resource-list-item-enter.resource-list-item-enter-active,
+    &.resource-list-item-leave
+      height 35px
 
     &:first-child
       border-top 1px solid #eee

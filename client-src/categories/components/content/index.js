@@ -1,6 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 import CategoriesList from '../categories-list';
 import LoadingCategories from '../loading-categories';
@@ -16,7 +17,7 @@ export const Categories = React.createClass({
     const {
       retrievingCategories, categories,
       categoriesActions, currentlyDeleting, isOnline,
-      deleteCategorySuccess
+      deleteCategorySuccess, alertActions
     } = this.props;
 
     if (retrievingCategories) {
@@ -32,6 +33,7 @@ export const Categories = React.createClass({
       categories={categories}
       deleteCategorySuccess={deleteCategorySuccess}
       categoriesActions={categoriesActions}
+      alertActions={alertActions}
       currentlyDeleting={currentlyDeleting}/>);
   }
 });
@@ -48,7 +50,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch)
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
   };
 }
 

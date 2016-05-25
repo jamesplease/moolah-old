@@ -1,5 +1,4 @@
 import actionTypes from './action-types';
-import * as alertActionCreators from '../alert/action-creators';
 import mockCategories from '../mock/categories';
 
 let categoriesLength = mockCategories.length;
@@ -60,16 +59,6 @@ export function deleteCategory(categoryId) {
     dispatch({type: actionTypes.DELETE_CATEGORY, categoryId});
 
     window.setTimeout(() => {
-      dispatch(alertActionCreators.queueAlert({
-        text: 'Category deleted',
-        style: 'success',
-        isDismissable: true,
-        persistent: false,
-        undoCallback() {
-          console.log('A request has been made to undo a Category delete.');
-        }
-      }));
-
       dispatch({
         type: actionTypes.DELETE_CATEGORY_SUCCESS,
         categoryId
