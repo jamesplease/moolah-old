@@ -36,7 +36,10 @@ function stylus() {
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('client-dist'))
     // Ensure that only the CSS files, and not source maps, are sent to
-    // livereload, otherwise there will be a hard page refresh 
+    // livereload, otherwise there will be a hard page refresh. Note that
+    // this causes the source mapped file to drift from what you're working on.
+    // I'm still using source maps because the file name itself rarely changes,
+    // and is useful for debugging.
     .pipe($.filter("**/*.css"))
     .pipe($.livereload());
 }
