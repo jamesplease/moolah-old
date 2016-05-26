@@ -17,8 +17,6 @@ export function createCategory(data) {
         id: newId
       };
 
-      mockCategories.push(newCategory);
-
       dispatch({
         type: actionTypes.CREATE_CATEGORY_SUCCESS,
         category: newCategory
@@ -28,13 +26,21 @@ export function createCategory(data) {
 }
 
 export function retrieveCategories() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({type: actionTypes.RETRIEVE_CATEGORIES});
 
     window.setTimeout(() => {
+      const existingCategories = getState().categories.categories;
+      let categories;
+      if (!existingCategories.length) {
+        categories = [...mockCategories];
+      } else {
+        categories = existingCategories;
+      }
+
       dispatch({
         type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        categories: [...mockCategories]
+        categories
       });
     }, 1200);
   };

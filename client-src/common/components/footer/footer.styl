@@ -4,14 +4,14 @@ footer
   width 100%
   min-width 320px
   background-color #fafafa
-  padding 12px 15px
   border-top 1px solid #e4e4e4
-  display block
+
+  > .container
+    padding 12px 15px
 
   +respond-from($m-screen-min)
-    display flex
-    padding-left 20px
-    padding-right 20px
+    > .container
+      display flex
 
   .footer-copyright
     font-size 13px
