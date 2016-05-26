@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {reduxForm} from 'redux-form';
@@ -33,6 +32,8 @@ const CreateCategoriesModal = React.createClass({
       'invalid-input': label.error && label.touched
     });
 
+    const createText = creatingCategory ? 'Creating...' : 'Create';
+
     return (
       <div className="create-category-modal">
         <h1 className="modal-title">
@@ -47,9 +48,12 @@ const CreateCategoriesModal = React.createClass({
               type="text"
               className={labelClass}
               placeholder="Enter name"
-              autocomplete={false}
-              autocorrect={true}
+              autoComplete="off"
+              autoCorrect={true}
+              spellCheck={true}
+              inputMode="verbatim"
               ref="labelInput"
+              maxLength={35}
               {...label}/>
           </div>
           <div className="form-row">
@@ -64,7 +68,7 @@ const CreateCategoriesModal = React.createClass({
               type="submit"
               className="btn create-category-modal-confirm"
               disabled={creatingCategory}>
-              Create
+              {createText}
             </button>
           </div>
         </form>
@@ -77,7 +81,7 @@ export { CreateCategoriesModal };
 
 const validate = values => {
   const errors = {}
-  if (!values.label) {
+  if (!values.label || !values.label.trim()) {
     errors.label = true;
   }
   return errors;

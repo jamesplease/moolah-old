@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
 import CreateCategoryModal from '../create-category-modal';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
 
 const CategoriesSubheader = React.createClass({
   getInitialState() {
@@ -30,8 +31,8 @@ const CategoriesSubheader = React.createClass({
       emoji: null,
       label: ''
     });
+    newCategory.label = newCategory.label.trim();
     this.props.categoriesActions.createCategory(newCategory);
-    // console.log('creating', fields, this.props.categoriesActions.createCategory);
   },
 
   createModal() {
@@ -56,12 +57,18 @@ const CategoriesSubheader = React.createClass({
       return false;
     }
 
-
     // If the creation was successful, then we can close the
     // modal.
     if (nextProps.createCategorySuccess) {
       this.setState({
         isModalOpen: false
+      });
+
+      this.props.alertActions.queueAlert({
+        text: 'Category created',
+        style: 'success',
+        isDismissable: true,
+        persistent: false
       });
     }
   },
@@ -105,7 +112,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch)
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
   };
 }
 
