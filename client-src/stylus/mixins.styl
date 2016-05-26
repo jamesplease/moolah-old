@@ -14,6 +14,19 @@ clip-bg-to-text()
   -webkit-background-clip text
   -webkit-text-fill-color transparent
 
+placeholder-color($color)
+  &::-webkit-input-placeholder
+     color $color
+
+  &:-moz-placeholder /* Firefox 18- */
+     color $color
+
+  &::-moz-placeholder  /* Firefox 19+ */
+     color $color
+
+  &:-ms-input-placeholder
+     color $color
+
 // `$width` must be a predefined variable defined in `variables.styl`.
 // This is a block mixin. To use it, prefix it with `+`. i.e.:
 // `+respond-to($s-screen-max)`

@@ -1,7 +1,11 @@
+import _ from 'lodash';
 import React from 'react';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
 import CreateCategoryModal from '../create-category-modal';
+import * as categoriesActionCreators from '../../../redux/categories/action-creators';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
 
 const CategoriesSubheader = React.createClass({
   getInitialState() {
@@ -22,14 +26,20 @@ const CategoriesSubheader = React.createClass({
     });
   },
 
-  onClickModalCreate() {
-    console.log('creating');
+  onClickModalCreate(fields) {
+    const newCategory = _.defaults(fields, {
+      emoji: null,
+      label: ''
+    });
+    newCategory.label = newCategory.label.trim();
+    this.props.categoriesActions.createCategory(newCategory);
   },
 
   createModal() {
     const childrenProps = {
       onClickCancel: this.onClickModalCancel,
-      onClickCreate: this.onClickModalCreate
+      onSubmit: this.onClickModalCreate,
+      creatingCategory: this.props.creatingCategory
     };
 
     const modalProps = {
@@ -38,6 +48,29 @@ const CategoriesSubheader = React.createClass({
     };
 
     return (<Modal {...modalProps}/>);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    // If we weren't previously trying to create a category,
+    // then there's nothing for us to check.
+    if (!this.props.creatingCategory) {
+      return false;
+    }
+
+    // If the creation was successful, then we can close the
+    // modal.
+    if (nextProps.createCategorySuccess) {
+      this.setState({
+        isModalOpen: false
+      });
+
+      this.props.alertActions.queueAlert({
+        text: 'Category created',
+        style: 'success',
+        isDismissable: true,
+        persistent: false
+      });
+    }
   },
 
   render() {
@@ -70,8 +103,18 @@ export {CategoriesSubheader};
 
 function mapStateToProps(state) {
   return {
-    isOnline: state.connection
+    isOnline: state.connection,
+    creatingCategory: state.categories.creatingCategory,
+    createCategorySuccess: state.categories.createCategorySuccess,
+    createCategoryFailure: state.categories.createCategoryFailure
   };
 }
 
-export default connect(mapStateToProps)(CategoriesSubheader);
+function mapDispatchToProps(dispatch) {
+  return {
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesSubheader);
