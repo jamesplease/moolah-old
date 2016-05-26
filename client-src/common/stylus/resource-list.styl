@@ -1,37 +1,7 @@
 .resource-list
+  background #fff
   margin 0
   padding 0
-
-  .resource-list-item
-    font-size 17px
-    padding 0
-    border-bottom 1px solid #eee
-    height 40px
-    transition height 0.25s
-    overflow hidden
-    display flex
-    align-items center
-
-    &.resource-list-item-enter,
-    &.resource-list-item-leave.resource-list-item-leave-active
-      height 0
-
-    &.resource-list-item-enter.resource-list-item-enter-active,
-    &.resource-list-item-leave
-      height 40px
-
-    &:first-child
-      border-top 1px solid #eee
-
-  .resource-list-item-delete
-    font-size 15px
-    color #b5b5b5
-    cursor pointer
-    margin 0 15px 0 auto
-    transition color 0.25s
-
-    &[disabled]
-      color #dfdfdf
 
 // Resource list items have a top border. The subheader has a bottom border.
 // This rule makes it so that when the subheader and resource list are
