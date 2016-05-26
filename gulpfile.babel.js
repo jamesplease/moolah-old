@@ -24,30 +24,12 @@ const exportFileName = path.basename(mainFile, path.extname(mainFile));
 
 var working = false;
 
-const stylusPaths = [
-  // Load our entrypoint first. This gives us an opportunity to load 3rd-party libraries,
-  // or whatever else needs to be loaded first
-  './client-src/index.styl',
-  // Next, we load the common stylus files. These might be depended upon by other files
-  './client-src/common/components/stylus/**/*.styl',
-  // Lastly, we pull in the stylus out of every pod. Variables are always loaded first, so
-  // that each pod can define its own variables
-  './client-src/**/variables.styl',
-  './client-src/**/*.styl',
-  // Ensure that we don't load up the variables file itself, which will error
-  // when it tries to import itself
-  '!./client-src/variables.styl',
-  '!./client-src/prenib.styl',
-  '!./client-src/mixins.styl'
-];
-
 function stylus() {
-  return gulp.src(stylusPaths)
+  return gulp.src('./client-src/stylus/index.styl')
     .pipe($.sourcemaps.init())
     .pipe($.stylus({
       'include css': true,
       paths: ['node_modules'],
-      import: ['prenib', 'nib/index', 'variables', 'mixins'],
       compress: productionMode
     }))
     .pipe($.concat('style.css'))
