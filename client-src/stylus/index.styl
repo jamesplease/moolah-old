@@ -6,15 +6,11 @@
 // The "./stylus" directory is for files that need to be either be loaded in a
 // specific order, or need to be loaded before the rest of the app.
 // Files that can be loaded in any order, and are scoped to a particular piece
-// of the application, should be placed into a pod.
+// of the application, should be placed into a pod. Shared "common" stylus
+// can be found in `./client-src/common/stylus`
 @import './variables';
 @import './mixins';
 @import './reset'
-@import './scaffolding'
-@import './typography'
-@import './subheader'
-@import './forms'
-@import './buttons'
 
 // Import all deeply nested stylus files.
 // Warning: using `**/*` would duplicate the above
