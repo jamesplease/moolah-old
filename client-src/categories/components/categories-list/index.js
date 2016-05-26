@@ -84,7 +84,8 @@ const CategoriesList = React.createClass({
 
     const deleteModal = this.state.isModalOpen ? this.getDeleteModal() : null;
 
-    const sortedCategories = _.sortBy(categories, 'label');
+    // Case-insensitive sort by the category's label
+    const sortedCategories = _.sortBy(categories, c => c.label.toLowerCase());
 
     const transitionGroupProps = {
       transitionName: 'resource-list-item',

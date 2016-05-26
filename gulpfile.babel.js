@@ -26,6 +26,7 @@ var working = false;
 
 function stylus() {
   return gulp.src('./client-src/stylus/index.styl')
+    .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.stylus({
       'include css': true,
