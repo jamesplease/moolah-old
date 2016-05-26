@@ -35,6 +35,9 @@ function stylus() {
     .pipe($.concat('style.css'))
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('client-dist'))
+    // Ensure that only the CSS files, and not source maps, are sent to
+    // livereload, otherwise there will be a hard page refresh 
+    .pipe($.filter("**/*.css"))
     .pipe($.livereload());
 }
 
@@ -72,7 +75,6 @@ function lintGulpfile() {
 
 function watch() {
   gulp.watch('./client-src/**/*.styl', ['stylus']);
-  $.livereload.listen();
 }
 
 function buildJavaScript() {
