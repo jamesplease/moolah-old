@@ -24,7 +24,12 @@
   color #b5b5b5
   cursor pointer
   margin 0 15px 0 auto
-  transition color 0.25s
+
+  &:hover
+    color #888
+
+  &:active
+    color #555
 
   +respond-from($m-screen-min)
     margin-right 0
