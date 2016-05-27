@@ -39,6 +39,7 @@ const CategoriesSubheader = React.createClass({
     const childrenProps = {
       onClickCancel: this.onClickModalCancel,
       onSubmit: this.onClickModalCreate,
+      categories: this.props.categories,
       confirmInProgress: this.props.creatingCategory,
       isEditMode: false
     };
@@ -105,6 +106,7 @@ export {CategoriesSubheader};
 function mapStateToProps(state) {
   return {
     isOnline: state.connection,
+    categories: state.categories.categories,
     creatingCategory: state.categories.creatingCategory,
     createCategorySuccess: state.categories.createCategorySuccess,
     createCategoryFailure: state.categories.createCategoryFailure

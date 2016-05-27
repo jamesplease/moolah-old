@@ -63,11 +63,12 @@ const CreateCategoriesModal = React.createClass({
     }
 
     const labelIsInvalid = label.error && label.touched;
+    const treatFormInvalid = labelIsInvalid && !this.state.cancelBegun;
 
     const labelClass = classNames({
       'text-input': true,
       'new-category-name': true,
-      'invalid-input': labelIsInvalid && !this.state.cancelBegun
+      'invalid-input': treatFormInvalid
     });
 
     const modalTitle = isEditMode ? 'Edit Category' : 'New Category';
@@ -80,19 +81,21 @@ const CreateCategoriesModal = React.createClass({
     }
 
     let errorMsg;
-    if (labelIsInvalid && label.error === 'empty' && !this.state.cancelBegun) {
+    if (treatFormInvalid && label.error === 'empty') {
       errorMsg = 'A name is required';
+    } else if (treatFormInvalid && label.error === 'duplicate') {
+      errorMsg = 'Category already exists';
     }
 
     const errorClass = classNames({
       'modal-error': true,
-      'visible': labelIsInvalid && !this.state.cancelBegun
+      'visible': treatFormInvalid
     });
 
     const modalClass = classNames({
       'create-category-modal': true,
-      'modal-form-invalid': labelIsInvalid && !this.state.cancelBegun
-    })
+      'modal-form-invalid': treatFormInvalid
+    });
 
     return (
       <div className={modalClass} onMouseUp={this.mouseUpOnComponent}>
@@ -131,7 +134,7 @@ const CreateCategoriesModal = React.createClass({
             <button
               type="submit"
               className="btn btn-info create-category-modal-confirm"
-              disabled={confirmInProgress}>
+              disabled={confirmInProgress || treatFormInvalid}>
               {confirmText}
             </button>
           </div>
@@ -143,11 +146,29 @@ const CreateCategoriesModal = React.createClass({
 
 export { CreateCategoriesModal };
 
-const validate = values => {
-  const errors = {}
-  if (!values.label || !values.label.trim()) {
+function validate(values, props) {
+  const newLabel = _.result(values.label, 'trim');
+
+  const errors = {};
+
+  const duplicate = _.find(props.categories, c => {
+    // A label cannot be a duplicate of itself!
+    if (c.id === props.categoryIdBeingUpdated) {
+      return;
+    }
+    return c.label.toLowerCase() === _.result(newLabel, 'toLowerCase');
+  });
+
+  // Prevent empty labels
+  if (!newLabel) {
     errors.label = 'empty';
   }
+
+  // Catch duplicates
+  else if (duplicate) {
+    errors.label = 'duplicate';
+  }
+
   return errors;
 }
 
@@ -159,6 +180,7 @@ function mapStateToFormProps(state) {
   }
 
   return {
+    categoryIdBeingUpdated,
     initialValues: _.find(categories.categories, {id: categoryIdBeingUpdated})
   };
 }
