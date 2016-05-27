@@ -41,9 +41,11 @@ export const Transactions = React.createClass({
     }
 
     return (
-      <ul className="transactions">
-        {children}
-      </ul>
+      <div className="transaction-list resource-list-container">
+        <ul className="resource-list">
+          {children}
+        </ul>
+      </div>
     );
   }
 });
