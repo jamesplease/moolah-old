@@ -12,6 +12,14 @@
   align-items center
   transition height 0.25s
 
+  +respond-from($m-screen-min)
+    left auto
+    top 55px
+    right 20px
+    width auto
+    min-width 230px
+    border-radius 6px
+
   // These classes are set by the ReactCSSTransitionGroup wrapper
   &.alert-enter,
   &.alert-appear,

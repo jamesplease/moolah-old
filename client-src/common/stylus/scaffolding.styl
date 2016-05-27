@@ -38,8 +38,9 @@ body
 .alert-enter.alert-enter-active,
 .alert-appear.alert-appear-active,
 .alert-leave
-  & + .content-container
-    padding-top 48px
+  +respond-to($s-screen-max)
+    & + .content-container
+      padding-top 48px
 
 main
   margin-bottom 40px
