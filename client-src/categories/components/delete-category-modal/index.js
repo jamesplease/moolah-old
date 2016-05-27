@@ -28,7 +28,7 @@ export default function DeleteCategoryModal(props) {
         </button>
         <button
           onClick={onClickDeleteBtn}
-          className="btn delete-category-modal-confirm"
+          className="btn btn-danger delete-category-modal-confirm"
           disabled={props.currentlyDeleting}>
           {deleteBtnText}
         </button>
