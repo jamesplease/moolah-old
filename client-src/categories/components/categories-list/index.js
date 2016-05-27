@@ -35,6 +35,7 @@ const CategoriesList = React.createClass({
   // We can use one method to close both modals, since the
   // modals will never be open at the same time.
   onCancelModel() {
+    this.props.categoriesActions.clearCategoryUpdateId();
     this.setState({
       isDeleteModalOpen: false,
       categoryToDelete: null,
@@ -129,6 +130,8 @@ const CategoriesList = React.createClass({
     // If we were updating, and the update is successful, then we can
     // close the modal and queue an alert.
     if (wasUpdating && successfulUpdate) {
+      this.props.categoriesActions.clearCategoryUpdateId();
+      
       this.setState({
         isUpdateModalOpen: false,
         categoryToUpdate: null
