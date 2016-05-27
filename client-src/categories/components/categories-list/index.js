@@ -76,6 +76,7 @@ const CategoriesList = React.createClass({
 
   getEditModal() {
     const childrenProps = {
+      categories: this.props.categories,
       onClickCancel: this.onCancelModel,
       onSubmit: this.onConfirmEditModal,
       category: this.state.categoryToUpdate,
