@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {reduxForm} from 'redux-form';
@@ -12,8 +13,9 @@ const CreateCategoriesModal = React.createClass({
     const {
       fields: {label},
       handleSubmit,
-      creatingCategory,
-      onClickCancel
+      confirmInProgress,
+      onClickCancel,
+      isEditMode
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -32,12 +34,19 @@ const CreateCategoriesModal = React.createClass({
       'invalid-input': label.error && label.touched
     });
 
-    const createText = creatingCategory ? 'Creating...' : 'Create';
+    const modalTitle = isEditMode ? 'Edit Category' : 'New Category';
+
+    let confirmText;
+    if (isEditMode) {
+      confirmText = confirmInProgress ? 'Editing...' : 'Edit';
+    } else {
+      confirmText = confirmInProgress ? 'Creating...' : 'Create';
+    }
 
     return (
       <div className="create-category-modal">
         <h1 className="modal-title">
-          New Category
+          {modalTitle}
         </h1>
         <form onSubmit={onFormSubmit}>
           <div className="form-row">
@@ -61,14 +70,14 @@ const CreateCategoriesModal = React.createClass({
               type="button"
               onClick={onClickCancelBtn}
               className="btn btn-line create-category-modal-cancel"
-              disabled={creatingCategory}>
+              disabled={confirmInProgress}>
               Cancel
             </button>
             <button
               type="submit"
               className="btn create-category-modal-confirm"
-              disabled={creatingCategory}>
-              {createText}
+              disabled={confirmInProgress}>
+              {confirmText}
             </button>
           </div>
         </form>
@@ -87,8 +96,20 @@ const validate = values => {
   return errors;
 }
 
+function mapStateToFormProps(state) {
+  const categories = state.categories;
+  const categoryIdBeingUpdated = categories.categoryIdBeingUpdated;
+  if (!categoryIdBeingUpdated) {
+    return;
+  }
+
+  return {
+    initialValues: _.find(categories.categories, {id: categoryIdBeingUpdated})
+  };
+}
+
 export default reduxForm({
   form: 'createCategory',
   fields: ['label'],
   validate
-})(CreateCategoriesModal);
+}, mapStateToFormProps)(CreateCategoriesModal);

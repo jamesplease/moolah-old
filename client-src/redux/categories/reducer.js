@@ -4,6 +4,20 @@ import initialState from './initial-state';
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SET_CATEGORY_UPDATE_ID: {
+      return Object.assign({
+        ...state,
+        categoryIdBeingUpdated: action.categoryId
+      });
+    }
+
+    case actionTypes.CLEAR_CATEGORY_UPDATE_ID: {
+      return Object.assign({
+        ...state,
+        categoryIdBeingUpdated: null
+      });
+    }
+
     // Create category
     case actionTypes.CREATE_CATEGORY: {
       return Object.assign({
@@ -86,23 +100,18 @@ export default (state = initialState, action) => {
 
     // Update category
     case actionTypes.UPDATE_CATEGORY: {
-      let currentlyUpdating = [...state.currentlyUpdating];
-      currentlyUpdating.push(action.categoryId);
       return Object.assign({
         ...state,
-        updatingCategory: true,
-        currentlyUpdating
+        updatingCategory: true
       });
     }
 
     case actionTypes.UPDATE_CATEGORY_SUCCESS: {
-      let current = state.currentlyUpdating;
-      let id = action.categoryId;
-      let currentlyUpdating = _.without(current, id);
+      let id = action.category.id;
 
-      let categories = ([...state.categories]).map(t => {
-        if (t.id !== action.categoryId) {
-          return t;
+      let categories = state.categories.map(c => {
+        if (c.id !== id) {
+          return c;
         } else {
           return action.category;
         }
@@ -112,20 +121,15 @@ export default (state = initialState, action) => {
         ...state,
         updatingCategory: false,
         updateCategorySuccess: true,
-        currentlyUpdating,
         categories
       });
     }
 
     case actionTypes.UPDATE_CATEGORY_FAILURE: {
-      let current = state.currentlyUpdating;
-      let id = action.categoryId;
-      let currentlyUpdating = _.without(current, id);
       return Object.assign({
         ...state,
         updatingCategory: false,
-        updateCategoryFailure: true,
-        currentlyUpdating
+        updateCategoryFailure: true
       });
     }
 

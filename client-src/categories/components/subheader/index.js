@@ -3,7 +3,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
-import CreateCategoryModal from '../create-category-modal';
+import ModifyCategoryModal from '../modify-category-modal';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 import * as alertActionCreators from '../../../redux/alert/action-creators';
 
@@ -39,11 +39,12 @@ const CategoriesSubheader = React.createClass({
     const childrenProps = {
       onClickCancel: this.onClickModalCancel,
       onSubmit: this.onClickModalCreate,
-      creatingCategory: this.props.creatingCategory
+      confirmInProgress: this.props.creatingCategory,
+      isEditMode: false
     };
 
     const modalProps = {
-      children: (<CreateCategoryModal {...childrenProps}/>),
+      children: (<ModifyCategoryModal {...childrenProps}/>),
       modalClassName: 'create-category-modal-container'
     };
 

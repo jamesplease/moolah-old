@@ -4,6 +4,19 @@ import mockCategories from '../mock/categories';
 let categoriesLength = mockCategories.length;
 let lastId = mockCategories[categoriesLength - 1].id;
 
+export function setCategoryUpdateId(categoryId) {
+  return {
+    type: actionTypes.SET_CATEGORY_UPDATE_ID,
+    categoryId
+  };
+}
+
+export function clearCategoryUpdateId() {
+  return {
+    type: actionTypes.CLEAR_CATEGORY_UPDATE_ID
+  };
+}
+
 export function createCategory(data) {
   return dispatch => {
     dispatch({type: actionTypes.CREATE_CATEGORY});
@@ -46,15 +59,14 @@ export function retrieveCategories() {
   };
 }
 
-export function updateCategory(categoryId) {
+export function updateCategory(category) {
   return dispatch => {
-    dispatch({type: actionTypes.UPDATE_CATEGORY, categoryId});
+    dispatch({type: actionTypes.UPDATE_CATEGORY, category});
 
     window.setTimeout(() => {
-      // This needs to send the updated category
       dispatch({
         type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-        categoryId
+        category
       });
     }, 1000);
   };
@@ -62,7 +74,7 @@ export function updateCategory(categoryId) {
 
 export function deleteCategory(categoryId) {
   return dispatch => {
-    dispatch({type: actionTypes.DELETE_CATEGORY, categoryId});
+    dispatch({type: actionTypes.DELETE_CATEGORY});
 
     window.setTimeout(() => {
       dispatch({
