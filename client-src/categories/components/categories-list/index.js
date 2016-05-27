@@ -3,40 +3,65 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import CategoryListItem from '../category-list-item';
 import Modal from '../../../common/components/modal';
+import ModifyCategoryModal from '../modify-category-modal';
 import DeleteCategoryModal from '../delete-category-modal';
 
 const CategoriesList = React.createClass({
   getInitialState() {
     return {
-      isModalOpen: false,
-      categoryToDelete: null
+      isDeleteModalOpen: false,
+      categoryToDelete: null,
+      isUpdateModalOpen: false,
+      categoryToUpdate: null
     };
   },
 
   onClickDelete(category) {
     this.setState({
-      isModalOpen: true,
+      isDeleteModalOpen: true,
       categoryToDelete: category
     });
   },
 
-  onClickModalCancel() {
+  onClickEdit(category) {
+    this.props.categoriesActions.setCategoryUpdateId(category.id);
+
     this.setState({
-      isModalOpen: false,
-      categoryToDelete: null
+      isUpdateModalOpen: true,
+      categoryToUpdate: category
     });
   },
 
-  onClickModalDelete() {
+  // We can use one method to close both modals, since the
+  // modals will never be open at the same time.
+  onCancelModel() {
+    this.setState({
+      isDeleteModalOpen: false,
+      categoryToDelete: null,
+      isUpdateModalOpen: false,
+      categoryToUpdate: null
+    });
+  },
+
+  onConfirmDeleteModal() {
     const {categoriesActions} = this.props;
     const category = this.state.categoryToDelete;
     categoriesActions.deleteCategory(category.id);
   },
 
+  onConfirmEditModal(fields) {
+    const {categoriesActions} = this.props;
+    const categoryId = this.state.categoryToUpdate.id;
+    categoriesActions.updateCategory({
+      id: categoryId,
+      ...fields
+    });
+  },
+
   getDeleteModal() {
     const childrenProps = {
-      onClickCancel: this.onClickModalCancel,
-      onClickDelete: this.onClickModalDelete,
+      onClickCancel: this.onCancelModel,
+      onClickDelete: this.onConfirmDeleteModal,
       category: this.state.categoryToDelete,
       currentlyDeleting: this.props.currentlyDeleting
     };
@@ -49,11 +74,26 @@ const CategoriesList = React.createClass({
     return (<Modal {...modalProps}/>);
   },
 
-  // We check to see if there was a successful delete by comparing props.
-  // If there was, then we close the modal.
-  componentWillReceiveProps(nextProps) {
+  getEditModal() {
+    const childrenProps = {
+      onClickCancel: this.onCancelModel,
+      onSubmit: this.onConfirmEditModal,
+      category: this.state.categoryToUpdate,
+      confirmInProgress: this.props.updatingCategory,
+      isEditMode: true
+    };
+
+    const modalProps = {
+      children: (<ModifyCategoryModal {...childrenProps}/>),
+      modalClassName: 'create-category-modal-container'
+    };
+
+    return (<Modal {...modalProps}/>);
+  },
+
+  checkForSuccessfulDelete(nextProps) {
     // If the modal isn't open, then there's nothing to check
-    if (this.state.isModalOpen === false) {
+    if (!this.state.isDeleteModalOpen) {
       return;
     }
 
@@ -64,7 +104,7 @@ const CategoriesList = React.createClass({
     // close the modal and queue an alert.
     if (wasDeleting && successfulDelete) {
       this.setState({
-        isModalOpen: false,
+        isDeleteModalOpen: false,
         categoryToDelete: null
       });
 
@@ -77,12 +117,46 @@ const CategoriesList = React.createClass({
     }
   },
 
+  checkForSuccessfulUpdate(nextProps) {
+    // If the modal isn't open, then there's nothing to check
+    if (!this.state.isUpdateModalOpen) {
+      return;
+    }
+
+    const wasUpdating = this.props.updatingCategory;
+    const successfulUpdate = nextProps.updateCategorySuccess;
+
+    // If we were updating, and the update is successful, then we can
+    // close the modal and queue an alert.
+    if (wasUpdating && successfulUpdate) {
+      this.setState({
+        isUpdateModalOpen: false,
+        categoryToUpdate: null
+      });
+
+      this.props.alertActions.queueAlert({
+        text: 'Category updated',
+        style: 'success',
+        isDismissable: true,
+        persistent: false
+      });
+    }
+  },
+
+  // We check to see if there was a successful delete by comparing props.
+  // If there was, then we close the modal.
+  componentWillReceiveProps(nextProps) {
+    this.checkForSuccessfulDelete(nextProps);
+    this.checkForSuccessfulUpdate(nextProps);
+  },
+
   render() {
     const {
       categories, currentlyDeleting, isOnline
     } = this.props;
 
-    const deleteModal = this.state.isModalOpen ? this.getDeleteModal() : null;
+    const deleteModal = this.state.isDeleteModalOpen ? this.getDeleteModal() : null;
+    const editModal = this.state.isUpdateModalOpen ? this.getEditModal() : null;
 
     // Case-insensitive sort by the category's label
     const sortedCategories = _.sortBy(categories, c => c.label.toLowerCase());
@@ -95,6 +169,7 @@ const CategoriesList = React.createClass({
 
     return (
       <div className="categories-list resource-list-container">
+        {editModal}
         {deleteModal}
         <div className="resource-list">
           <ReactCSSTransitionGroup {...transitionGroupProps}>
@@ -103,6 +178,7 @@ const CategoriesList = React.createClass({
                 isOnline={isOnline}
                 category={category}
                 key={category.id}
+                onClickEdit={this.onClickEdit}
                 onClickDelete={this.onClickDelete}
                 currentlyDeleting={currentlyDeleting}/>
             ))}

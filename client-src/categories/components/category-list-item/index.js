@@ -1,23 +1,25 @@
-import _ from 'lodash';
 import React from 'react';
 
 export default function CategoryListItem(props) {
   const {
     category, isOnline, onClickDelete,
-    currentlyDeleting
+    onClickEdit
   } = props;
 
-  const isDeleting = _.includes(currentlyDeleting, category.id);
-  const deleteIsDisabled = isDeleting || !isOnline;
+  const deleteIsDisabled = !isOnline;
 
   return (
     <div className="resource-list-item category-list-item">
-      <span className="category-list-item-emoji">
+      <button
+        className="category-list-item-emoji"
+        onClick={() => onClickEdit(category)}>
         {category.emoji}
-      </span>
-      <span className="category-list-item-label">
+      </button>
+      <button
+        className="category-list-item-label"
+        onClick={() => onClickEdit(category)}>
         {category.label}
-      </span>
+      </button>
       <button
         className="resource-list-item-delete"
         onClick={() => onClickDelete(category)}

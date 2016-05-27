@@ -9,7 +9,7 @@ export default {
   retrieveCategoriesSuccess: false,
   retrieveCategoriesFailure: false,
 
-  currentlyUpdating: [],
+  categoryIdBeingUpdated: null,
   updatingCategory: false,
   updateCategorySuccess: false,
   updateCategoryFailure: false,
