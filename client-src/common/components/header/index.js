@@ -12,22 +12,24 @@ export function Header({isMobileMenuVisible, uiActions}) {
 
   return (
     <header>
-      <h1 className="app-logo">
-        <Link to="/">
-          Moolah
-        </Link>
-      </h1>
-      <button className="mobile-menu-toggle" onClick={onClickToggle}>
-        <i className="zmdi zmdi-menu zmdi-hc-lg mobile-menu-toggle"></i>
-      </button>
-      <Nav/>
-      <div className="header-profile-container">
-        <Link className="header-profile-link" to="/profile">
-          <span className="header-name">
-            James S.
-          </span>
-          <img className="header-profile-pic" />
-        </Link>
+      <div className="container">
+        <h1 className="app-logo">
+          <Link to="/">
+            Moolah
+          </Link>
+        </h1>
+        <button className="mobile-menu-toggle" onClick={onClickToggle}>
+          <i className="zmdi zmdi-menu zmdi-hc-lg mobile-menu-toggle"></i>
+        </button>
+        <Nav/>
+        <div className="header-profile-container">
+          <Link className="header-profile-link" to="/profile">
+            <span className="header-name">
+              James S.
+            </span>
+            <img className="header-profile-pic" />
+          </Link>
+        </div>
       </div>
     </header>
   );

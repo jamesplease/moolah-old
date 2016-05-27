@@ -75,7 +75,7 @@ const CreateCategoriesModal = React.createClass({
             </button>
             <button
               type="submit"
-              className="btn create-category-modal-confirm"
+              className="btn btn-info create-category-modal-confirm"
               disabled={confirmInProgress}>
               {confirmText}
             </button>
