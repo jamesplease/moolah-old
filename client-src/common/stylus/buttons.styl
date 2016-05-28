@@ -1,5 +1,6 @@
 .btn
   primary-gradient-fill()
+  noselect()
   display inline-block
   font-size 16px
   font-weight 500
@@ -20,6 +21,10 @@
   &[disabled]
     opacity 0.35
     cursor not-allowed
+
+  &:focus
+    outline none
+    box-shadow 0 0 0 1px #fff, 0 0 0 3px rgba(193, 156, 160, 0.5);
 
   &:hover
     gradient-fill(#e75131, #7a00cb)
