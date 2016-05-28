@@ -1,9 +1,18 @@
-.text-input
-  height 34px
+// This mixin is only used here, so we inline it.
+base-text-input()
   border 1px solid #bbbbbb
   border-radius 6px
   box-shadow inset 0 1px 1px rgba(0, 0, 0, 0.25)
   padding 0 10px
+  width 100%
+
+.text-input
+  base-text-input()
+  height 34px
+
+.textarea-input
+  base-text-input()
+  padding 7px 10px
 
   // HTML5 validation isn't that great, but just in case I want to use
   // it, the style here supports it. In most cases I'll use `.invalid-input`
