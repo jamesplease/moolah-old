@@ -172,7 +172,7 @@ function validate(values, props) {
   return errors;
 }
 
-function mapStateToFormProps(state) {
+function mapStateToProps(state) {
   const categories = state.categories;
   const categoryIdBeingUpdated = categories.categoryIdBeingUpdated;
   if (!categoryIdBeingUpdated) {
@@ -189,4 +189,4 @@ export default reduxForm({
   form: 'createCategory',
   fields: ['label'],
   validate
-}, mapStateToFormProps)(CreateCategoriesModal);
+}, mapStateToProps)(CreateCategoriesModal);
