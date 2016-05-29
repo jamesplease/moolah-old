@@ -82,11 +82,13 @@ const Contact = React.createClass({
     const contactContent = sendMessageSuccess ? this.getSuccessMessage() : this.getContactForm();
 
     return (
-      <div className="container text-container contact-page">
-        <h1>
-          Contact Us
-        </h1>
-        {contactContent}
+      <div className="container contact-page">
+        <div className="text-container">
+          <h1>
+            Contact Us
+          </h1>
+          {contactContent}
+        </div>
       </div>
     );
   }
