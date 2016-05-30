@@ -1,7 +1,7 @@
 import React from 'react';
-import LoadingIndicator from '../../../common/components/loading-indicator';
+import LoadingIndicator from '../loading-indicator';
 
-export default function LoadingCategories() {
+export default function LoadingPage() {
   return (
     <div className="loading-resource-list">
       <LoadingIndicator/>

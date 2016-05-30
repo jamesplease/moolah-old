@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 import CategoriesList from '../categories-list';
-import LoadingCategories from '../loading-categories';
+import LoadingPage from '../../../common/components/loading-page';
 import EmptyCategories from '../empty-categories';
 
 export const Categories = React.createClass({
@@ -21,7 +21,7 @@ export const Categories = React.createClass({
     } = this.props;
 
     if (retrievingCategories) {
-      return <LoadingCategories/>;
+      return <LoadingPage/>;
     }
 
     if (!categories.length) {
