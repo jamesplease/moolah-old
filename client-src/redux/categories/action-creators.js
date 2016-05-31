@@ -17,6 +17,12 @@ export function clearCategoryUpdateId() {
   };
 }
 
+export function dismissCreateCategoryFailureAlert() {
+  return {
+    type: actionTypes.CREATE_CATEGORY_DISMISS_FAILURE_ALERT
+  };
+}
+
 export function createCategory(data) {
   return dispatch => {
     dispatch({type: actionTypes.CREATE_CATEGORY});
@@ -59,6 +65,12 @@ export function retrieveCategories() {
   };
 }
 
+export function dismissUpdateCategoryFailureAlert() {
+  return {
+    type: actionTypes.UPDATE_CATEGORY_DISMISS_FAILURE_ALERT
+  };
+}
+
 export function updateCategory(category) {
   return dispatch => {
     dispatch({type: actionTypes.UPDATE_CATEGORY, category});
@@ -69,6 +81,12 @@ export function updateCategory(category) {
         category
       });
     }, 1000);
+  };
+}
+
+export function dismissDeleteCategoryFailureAlert() {
+  return {
+    type: actionTypes.DELETE_CATEGORY_DISMISS_FAILURE_ALERT
   };
 }
 

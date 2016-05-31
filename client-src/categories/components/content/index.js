@@ -6,6 +6,7 @@ import * as categoriesActionCreators from '../../../redux/categories/action-crea
 import CategoriesList from '../categories-list';
 import LoadingCategories from '../loading-categories';
 import EmptyCategories from '../empty-categories';
+import ErrorRetrieving from '../error-retrieving';
 
 export const Categories = React.createClass({
   componentDidMount() {
@@ -17,11 +18,17 @@ export const Categories = React.createClass({
     const {
       retrievingCategories, categories, updateCategorySuccess,
       categoriesActions, currentlyDeleting, isOnline,
-      deleteCategorySuccess, alertActions, updatingCategory
+      deleteCategorySuccess, alertActions, updatingCategory,
+      retrieveCategoriesFailure, updateCategoryFailure,
+      deleteCategoryFailure
     } = this.props;
 
     if (retrievingCategories) {
       return <LoadingCategories/>;
+    }
+
+    if (retrieveCategoriesFailure) {
+      return <ErrorRetrieving retry={categoriesActions.retrieveCategories}/>;
     }
 
     if (!categories.length) {
@@ -34,7 +41,9 @@ export const Categories = React.createClass({
       updatingCategory={updatingCategory}
       categories={categories}
       deleteCategorySuccess={deleteCategorySuccess}
+      deleteCategoryFailure={deleteCategoryFailure}
       updateCategorySuccess={updateCategorySuccess}
+      updateCategoryFailure={updateCategoryFailure}
       categoriesActions={categoriesActions}
       alertActions={alertActions}/>);
   }
@@ -46,9 +55,12 @@ function mapStateToProps(state) {
     categories: state.categories.categories,
     currentlyDeleting: state.categories.currentlyDeleting,
     deleteCategorySuccess: state.categories.deleteCategorySuccess,
+    deleteCategoryFailure: state.categories.deleteCategoryFailure,
     retrievingCategories: state.categories.retrievingCategories,
     updatingCategory: state.categories.updatingCategory,
-    updateCategorySuccess: state.categories.updateCategorySuccess
+    updateCategorySuccess: state.categories.updateCategorySuccess,
+    retrieveCategoriesFailure: state.categories.retrieveCategoriesFailure,
+    updateCategoryFailure: state.categories.updateCategoryFailure
   };
 }
 
