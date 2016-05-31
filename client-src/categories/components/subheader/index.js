@@ -41,6 +41,8 @@ const CategoriesSubheader = React.createClass({
       onSubmit: this.onClickModalCreate,
       categories: this.props.categories,
       confirmInProgress: this.props.creatingCategory,
+      actionFailure: this.props.createCategoryFailure,
+      dismissError: this.props.categoriesActions.dismissCreateCategoryFailureAlert,
       isEditMode: false
     };
 

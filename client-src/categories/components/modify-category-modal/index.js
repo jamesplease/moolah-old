@@ -43,13 +43,41 @@ const CreateCategoriesModal = React.createClass({
     })
   },
 
+  componentWillReceiveProps(nextProps) {
+    const nextLabel = nextProps.fields.label;
+    const thisLabel = this.props.fields.label;
+
+    const nextLabelIsInvalid = nextLabel.error && nextLabel.touched;
+    const thisLabelIsInvalid = thisLabel.error && thisLabel.touched;
+
+    // If the next label is invalid, and the current label is valid, then
+    // that means the form has gone from being valid to invalid. In that case,
+    // we display an error message. If the user had already submitted
+    // the form, then they would no longer see the "error occurred" message.
+    // We want to dismiss that "error occurred" message, because if they
+    // fix the form issue then it should be as if the form wasn't submitted.
+    // It'd be weird if the error went BACK to the "error occurred" after
+    // they corrected the issue with the form.
+    if (nextLabelIsInvalid && nextLabelIsInvalid !== thisLabelIsInvalid) {
+      this.props.dismissError();
+    }
+  },
+
+  componentWillUnmount() {
+    // When the component is removed from the DOM, we can clear out any
+    // HTTP error states. This makes it so that opening the modal again doesn't
+    // display the old error.
+    this.props.dismissError();
+  },
+
   render() {
     const {
       fields: {label},
       handleSubmit,
       confirmInProgress,
       onClickCancel,
-      isEditMode
+      isEditMode,
+      actionFailure
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -85,16 +113,18 @@ const CreateCategoriesModal = React.createClass({
       errorMsg = 'A name is required';
     } else if (treatFormInvalid && label.error === 'duplicate') {
       errorMsg = 'Category already exists';
+    } else if (actionFailure) {
+      errorMsg = 'There was an error.';
     }
 
     const errorClass = classNames({
       'modal-error': true,
-      'visible': treatFormInvalid
+      'visible': treatFormInvalid || actionFailure
     });
 
     const modalClass = classNames({
       'create-category-modal': true,
-      'modal-form-invalid': treatFormInvalid
+      'modal-form-invalid': treatFormInvalid || actionFailure
     });
 
     return (

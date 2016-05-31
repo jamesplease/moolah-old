@@ -81,6 +81,8 @@ const CategoriesList = React.createClass({
       onClickCancel: this.onCancelModel,
       onSubmit: this.onConfirmEditModal,
       category: this.state.categoryToUpdate,
+      actionFailure: this.props.updateCategoryFailure,
+      dismissError: this.props.categoriesActions.dismissUpdateCategoryFailureAlert,
       confirmInProgress: this.props.updatingCategory,
       isEditMode: true
     };
@@ -132,7 +134,7 @@ const CategoriesList = React.createClass({
     // close the modal and queue an alert.
     if (wasUpdating && successfulUpdate) {
       this.props.categoriesActions.clearCategoryUpdateId();
-      
+
       this.setState({
         isUpdateModalOpen: false,
         categoryToUpdate: null

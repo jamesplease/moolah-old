@@ -45,14 +45,14 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DISMISS_CREATE_CATEGORY_SUCCESS_ALERT: {
+    case actionTypes.CREATE_CATEGORY_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         createCategorySuccess: false
       });
     }
 
-    case actionTypes.DISMISS_CREATE_CATEGORY_FAILURE_ALERT: {
+    case actionTypes.CREATE_CATEGORY_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         createCategoryFailure: false
@@ -84,14 +84,14 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DISMISS_RETRIEVE_CATEGORIES_SUCCESS_ALERT: {
+    case actionTypes.RETRIEVE_CATEGORIES_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         retrieveCategoriesSuccess: false
       });
     }
 
-    case actionTypes.DISMISS_RETRIEVE_CATEGORIES_FAILURE_ALERT: {
+    case actionTypes.RETRIEVE_CATEGORIES_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         retrieveCategoriesFailure: false
@@ -133,14 +133,14 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DISMISS_UPDATE_CATEGORY_SUCCESS_ALERT: {
+    case actionTypes.UPDATE_CATEGORY_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         updateCategorySuccess: false
       });
     }
 
-    case actionTypes.DISMISS_UPDATE_CATEGORY_FAILURE_ALERT: {
+    case actionTypes.UPDATE_CATEGORY_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         updateCategoryFailure: false
@@ -177,14 +177,14 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DISMISS_DELETE_CATEGORY_SUCCESS_ALERT: {
+    case actionTypes.DELETE_CATEGORY_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         deleteCategorySuccess: false
       });
     }
 
-    case actionTypes.DISMISS_DELETE_CATEGORY_FAILURE_ALERT: {
+    case actionTypes.DELETE_CATEGORY_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         deleteCategoryFailure: false
