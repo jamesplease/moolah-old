@@ -6,6 +6,7 @@ import * as categoriesActionCreators from '../../../redux/categories/action-crea
 import CategoriesList from '../categories-list';
 import LoadingCategories from '../loading-categories';
 import EmptyCategories from '../empty-categories';
+import ErrorRetrieving from '../error-retrieving';
 
 export const Categories = React.createClass({
   componentDidMount() {
@@ -17,11 +18,16 @@ export const Categories = React.createClass({
     const {
       retrievingCategories, categories, updateCategorySuccess,
       categoriesActions, currentlyDeleting, isOnline,
-      deleteCategorySuccess, alertActions, updatingCategory
+      deleteCategorySuccess, alertActions, updatingCategory,
+      retrieveCategoriesFailure
     } = this.props;
 
     if (retrievingCategories) {
       return <LoadingCategories/>;
+    }
+
+    if (retrieveCategoriesFailure) {
+      return <ErrorRetrieving retry={categoriesActions.retrieveCategories}/>;
     }
 
     if (!categories.length) {
@@ -48,7 +54,8 @@ function mapStateToProps(state) {
     deleteCategorySuccess: state.categories.deleteCategorySuccess,
     retrievingCategories: state.categories.retrievingCategories,
     updatingCategory: state.categories.updatingCategory,
-    updateCategorySuccess: state.categories.updateCategorySuccess
+    updateCategorySuccess: state.categories.updateCategorySuccess,
+    retrieveCategoriesFailure: state.categories.retrieveCategoriesFailure
   };
 }
 
