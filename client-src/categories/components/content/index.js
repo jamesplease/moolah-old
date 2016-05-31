@@ -19,7 +19,8 @@ export const Categories = React.createClass({
       retrievingCategories, categories, updateCategorySuccess,
       categoriesActions, currentlyDeleting, isOnline,
       deleteCategorySuccess, alertActions, updatingCategory,
-      retrieveCategoriesFailure, updateCategoryFailure
+      retrieveCategoriesFailure, updateCategoryFailure,
+      deleteCategoryFailure
     } = this.props;
 
     if (retrievingCategories) {
@@ -40,6 +41,7 @@ export const Categories = React.createClass({
       updatingCategory={updatingCategory}
       categories={categories}
       deleteCategorySuccess={deleteCategorySuccess}
+      deleteCategoryFailure={deleteCategoryFailure}
       updateCategorySuccess={updateCategorySuccess}
       updateCategoryFailure={updateCategoryFailure}
       categoriesActions={categoriesActions}
@@ -53,6 +55,7 @@ function mapStateToProps(state) {
     categories: state.categories.categories,
     currentlyDeleting: state.categories.currentlyDeleting,
     deleteCategorySuccess: state.categories.deleteCategorySuccess,
+    deleteCategoryFailure: state.categories.deleteCategoryFailure,
     retrievingCategories: state.categories.retrievingCategories,
     updatingCategory: state.categories.updatingCategory,
     updateCategorySuccess: state.categories.updateCategorySuccess,

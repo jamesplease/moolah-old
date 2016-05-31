@@ -64,6 +64,8 @@ const CategoriesList = React.createClass({
       onClickCancel: this.onCancelModel,
       onClickDelete: this.onConfirmDeleteModal,
       category: this.state.categoryToDelete,
+      actionFailure: this.props.deleteCategoryFailure,
+      dismissError: this.props.categoriesActions.dismissDeleteCategoryFailureAlert,
       currentlyDeleting: this.props.currentlyDeleting
     };
 

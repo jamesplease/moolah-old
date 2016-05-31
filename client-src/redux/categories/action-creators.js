@@ -84,6 +84,12 @@ export function updateCategory(category) {
   };
 }
 
+export function dismissDeleteCategoryFailureAlert() {
+  return {
+    type: actionTypes.DELETE_CATEGORY_DISMISS_FAILURE_ALERT
+  };
+}
+
 export function deleteCategory(categoryId) {
   return dispatch => {
     dispatch({type: actionTypes.DELETE_CATEGORY});
