@@ -25,7 +25,7 @@ const DeleteCategoryModal = React.createClass({
     const errorMsg = props.actionFailure ? 'There was an error' : null;
 
     const errorClass = classNames({
-      'modal-error': true,
+      'modal-error form-error': true,
       'visible': props.actionFailure
     });
 
