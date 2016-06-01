@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import * as transactionsActionsCreators from '../../../redux/transactions/action-creators';
 
 export function TransactionsSubheader({isOnline, transactionsActions}) {
-  const disabled = isOnline ? false : true;
+  const disabled = !isOnline;
 
   function onClickNew() {
     transactionsActions.createTransaction({

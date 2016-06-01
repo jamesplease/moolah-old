@@ -22,7 +22,7 @@ exports.read = function(table, fields, options) {
   const tableName = pgp.as.name(table);
 
   var singular = options.singular;
-  singular = !_.isUndefined(singular) ? singular : true;
+  singular = _.isUndefined(singular) ? true : singular;
   fields = fields ? fields : '*';
 
   var columns;
