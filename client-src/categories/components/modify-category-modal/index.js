@@ -118,7 +118,7 @@ const CreateCategoriesModal = React.createClass({
     }
 
     const errorClass = classNames({
-      'modal-error': true,
+      'modal-error form-error': true,
       'visible': treatFormInvalid || actionFailure
     });
 
