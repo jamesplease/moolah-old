@@ -172,26 +172,26 @@ const CategoriesList = React.createClass({
     const transitionGroupProps = {
       transitionName: 'resource-list-item',
       transitionEnterTimeout: 250,
-      transitionLeaveTimeout: 250
+      transitionLeaveTimeout: 250,
+      component: 'ul',
+      className: 'resource-list'
     };
 
     return (
       <div className="categories-list resource-list-container">
         {editModal}
         {deleteModal}
-        <div className="resource-list">
-          <ReactCSSTransitionGroup {...transitionGroupProps}>
-            {sortedCategories.map(category => (
-              <CategoryListItem
-                isOnline={isOnline}
-                category={category}
-                key={category.id}
-                onClickEdit={this.onClickEdit}
-                onClickDelete={this.onClickDelete}
-                deletingCategory={deletingCategory}/>
-            ))}
-          </ReactCSSTransitionGroup>
-        </div>
+        <ReactCSSTransitionGroup {...transitionGroupProps}>
+          {sortedCategories.map(category => (
+            <CategoryListItem
+              isOnline={isOnline}
+              category={category}
+              key={category.id}
+              onClickEdit={this.onClickEdit}
+              onClickDelete={this.onClickDelete}
+              deletingCategory={deletingCategory}/>
+          ))}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
