@@ -27,7 +27,7 @@ export function Header({isMobileMenuVisible, uiActions}) {
             <span className="header-name">
               James S.
             </span>
-            <img className="header-profile-pic" />
+            <img className="header-profile-pic"/>
           </Link>
         </div>
       </div>

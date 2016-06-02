@@ -16,7 +16,17 @@
     "./node_modules/pleaserc/.eslintrc"
   ],
   "rules": {
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/no-multi-comp": ["error", {"ignoreStateless": true}],
+    "react/self-closing-comp": "error",
+    "react/wrap-multilines": "error",
+    "react/jsx-curly-spacing": "error",
+    "react/jsx-equals-spacing": "error",
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-key": "error",
+    "react/jsx-no-target-blank": "error",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-space-before-closing": ["error", "never"]
   },
   "env": {
     "browser": true,
