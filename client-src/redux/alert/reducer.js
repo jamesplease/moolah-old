@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           queue
-        }
+        };
       }
 
       // Otherwise, we can immediately show this alert. No need
@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
           ...state,
           ...alertAction,
           alertIsActive: true
-        }
+        };
       }
     }
 

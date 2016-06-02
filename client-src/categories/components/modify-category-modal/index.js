@@ -5,7 +5,7 @@ import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
 
 const CreateCategoriesModal = React.createClass({
-  componentDidMount(){
+  componentDidMount() {
     ReactDOM.findDOMNode(this.refs.labelInput).focus();
   },
 
@@ -40,7 +40,7 @@ const CreateCategoriesModal = React.createClass({
   mouseUpOnComponent() {
     this.setState({
       cancelBegun: false
-    })
+    });
   },
 
   componentWillReceiveProps(nextProps) {
@@ -119,7 +119,7 @@ const CreateCategoriesModal = React.createClass({
 
     const errorClass = classNames({
       'modal-error form-error': true,
-      'visible': treatFormInvalid || actionFailure
+      visible: treatFormInvalid || actionFailure
     });
 
     const modalClass = classNames({
@@ -174,7 +174,7 @@ const CreateCategoriesModal = React.createClass({
   }
 });
 
-export { CreateCategoriesModal };
+export {CreateCategoriesModal};
 
 function validate(values, props) {
   const newLabel = _.result(values.label, 'trim');

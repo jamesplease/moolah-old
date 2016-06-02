@@ -41,7 +41,7 @@ function stylus() {
     // this causes the source mapped file to drift from what you're working on.
     // I'm still using source maps because the file name itself rarely changes,
     // and is useful for debugging.
-    .pipe($.filter("**/*.css"))
+    .pipe($.filter('**/*.css'))
     .pipe($.livereload());
 }
 
@@ -93,12 +93,15 @@ function buildJavaScript() {
       },
       module: {
         loaders: [
-          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+          {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
         ]
       },
       devtool: 'source-map'
     }, null, () => {
-      if (!working) { return; }
+      if (!working) {
+        return;
+      }
+
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
         watch();
@@ -107,7 +110,7 @@ function buildJavaScript() {
       }
       firstBuild = false;
     }))
-    .pipe($.if(productionMode, $.sourcemaps.init({ loadMaps: true })))
+    .pipe($.if(productionMode, $.sourcemaps.init({loadMaps: true})))
     .pipe($.if(productionMode, $.uglify()))
     .pipe($.if(productionMode, $.sourcemaps.write('./')))
     .pipe(gulp.dest(destinationFolder));
@@ -115,10 +118,10 @@ function buildJavaScript() {
 
 function _mochaApiIntegration() {
   return gulp.src([
-      'test/setup/node.js',
-      'test/integration/api/index.js',
-      'test/integration/**/*.js'
-    ], {read: false})
+    'test/setup/node.js',
+    'test/integration/api/index.js',
+    'test/integration/**/*.js'
+  ], {read: false})
     .pipe($.mocha({
       reporter: 'dot',
       globals: Object.keys(mochaGlobals.globals),
@@ -152,7 +155,7 @@ function test() {
 function coverage(done) {
   _registerBabel();
   gulp.src(['client-src/**/*.js', 'server/**/*.js'])
-    .pipe($.istanbul({ instrumenter: Instrumenter }))
+    .pipe($.istanbul({instrumenter: Instrumenter}))
     .pipe($.istanbul.hookRequire())
     .on('finish', () => {
       return test()
@@ -191,15 +194,15 @@ function testBrowser() {
       module: {
         loaders: [
           // This is what allows us to author in future JavaScript
-          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+          {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
           // This allows the test setup scripts to load `package.json`
-          { test: /\.json$/, exclude: /node_modules/, loader: 'json-loader' }
+          {test: /\.json$/, exclude: /node_modules/, loader: 'json-loader'}
         ]
       },
       plugins: [
         // By default, webpack does `n=>n` compilation with entry files. This concatenates
         // them into a single chunk.
-        new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })
+        new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1})
       ],
       devtool: 'inline-source-map'
     }, null, () => {

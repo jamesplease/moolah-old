@@ -10,7 +10,8 @@
   "parser": "babel-eslint",
   "rules": {
     "strict": 0,
-    "no-unused-expressions": 0
+    "no-unused-expressions": 0,
+    "max-nested-callbacks": "off"
   },
   "env": {
     "browser": true,

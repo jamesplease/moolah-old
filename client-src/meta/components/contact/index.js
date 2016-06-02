@@ -21,7 +21,7 @@ const Contact = React.createClass({
           Your message has been received. We do our best to respond within 72 hours.
         </p>
       </div>
-    )
+    );
   },
 
   getContactForm() {

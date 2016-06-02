@@ -41,7 +41,7 @@ render((
         <Route path="/privacy" components={{main: Privacy}}/>
         <Route path="/about" components={{main: About}}/>
         <Route path="/terms" components={{main: Terms}}/>
-        <Redirect from="/dashboard" to="/" />
+        <Redirect from="/dashboard" to="/"/>
         <Route path="*" components={{main: App}}/>
       </Route>
     </Router>

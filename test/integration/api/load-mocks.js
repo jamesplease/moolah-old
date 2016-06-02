@@ -22,7 +22,7 @@ import migrate from '../../../server/api/util/migrate';
 // }).return(ran)
 // }
 
-function loadMocks(/* mock */) {
+function loadMocks() {
   try {
     migrate.reset();
   } catch (e) {

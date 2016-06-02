@@ -2,7 +2,7 @@
 
 const requireId = {
   anyOf: [
-    { type: 'integer' },
+    {type: 'integer'},
     {
       type: 'string',
       pattern: '^[0-9]+$'

@@ -1,5 +1,5 @@
 import React from 'react';
-import {bindActionCreators} from 'redux'
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import Nav from '../nav';
@@ -27,7 +27,7 @@ export function Header({isMobileMenuVisible, uiActions}) {
             <span className="header-name">
               James S.
             </span>
-            <img className="header-profile-pic" />
+            <img className="header-profile-pic"/>
           </Link>
         </div>
       </div>
