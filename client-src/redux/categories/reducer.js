@@ -152,7 +152,6 @@ export default (state = initialState, action) => {
       return Object.assign({
         ...state,
         deletingCategory: true,
-        currentlyDeleting: true
       });
     }
 
@@ -163,7 +162,6 @@ export default (state = initialState, action) => {
         ...state,
         deletingCategory: false,
         deleteCategorySuccess: true,
-        currentlyDeleting: false,
         categories
       });
     }
@@ -173,7 +171,6 @@ export default (state = initialState, action) => {
         ...state,
         deletingCategory: false,
         deleteCategoryFailure: true,
-        currentlyDeleting: false
       });
     }
 

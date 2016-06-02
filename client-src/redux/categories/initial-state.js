@@ -14,7 +14,6 @@ export default {
   updateCategorySuccess: false,
   updateCategoryFailure: false,
 
-  currentlyDeleting: false,
   deletingCategory: false,
   deleteCategorySuccess: false,
   deleteCategoryFailure: false

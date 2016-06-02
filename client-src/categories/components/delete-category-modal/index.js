@@ -20,7 +20,7 @@ const DeleteCategoryModal = React.createClass({
       _.result(props, 'onClickDelete');
     }
 
-    const deleteBtnText = props.currentlyDeleting ? 'Deleting...' : 'Delete';
+    const deleteBtnText = props.deletingCategory ? 'Deleting...' : 'Delete';
 
     const errorMsg = props.actionFailure ? 'There was an error' : null;
 
@@ -46,13 +46,13 @@ const DeleteCategoryModal = React.createClass({
           <button
             onClick={onClickCancelBtn}
             className="btn btn-line delete-category-modal-cancel"
-            disabled={props.currentlyDeleting}>
+            disabled={props.deletingCategory}>
             Cancel
           </button>
           <button
             onClick={onClickDeleteBtn}
             className="btn btn-danger delete-category-modal-confirm"
-            disabled={props.currentlyDeleting}>
+            disabled={props.deletingCategory}>
             {deleteBtnText}
           </button>
         </div>
