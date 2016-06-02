@@ -66,7 +66,7 @@ const CategoriesList = React.createClass({
       category: this.state.categoryToDelete,
       actionFailure: this.props.deleteCategoryFailure,
       dismissError: this.props.categoriesActions.dismissDeleteCategoryFailureAlert,
-      currentlyDeleting: this.props.currentlyDeleting
+      deletingCategory: this.props.deletingCategory
     };
 
     const modalProps = {
@@ -103,7 +103,7 @@ const CategoriesList = React.createClass({
       return;
     }
 
-    const wasDeleting = this.props.currentlyDeleting;
+    const wasDeleting = this.props.deletingCategory;
     const successfulDelete = nextProps.deleteCategorySuccess;
 
     // If we were deleting, and the delete is successful, then we can
@@ -160,7 +160,7 @@ const CategoriesList = React.createClass({
 
   render() {
     const {
-      categories, currentlyDeleting, isOnline
+      categories, deletingCategory, isOnline
     } = this.props;
 
     const deleteModal = this.state.isDeleteModalOpen ? this.getDeleteModal() : null;
@@ -188,7 +188,7 @@ const CategoriesList = React.createClass({
                 key={category.id}
                 onClickEdit={this.onClickEdit}
                 onClickDelete={this.onClickDelete}
-                currentlyDeleting={currentlyDeleting}/>
+                deletingCategory={deletingCategory}/>
             ))}
           </ReactCSSTransitionGroup>
         </div>
