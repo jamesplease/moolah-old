@@ -9,7 +9,7 @@ export default function CategoryListItem(props) {
   const deleteIsDisabled = !isOnline;
 
   return (
-    <div className="resource-list-item category-list-item">
+    <li className="resource-list-item category-list-item">
       <button className="category-list-item-label-btn" onClick={() => onClickEdit(category)}>
         <span className="category-list-item-emoji">
           {category.emoji}
@@ -25,6 +25,6 @@ export default function CategoryListItem(props) {
         disabled={deleteIsDisabled}>
         Delete
       </button>
-    </div>
+    </li>
   );
 }
