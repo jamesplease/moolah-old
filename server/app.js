@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
 const compress = require('compression');
+const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 
 const api = require('./api');
@@ -24,6 +25,7 @@ module.exports = function() {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(compress());
+  app.use(favicon(path.join(__dirname, 'favicon.ico')));
   app.use(express.static(ASSETS_PATH));
 
   app.use('/api', api);
