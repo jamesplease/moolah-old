@@ -98,6 +98,7 @@
     "redux": "3.5.0",
     "redux-form": "^5.2.4",
     "redux-thunk": "2.0.1",
+    "responsive-stylus-mixins": "^1.0.0",
     "serve-favicon": "^2.3.0",
     "throng": "3.0.0"
   }

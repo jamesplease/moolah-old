@@ -39,30 +39,3 @@ placeholder-color($color)
 
   &:-ms-input-placeholder
      color $color
-
-// `$width` should be a predefined variable defined in `variables.styl`.
-// This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-below($md-screen)`
-respond-below($width)
-  $width = $width - 1
-  media = 'all and (max-width: %s)' % $width
-  @media media
-    {block}
-
-// `$width` should be a predefined variable defined in `variables.styl`.
-// This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-above($md-screen)`
-respond-above($width)
-  media = 'all and (min-width: %s)' % $width
-  @media media
-    {block}
-
-// The `$x-width` args should be a predefined variable defined in
-// `variables.styl`.
-// This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-between($md-screen, $lg-screen)`
-respond-between($min-width, $max-width)
-  $max-width = $max-width - 1
-  media = 'all and (min-width: %s) and (max-width: %s)' % ($min-width $max-width)
-  @media media
-    {block}
