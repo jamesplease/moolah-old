@@ -24,6 +24,7 @@
     "react/jsx-equals-spacing": "error",
     "react/jsx-indent": ["error", 2],
     "react/jsx-key": "error",
+    "react/no-danger": "off",
     "react/jsx-no-target-blank": "error",
     "react/jsx-pascal-case": "error",
     "react/jsx-space-before-closing": ["error", "never"]
