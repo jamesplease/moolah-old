@@ -15,7 +15,7 @@ body
   margin 0 auto
   padding 0 15px
 
-  +respond-from($m-screen-min)
+  +respond-above($md-screen)
     padding 0 20px
 
 .content-container
@@ -38,7 +38,7 @@ body
 .alert-enter.alert-enter-active,
 .alert-appear.alert-appear-active,
 .alert-leave
-  +respond-to($s-screen-max)
+  +respond-below($md-screen)
     & + .content-container
       padding-top 48px
 

@@ -12,7 +12,7 @@
   align-items center
   transition height 0.25s
 
-  +respond-from($m-screen-min)
+  +respond-above($md-screen)
     left auto
     top 51px
     right 20px
@@ -35,7 +35,7 @@
     // room. This behavior is specified in `scaffolding.styl`
     height 48px
 
-    +respond-from($m-screen-min)
+    +respond-above($md-screen)
       height 40px
 
   &.warning

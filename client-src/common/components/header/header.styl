@@ -16,7 +16,7 @@ header
     // circle, so it appears to the eye to be further inset than it really is.
     padding 0 20px
 
-    +respond-to($s-screen-max)
+    +respond-below($md-screen)
       padding 0 15px
 
   a
@@ -43,20 +43,20 @@ header
       font-size 21px
 
 
-    +respond-from($m-screen-min)
+    +respond-above($md-screen)
       display block
 
   .mobile-menu-toggle
     primary-gradient-fill()
     clip-bg-to-text()
 
-    +respond-from($m-screen-min)
+    +respond-above($md-screen)
       display none
 
   .main-nav
     display none
 
-    +respond-from($m-screen-min)
+    +respond-above($md-screen)
       display block
 
   .main-nav-list

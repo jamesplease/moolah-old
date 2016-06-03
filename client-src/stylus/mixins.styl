@@ -40,40 +40,29 @@ placeholder-color($color)
   &:-ms-input-placeholder
      color $color
 
-// `$width` must be a predefined variable defined in `variables.styl`.
+// `$width` should be a predefined variable defined in `variables.styl`.
 // This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-to($s-screen-max)`
-respond-to($width)
-  if $lg-screen is $width
-    media = 'all and (min-width: %s)' % $width
-    @media media
-      {block}
-  else
-    media = 'all and (max-width: %s)' % $width
-    @media media
-      {block}
+// `+respond-below($md-screen)`
+respond-below($width)
+  $width = $width - 1
+  media = 'all and (max-width: %s)' % $width
+  @media media
+    {block}
 
-// `$width` must be a predefined variable defined in `variables.styl`.
+// `$width` should be a predefined variable defined in `variables.styl`.
 // This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-from($l-screen-min)`
-respond-from($width)
+// `+respond-above($md-screen)`
+respond-above($width)
   media = 'all and (min-width: %s)' % $width
   @media media
     {block}
 
-// `$width` must be a predefined variable defined in `variables.styl`.
+// The `$x-width` args should be a predefined variable defined in
+// `variables.styl`.
 // This is a block mixin. To use it, prefix it with `+`. i.e.:
-// `+respond-as($l-screen)`
-respond-as($width)
-  if $width is $l-screen
-    media = 'all and (min-width: %s)' % $l-screen-min
-    @media media
-      {block}
-  if $width is $m-screen
-    media = '(min-width: %s) and (max-width: %s)' % ($m-screen-min $m-screen-max)
-    @media media
-      {block}
-  if $width is $s-screen
-    media = 'all and (max-width: %s)' % $s-screen-max
-    @media media
-      {block}
+// `+respond-between($md-screen, $lg-screen)`
+respond-between($min-width, $max-width)
+  $max-width = $max-width - 1
+  media = 'all and (min-width: %s) and (max-width: %s)' % ($min-width $max-width)
+  @media media
+    {block}
