@@ -10,11 +10,11 @@ Track your finances.
 
 ### Deploying
 
-> This app is in very early development, so there's not much to see if you deploy it right now.
+> **Note:** This app is in very early development, so it might not even deploy
+  to Heroku properly. Don't expect to see anything if you deploy it!
 
-The preferred way to deploy this app is through Heroku. Just click the button below.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/jmeas/moolah/tree/master)
+If you've read the above caveat, and _still_ want to deploy it, just
+[click here](https://heroku.com/deploy?template=https://github.com/jmeas/moolah/tree/master).
 
 ### Developing
 
@@ -53,6 +53,17 @@ do that.
 
 Lastly, run `heroku config -s` from the project's root directory. Copy and paste the entire line beginning with `DATABASE_URL=` into a file
 in the root directory of this project called `.env`. This will allow you to connect to the remote database when you run `npm run work`.
+
+#### Local development
+
+Once you've followed the installation and database setup instructions above,
+you're ready to run the app locally. Follow these steps:
+
+1. Start up Postgres
+2. Run `npm run local-server` to start the Express app
+2. Run `npm run work` to build the local assets, and set up the file watcher
+
+The app should now be available in your browser at `http://localhost:5000`.
 
 #### Developer Scripts
 
