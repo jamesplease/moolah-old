@@ -1,5 +1,5 @@
 export default {
-  transactions: null,
+  transactions: [],
 
   creatingTransaction: false,
   createTransactionSuccess: false,
