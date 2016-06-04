@@ -15,6 +15,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const BASE_DIR = __dirname;
 const PROJECT_ROOT = path.normalize(`${BASE_DIR}/..`);
 const ASSETS_PATH = path.join(PROJECT_ROOT, 'client-dist');
+const STATIC_PATH = path.join(BASE_DIR, 'static');
 const VIEWS_DIR = path.join(BASE_DIR, 'views');
 
 module.exports = function() {
@@ -27,6 +28,7 @@ module.exports = function() {
   app.use(compress());
   app.use(favicon(path.join(__dirname, 'favicon.ico')));
   app.use(express.static(ASSETS_PATH));
+  app.use(express.static(STATIC_PATH));
 
   app.use('/api', api);
 

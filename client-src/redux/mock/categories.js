@@ -3,86 +3,86 @@ export default [
   {
     id: 1,
     label: 'Pets',
-    emoji: '🐶'
+    emoji: ':dog:'
   },
   {
     id: 2,
     label: 'Gas',
-    emoji: '⛽️'
+    emoji: ':fuelpump:'
   },
   {
     id: 3,
     label: 'Electronics',
-    emoji: '💻'
+    emoji: ':computer:'
   },
   {
     id: 4,
     label: 'Food & Groceries',
-    emoji: '🍎'
+    emoji: ':apple:'
   },
   {
     id: 5,
     label: 'Travel',
-    emoji: null
+    emoji: ''
   },
   {
     id: 6,
     label: 'Movies',
-    emoji: '🎬'
+    emoji: ':clapper:'
   },
   {
     id: 7,
     label: 'Coffee',
-    emoji: '☕️'
+    emoji: ':coffee:'
   },
   {
     id: 8,
     label: 'Alcohol',
-    emoji: '🍺'
+    emoji: ':beer:'
   },
   {
     id: 9,
     label: 'Child care',
-    emoji: '👶'
+    emoji: ':baby:'
   },
   {
     id: 10,
     label: 'Rent',
-    emoji: '🏡'
+    emoji: ':house_with_garden:'
   },
   {
     id: 11,
     label: 'Education',
-    emoji: '📚'
+    emoji: ':books:'
   },
   {
     id: 12,
     label: 'Shopping',
-    emoji: '🛍'
+    emoji: ':shopping_bags:'
   },
   {
     id: 13,
     label: 'Apple Store',
-    emoji: '🖥'
+    emoji: ':desktop_computer:'
   },
   {
     id: 14,
     label: 'Video Games',
-    emoji: '🕹'
+    emoji: ':joystick:'
   },
   {
     id: 15,
     label: 'Charity',
-    emoji: '💸'
+    emoji: ':money_with_wings:'
   },
   {
     id: 16,
     label: 'Donations',
-    emoji: '💸'
+    emoji: ':money_with_wings:'
   },
   {
     id: 17,
     label: 'Music',
-    emoji: '🎶'
+    emoji: ':notes:'
   }
 ];
