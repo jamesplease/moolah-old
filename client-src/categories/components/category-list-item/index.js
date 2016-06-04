@@ -1,5 +1,5 @@
 import React from 'react';
-import emoji from '../../../common/services/js-emoji';
+import emojiRenderer from '../../../common/services/emoji-renderer';
 
 export default function CategoryListItem(props) {
   const {
@@ -10,7 +10,7 @@ export default function CategoryListItem(props) {
   const deleteIsDisabled = !isOnline;
 
   const categoryEmojiHtml = {
-    __html: emoji.replace_colons(category.emoji)
+    __html: emojiRenderer.replace_colons(category.emoji)
   };
 
   return (
