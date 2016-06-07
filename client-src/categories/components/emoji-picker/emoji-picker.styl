@@ -1,0 +1,45 @@
+.emoji-picker
+  position fixed
+  bottom 0
+  left 0
+  right 0
+  height 60vh
+  background #fff
+  box-shadow 0 0 50px rgba(0, 0, 0, 0.25)
+  // This is the height of `.emoji-picker-categories`, defined below
+  padding-top 40px
+  z-index 10000
+
+  .emoji-picker-categories
+    position absolute
+    top 0
+    left 0
+    right 0
+    height 40px
+    line-height 40px
+    padding 0 15px
+    border-bottom 1px solid #eee
+    overflow hidden
+    display flex
+    background #fff
+
+  .emoji-picker-body
+    padding 15px
+    // The height of the picker - the height of the header
+    height calc(60vh - 40px)
+    overflow scroll
+
+  .emoji-picker-search
+    margin-bottom 10px
+
+  .emoji-picker-list
+    font-size 23px
+    height 1000px
+    display flex
+    justify-content center
+    flex-wrap wrap
+
+  .emoji-picker-list-item
+    width 41px
+    text-align center
+    padding-bottom 8px

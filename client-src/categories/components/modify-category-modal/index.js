@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
+import EmojiPicker from '../emoji-picker';
 
 const CreateCategoriesModal = React.createClass({
   componentDidMount() {
@@ -128,47 +129,50 @@ const CreateCategoriesModal = React.createClass({
     });
 
     return (
-      <div className={modalClass} onMouseUp={this.mouseUpOnComponent}>
-        <h1 className="modal-title">
-          {modalTitle}
-        </h1>
-        <div className={errorClass}>
-          {errorMsg}
-        </div>
-        <form onSubmit={onFormSubmit}>
-          <div className="form-row">
-            <div className="create-category-modal-emoji-select">
-              🙃
+      <div>
+        <EmojiPicker/>
+        <div className={modalClass} onMouseUp={this.mouseUpOnComponent}>
+          <h1 className="modal-title">
+            {modalTitle}
+          </h1>
+          <div className={errorClass}>
+            {errorMsg}
+          </div>
+          <form onSubmit={onFormSubmit}>
+            <div className="form-row">
+              <div className="create-category-modal-emoji-select">
+                🙃
+              </div>
+              <input
+                type="text"
+                className={labelClass}
+                placeholder="Enter name"
+                autoComplete="off"
+                autoCorrect={true}
+                spellCheck={true}
+                inputMode="verbatim"
+                ref="labelInput"
+                maxLength={35}
+                {...label}/>
             </div>
-            <input
-              type="text"
-              className={labelClass}
-              placeholder="Enter name"
-              autoComplete="off"
-              autoCorrect={true}
-              spellCheck={true}
-              inputMode="verbatim"
-              ref="labelInput"
-              maxLength={35}
-              {...label}/>
-          </div>
-          <div className="form-row">
-            <button
-              type="button"
-              onClick={onClickCancelBtn}
-              className="btn btn-line create-category-modal-cancel"
-              disabled={confirmInProgress}
-              onMouseDown={this.mouseDownCancel}>
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="btn btn-info create-category-modal-confirm"
-              disabled={confirmInProgress || treatFormInvalid}>
-              {confirmText}
-            </button>
-          </div>
-        </form>
+            <div className="form-row">
+              <button
+                type="button"
+                onClick={onClickCancelBtn}
+                className="btn btn-line create-category-modal-cancel"
+                disabled={confirmInProgress}
+                onMouseDown={this.mouseDownCancel}>
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn btn-info create-category-modal-confirm"
+                disabled={confirmInProgress || treatFormInvalid}>
+                {confirmText}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

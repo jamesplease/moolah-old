@@ -81,6 +81,7 @@
     "classnames": "2.2.3",
     "compression": "^1.6.1",
     "cors": "^2.7.1",
+    "emoji-data": "git+https://github.com/iamcal/emoji-data.git#9b52b180a37dbe938605f968bd89e59ffc6dd3c4",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "express-routebuilder": "2.1.0",
