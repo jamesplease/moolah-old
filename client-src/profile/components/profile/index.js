@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import emojiList from '../../../common/services/emoji-list';
 
-const html = _.reduce(emojiList.byName, (memo, v, name) => {
+const html = _.reduce(emojiList.byName, (memo, v) => {
   return `${memo}<li>${v}</li>`;
 }, '');
 
