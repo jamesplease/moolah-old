@@ -6,6 +6,10 @@ base-text-input()
   padding 0 10px
   width 100%
 
+  +respond-below($md-screen)
+    // At least 16px is needed to prevent Safari from auto-zooming
+    font-size 16px
+
 .text-input
   base-text-input()
   height 34px
