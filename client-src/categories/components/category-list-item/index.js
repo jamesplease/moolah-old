@@ -10,8 +10,12 @@ export default function CategoryListItem(props) {
   const deleteIsDisabled = !isOnline;
 
   const categoryEmojiHtml = {
-    __html: emoji.replace_colons(category.emoji)
+    __html: ''
   };
+
+  if (category.emoji) {
+    categoryEmojiHtml.__html = emoji.replace_colons(category.emoji);
+  }
 
   return (
     <li className="resource-list-item category-list-item">
