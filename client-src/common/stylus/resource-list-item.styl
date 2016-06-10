@@ -1,15 +1,16 @@
 .resource-list-item
-  font-size 17px
-  padding 0
+  content-padding()
+  font-size 16px
   border-bottom 1px solid #eee
   height 40px
+  line-height 40px
   transition height 0.25s
   overflow hidden
   display flex
   align-items center
 
-  &:hover
-    background #fbfbfb
+  +respond-above($md-screen)
+    padding 0
 
   &.resource-list-item-enter,
   &.resource-list-item-leave.resource-list-item-leave-active
@@ -26,7 +27,7 @@
   font-size 15px
   color #b5b5b5
   cursor pointer
-  margin 0 15px 0 auto
+  margin-left auto
 
   &:hover
     color #888

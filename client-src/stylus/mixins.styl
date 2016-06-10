@@ -6,6 +6,9 @@ ellipsis()
 content-padding()
   padding 0 15px
 
+  +respond-above($md-screen)
+    padding 0 20px
+
 gradient-fill($one, $two)
   background radial-gradient(circle at top right, $one, $two)
 

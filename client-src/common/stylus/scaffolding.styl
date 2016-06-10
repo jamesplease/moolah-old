@@ -14,10 +14,9 @@ body
 .container
   max-width $appWidth
   margin 0 auto
-  padding 0 15px
 
-  +respond-above($md-screen)
-    padding 0 20px
+.padded-container
+  content-padding()
 
 .content-container
   display flex

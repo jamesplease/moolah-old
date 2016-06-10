@@ -5,7 +5,7 @@ export default function ProfileSubheader() {
     <div className="sub-header">
       <div className="container">
         <h1 className="subheader-title">
-          Profile
+          Your Account
         </h1>
       </div>
     </div>
