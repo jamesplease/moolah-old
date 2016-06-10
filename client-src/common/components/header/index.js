@@ -22,12 +22,12 @@ export function Header({isMobileMenuVisible, uiActions}) {
           <i className="zmdi zmdi-menu zmdi-hc-lg mobile-menu-toggle"></i>
         </button>
         <Nav/>
-        <div className="header-profile-container">
-          <Link className="header-profile-link" to="/profile">
+        <div className="header-account-container">
+          <Link className="header-account-link" to="/account">
             <span className="header-name">
               James S.
             </span>
-            <img className="header-profile-pic"/>
+            <img className="header-account-pic"/>
           </Link>
         </div>
       </div>

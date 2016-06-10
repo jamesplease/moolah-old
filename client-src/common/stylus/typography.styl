@@ -4,7 +4,9 @@ html
   font-family 'Source Sans Pro', sans-serif
   -webkit-font-smoothing antialiased!important
 
-a
+a,
+.link-text
+  cursor pointer
   color $linkColor
 
 h1
@@ -21,6 +23,7 @@ h1, h2, h3, h4, h5, h6
   line-height 1.5
 
 .text-container
+  content-padding()
   margin-top 15px
 
   p, h1, h2

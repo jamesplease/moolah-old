@@ -9,14 +9,14 @@ body
   // 45px is the size of the header
   padding-top 46px
   min-height 100vh
+  overflow-x hidden
 
 .container
   max-width $appWidth
   margin 0 auto
-  padding 0 15px
 
-  +respond-above($md-screen)
-    padding 0 20px
+.padded-container
+  content-padding()
 
 .content-container
   display flex
