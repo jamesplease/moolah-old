@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ProfileSubheader() {
+export default function AccountSubheader() {
   return (
     <div className="sub-header">
       <div className="container">

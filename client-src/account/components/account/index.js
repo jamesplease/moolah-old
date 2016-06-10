@@ -8,25 +8,25 @@ function getLoginServiceImgUrl(serviceName) {
   return `/${serviceName.toLowerCase()}-logo@2x.png`;
 }
 
-export default function Profile() {
+export default function Account() {
   return (
     <div className="container">
-      <div className="profile">
-        <div className="profile-form-row">
-          <label className="profile-label">Profile Photo</label>
+      <div className="account">
+        <div className="account-form-row">
+          <label className="account-label">Profile Photo</label>
           <div className="photo-input">
             <img
-              className="profile-photo"
+              className="account-photo"
               src={imgSrc}/>
             <button className="link-text change-photo-text">Change photo</button>
           </div>
         </div>
-        <div className="profile-form-row">
-          <label className="profile-label">Name</label>
+        <div className="account-form-row">
+          <label className="account-label">Name</label>
           <input type="text" className="text-input" value="Aradhya Singhal"/>
         </div>
-        <div className="profile-form-row">
-          <label className="profile-label">Email</label>
+        <div className="account-form-row">
+          <label className="account-label">Email</label>
           <input type="text" className="text-input" value="asinghal@gmail.com"/>
         </div>
         <div className="resource-list-header">
@@ -38,7 +38,7 @@ export default function Profile() {
           {loginServices.map(service => (
             <li className="resource-list-item" key={service.name}>
               <img
-                className="resource-list-profile-icon"
+                className="resource-list-account-icon"
                 src={getLoginServiceImgUrl(service.name)}/>
               {service.name}
               <button className="resource-list-item-delete">

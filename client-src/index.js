@@ -9,8 +9,8 @@ import DashboardSubheader from './dashboard/components/subheader';
 import Dashboard from './dashboard/components/dashboard';
 import CategoriesSubheader from './categories/components/subheader';
 import Categories from './categories/components/content';
-import ProfileSubheader from './profile/components/subheader';
-import Profile from './profile/components/profile';
+import AccountSubheader from './account/components/subheader';
+import Account from './account/components/account';
 import AnalyticsSubheader from './analytics/components/subheader';
 import Analytics from './analytics/components/analytics';
 import TransactionsSubheader from './transactions/components/subheader';
@@ -38,7 +38,7 @@ render((
         <Route path="/transactions" components={{main: Transactions, subheader: TransactionsSubheader}}/>
         <Route path="/categories" components={{main: Categories, subheader: CategoriesSubheader}}/>
         <Route path="/analytics" components={{main: Analytics, subheader: AnalyticsSubheader}}/>
-        <Route path="/profile" components={{main: Profile, subheader: ProfileSubheader}}/>
+        <Route path="/account" components={{main: Account, subheader: AccountSubheader}}/>
         <Route path="/contact" components={{main: Contact}}/>
         <Route path="/privacy" components={{main: Privacy}}/>
         <Route path="/about" components={{main: About}}/>
