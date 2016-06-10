@@ -2,6 +2,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import classNames from 'classnames';
 import Nav from '../nav';
 import * as uiActionCreators from '../../../redux/ui/action-creators';
 
@@ -9,6 +10,11 @@ export function Header({isMobileMenuVisible, uiActions}) {
   function onClickToggle() {
     uiActions.toggleMobileMenu(!isMobileMenuVisible);
   }
+
+  const mobileNavToggleClass = classNames({
+    'is-active': isMobileMenuVisible,
+    'mobile-menu-toggle hamburger hamburger--squeeze': true
+  });
 
   return (
     <header>
@@ -18,8 +24,12 @@ export function Header({isMobileMenuVisible, uiActions}) {
             Moolah
           </Link>
         </h1>
-        <button className="mobile-menu-toggle" onClick={onClickToggle}>
-          <i className="zmdi zmdi-menu zmdi-hc-lg mobile-menu-toggle"></i>
+        <button
+          className={mobileNavToggleClass}
+          onClick={onClickToggle}>
+          <span className="hamburger-box">
+            <span className="hamburger-inner"></span>
+          </span>
         </button>
         <Nav/>
         <div className="header-account-container">
