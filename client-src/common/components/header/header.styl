@@ -47,8 +47,25 @@ header
       display block
 
   .mobile-menu-toggle
-    primary-gradient-fill()
-    clip-bg-to-text()
+    padding 0
+    height 22px
+
+    .hamburger-box
+      height 22px
+      width 20.25px
+
+    .hamburger-inner,
+    .hamburger-inner:after,
+    .hamburger-inner:before
+      width 20.25px
+      height 2.25px
+      primary-gradient-fill()
+
+    .hamburger-inner:before
+      top -6px
+
+    .hamburger-inner:after
+      bottom -6px
 
     +respond-above($md-screen)
       display none
