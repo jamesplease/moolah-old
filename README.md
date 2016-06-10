@@ -78,3 +78,8 @@ The app should now be available in your browser at `http://localhost:5000`.
 - `npm run migrate:up`: Applies migrations
 - `npm run migrate:down`: Reverts migrations
 - `npm run migrate:create`: Create a new migration
+
+##### Acknowledgements
+
+I'll be trying out using [BrowserStack](https://www.browserstack.com/)'s free
+account for open source projects to run this application's integration tests.
