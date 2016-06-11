@@ -85,7 +85,7 @@ const CategoriesSubheader = React.createClass({
     const modal = this.state.isModalOpen ? this.createModal() : null;
 
     return (
-      <div className="sub-header">
+      <div className="sub-header list-header">
         {modal}
         <div className="container">
           <h1 className="subheader-title">

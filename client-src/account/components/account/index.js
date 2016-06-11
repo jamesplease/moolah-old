@@ -1,4 +1,5 @@
 import React from 'react';
+import Subheader from '../subheader';
 import loginServices from '../../../common/services/login-services';
 
 const imgSrc = 'http://lh3.googleusercontent.com' +
@@ -10,8 +11,9 @@ function getLoginServiceImgUrl(serviceName) {
 
 export default function Account() {
   return (
-    <div className="container">
-      <div className="account">
+    <div>
+      <Subheader/>
+      <div className="account container">
         <div className="account-form-row">
           <label className="account-label">Profile Photo</label>
           <div className="photo-input">

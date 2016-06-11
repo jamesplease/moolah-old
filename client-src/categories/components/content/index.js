@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
+import Subheader from '../subheader';
 import CategoriesList from '../categories-list';
 import LoadingCategories from '../loading-categories';
 import EmptyCategories from '../empty-categories';
@@ -14,7 +15,7 @@ export const Categories = React.createClass({
     categoriesActions.retrieveCategories();
   },
 
-  render() {
+  getContents() {
     const {
       retrievingCategories, categories, updateCategorySuccess,
       categoriesActions, deletingCategory, isOnline,
@@ -46,6 +47,15 @@ export const Categories = React.createClass({
       updateCategoryFailure={updateCategoryFailure}
       categoriesActions={categoriesActions}
       alertActions={alertActions}/>);
+  },
+
+  render() {
+    return (
+      <div>
+        <Subheader/>
+        {this.getContents()}
+      </div>
+    );
   }
 });
 
