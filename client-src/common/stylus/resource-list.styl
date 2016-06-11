@@ -12,6 +12,6 @@
 // This rule makes it so that when the subheader and resource list are
 // visually next to one another, their borders overlap so as not to produce
 // a double-border effect.
-main > .resource-list:first-child,
-main > .resource-list-container:first-child
+.sub-header + .resource-list,
+.sub-header + .resource-list-container
   margin-top -1px

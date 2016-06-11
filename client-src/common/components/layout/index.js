@@ -53,8 +53,7 @@ const Layout = React.createClass({
 
   render() {
     const {
-      main,
-      subheader,
+      children,
       alertProps,
       alertActions,
       dispatch
@@ -88,9 +87,8 @@ const Layout = React.createClass({
           {alert}
         </ReactCSSTransitionGroup>
         <div className="content-container">
-          {subheader}
           <main>
-            {main}
+            {children}
           </main>
           <Footer/>
         </div>

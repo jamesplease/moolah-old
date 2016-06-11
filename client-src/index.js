@@ -5,15 +5,10 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {Router, Route, IndexRoute, browserHistory, Redirect} from 'react-router';
 
-import DashboardSubheader from './dashboard/components/subheader';
 import Dashboard from './dashboard/components/dashboard';
-import CategoriesSubheader from './categories/components/subheader';
 import Categories from './categories/components/content';
-import AccountSubheader from './account/components/subheader';
 import Account from './account/components/account';
-import AnalyticsSubheader from './analytics/components/subheader';
 import Analytics from './analytics/components/analytics';
-import TransactionsSubheader from './transactions/components/subheader';
 import Transactions from './transactions/components/transactions';
 import Layout from './common/components/layout';
 import About from './meta/components/about';
@@ -24,9 +19,9 @@ import store from './redux/store';
 
 import './common/services/js-emoji';
 
-const App = React.createClass({
+const NotFound = React.createClass({
   render() {
-    return <div>Not Found Sorry</div>;
+    return (<div>Not found – sorry!</div>);
   }
 });
 
@@ -34,17 +29,17 @@ render((
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Layout}>
-        <IndexRoute components={{main: Dashboard, subheader: DashboardSubheader}}/>
-        <Route path="/transactions" components={{main: Transactions, subheader: TransactionsSubheader}}/>
-        <Route path="/categories" components={{main: Categories, subheader: CategoriesSubheader}}/>
-        <Route path="/analytics" components={{main: Analytics, subheader: AnalyticsSubheader}}/>
-        <Route path="/account" components={{main: Account, subheader: AccountSubheader}}/>
-        <Route path="/contact" components={{main: Contact}}/>
-        <Route path="/privacy" components={{main: Privacy}}/>
-        <Route path="/about" components={{main: About}}/>
-        <Route path="/terms" components={{main: Terms}}/>
+        <IndexRoute component={Dashboard}/>
+        <Route path="/transactions" component={Transactions}/>
+        <Route path="/categories" component={Categories}/>
+        <Route path="/analytics" component={Analytics}/>
+        <Route path="/account" component={Account}/>
+        <Route path="/contact" component={Contact}/>
+        <Route path="/privacy" component={Privacy}/>
+        <Route path="/about" component={About}/>
+        <Route path="/terms" component={Terms}/>
         <Redirect from="/dashboard" to="/"/>
-        <Route path="*" components={{main: App}}/>
+        <Route path="*" component={NotFound}/>
       </Route>
     </Router>
   </Provider>
