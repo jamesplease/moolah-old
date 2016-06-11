@@ -3,8 +3,11 @@ import 'babel-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import {Router, Route, IndexRoute, browserHistory, Redirect} from 'react-router';
-
+import {
+  Router, Route, IndexRoute, browserHistory,
+  Redirect, applyRouterMiddleware
+} from 'react-router';
+import useScroll from 'react-router-scroll';
 import Dashboard from './dashboard/components/dashboard';
 import Categories from './categories/components/content';
 import Account from './account/components/account';
@@ -27,7 +30,7 @@ const NotFound = React.createClass({
 
 render((
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
         <IndexRoute component={Dashboard}/>
         <Route path="/transactions" component={Transactions}/>

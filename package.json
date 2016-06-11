@@ -63,6 +63,7 @@
     "json-loader": "^0.5.3",
     "mocha": "^2.3.4",
     "pleaserc": "^2.0.0",
+    "react-router-scroll": "^0.2.0",
     "run-sequence": "^1.2.1",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
