@@ -18,7 +18,11 @@ function lastDayOfMonth(date) {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0);
 }
 
-export function generateMonthlyRecurring({name, amount, startDate, description, categoryId}) {
+function formatDate(date) {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+
+export function generateMonthlyRecurring({amount, startDate, description, categoryId}) {
   const today = cloneDate(currentDate);
   const oneMonthFromNow = addMonth(today);
   const lastDayNextMonth = lastDayOfMonth(oneMonthFromNow);
@@ -27,7 +31,7 @@ export function generateMonthlyRecurring({name, amount, startDate, description, 
   let startDateClone = cloneDate(startDateObj);
 
   const dates = [];
-  while(startDateClone < lastDayNextMonth) {
+  while (startDateClone < lastDayNextMonth) {
     dates.push(cloneDate(startDateClone));
     startDateClone = addMonth(startDateClone);
   }
@@ -35,22 +39,22 @@ export function generateMonthlyRecurring({name, amount, startDate, description, 
   return dates.map(date => {
     return {
       id: currentId++,
-      name, amount, description,
+      amount, description,
       categoryId,
-      date: cloneDate(startDateClone),
+      date: formatDate(date),
       recurring: 'monthly'
     };
   });
 }
 
 export default _.concat(
-  generateMonthlyRecurring({name: 'Gas', amount: '67.00', startDate: '2015-10-01', categoryId: 1}),
-  generateMonthlyRecurring({name: 'Rent', amount: '2000.00', startDate: '2015-06-01', categoryId: 1}),
-  generateMonthlyRecurring({name: 'Spotify', amount: '9.99', startDate: '2016-01-06', categoryId: 1}),
-  generateMonthlyRecurring({name: 'Water', amount: '24.76', startDate: '2016-03-01', categoryId: 1}),
-  generateMonthlyRecurring({name: 'Trash', amount: '21.10', startDate: '2015-07-01', categoryId: 1}),
-  generateMonthlyRecurring({name: 'iCloud Storage', amount: '9.99', startDate: '2015-06-15', categoryId: 1}),
-  generateMonthlyRecurring({name: "Renter's insurance", amount: '15.50', startDate: '2015-10-01', categoryId: 1}),
-  generateMonthlyRecurring({name: "Car insurance", amount: '23.87', startDate: '2016-04-04', categoryId: 1}),
-  generateMonthlyRecurring({name: "GitHub", amount: '7.00', startDate: '2015-10-01', categoryId: 1}),
+  generateMonthlyRecurring({description: 'Gas', amount: '67.00', startDate: '2015-10-01', categoryId: 1}),
+  generateMonthlyRecurring({description: 'Rent', amount: '2000.00', startDate: '2015-06-01', categoryId: 1}),
+  generateMonthlyRecurring({description: 'Spotify', amount: '9.99', startDate: '2016-01-06', categoryId: 1}),
+  generateMonthlyRecurring({description: 'Water', amount: '24.76', startDate: '2016-03-01', categoryId: 1}),
+  generateMonthlyRecurring({description: 'Trash', amount: '21.10', startDate: '2015-07-01', categoryId: 1}),
+  generateMonthlyRecurring({description: 'iCloud Storage', amount: '9.99', startDate: '2015-06-15', categoryId: 1}),
+  generateMonthlyRecurring({description: "Renter's insurance", amount: '15.50', startDate: '2015-10-01', categoryId: 1}),
+  generateMonthlyRecurring({description: 'Car insurance', amount: '23.87', startDate: '2016-04-04', categoryId: 1}),
+  generateMonthlyRecurring({description: 'GitHub', amount: '7.00', startDate: '2015-10-01', categoryId: 1}),
 );

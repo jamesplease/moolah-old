@@ -5,9 +5,9 @@ import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 import Subheader from '../subheader';
 import CategoriesList from '../categories-list';
-import LoadingCategories from '../loading-categories';
 import EmptyCategories from '../empty-categories';
-import ErrorRetrieving from '../error-retrieving';
+import ErrorRetrieving from '../../../common/components/error-retrieving';
+import LoadingResourceList from '../../../common/components/loading-resource-list';
 
 export const Categories = React.createClass({
   componentDidMount() {
@@ -25,11 +25,13 @@ export const Categories = React.createClass({
     } = this.props;
 
     if (retrievingCategories) {
-      return <LoadingCategories/>;
+      return <LoadingResourceList/>;
     }
 
     if (retrieveCategoriesFailure) {
-      return <ErrorRetrieving retry={categoriesActions.retrieveCategories}/>;
+      return (<ErrorRetrieving
+        retry={categoriesActions.retrieveCategories}
+        resourceName="Categories"/>);
     }
 
     if (!categories.length) {

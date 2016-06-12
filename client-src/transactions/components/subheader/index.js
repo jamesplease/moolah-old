@@ -15,13 +15,13 @@ export function TransactionsSubheader({isOnline, transactionsActions}) {
   }
 
   return (
-    <div className="sub-header">
+    <div className="sub-header list-header">
       <div className="container">
         <h1 className="subheader-title">
           Transactions
         </h1>
         <button
-          className="subheader-action btn btn-line"
+          className="subheader-action btn"
           onClick={onClickNew}
           disabled={disabled}>
           + Transaction

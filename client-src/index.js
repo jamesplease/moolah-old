@@ -12,7 +12,7 @@ import Dashboard from './dashboard/components/dashboard';
 import Categories from './categories/components/content';
 import Account from './account/components/account';
 import Analytics from './analytics/components/analytics';
-import Transactions from './transactions/components/transactions';
+import Transactions from './transactions/components/content';
 import Layout from './common/components/layout';
 import About from './meta/components/about';
 import Contact from './meta/components/contact';

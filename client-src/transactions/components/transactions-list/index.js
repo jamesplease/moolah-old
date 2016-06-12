@@ -1,12 +1,12 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Transaction from '../transaction';
+import TransactionListItem from '../transaction-list-item';
 import * as transactionsActionCreators from '../../../redux/transactions/action-creators';
 
 function getTransactionsList(transactions, transactionsActions) {
   return transactions.map(t => (
-    <Transaction
+    <TransactionListItem
       key={t.id}
       transaction={t}
       deleteTransaction={transactionsActions.deleteTransaction}
@@ -14,31 +14,10 @@ function getTransactionsList(transactions, transactionsActions) {
   ));
 }
 
-function getLoadingState() {
-  return (<div>Loading transactions.</div>);
-}
-
-function getEmptyTransactions() {
-  return (<div>There are no transactions.</div>);
-}
-
-export const Transactions = React.createClass({
-  componentDidMount() {
-    const {transactionsActions} = this.props;
-    transactionsActions.retrieveTransactions();
-  },
-
+export const TransactionsList = React.createClass({
   render() {
     const {transactions, transactionsActions} = this.props;
-    var children;
-
-    if (!transactions) {
-      children = getLoadingState();
-    } else if (!transactions.length) {
-      children = getEmptyTransactions();
-    } else {
-      children = getTransactionsList(transactions, transactionsActions);
-    }
+    var children = getTransactionsList(transactions, transactionsActions);
 
     return (
       <div className="transaction-list resource-list-container">
@@ -62,4 +41,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
