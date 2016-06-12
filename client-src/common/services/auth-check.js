@@ -3,7 +3,7 @@ function redirect({requireLoggedIn, nextState, replace, store, location}) {
   const meetsRequirement = requireLoggedIn ? isLoggedIn : !isLoggedIn;
 
   if (meetsRequirement) {
-    return;
+    return true;
   }
 
   let state;
@@ -17,6 +17,8 @@ function redirect({requireLoggedIn, nextState, replace, store, location}) {
     pathname: location,
     state
   });
+
+  return false;
 }
 
 // Pass a `store` to receive a `requireAuth` function. Use that function to
@@ -25,7 +27,7 @@ function redirect({requireLoggedIn, nextState, replace, store, location}) {
 export default function generateRequireAuth(store) {
   return {
     mustBeLoggedIn(nextState, replace) {
-      redirect({
+      return redirect({
         store, nextState, replace,
         location: '/login',
         requireLoggedIn: true
@@ -33,7 +35,7 @@ export default function generateRequireAuth(store) {
     },
 
     mustBeLoggedOut(nextState, replace) {
-      redirect({
+      return redirect({
         store, nextState, replace,
         location: '/',
         requireLoggedIn: false

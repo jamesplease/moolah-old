@@ -21,17 +21,34 @@ import Terms from './meta/components/terms';
 import SignIn from './meta/components/sign-in';
 import store from './redux/store';
 import generateAuthCheck from './common/services/auth-check';
+import {getYearMonthStringFromDate} from './transactions/services/format-date';
 import mockServer from './mock-server';
 
 mockServer.start();
 const authCheck = generateAuthCheck(store);
+
+// When we enter `/transactions/this-month`, we dynamically redirect them to a
+// URL with the current month and year in it. This way, the URL in the nav bar
+// can remain constant, even if the user keeps the app open as the dates change.
+function onTransactionsEnter(nextState, redirect) {
+  if (!authCheck.mustBeLoggedIn()) {
+    return;
+  }
+
+  const dateString = getYearMonthStringFromDate(new Date());
+  redirect(`/transactions/${dateString}`);
+}
 
 render((
   <Provider store={store}>
     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
         <IndexRoute component={IndexPage}/>
-        <Route path="/transactions" component={Transactions} onEnter={authCheck.mustBeLoggedIn}/>
+        <Route path="/transactions/this-month" onEnter={onTransactionsEnter}/>
+        <Route
+          path="/transactions/:transactionDate"
+          component={Transactions}/>
+        <Redirect from="/transactions" to="/transactions/this-month"/>
         <Route path="/categories" component={Categories} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/analytics" component={Analytics} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/account" component={Account} onEnter={authCheck.mustBeLoggedIn}/>
