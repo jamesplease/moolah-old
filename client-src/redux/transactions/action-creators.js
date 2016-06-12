@@ -1,89 +1,86 @@
 import actionTypes from './action-types';
+import mockTransactions from '../mock/transactions';
+
+const transactionsLength = mockTransactions.length;
+let lastId = mockTransactions[transactionsLength - 1].id;
+
+export function setTransactionUpdateId(transactionId) {
+  return {
+    type: actionTypes.SET_TRANSACTION_UPDATE_ID,
+    transactionId
+  };
+}
+
+export function clearTransactionUpdateId() {
+  return {
+    type: actionTypes.CLEAR_TRANSACTION_UPDATE_ID
+  };
+}
 
 export function createTransaction(data) {
   return dispatch => {
     dispatch({type: actionTypes.CREATE_TRANSACTION});
 
-    fetch('/api/v1/transactions', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(resp => resp.json())
-      .then(resp => {
-        dispatch({
-          type: actionTypes.CREATE_TRANSACTION_SUCCESS,
-          transaction: resp.data
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.CREATE_TRANSACTION_FAILURE
-      }));
+    const newId = ++lastId;
+
+    // Simulate fake network latency
+    window.setTimeout(() => {
+      const newTransaction = {
+        ...data,
+        id: newId
+      };
+
+      dispatch({
+        type: actionTypes.CREATE_TRANSACTIONS_SUCCESS,
+        transaction: newTransaction
+      });
+    }, 1000);
   };
 }
 
 export function retrieveTransactions() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS});
 
-    fetch('/api/v1/transactions')
-      .then(resp => resp.json())
-      .then(resp => {
-        dispatch({
-          type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
-          transactions: resp.data
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.RETRIEVE_TRANSACTIONS_FAILURE
-      }));
+    window.setTimeout(() => {
+      const existingTransactions = getState().transactions.transactions;
+      let transactions;
+      if (!existingTransactions.length) {
+        transactions = [...mockTransactions];
+      } else {
+        transactions = existingTransactions;
+      }
+
+      dispatch({
+        type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
+        transactions
+      });
+    }, 1200);
   };
 }
 
-export function updateTransaction(transactionId, data) {
+export function updateTransaction(transaction) {
   return dispatch => {
-    dispatch({type: actionTypes.UPDATE_TRANSACTION, transactionId});
+    dispatch({type: actionTypes.UPDATE_TRANSACTION, transaction});
 
-    fetch(`/api/v1/transactions/${transactionId}`, {
-      method: 'PATCH',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(resp => resp.json())
-      .then(resp => {
-        dispatch({
-          type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
-          transactionId,
-          transaction: resp.data
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.UPDATE_TRANSACTION_FAILURE,
-        transactionId
-      }));
+    window.setTimeout(() => {
+      dispatch({
+        type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
+        transaction
+      });
+    }, 1000);
   };
 }
 
 export function deleteTransaction(transactionId) {
   return dispatch => {
-    dispatch({type: actionTypes.DELETE_TRANSACTION, transactionId});
+    dispatch({type: actionTypes.DELETE_TRANSACTION});
 
-    fetch(`/api/v1/transactions/${transactionId}`, {method: 'DELETE'})
-      .then(() => {
-        dispatch({
-          type: actionTypes.DELETE_TRANSACTION_SUCCESS,
-          transactionId
-        });
-      })
-      .catch(() => dispatch({
-        type: actionTypes.DELETE_TRANSACTION_FAILURE,
+    window.setTimeout(() => {
+      dispatch({
+        type: actionTypes.DELETE_TRANSACTION_SUCCESS,
         transactionId
-      }));
+      });
+    }, 1000);
   };
 }

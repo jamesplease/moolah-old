@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+let currentId = 1;
 const currentDate = new Date();
 
 function cloneDate(date) {
@@ -33,6 +34,7 @@ export function generateMonthlyRecurring({name, amount, startDate, description, 
 
   return dates.map(date => {
     return {
+      id: currentId++,
       name, amount, description,
       categoryId,
       date: cloneDate(startDateClone),

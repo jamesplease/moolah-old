@@ -1,5 +1,5 @@
 export default {
-  transactions: null,
+  transactions: [],
 
   creatingTransaction: false,
   createTransactionSuccess: false,
@@ -9,12 +9,11 @@ export default {
   retrieveTransactionsSuccess: false,
   retrieveTransactionsFailure: false,
 
-  currentlyUpdating: [],
+  transactionIdBeingUpdated: null,
   updatingTransaction: false,
   updateTransactionSuccess: false,
   updateTransactionFailure: false,
 
-  currentlyDeleting: [],
   deletingTransaction: false,
   deleteTransactionSuccess: false,
   deleteTransactionFailure: false

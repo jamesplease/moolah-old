@@ -4,6 +4,20 @@ import initialState from './initial-state';
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SET_TRANSACTION_UPDATE_ID: {
+      return Object.assign({
+        ...state,
+        transactionIdBeingUpdated: action.transactionId
+      });
+    }
+
+    case actionTypes.CLEAR_TRANSACTION_UPDATE_ID: {
+      return Object.assign({
+        ...state,
+        transactionIdBeingUpdated: null
+      });
+    }
+
     // Create transaction
     case actionTypes.CREATE_TRANSACTION: {
       return Object.assign({
@@ -31,14 +45,14 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DISMISS_CREATE_TRANSACTION_SUCCESS_ALERT: {
+    case actionTypes.CREATE_TRANSACTION_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         createTransactionSuccess: false
       });
     }
 
-    case actionTypes.DISMISS_CREATE_TRANSACTION_FAILURE_ALERT: {
+    case actionTypes.CREATE_TRANSACTION_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         createTransactionFailure: false
@@ -70,14 +84,14 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DISMISS_RETRIEVE_TRANSACTIONS_SUCCESS_ALERT: {
+    case actionTypes.RETRIEVE_TRANSACTIONS_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         retrieveTransactionsSuccess: false
       });
     }
 
-    case actionTypes.DISMISS_RETRIEVE_TRANSACTIONS_FAILURE_ALERT: {
+    case actionTypes.RETRIEVE_TRANSACTIONS_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         retrieveTransactionsFailure: false
@@ -86,22 +100,17 @@ export default (state = initialState, action) => {
 
     // Update transaction
     case actionTypes.UPDATE_TRANSACTION: {
-      let currentlyUpdating = [...state.currentlyUpdating];
-      currentlyUpdating.push(action.transactionId);
       return Object.assign({
         ...state,
         updatingTransaction: true,
-        currentlyUpdating
       });
     }
 
     case actionTypes.UPDATE_TRANSACTION_SUCCESS: {
-      let current = state.currentlyUpdating;
-      let id = action.transactionId;
-      let currentlyUpdating = _.without(current, id);
+      let id = action.transaction.id;
 
       let transactions = ([...state.transactions]).map(t => {
-        if (t.id !== action.transactionId) {
+        if (t.id !== id) {
           return t;
         } else {
           return action.transaction;
@@ -112,31 +121,26 @@ export default (state = initialState, action) => {
         ...state,
         updatingTransaction: false,
         updateTransactionSuccess: true,
-        currentlyUpdating,
         transactions
       });
     }
 
     case actionTypes.UPDATE_TRANSACTION_FAILURE: {
-      let current = state.currentlyUpdating;
-      let id = action.transactionId;
-      let currentlyUpdating = _.without(current, id);
       return Object.assign({
         ...state,
         updatingTransaction: false,
-        updateTransactionFailure: true,
-        currentlyUpdating
+        updateTransactionFailure: true
       });
     }
 
-    case actionTypes.DISMISS_UPDATE_TRANSACTION_SUCCESS_ALERT: {
+    case actionTypes.UPDATE_TRANSACTION_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         updateTransactionSuccess: false
       });
     }
 
-    case actionTypes.DISMISS_UPDATE_TRANSACTION_FAILURE_ALERT: {
+    case actionTypes.UPDATE_TRANSACTION_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         updateTransactionFailure: false
@@ -145,51 +149,39 @@ export default (state = initialState, action) => {
 
     // Delete transaction
     case actionTypes.DELETE_TRANSACTION: {
-      let currentlyDeleting = [...state.currentlyDeleting];
-      currentlyDeleting.push(action.transactionId);
       return Object.assign({
         ...state,
         deletingTransaction: true,
-        currentlyDeleting
       });
     }
 
     case actionTypes.DELETE_TRANSACTION_SUCCESS: {
-      let current = state.currentlyDeleting;
-      let id = action.transactionId;
-      let currentlyDeleting = _.without(current, id);
-
       const rejectionFn = val => val.id === action.transactionId;
       let transactions = _.reject(state.transactions, rejectionFn);
       return Object.assign({
         ...state,
         deletingTransaction: false,
         deleteTransactionSuccess: true,
-        currentlyDeleting,
         transactions
       });
     }
 
     case actionTypes.DELETE_TRANSACTION_FAILURE: {
-      let current = state.currentlyDeleting;
-      let id = action.transactionId;
-      let currentlyDeleting = _.without(current, id);
       return Object.assign({
         ...state,
         deletingTransaction: false,
         deleteTransactionFailure: true,
-        currentlyDeleting
       });
     }
 
-    case actionTypes.DISMISS_DELETE_TRANSACTION_SUCCESS_ALERT: {
+    case actionTypes.DELETE_TRANSACTION_DISMISS_SUCCESS_ALERT: {
       return Object.assign({
         ...state,
         deleteTransactionSuccess: false
       });
     }
 
-    case actionTypes.DISMISS_DELETE_TRANSACTION_FAILURE_ALERT: {
+    case actionTypes.DELETE_TRANSACTION_DISMISS_FAILURE_ALERT: {
       return Object.assign({
         ...state,
         deleteTransactionFailure: false

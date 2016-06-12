@@ -20,8 +20,6 @@ import Privacy from './meta/components/privacy';
 import Terms from './meta/components/terms';
 import store from './redux/store';
 
-import './common/services/js-emoji';
-
 const NotFound = React.createClass({
   render() {
     return (<div>Not found – sorry!</div>);
