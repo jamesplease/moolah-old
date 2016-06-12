@@ -1,7 +1,7 @@
 import actionTypes from './action-types';
 import mockCategories from '../mock/categories';
 
-let categoriesLength = mockCategories.length;
+const categoriesLength = mockCategories.length;
 let lastId = mockCategories[categoriesLength - 1].id;
 
 export function setCategoryUpdateId(categoryId) {
