@@ -1,8 +1,11 @@
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const CreateCategoriesModal = React.createClass({
   componentDidMount() {
@@ -50,6 +53,18 @@ const CreateCategoriesModal = React.createClass({
     const nextLabelIsInvalid = nextLabel.error && nextLabel.touched;
     const thisLabelIsInvalid = thisLabel.error && thisLabel.touched;
 
+    if (nextProps.actionFailure && !this.props.actionFailure) {
+      const {queueAlert} = this.props.alertActions;
+      const dismissFailureAlert = categoriesActionCreators.dismissUpdateCategoryFailureAlert();
+      queueAlert({
+        style: 'danger',
+        text: 'Oops – there<br><br><br><br>was an error.<br>Try that<br>one<br>more<br>time?',
+        persistent: true,
+        isDismissable: true,
+        onDismissAction: dismissFailureAlert
+      });
+    }
+
     // If the next label is invalid, and the current label is valid, then
     // that means the form has gone from being valid to invalid. In that case,
     // we display an error message. If the user had already submitted
@@ -76,8 +91,7 @@ const CreateCategoriesModal = React.createClass({
       handleSubmit,
       confirmInProgress,
       onClickCancel,
-      isEditMode,
-      actionFailure
+      isEditMode
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -113,18 +127,16 @@ const CreateCategoriesModal = React.createClass({
       errorMsg = 'A name is required';
     } else if (treatFormInvalid && label.error === 'duplicate') {
       errorMsg = 'Category already exists';
-    } else if (actionFailure) {
-      errorMsg = 'There was an error.';
     }
 
     const errorClass = classNames({
       'modal-error form-error': true,
-      visible: treatFormInvalid || actionFailure
+      visible: treatFormInvalid
     });
 
     const modalClass = classNames({
       'create-category-modal': true,
-      'modal-form-invalid': treatFormInvalid || actionFailure
+      'modal-form-invalid': treatFormInvalid
     });
 
     return (
@@ -215,8 +227,19 @@ function mapStateToProps(state) {
   };
 }
 
-export default reduxForm({
-  form: 'createCategory',
-  fields: ['label'],
-  validate
-}, mapStateToProps)(CreateCategoriesModal);
+function mapDispatchToProps(dispatch) {
+  return {
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
+  };
+}
+
+export default reduxForm(
+  {
+    form: 'createCategory',
+    fields: ['label'],
+    validate
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateCategoriesModal);

@@ -96,6 +96,7 @@
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.0.2",
+    "react-gateway": "^2.2.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",
     "redux": "3.5.0",

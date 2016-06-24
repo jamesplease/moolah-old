@@ -7,6 +7,7 @@ import {
   Router, Route, IndexRoute, browserHistory,
   Redirect, applyRouterMiddleware
 } from 'react-router';
+import {GatewayProvider} from 'react-gateway';
 import useScroll from 'react-router-scroll';
 import Dashboard from './dashboard/components/dashboard';
 import Categories from './categories/components/content';
@@ -28,20 +29,22 @@ const NotFound = React.createClass({
 
 render((
   <Provider store={store}>
-    <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
-      <Route path="/" component={Layout}>
-        <IndexRoute component={Dashboard}/>
-        <Route path="/transactions" component={Transactions}/>
-        <Route path="/categories" component={Categories}/>
-        <Route path="/analytics" component={Analytics}/>
-        <Route path="/account" component={Account}/>
-        <Route path="/contact" component={Contact}/>
-        <Route path="/privacy" component={Privacy}/>
-        <Route path="/about" component={About}/>
-        <Route path="/terms" component={Terms}/>
-        <Redirect from="/dashboard" to="/"/>
-        <Route path="*" component={NotFound}/>
-      </Route>
-    </Router>
+    <GatewayProvider>
+      <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
+        <Route path="/" component={Layout}>
+          <IndexRoute component={Dashboard}/>
+          <Route path="/transactions" component={Transactions}/>
+          <Route path="/categories" component={Categories}/>
+          <Route path="/analytics" component={Analytics}/>
+          <Route path="/account" component={Account}/>
+          <Route path="/contact" component={Contact}/>
+          <Route path="/privacy" component={Privacy}/>
+          <Route path="/about" component={About}/>
+          <Route path="/terms" component={Terms}/>
+          <Redirect from="/dashboard" to="/"/>
+          <Route path="*" component={NotFound}/>
+        </Route>
+      </Router>
+    </GatewayProvider>
   </Provider>
 ), document.querySelector('.app-container'));

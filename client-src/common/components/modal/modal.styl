@@ -12,13 +12,14 @@
   background #fff
   min-width 150px
   min-height 50px
-  max-width 85%
+  max-width 80vw
   // When the header doesn't span the full width, then all of the whitespace
   // around it makes the top appear visually to have more padding than it does
   padding 22px 27px 27px
   box-shadow 0 0 100px rgba(0, 0, 0, 0.25)
   margin 0 auto
-  margin-top 20vh
+  pointer-events auto
+  transition opacity 2s, transform 2s cubic-bezier(0.440, 0.135, 0.475, 1.5)
 
   .modal-title
     font-size 17px
@@ -34,3 +35,21 @@
   .modal-error
     text-align center
     margin-bottom 13px
+
+// These classes are set by the ReactCSSTransitionGroup wrapper
+.modal-enter,
+.modal-appear,
+.modal-leave.modal-leave-active
+  opacity 0
+  transform scale(0.75)
+
+// These classes are set by the ReactCSSTransitionGroup wrapper
+.modal-enter.modal-enter-active,
+.modal-appear.modal-appear-active,
+.modal-leave
+  // When this becomes visible, the `content-container` scoots down to make
+  // room. This behavior is specified in `scaffolding.styl`
+  opacity 1
+  transform scale(1)
+  transition-duration 2s
+  transition-timing-function transform ease
