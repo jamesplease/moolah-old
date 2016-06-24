@@ -3,7 +3,7 @@ import actionTypes from './action-types';
 import initialState from './initial-state';
 
 const validActionProps = [
-  'text', 'style',
+  'text', 'style', 'onDismissAction',
   'isDismissable',
   'icon', 'alertId'
 ];
@@ -59,6 +59,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         alertId: null,
+        undoAction: null,
         alertIsActive: false
       };
     }

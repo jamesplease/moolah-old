@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import classNames from 'classnames';
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as contactActionCreators from '../../../redux/contact/action-creators';
 
 const Contact = React.createClass({
@@ -24,13 +24,27 @@ const Contact = React.createClass({
     );
   },
 
+  componentWillReceiveProps(nextProps) {
+    const {sendMessageFailure} = this.props;
+    if (!sendMessageFailure && nextProps.sendMessageFailure) {
+      const resetMessageStateAction = contactActionCreators.resetMessageState();
+      const {queueAlert} = this.props.alertActions;
+      queueAlert({
+        style: 'danger',
+        text: 'Oops – there was an error.<br>Try that one more time?',
+        persistent: true,
+        isDismissable: true,
+        onDismissAction: resetMessageStateAction
+      });
+    }
+  },
+
   getContactForm() {
     const {
       fields: {subject, body},
       handleSubmit,
       contactActions,
-      sendingMessage,
-      sendMessageFailure
+      sendingMessage
     } = this.props;
 
     function onSubmit(data) {
@@ -41,11 +55,6 @@ const Contact = React.createClass({
     const sendBtnDisabled = sendingMessage;
 
     const placeholder = body.touched && body.error === 'empty' ? 'Please enter a message!' : '';
-
-    const errorClass = classNames({
-      'form-row form-error contact-page-error': true,
-      visible: sendMessageFailure
-    });
 
     return (
       <div>
@@ -69,9 +78,6 @@ const Contact = React.createClass({
               rows={6}
               spellCheck={true}
               {...body}/>
-          </div>
-          <div className={errorClass}>
-            The message failed to send. Please try again.
           </div>
           <div className="form-row contact-submit-row">
             <button
@@ -129,7 +135,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    contactActions: bindActionCreators(contactActionCreators, dispatch)
+    contactActions: bindActionCreators(contactActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
   };
 }
 

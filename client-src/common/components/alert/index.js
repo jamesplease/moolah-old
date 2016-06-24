@@ -13,7 +13,7 @@ const defaultIconMap = {
 const Alert = React.createClass({
   componentWillMount() {
     // Dismissable alerts will dismiss themselves after 2 seconds
-    if (this.props.isDismissable) {
+    if (this.props.persistent) {
       this._autodestruct = window.setTimeout(() => {
         this.props.dismissCurrentAlert();
       }, 2000);
@@ -21,8 +21,20 @@ const Alert = React.createClass({
   },
 
   componentWillUnmount() {
+    const {
+      showNextAlert, onDismissAction,
+      dispatch
+    } = this.props;
+
     window.clearTimeout(this._autodestruct);
-    this.props.showNextAlert();
+
+    // If the alert was given an action to emit when it unmounts,
+    // then we call that now.
+    if (onDismissAction) {
+      dispatch(onDismissAction);
+    }
+
+    showNextAlert();
   },
 
   render() {
@@ -31,7 +43,6 @@ const Alert = React.createClass({
       icon,
       text,
       alertIsActive,
-      undoCallback,
       isDismissable,
       dismissCurrentAlert
     } = this.props;
@@ -52,15 +63,6 @@ const Alert = React.createClass({
       [materialIconClass]: true
     });
 
-    let undoText;
-    if (undoCallback) {
-      undoText = (
-        <button className="alert-undo" onClick={undoCallback}>
-          Undo
-        </button>
-      );
-    }
-
     let dismissIcon;
     if (isDismissable) {
       // If the modal is being hidden, then we can't dismiss it
@@ -75,12 +77,15 @@ const Alert = React.createClass({
       );
     }
 
+    const textHtml = {
+      __html: text
+    };
+
     return (
       <div className={alertClass}>
         <span className="alert-text">
           <i className={iconClass}></i>
-          {text}
-          {undoText}
+          <span dangerouslySetInnerHTML={textHtml}/>
         </span>
         {dismissIcon}
       </div>
