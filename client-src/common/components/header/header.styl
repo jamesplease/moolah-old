@@ -1,4 +1,4 @@
-header
+.appHeader
   position fixed
   top 0
   right 0
@@ -8,102 +8,90 @@ header
   background-color #fafafa
   border-bottom 1px solid #eeeeee
 
-  > .container
-    display flex
-    align-items center
-    height 100%
-    // There's less padding to the right because the profile image is a
-    // circle, so it appears to the eye to be further inset than it really is.
-    padding 0 20px
+.appHeader-container
+  display flex
+  align-items center
+  height 100%
 
-    +respond-below($md-screen)
-      padding 0 15px
+.appHeader-appLogo
+  display none
+  margin 0
+  margin-right 24px
+  padding 0
+  font-weight bold
 
-  a
-    text-decoration none
-    font-size 16px
-    color #a1a1a1
+  +respond-above($md-screen)
+    display block
 
-    &:hover
-      color #888
+.appHeader-appLogo-Link
+  primary-gradient-fill()
+  clip-bg-to-text()
+  font-size 21px
 
-    &:active
-      color #666
+.appHeader-overlayNavToggle
+  padding 0
+  height 22px
+  position relative
+  z-index 16000
 
-  .app-logo
-    display none
-    margin 0
-    margin-right 24px
-    padding 0
-    font-weight bold
-
-    a
-      primary-gradient-fill()
-      clip-bg-to-text()
-      font-size 21px
-
-
-    +respond-above($md-screen)
-      display block
-
-  .mobile-menu-toggle
-    padding 0
-    height 22px
-
-    .hamburger-box
-      height 22px
-      width 20.25px
-
+  &.is-active
     .hamburger-inner,
     .hamburger-inner:after,
     .hamburger-inner:before
-      width 20.25px
-      height 2.25px
-      primary-gradient-fill()
+      background #fff
 
-    .hamburger-inner:before
-      top -6px
+  .hamburger-box
+    height 22px
+    width 20.25px
 
-    .hamburger-inner:after
-      bottom -6px
+  .hamburger-inner,
+  .hamburger-inner:after,
+  .hamburger-inner:before
+    width 20.25px
+    height 2.25px
+    primary-gradient-fill()
 
-    +respond-above($md-screen)
-      display none
+  .hamburger-inner:before
+    top -6px
 
-  .main-nav
+  .hamburger-inner:after
+    bottom -6px
+
+  +respond-above($md-screen)
     display none
 
-    +respond-above($md-screen)
-      display block
+.appHeader-accountContainer
+  margin-left auto
 
-  .main-nav-list
-    display flex
+.appHeader-accountLink
+  display flex
+  align-items center
+  position relative
+  z-index 16000
+  text-decoration none
+  color #a1a1a1
 
-    li
-      margin-right 27px
+  &:hover
+    color #888
 
-      &:last-child
-        margin 0
+.appHeader-userName
+  ellipsis()
+  max-width 150px
+  margin-right 10px
+  transition color 0.15s
 
-    a.active
-      color $linkColor
+  &.overlayIsOpen
+    color #fff
 
-  .header-account-container
-    margin-left auto
+.appHeader-profilePicture
+  width 31px
+  height 31px
+  border-radius 50%
+  border 2px solid #fff
+  background-size cover
+  background-image url('http://lh3.googleusercontent.com/-SFoxuA-9BgQ/AAAAAAAAAAI/AAAAAAAAAAA/ADhl2yoCgd6de7jfz57PsSkdK0WUHJH1IQ/s64-c-mo/photo.jpg')
+  transition border-color 0.12s 0.06s
 
-  .header-account-link
-    display flex
-    align-items center
-
-  .header-name
-    ellipsis()
-    max-width 150px
-    margin-right 10px
-
-  .header-account-pic
-    width 31px
-    height 31px
-    border-radius 50%
-    border 2px solid #fff
-    background-size cover
-    background-image url('http://lh3.googleusercontent.com/-SFoxuA-9BgQ/AAAAAAAAAAI/AAAAAAAAAAA/ADhl2yoCgd6de7jfz57PsSkdK0WUHJH1IQ/s64-c-mo/photo.jpg')
+  &.overlayIsOpen
+    border-color #5b515f
+    transition border-color 0.1s

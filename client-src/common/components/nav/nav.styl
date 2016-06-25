@@ -1,0 +1,96 @@
+.mainNav
+  +respond-below($md-screen)
+    position relative
+    // We can't display:none this, or else it won't animate with transitions.
+    // So instead we just scoot it way off screen.
+    left -9999px
+    height 0
+    width 0
+    opacity 0
+    transform scale(0.9)
+    transition opacity 0.1s, transform 0.15s
+
+.mainNav-list
+  display flex
+
+.mainNav-listItem
+  margin-right 27px
+
+  &:last-child
+    margin 0
+
+.mainNav-listItem-smallScreenOnly
+  +respond-above($md-screen)
+    display none
+
+.mainNav-listItem-link
+  text-decoration none
+  font-size 16px
+  color #a1a1a1
+
+  &:hover
+    color #888
+
+  &:active
+    color #666
+
+  &.active,
+  &.active:focus
+    color $linkColor
+
+.mainNav-overlayVisible
+  transition opacity 0.25s 0.1s, transform 0.25s 0.05s
+  transform scale(1)
+  left 0
+  height auto
+  width auto
+  opacity 1
+  position absolute
+  top 54px
+  left 0
+  z-index 20000
+  width 100%
+
+  .mainNav-list
+    flex-direction column
+
+  .mainNav-listItem
+    padding 10px 5px
+    margin 0 20px
+    border-bottom 1px solid #493e4d
+
+    &:last-child
+      margin 0 20px
+      border-bottom 0
+
+  .mainNav-listItem-link,
+  .mainNav-listItem-link.active
+    font-size 20px
+    color #fff
+    display block
+    width calc(100% - 40px)
+
+.overlayNav
+  position fixed
+  z-index 15000
+  top 0
+  left 0
+  right 0
+  bottom 0
+  -webkit-backdrop-filter blur(2px)
+  transition opacity 0.15s linear
+  background-color rgba(40, 27, 45, 0.95)
+
+// These classes are set by the ReactCSSTransitionGroup wrapper
+.overlayNav-enter,
+.overlayNav-appear,
+.overlayNav-leave.overlayNav-leave-active
+  opacity 0
+
+// These classes are set by the ReactCSSTransitionGroup wrapper
+.overlayNav-enter.overlayNav-enter-active,
+.overlayNav-appear.overlayNav-appear-active,
+.overlayNav-leave
+  // When this becomes visible, the `content-container` scoots down to make
+  // room. This behavior is specified in `scaffolding.styl`
+  opacity 1

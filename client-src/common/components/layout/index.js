@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import Header from '../header';
 import Footer from '../footer';
 import Alert from '../alert';
-import MobileNav from '../mobile-nav';
 import TransitionFirstChild from '../transition-first-child';
 import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as connectionActionCreators from '../../../redux/connection/action-creators';
@@ -82,7 +81,6 @@ const Layout = React.createClass({
     return (
       <div>
         <Header/>
-        <MobileNav/>
         <ReactCSSTransitionGroup {...transitionGroupProps}>
           {alert}
         </ReactCSSTransitionGroup>
