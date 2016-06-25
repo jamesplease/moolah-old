@@ -1,20 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
+import scrollService from '../../services/scroll-service';
 
 export default React.createClass({
-  disableMobileScroll(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  },
-
   componentDidMount() {
-    document.body.classList.add('noscroll');
-    document.body.addEventListener('touchmove', this.disableMobileScroll, false);
+    scrollService.disableScroll();
   },
 
   componentWillUnmount() {
-    document.body.classList.remove('noscroll');
-    document.body.removeEventListener('touchmove', this.disableMobileScroll);
+    scrollService.enableScroll();
   },
 
   render() {

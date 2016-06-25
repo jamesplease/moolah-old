@@ -1,74 +1,91 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import classNames from 'classnames';
 import {Link} from 'react-router';
-import * as uiActionCreators from '../../../redux/ui/action-creators';
+import TransitionFirstChild from '../transition-first-child';
 
-export function Nav({uiActions, isMobileNav, isHidden}) {
-  // This ensures that the mobile nav gets closed anytime a link is clicked
+export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
+  // This ensures that the overlay nav gets closed anytime a link is clicked
   function onClickNavItem() {
-    if (!isMobileNav) { return; }
-    uiActions.toggleMobileMenu(false);
+    if (!isOverlayNavVisible) { return; }
+    toggleOverlayNav();
   }
 
-  // If the nav is hidden, then it cannot be tabbed to
-  const itemTabIndex = isHidden ? -1 : 0;
+  const mainNavClass = classNames({
+    mainNav: true,
+    'mainNav-overlayVisible': isOverlayNavVisible
+  });
 
-  let dashboardLink;
-  if (isMobileNav) {
-    dashboardLink = (
-      <li>
-        <Link
-          to="/"
-          onClick={onClickNavItem}
-          activeClassName="active"
-          tabIndex={itemTabIndex}>
-          Dashboard
-        </Link>
-      </li>
+  const listItemClass = classNames({
+    'mainNav-listItem': true,
+  });
+
+  const overlayNavOnlyListItemClass = classNames({
+    [listItemClass]: true,
+    'mainNav-listItem-smallScreenOnly': true
+  });
+
+  const transitionGroupProps = {
+    transitionName: 'overlayNav',
+    transitionAppear: true,
+    transitionEnterTimeout: 150,
+    transitionLeaveTimeout: 150,
+    transitionAppearTimeout: 150,
+    component: TransitionFirstChild
+  };
+
+  let overlayMenuBackdrop;
+  if (isOverlayNavVisible) {
+    overlayMenuBackdrop = (
+      <div className="overlayNav"/>
     );
   }
 
   return (
-    <nav className="main-nav">
-      <ul className="main-nav-list">
-        {dashboardLink}
-        <li>
-          <Link
-            to="/transactions"
-            onClick={onClickNavItem}
-            activeClassName="active"
-            tabIndex={itemTabIndex}>
-            Transactions
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/categories"
-            onClick={onClickNavItem}
-            activeClassName="active"
-            tabIndex={itemTabIndex}>
-            Categories
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/analytics"
-            onClick={onClickNavItem}
-            activeClassName="active"
-            tabIndex={itemTabIndex}>
-            Analytics
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    <div>
+      <nav className={mainNavClass}>
+        <ul className="mainNav-list">
+          <li className={overlayNavOnlyListItemClass}>
+            <Link
+              to="/"
+              onClick={onClickNavItem}
+              className="mainNav-listItem-link"
+              activeClassName="active">
+              Dashboard
+            </Link>
+          </li>
+          <li className={listItemClass}>
+            <Link
+              to="/transactions"
+              onClick={onClickNavItem}
+              className="mainNav-listItem-link"
+              activeClassName="active">
+              Transactions
+            </Link>
+          </li>
+          <li className={listItemClass}>
+            <Link
+              to="/categories"
+              onClick={onClickNavItem}
+              className="mainNav-listItem-link"
+              activeClassName="active">
+              Categories
+            </Link>
+          </li>
+          <li className={listItemClass}>
+            <Link
+              to="/analytics"
+              onClick={onClickNavItem}
+              className="mainNav-listItem-link"
+              activeClassName="active">
+              Analytics
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <ReactCSSTransitionGroup {...transitionGroupProps}>
+        {overlayMenuBackdrop}
+      </ReactCSSTransitionGroup>
+    </div>
   );
 }
-
-function mapDispatchToProps(dispatch) {
-  return {
-    uiActions: bindActionCreators(uiActionCreators, dispatch)
-  };
-}
-
-export default connect(null, mapDispatchToProps, null, {pure: false})(Nav);

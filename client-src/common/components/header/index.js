@@ -1,58 +1,85 @@
 import React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import Nav from '../nav';
-import * as uiActionCreators from '../../../redux/ui/action-creators';
+import scrollService from '../../services/scroll-service';
 
-export function Header({isMobileMenuVisible, uiActions}) {
-  function onClickToggle() {
-    uiActions.toggleMobileMenu(!isMobileMenuVisible);
-  }
+const Header = React.createClass({
+  getInitialState() {
+    return {
+      isOverlayNavVisible: false
+    };
+  },
 
-  const mobileNavToggleClass = classNames({
-    'is-active': isMobileMenuVisible,
-    'mobile-menu-toggle hamburger hamburger--squeeze': true
-  });
+  toggleOverlayNav(showOverlayNav) {
+    let newValue;
+    if (typeof showOverlayNav === 'undefined') {
+      newValue = !this.state.isOverlayNavVisible;
+    } else {
+      newValue = showOverlayNav;
+    }
 
-  return (
-    <header>
-      <div className="container">
-        <h1 className="app-logo">
-          <Link to="/">
-            Moolah
-          </Link>
-        </h1>
-        <button
-          className={mobileNavToggleClass}
-          onClick={onClickToggle}>
-          <span className="hamburger-box">
-            <span className="hamburger-inner"></span>
-          </span>
-        </button>
-        <Nav/>
-        <div className="header-account-container">
-          <Link className="header-account-link" to="/account">
-            <span className="header-name">
-              James S.
+    if (newValue) {
+      scrollService.disableScroll();
+    } else {
+      scrollService.enableScroll();
+    }
+
+    this.setState({
+      isOverlayNavVisible: newValue
+    });
+  },
+
+  render() {
+    const overlayNavToggleClass = classNames({
+      'is-active': this.state.isOverlayNavVisible,
+      'hamburger hamburger--squeeze': true,
+      'appHeader-overlayNavToggle': true
+    });
+
+    const userNameClass = classNames({
+      'appHeader-userName': true,
+      overlayIsOpen: this.state.isOverlayNavVisible
+    });
+
+    const profilePictureClass = classNames({
+      'appHeader-profilePicture': true,
+      overlayIsOpen: this.state.isOverlayNavVisible
+    });
+
+    return (
+      <header className="appHeader">
+        <div className="container padded-container appHeader-container">
+          <h1 className="appHeader-appLogo">
+            <Link to="/" className="appHeader-appLogo-Link">
+              Moolah
+            </Link>
+          </h1>
+          <button
+            className={overlayNavToggleClass}
+            onClick={() => this.toggleOverlayNav()}>
+            <span className="hamburger-box">
+              <span className="hamburger-inner"></span>
             </span>
-            <img className="header-account-pic"/>
-          </Link>
+          </button>
+          <Nav
+            isOverlayNavVisible={this.state.isOverlayNavVisible}
+            toggleOverlayNav={() => this.toggleOverlayNav(false)}/>
+          <div className="appHeader-accountContainer">
+            <Link
+              className="appHeader-accountLink"
+              to="/account"
+              onClick={() => this.toggleOverlayNav(false)}>
+              <span className={userNameClass}>
+                James S.
+              </span>
+              <img className={profilePictureClass}/>
+            </Link>
+          </div>
         </div>
-      </div>
-    </header>
-  );
-}
+      </header>
+    );
+  }
+});
 
-function mapStateToProps(state) {
-  return {isMobileMenuVisible: state.ui.isMobileMenuVisible};
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    uiActions: bindActionCreators(uiActionCreators, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(Header);
+export default Header;
