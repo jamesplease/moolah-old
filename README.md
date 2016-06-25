@@ -79,6 +79,10 @@ The app should now be available in your browser at `http://localhost:5000`.
 - `npm run migrate:down`: Reverts migrations
 - `npm run migrate:create`: Create a new migration
 
+### Target browser support
+
+Evergreen browsers (including Microsoft Edge). No Internet Explorer support.
+
 ##### Acknowledgements
 
 I'll be trying out using [BrowserStack](https://www.browserstack.com/)'s free
