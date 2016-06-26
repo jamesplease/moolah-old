@@ -11,7 +11,7 @@ const transitionGroupProps = {
   component: TransitionFirstChild
 };
 
-export default function({children}) {
+export default function ModalGateway({children}) {
   return (
     <ReactCSSTransitionGroup {...transitionGroupProps}>
       {children}
