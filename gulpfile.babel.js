@@ -78,7 +78,7 @@ function lintGulpfile() {
 }
 
 function watch() {
-  gulp.watch('./client-src/**/*.styl', ['stylus']);
+  return $.watch('./client-src/**/*.styl', stylus);
 }
 
 function buildJavaScript() {
@@ -168,7 +168,7 @@ const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintr
 
 // Run the headless unit tests as you make changes.
 function watchTests() {
-  gulp.watch(watchFiles, ['test']);
+  $.watch(watchFiles, test);
 }
 
 function testBrowser() {
@@ -208,7 +208,7 @@ function testBrowser() {
     }, null, () => {
       if (firstBuild) {
         $.livereload.listen({port: 35729, host: 'localhost', start: true});
-        gulp.watch(watchFiles, ['lint']);
+        $.watch(watchFiles, lint);
       } else {
         $.livereload.reload('./tmp/__spec-build.js');
       }
