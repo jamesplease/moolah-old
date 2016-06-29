@@ -155,7 +155,10 @@ function test() {
 function coverage(done) {
   _registerBabel();
   gulp.src(['client-src/**/*.js', 'server/**/*.js'])
-    .pipe($.istanbul({instrumenter: Instrumenter}))
+    .pipe($.istanbul({
+      instrumenter: Instrumenter,
+      includeUntested: true
+    }))
     .pipe($.istanbul.hookRequire())
     .on('finish', () => {
       return test()
