@@ -1,43 +1,48 @@
-.alert
+.alert-container
+  min-height 68px
+  display flex
+  flex-direction column
+  justify-content flex-end
   position fixed
-  top 46px
+  top 49px
   left 0
+  right 0
+  width 320px
+  z-index 20000
+  margin 0 auto
+
+.alert
   overflow hidden
-  width 100%
+  max-width 80vw
   line-height 20px
-  text-align center
   color #fff
-  z-index 100
+  text-align center
   display flex
   align-items center
-  transition height 0.25s
-  padding 15px 0
+  padding 14px 0
+  border-radius 6px
+  box-shadow 0 0 50px rgba(0, 0, 0, 0.25)
 
-  +respond-above($md-screen)
-    left auto
-    top 51px
-    right 20px
-    line-height 40px
-    width auto
-    min-width 230px
-    border-radius 6px
-
-  // These classes are set by the ReactCSSTransitionGroup wrapper
   &.alert-enter,
   &.alert-appear,
   &.alert-leave.alert-leave-active
-    height 0
+    opacity 0.01
+    transform scale(0.92)
 
-  // These classes are set by the ReactCSSTransitionGroup wrapper
   &.alert-enter.alert-enter-active,
   &.alert-appear.alert-appear-active,
   &.alert-leave
-    // When this becomes visible, the `content-container` scoots down to make
-    // room. This behavior is specified in `scaffolding.styl`
-    height 48px
+    opacity 1
+    transform scale(1)
 
-    +respond-above($md-screen)
-      height 40px
+  &.alert-leave.alert-leave-active
+    transition opacity 0.15s, transform 0.15s
+    transition-timing-function linear
+
+  &.alert-appear.alert-appear-active,
+  &.alert-enter.alert-enter-active
+    transition opacity 0.25s, transform 0.15s
+    transition-timing-function cubic-bezier(0.1, 0.23, 0.71, 1.65)
 
   &.warning
     background radial-gradient(circle at top right, #ffa648, #ff7f1b)
@@ -53,15 +58,16 @@
 
   .alert-text
     flex 1
-    padding 0 15px 0 15px
+    padding 0 15px 0 10px
 
   &.dismissable-alert .alert-text
     // The left padding is so large to account for the space taken up
     // by the `dismiss` icon.
-    padding-left 37px
+    margin-left 20px
 
   .alert-icon
-    margin-right 7px
+    flex 0 0 14px
+    margin-left 15px
 
   .alert-dismiss
     margin 0 15px 0 auto
