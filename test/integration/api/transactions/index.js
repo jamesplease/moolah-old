@@ -8,6 +8,7 @@ import responseValidation from '../utils/response-validation';
 import Inserts from '../utils/concatenate-inserts';
 
 const pgp = pg();
+const db = pgp(dbConfig);
 
 function getInsertQuery(values) {
   // Ensure that each key exists – even if it's null. pg-promise
@@ -64,8 +65,6 @@ describe('Transactions', () => {
 
     describe('when there is data', () => {
       beforeEach(() => {
-        const db = pgp(dbConfig);
-
         const values = [
           {value: '10.20', date: '2016-01-10'},
           {value: '1000.20', description: 'test'}
@@ -149,8 +148,6 @@ describe('Transactions', () => {
 
     describe('when the resource exists', () => {
       beforeEach(() => {
-        const db = pgp(dbConfig);
-
         const values = [
           {value: '10.20', date: '2015-12-12'},
           {value: '1000.20', description: 'test'}
@@ -222,8 +219,6 @@ describe('Transactions', () => {
 
     describe('when the resource exists', () => {
       beforeEach(() => {
-        const db = pgp(dbConfig);
-
         const values = [
           {value: '10.20', date: '2015-12-12'},
           {value: '1000.20', description: 'test'}
@@ -381,8 +376,6 @@ describe('Transactions', () => {
 
     describe('when the resource exists', () => {
       beforeEach(() => {
-        const db = pgp(dbConfig);
-
         const values = [
           {value: '10.20', date: '2016-12-12'},
           {value: '1000.20', description: 'test'}
