@@ -3,6 +3,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import CategoryListItem from '../category-list-item';
 import Modal from '../../../common/components/modal';
+import ModalGateway from '../../../common/components/modal-gateway';
 import ModifyCategoryModal from '../modify-category-modal';
 import DeleteCategoryModal from '../delete-category-modal';
 
@@ -179,8 +180,12 @@ const CategoriesList = React.createClass({
 
     return (
       <div className="categories-list resource-list-container">
-        {editModal}
-        {deleteModal}
+        <ModalGateway>
+          {editModal}
+        </ModalGateway>
+        <ModalGateway>
+          {deleteModal}
+        </ModalGateway>
         <ReactCSSTransitionGroup {...transitionGroupProps}>
           {sortedCategories.map(category => (
             <CategoryListItem

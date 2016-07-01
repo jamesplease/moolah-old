@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import scrollService from '../../services/scroll-service';
+import {Gateway} from 'react-gateway';
 
 export default React.createClass({
   componentDidMount() {
@@ -19,14 +20,18 @@ export default React.createClass({
       [modalClassProp]: true
     });
 
+    if (!this.props.children) {
+      return null;
+    }
+
     // This is one component where the base element's class name isn't the
     // name of the component. That's because we need the overlay
     return (
-      <div className="modal-overlay">
+      <Gateway into="modal-gateway">
         <div className={modalClass}>
           {this.props.children}
         </div>
-      </div>
+      </Gateway>
     );
   }
 });

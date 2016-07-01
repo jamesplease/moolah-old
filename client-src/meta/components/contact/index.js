@@ -31,8 +31,7 @@ const Contact = React.createClass({
       const {queueAlert} = this.props.alertActions;
       queueAlert({
         style: 'danger',
-        text: 'Oops – there was an error.<br>Try that one more time?',
-        persistent: true,
+        text: 'Oops – there was an error.',
         isDismissable: true,
         onDismissAction: resetMessageStateAction
       });

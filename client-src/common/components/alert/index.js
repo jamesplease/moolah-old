@@ -13,10 +13,10 @@ const defaultIconMap = {
 const Alert = React.createClass({
   componentWillMount() {
     // Dismissable alerts will dismiss themselves after 2 seconds
-    if (this.props.persistent) {
+    if (!this.props.persistent) {
       this._autodestruct = window.setTimeout(() => {
         this.props.dismissCurrentAlert();
-      }, 2000);
+      }, 4000);
     }
   },
 

@@ -2,9 +2,11 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {Gateway} from 'react-gateway';
 import Header from '../header';
 import Footer from '../footer';
 import Alert from '../alert';
+import Overlay from '../overlay';
 import TransitionFirstChild from '../transition-first-child';
 import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as connectionActionCreators from '../../../redux/connection/action-creators';
@@ -72,18 +74,21 @@ const Layout = React.createClass({
     const transitionGroupProps = {
       transitionName: 'alert',
       transitionAppear: true,
-      transitionEnterTimeout: 250,
-      transitionLeaveTimeout: 250,
-      transitionAppearTimeout: 250,
+      transitionEnterTimeout: 180,
+      transitionLeaveTimeout: 130,
+      transitionAppearTimeout: 180,
       component: TransitionFirstChild
     };
 
     return (
       <div>
         <Header/>
-        <ReactCSSTransitionGroup {...transitionGroupProps}>
-          {alert}
-        </ReactCSSTransitionGroup>
+        <Overlay/>
+        <Gateway into="alert-gateway">
+          <ReactCSSTransitionGroup {...transitionGroupProps}>
+            {alert}
+          </ReactCSSTransitionGroup>
+        </Gateway>
         <div className="content-container">
           <main>
             {children}
