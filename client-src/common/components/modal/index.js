@@ -1,14 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
-import scrollService from '../../services/scroll-service';
+import preventScroll from 'prevent-scroll';
 
 export default React.createClass({
   componentDidMount() {
-    scrollService.disableScroll();
+    preventScroll.on();
   },
 
   componentWillUnmount() {
-    scrollService.enableScroll();
+    preventScroll.off();
   },
 
   render() {
