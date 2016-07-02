@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import Nav from '../nav';
-import scrollService from '../../services/scroll-service';
+import preventScroll from 'prevent-scroll';
 
 const Header = React.createClass({
   getInitialState() {
@@ -20,9 +20,9 @@ const Header = React.createClass({
     }
 
     if (newValue) {
-      scrollService.disableScroll();
+      preventScroll.on();
     } else {
-      scrollService.enableScroll();
+      preventScroll.off();
     }
 
     this.setState({
