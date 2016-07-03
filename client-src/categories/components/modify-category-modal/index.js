@@ -1,8 +1,11 @@
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const CreateCategoriesModal = React.createClass({
   componentDidMount() {
@@ -44,6 +47,17 @@ const CreateCategoriesModal = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.actionFailure && !this.props.actionFailure) {
+      const {queueAlert} = this.props.alertActions;
+      const dismissFailureAlert = categoriesActionCreators.dismissUpdateCategoryFailureAlert();
+      queueAlert({
+        style: 'danger',
+        text: 'Oops – there was an error.<br>Try that one more time?',
+        isDismissable: true,
+        onDismissAction: dismissFailureAlert
+      });
+    }
+
     const nextLabel = nextProps.fields.label;
     const thisLabel = this.props.fields.label;
 
@@ -76,8 +90,7 @@ const CreateCategoriesModal = React.createClass({
       handleSubmit,
       confirmInProgress,
       onClickCancel,
-      isEditMode,
-      actionFailure
+      isEditMode
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -113,18 +126,16 @@ const CreateCategoriesModal = React.createClass({
       errorMsg = 'A name is required';
     } else if (treatFormInvalid && label.error === 'duplicate') {
       errorMsg = 'Category already exists';
-    } else if (actionFailure) {
-      errorMsg = 'There was an error.';
     }
 
     const errorClass = classNames({
       'modal-error form-error': true,
-      visible: treatFormInvalid || actionFailure
+      visible: treatFormInvalid
     });
 
     const modalClass = classNames({
       'create-category-modal': true,
-      'modal-form-invalid': treatFormInvalid || actionFailure
+      'modal-form-invalid': treatFormInvalid
     });
 
     return (
@@ -215,8 +226,19 @@ function mapStateToProps(state) {
   };
 }
 
-export default reduxForm({
-  form: 'createCategory',
-  fields: ['label'],
-  validate
-}, mapStateToProps)(CreateCategoriesModal);
+function mapDispatchToProps(dispatch) {
+  return {
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
+  };
+}
+
+export default reduxForm(
+  {
+    form: 'createCategory',
+    fields: ['label'],
+    validate
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateCategoriesModal);

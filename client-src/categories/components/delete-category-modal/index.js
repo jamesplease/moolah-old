@@ -1,10 +1,26 @@
 import _ from 'lodash';
 import React from 'react';
-import classNames from 'classnames';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const DeleteCategoryModal = React.createClass({
   componentWillUnmount() {
     this.props.dismissError();
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.actionFailure && !this.props.actionFailure) {
+      const {queueAlert} = this.props.alertActions;
+      const dismissFailureAlert = categoriesActionCreators.dismissDeleteCategoryFailureAlert();
+      queueAlert({
+        style: 'danger',
+        text: 'Oops – there was an error.<br>Try that one more time?',
+        isDismissable: true,
+        onDismissAction: dismissFailureAlert
+      });
+    }
   },
 
   render() {
@@ -22,26 +38,11 @@ const DeleteCategoryModal = React.createClass({
 
     const deleteBtnText = props.deletingCategory ? 'Deleting...' : 'Delete';
 
-    const errorMsg = props.actionFailure ? 'There was an error' : null;
-
-    const errorClass = classNames({
-      'modal-error form-error': true,
-      visible: props.actionFailure
-    });
-
-    const modalClass = classNames({
-      'delete-category-modal': true,
-      'modal-form-invalid': props.actionFailure
-    });
-
     return (
-      <div className={modalClass}>
+      <div className="delete-category-modal">
         <h1 className="modal-title">
           Delete "{props.category.label}"?
         </h1>
-        <div className={errorClass}>
-          {errorMsg}
-        </div>
         <div className="form-row">
           <button
             onClick={onClickCancelBtn}
@@ -61,4 +62,13 @@ const DeleteCategoryModal = React.createClass({
   }
 });
 
-export default DeleteCategoryModal;
+export {DeleteCategoryModal};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
+  };
+}
+
+export default connect(null, mapDispatchToProps)(DeleteCategoryModal);
