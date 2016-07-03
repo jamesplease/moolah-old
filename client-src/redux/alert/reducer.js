@@ -4,7 +4,7 @@ import initialState from './initial-state';
 
 const validActionProps = [
   'text', 'style', 'onDismissAction',
-  'isDismissable',
+  'isDismissable', 'persistent',
   'icon', 'alertId'
 ];
 
