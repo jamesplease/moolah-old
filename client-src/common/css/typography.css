@@ -1,0 +1,59 @@
+html {
+  font-size: $rootFontSize;
+  color: $textColor;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+a,
+.link-text {
+  cursor: pointer;
+  color: $linkColor;
+}
+
+h1 {
+  font-size: 25px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+.paragraph {
+  color: #666;
+  line-height: 1.5;
+}
+
+.text-container {
+  @mixin content-padding;
+  margin-top: 15px;
+
+  p,
+  h1,
+  h2 {
+    margin-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  @media screen and (width >= $md-screen) {
+    width: 80%;
+    max-width: 600px;
+  }
+}

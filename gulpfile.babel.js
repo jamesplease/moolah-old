@@ -7,6 +7,10 @@ import {Instrumenter} from 'isparta';
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
 import runSequence from 'run-sequence';
+import precss from 'precss';
+import cssnano from 'cssnano';
+import postcssSass from 'postcss-scss';
+import easyImport from 'postcss-easy-import';
 
 import mochaGlobals from './test/setup/.globals';
 import manifest from './package.json';
@@ -24,15 +28,30 @@ const exportFileName = path.basename(mainFile, path.extname(mainFile));
 
 var working = false;
 
-function stylus() {
-  return gulp.src('./client-src/stylus/index.styl')
+function lintCss() {
+  return gulp.src('./client-src/**/*.css')
+    .pipe($.stylelint({
+      reporters: [
+        {formatter: 'string', console: true}
+      ],
+      syntax: 'scss'
+    }));
+}
+
+function css() {
+  const processors = [
+    easyImport({glob: true}),
+    precss({import: {prefix: ''}}),
+  ];
+
+  if (productionMode) {
+    processors.push(cssnano());
+  }
+
+  return gulp.src('./client-src/css/index.css')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
-    .pipe($.stylus({
-      'include css': true,
-      paths: ['node_modules'],
-      compress: productionMode
-    }))
+    .pipe($.postcss(processors, {parser: postcssSass}))
     .pipe($.concat('style.css'))
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('client-dist'))
@@ -78,7 +97,11 @@ function lintGulpfile() {
 }
 
 function watch() {
-  return $.watch('./client-src/**/*.styl', stylus);
+  return $.watch([
+    // Just in case the CSS task changes
+    'gulpfile.babel.js',
+    './client-src/**/*.css'
+  ], css);
 }
 
 function buildJavaScript() {
@@ -223,7 +246,7 @@ function testBrowser() {
 function build(done) {
   runSequence(
     ['lint', 'clean'],
-    ['stylus', 'build-javascript'],
+    ['css', 'build-javascript'],
     done
   );
 }
@@ -251,8 +274,10 @@ gulp.task('lint-test', lintTest);
 // Lint this file
 gulp.task('lint-gulpfile', lintGulpfile);
 
+gulp.task('lint-css', lintCss);
+
 // Lint everything
-gulp.task('lint', ['lint-client', 'lint-server', 'lint-test', 'lint-gulpfile']);
+gulp.task('lint', ['lint-client', 'lint-server', 'lint-test', 'lint-gulpfile', 'lint-css']);
 
 // Build *just* the JavaScript app
 gulp.task('build-javascript', buildJavaScript);
@@ -264,7 +289,7 @@ gulp.task('build', build);
 gulp.task('work', work);
 
 // Builds the CSS
-gulp.task('stylus', stylus);
+gulp.task('css', css);
 
 // Lint and run our tests
 gulp.task('test', ['lint'], test);

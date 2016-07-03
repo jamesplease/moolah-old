@@ -1,0 +1,43 @@
+.profileDropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 235px;
+  background-color: #fff;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  z-index: 20000;
+  overflow: hidden;
+}
+
+.profileDropdown-listItem {
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.profileDropdown-link {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  text-decoration: none;
+  color: #444;
+  padding: 0 15px;
+  font-size: 16px;
+
+  &:hover {
+    color: #3e3e3e;
+    background: #fbfbfb;
+  }
+
+  &:active {
+    color: #393939;
+    background: #f7f7f7;
+  }
+}
+
+.profileDropdown-icon {
+  margin-right: 10px;
+}

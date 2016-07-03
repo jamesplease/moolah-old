@@ -1,0 +1,56 @@
+@define-mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@define-mixin content-padding {
+  padding: 0 15px;
+
+  @media screen and (width > $md-screen) {
+    padding: 0 20px;
+  }
+}
+
+@define-mixin gradient-fill $one, $two {
+  background: radial-gradient(circle at top right, $one, $two);
+}
+
+@define-mixin primary-gradient-fill {
+  // This is used as a fallback for older browsers (I'm using this
+  // mixin for backgrounds and gradient text – that needs to change)
+  color: #c7236c;
+  @mixin gradient-fill #f5582e, #8000d4;
+}
+
+@define-mixin clip-bg-to-text {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@define-mixin noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@define-mixin placeholder-color $color {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $color;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}

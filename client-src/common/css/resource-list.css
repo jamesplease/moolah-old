@@ -1,0 +1,20 @@
+.resource-list {
+  margin: 0;
+  padding: 0;
+  max-width: 800px;
+
+  @media screen and (width >= $md-screen) {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+  }
+}
+
+// Resource list items have a top border. The subheader has a bottom border.
+// This rule makes it so that when the subheader and resource list are
+// visually next to one another, their borders overlap so as not to produce
+// a double-border effect.
+.sub-header + .resource-list,
+.sub-header + .resource-list-container {
+  margin-top: -1px;
+}

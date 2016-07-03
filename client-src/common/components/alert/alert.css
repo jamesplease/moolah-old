@@ -1,0 +1,80 @@
+.alert {
+  position: fixed;
+  top: 46px;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  line-height: 20px;
+  text-align: center;
+  color: #fff;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  transition: height 0.25s;
+  padding: 15px 0;
+
+  @media screen and (width >= $md-screen) {
+    left: auto;
+    top: 51px;
+    right: 20px;
+    line-height: 40px;
+    width: auto;
+    min-width: 230px;
+    border-radius: 6px;
+  }
+
+  // These classes are set by the ReactCSSTransitionGroup wrapper
+  &.alert-enter,
+  &.alert-appear,
+  &.alert-leave.alert-leave-active {
+    height: 0;
+  }
+
+  // These classes are set by the ReactCSSTransitionGroup wrapper
+  &.alert-enter.alert-enter-active,
+  &.alert-appear.alert-appear-active,
+  &.alert-leave {
+    // When this becomes visible, the `content-container` scoots down to make
+    // room. This behavior is specified in `scaffolding.styl`
+    height: 48px;
+
+    @media screen and (width >= $md-screen) {
+      height: 40px;
+    }
+  }
+
+  &.warning {
+    background: radial-gradient(circle at top right, #ffa648, #ff7f1b);
+  }
+
+  &.danger {
+    background: radial-gradient(circle at top right, #f06565, #f43636);
+  }
+
+  &.success {
+    background: radial-gradient(circle at top right, #a6d659, #37b645);
+  }
+
+  &.info {
+    background: radial-gradient(circle at top right, #36c7f4, #6593f0);
+  }
+
+  .alert-text {
+    flex: 1;
+    padding: 0 15px;
+  }
+
+  &.dismissable-alert .alert-text {
+    // The left padding is so large to account for the space taken up
+    // by the `dismiss` icon.
+    padding-left: 37px;
+  }
+
+  .alert-icon {
+    margin-right: 7px;
+  }
+
+  .alert-dismiss {
+    margin: 0 15px 0 auto;
+  }
+}
