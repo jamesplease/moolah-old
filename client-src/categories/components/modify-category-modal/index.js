@@ -49,7 +49,7 @@ const CreateCategoriesModal = React.createClass({
   componentWillReceiveProps(nextProps) {
     if (nextProps.actionFailure && !this.props.actionFailure) {
       const {queueAlert} = this.props.alertActions;
-      const dismissFailureAlert = categoriesActionCreators.dismissUpdateCategoryFailureAlert();
+      const dismissFailureAlert = categoriesActionCreators.resetUpdateCategoryResolution();
       queueAlert({
         style: 'danger',
         text: 'Oops – there was an error.<br>Try that one more time?',
@@ -75,13 +75,6 @@ const CreateCategoriesModal = React.createClass({
     if (nextLabelIsInvalid && nextLabelIsInvalid !== thisLabelIsInvalid) {
       this.props.dismissError();
     }
-  },
-
-  componentWillUnmount() {
-    // When the component is removed from the DOM, we can clear out any
-    // HTTP error states. This makes it so that opening the modal again doesn't
-    // display the old error.
-    this.props.dismissError();
   },
 
   render() {

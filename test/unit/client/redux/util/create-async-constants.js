@@ -17,8 +17,7 @@ describe('createAsyncConstants', () => {
         pasta: null,
         pasta_SUCCESS: null,
         pasta_FAILURE: null,
-        pasta_DISMISS_SUCCESS_ALERT: null,
-        pasta_DISMISS_FAILURE_ALERT: null
+        pasta_RESET_RESOLUTION: null,
       });
     });
   });
@@ -29,13 +28,11 @@ describe('createAsyncConstants', () => {
         pasta: null,
         pasta_SUCCESS: null,
         pasta_FAILURE: null,
-        pasta_DISMISS_SUCCESS_ALERT: null,
-        pasta_DISMISS_FAILURE_ALERT: null,
+        pasta_RESET_RESOLUTION: null,
         spaghetti: null,
         spaghetti_SUCCESS: null,
         spaghetti_FAILURE: null,
-        spaghetti_DISMISS_SUCCESS_ALERT: null,
-        spaghetti_DISMISS_FAILURE_ALERT: null
+        spaghetti_RESET_RESOLUTION: null,
       });
     });
   });

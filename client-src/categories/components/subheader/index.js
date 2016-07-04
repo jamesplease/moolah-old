@@ -42,7 +42,7 @@ const CategoriesSubheader = React.createClass({
       categories: this.props.categories,
       confirmInProgress: this.props.creatingCategory,
       actionFailure: this.props.createCategoryFailure,
-      dismissError: this.props.categoriesActions.dismissCreateCategoryFailureAlert,
+      dismissError: this.props.categoriesActions.resetCreateCategoryResolution,
       isEditMode: false
     };
 

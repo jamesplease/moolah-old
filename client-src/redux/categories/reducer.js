@@ -45,17 +45,11 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.CREATE_CATEGORY_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.CREATE_CATEGORY_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
+        createCategoryFailure: false,
         createCategorySuccess: false
-      });
-    }
-
-    case actionTypes.CREATE_CATEGORY_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
-        createCategoryFailure: false
       });
     }
 
@@ -84,17 +78,11 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.RETRIEVE_CATEGORIES_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
+        retrieveCategoriesFailure: false,
         retrieveCategoriesSuccess: false
-      });
-    }
-
-    case actionTypes.RETRIEVE_CATEGORIES_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
-        retrieveCategoriesFailure: false
       });
     }
 
@@ -133,17 +121,11 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.UPDATE_CATEGORY_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
-        updateCategorySuccess: false
-      });
-    }
-
-    case actionTypes.UPDATE_CATEGORY_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
-        updateCategoryFailure: false
+        updateCategorySuccess: false,
+        updateCategoryFailure: false,
       });
     }
 
@@ -174,17 +156,11 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DELETE_CATEGORY_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.DELETE_CATEGORY_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
+        deleteCategoryFailure: false,
         deleteCategorySuccess: false
-      });
-    }
-
-    case actionTypes.DELETE_CATEGORY_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
-        deleteCategoryFailure: false
       });
     }
 
