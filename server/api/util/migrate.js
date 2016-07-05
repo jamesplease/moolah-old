@@ -21,6 +21,6 @@ function execute(command) {
 
 exports.up = execute.bind(null, '-A -e');
 exports.reset = function() {
-  execute('-R -a -e');
+  execute('-R -a -e --to=20150823131441');
   execute('-A -e');
 };
