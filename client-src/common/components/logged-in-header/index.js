@@ -2,12 +2,14 @@ import React from 'react';
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import Nav from '../nav';
+import ProfileDropdown from '../profile-dropdown';
 import preventScroll from 'prevent-scroll';
 
 const LoggedInHeader = React.createClass({
   getInitialState() {
     return {
-      isOverlayNavVisible: false
+      isOverlayNavVisible: false,
+      isProfileDropdownVisible: false
     };
   },
 
@@ -30,6 +32,24 @@ const LoggedInHeader = React.createClass({
     });
   },
 
+  showProfileDropdown() {
+    this.toggleOverlayNav(false);
+
+    this.setState({
+      isProfileDropdownVisible: true
+    });
+
+    preventScroll.on();
+  },
+
+  hideProfileDropdown() {
+    this.setState({
+      isProfileDropdownVisible: false
+    });
+
+    preventScroll.off();
+  },
+
   render() {
     const overlayNavToggleClass = classNames({
       'is-active': this.state.isOverlayNavVisible,
@@ -46,6 +66,11 @@ const LoggedInHeader = React.createClass({
       'appHeader-profilePicture': true,
       overlayIsOpen: this.state.isOverlayNavVisible
     });
+
+    let profileDropdown;
+    if (this.state.isProfileDropdownVisible) {
+      profileDropdown = <ProfileDropdown closeDropdown={this.hideProfileDropdown}/>;
+    }
 
     return (
       <header className="appHeader">
@@ -66,15 +91,15 @@ const LoggedInHeader = React.createClass({
             isOverlayNavVisible={this.state.isOverlayNavVisible}
             toggleOverlayNav={() => this.toggleOverlayNav(false)}/>
           <div className="appHeader-accountContainer">
-            <Link
+            <div
               className="appHeader-accountLink"
-              to="/account"
-              onClick={() => this.toggleOverlayNav(false)}>
+              onClick={this.showProfileDropdown}>
               <span className={userNameClass}>
                 James S.
               </span>
               <img className={profilePictureClass}/>
-            </Link>
+            </div>
+            {profileDropdown}
           </div>
         </div>
       </header>
