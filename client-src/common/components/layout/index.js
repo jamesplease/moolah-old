@@ -55,7 +55,8 @@ const Layout = React.createClass({
       children,
       alertProps,
       alertActions,
-      dispatch
+      dispatch,
+      user
     } = this.props;
 
     const allAlertProps = {
@@ -80,7 +81,7 @@ const Layout = React.createClass({
 
     return (
       <div>
-        <Header/>
+        <Header user={user}/>
         <ReactCSSTransitionGroup {...transitionGroupProps}>
           {alert}
         </ReactCSSTransitionGroup>
@@ -99,7 +100,8 @@ export {Layout};
 
 function mapStateToProps(state) {
   return {
-    alertProps: state.alert
+    alertProps: state.alert,
+    user: state.auth.user
   };
 }
 
