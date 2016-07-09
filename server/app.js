@@ -5,12 +5,15 @@ const path = require('path');
 const helmet = require('helmet');
 const express = require('express');
 const passport = require('passport');
+const addRequestId = require('express-request-id');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const compress = require('compression');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const pgSession = require('connect-pg-simple')(session);
+const errorLogs = require('./logging/error-logs');
+const infoLogs = require('./logging/info-logs');
 
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
@@ -46,6 +49,15 @@ module.exports = function() {
   app.use(favicon(path.join(__dirname, 'favicon.ico')));
   app.use(express.static(ASSETS_PATH));
   app.use(express.static(STATIC_PATH));
+  app.use(addRequestId({
+    // We're using this middleware for logging purposes. Each request having
+    // a unique ID can help filter many requests coming in. If we set it as a
+    // header, we'd get the benefit of Bunyan automatically logging in. But
+    // then we'd also be sending it over the wire unnecessarily. So we turn
+    // that off, which means we must remember to attach the `req.id` to all logs
+    // that are sent a request. i.e.; `log.info({reqId: req.id})`
+    setHeader: false
+  }));
 
   const sessionStore = new pgSession({
     pg: pgp.pg,
@@ -97,20 +109,33 @@ module.exports = function() {
     passport.authenticate('google', redirects),
     (req, res) => {
       // Explicitly save the session before redirecting!
-      req.session.save(() => {
-        res.redirect('/');
+      req.session.save((err) => {
+        if (err) {
+          errorLogs.loginError();
+          res.redirect('/login');
+        } else {
+          res.redirect('/');
+        }
       });
     }
   );
 
   app.get('/logout', (req, res) => {
     req.logout();
-    req.session.save(() => {
-      res.redirect('/login');
+    req.session.save((err) => {
+      if (err) {
+        errorLogs.logoutError();
+        // Redirect to the dashboard if the logout fails. Perhaps in the future
+        // some state could be passed letting users know that
+        // it did not succeed?
+        res.redirect('/');
+      } else {
+        res.redirect('/login');
+      }
     });
   });
 
-  // Every route is served by our JS app
+  // Every other route is served by our JS app
   app.get('*', (req, res) => {
     res.locals.devMode = res.app.get('env') === 'development';
 
@@ -125,7 +150,7 @@ module.exports = function() {
 
   if (!global.TESTING) {
     app.listen(port, () => {
-      console.log(`Node app is running at localhost:${port}`);
+      infoLogs.serverStart(port);
     });
   }
 
