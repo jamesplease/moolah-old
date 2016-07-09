@@ -30,6 +30,9 @@
   "bugs": {
     "url": "https://github.com/jmeas/moolah/issues"
   },
+  "engines": {
+    "node": "6.3.0"
+  },
   "homepage": "https://github.com/jmeas/moolah",
   "devDependencies": {
     "babel-core": "^6.3.26",
