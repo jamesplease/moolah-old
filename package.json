@@ -100,7 +100,7 @@
     "lodash": "^4.1.0",
     "passport": "^0.3.2",
     "passport-google-oauth20": "^1.0.0",
-    "pg-promise": "5.1.0",
+    "pg-promise": "5.1.2",
     "prevent-scroll": "^1.0.1",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
