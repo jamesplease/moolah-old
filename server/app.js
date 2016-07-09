@@ -2,6 +2,7 @@
 
 const pgp = require('pg-promise');
 const path = require('path');
+const helmet = require('helmet');
 const express = require('express');
 const passport = require('passport');
 const exphbs = require('express-handlebars');
@@ -32,6 +33,13 @@ module.exports = function() {
 
   app.set('env', NODE_ENV);
 
+  app.use(helmet({
+    // This application should never appear in an iFrame
+    frameguard: {action: 'deny'},
+    // No HTTPS at the moment. See: https://github.com/jmeas/moolah/issues/321
+    hsts: false,
+    noCache: {}
+  }));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(compress());
