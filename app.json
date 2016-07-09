@@ -14,6 +14,16 @@
     "BUILD_ASSETS": {
       "description": "Ensures that Heroku builds the app on deploy.",
       "value": "true"
+    },
+    "SESSION_SECRET": {
+      "description": "This is a secret string used to sign session ID cookies",
+      "generator": "secret"
+    },
+    "GOOGLE_CLIENT_ID": {
+      "description": "The ClientID of your Google app. Enables Google logins."
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "description": "The Client Secret of your Google app. Enables Google logins."
     }
   }
 }
