@@ -10,10 +10,8 @@ export function sendMessage() {
   };
 }
 
-export function resetMessageState() {
-  // Hello I'm abusing redux-thunk, how are you?
-  return (dispatch) => {
-    dispatch({type: actionTypes.SEND_MESSAGE_DISMISS_FAILURE_ALERT});
-    dispatch({type: actionTypes.SEND_MESSAGE_DISMISS_SUCCESS_ALERT});
+export function resetMessageResolution() {
+  return {
+    type: actionTypes.SEND_MESSAGE_RESET_RESOLUTION
   };
 }

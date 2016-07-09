@@ -26,17 +26,11 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.SEND_MESSAGE_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.SEND_MESSAGE_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
+        sendMessageFailure: false,
         sendMessageSuccess: false
-      });
-    }
-
-    case actionTypes.SEND_MESSAGE_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
-        sendMessageFailure: false
       });
     }
 

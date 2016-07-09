@@ -13,7 +13,7 @@ const DeleteCategoryModal = React.createClass({
   componentWillReceiveProps(nextProps) {
     if (nextProps.actionFailure && !this.props.actionFailure) {
       const {queueAlert} = this.props.alertActions;
-      const dismissFailureAlert = categoriesActionCreators.dismissDeleteCategoryFailureAlert();
+      const dismissFailureAlert = categoriesActionCreators.resetDeleteCategoryResolution();
       queueAlert({
         style: 'danger',
         text: 'Oops – there was an error.<br>Try that one more time?',

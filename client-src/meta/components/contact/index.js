@@ -8,7 +8,7 @@ import * as contactActionCreators from '../../../redux/contact/action-creators';
 const Contact = React.createClass({
   componentWillUnmount() {
     const {contactActions} = this.props;
-    contactActions.resetMessageState();
+    contactActions.resetMessageResolution();
   },
 
   getSuccessMessage() {
@@ -27,14 +27,14 @@ const Contact = React.createClass({
   componentWillReceiveProps(nextProps) {
     const {sendMessageFailure} = this.props;
     if (!sendMessageFailure && nextProps.sendMessageFailure) {
-      const resetMessageStateAction = contactActionCreators.resetMessageState();
+      const resetMessageResolutionAction = contactActionCreators.resetMessageResolution();
       const {queueAlert} = this.props.alertActions;
       queueAlert({
         style: 'danger',
         text: 'Oops – there was an error.<br>Try that one more time?',
         persistent: true,
         isDismissable: true,
-        onDismissAction: resetMessageStateAction
+        onDismissAction: resetMessageResolutionAction
       });
     }
   },

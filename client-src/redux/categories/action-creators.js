@@ -17,9 +17,9 @@ export function clearCategoryUpdateId() {
   };
 }
 
-export function dismissCreateCategoryFailureAlert() {
+export function resetCreateCategoryResolution() {
   return {
-    type: actionTypes.CREATE_CATEGORY_DISMISS_FAILURE_ALERT
+    type: actionTypes.CREATE_CATEGORY_RESET_RESOLUTION
   };
 }
 
@@ -65,9 +65,9 @@ export function retrieveCategories() {
   };
 }
 
-export function dismissUpdateCategoryFailureAlert() {
+export function resetUpdateCategoryResolution() {
   return {
-    type: actionTypes.UPDATE_CATEGORY_DISMISS_FAILURE_ALERT
+    type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION
   };
 }
 
@@ -84,9 +84,9 @@ export function updateCategory(category) {
   };
 }
 
-export function dismissDeleteCategoryFailureAlert() {
+export function resetDeleteCategoryResolution() {
   return {
-    type: actionTypes.DELETE_CATEGORY_DISMISS_FAILURE_ALERT
+    type: actionTypes.DELETE_CATEGORY_RESET_RESOLUTION
   };
 }
 

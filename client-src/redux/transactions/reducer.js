@@ -45,16 +45,10 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.CREATE_TRANSACTION_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.CREATE_TRANSACTION_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
-        createTransactionSuccess: false
-      });
-    }
-
-    case actionTypes.CREATE_TRANSACTION_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
+        createTransactionSuccess: false,
         createTransactionFailure: false
       });
     }
@@ -84,16 +78,10 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.RETRIEVE_TRANSACTIONS_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.RETRIEVE_TRANSACTIONS_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
-        retrieveTransactionsSuccess: false
-      });
-    }
-
-    case actionTypes.RETRIEVE_TRANSACTIONS_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
+        retrieveTransactionsSuccess: false,
         retrieveTransactionsFailure: false
       });
     }
@@ -133,16 +121,10 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.UPDATE_TRANSACTION_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
-        updateTransactionSuccess: false
-      });
-    }
-
-    case actionTypes.UPDATE_TRANSACTION_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
+        updateTransactionSuccess: false,
         updateTransactionFailure: false
       });
     }
@@ -174,16 +156,10 @@ export default (state = initialState, action) => {
       });
     }
 
-    case actionTypes.DELETE_TRANSACTION_DISMISS_SUCCESS_ALERT: {
+    case actionTypes.DELETE_TRANSACTION_RESET_RESOLUTION: {
       return Object.assign({
         ...state,
-        deleteTransactionSuccess: false
-      });
-    }
-
-    case actionTypes.DELETE_TRANSACTION_DISMISS_FAILURE_ALERT: {
-      return Object.assign({
-        ...state,
+        deleteTransactionSuccess: false,
         deleteTransactionFailure: false
       });
     }

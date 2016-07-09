@@ -2,8 +2,7 @@ const mapConstant = X => ({
   [`${X}`]: null,
   [`${X}_SUCCESS`]: null,
   [`${X}_FAILURE`]: null,
-  [`${X}_DISMISS_SUCCESS_ALERT`]: null,
-  [`${X}_DISMISS_FAILURE_ALERT`]: null
+  [`${X}_RESET_RESOLUTION`]: null,
 });
 
 export default (...args) => {

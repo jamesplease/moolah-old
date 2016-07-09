@@ -65,7 +65,7 @@ const CategoriesList = React.createClass({
       onClickDelete: this.onConfirmDeleteModal,
       category: this.state.categoryToDelete,
       actionFailure: this.props.deleteCategoryFailure,
-      dismissError: this.props.categoriesActions.dismissDeleteCategoryFailureAlert,
+      dismissError: this.props.categoriesActions.resetDeleteCategoryResolution,
       deletingCategory: this.props.deletingCategory
     };
 
@@ -84,7 +84,7 @@ const CategoriesList = React.createClass({
       onSubmit: this.onConfirmEditModal,
       category: this.state.categoryToUpdate,
       actionFailure: this.props.updateCategoryFailure,
-      dismissError: this.props.categoriesActions.dismissUpdateCategoryFailureAlert,
+      dismissError: this.props.categoriesActions.resetUpdateCategoryResolution,
       confirmInProgress: this.props.updatingCategory,
       isEditMode: true
     };
