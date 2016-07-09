@@ -8,7 +8,7 @@ import {
   Redirect, applyRouterMiddleware
 } from 'react-router';
 import useScroll from 'react-router-scroll';
-import Dashboard from './dashboard/components/dashboard';
+import IndexPage from './common/components/index-page';
 import Categories from './categories/components/content';
 import Account from './account/components/account';
 import Analytics from './analytics/components/analytics';
@@ -18,6 +18,7 @@ import About from './meta/components/about';
 import Contact from './meta/components/contact';
 import Privacy from './meta/components/privacy';
 import Terms from './meta/components/terms';
+import SignIn from './meta/components/sign-in';
 import store from './redux/store';
 
 const NotFound = React.createClass({
@@ -30,7 +31,7 @@ render((
   <Provider store={store}>
     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
-        <IndexRoute component={Dashboard}/>
+        <IndexRoute component={IndexPage}/>
         <Route path="/transactions" component={Transactions}/>
         <Route path="/categories" component={Categories}/>
         <Route path="/analytics" component={Analytics}/>
@@ -39,6 +40,8 @@ render((
         <Route path="/privacy" component={Privacy}/>
         <Route path="/about" component={About}/>
         <Route path="/terms" component={Terms}/>
+        <Route path="/login" component={SignIn}/>
+        <Route path="/join" component={SignIn}/>
         <Redirect from="/dashboard" to="/"/>
         <Route path="*" component={NotFound}/>
       </Route>
