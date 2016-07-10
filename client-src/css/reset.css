@@ -1,0 +1,38 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  background: transparent;
+  border: none;
+  // normalize.css does a poor job at normalizing button padding, so we make
+  // sure that it's 0. Otherwise, Chrome and iOS Safari have a big discrepency
+  // as of May 22nd, 2016
+  padding: 0;
+}
+
+// Resets the cursor
+html,
+body {
+  cursor: default;
+}
+
+code {
+  cursor: text;
+}
+
+a,
+label,
+button,
+input[type='radio'],
+input[type='submit'],
+input[type='checkbox'] {
+  cursor: pointer;
+}
+
+button[disabled],
+input[disabled] {
+  cursor: default;
+}

@@ -1,0 +1,10 @@
+.resource-list-header {
+  @mixin content-padding;
+  display: flex;
+  font-size: 17px;
+  margin-bottom: 13px;
+
+  .resource-list-header-text {
+    color: #868686;
+  }
+}

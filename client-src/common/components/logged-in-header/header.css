@@ -1,0 +1,120 @@
+.appHeader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  height: 46px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+.appHeader-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.appHeader-appLogo {
+  display: none;
+  margin: 0;
+  margin-right: 24px;
+  padding: 0;
+  font-weight: bold;
+
+  @media screen and (width >= $md-screen) {
+    display: block;
+  }
+}
+
+.appHeader-appLogo-Link {
+  @mixin primary-gradient-fill;
+  @mixin clip-bg-to-text;
+  font-size: 21px;
+  text-decoration: none;
+}
+
+.appHeader-overlayNavToggle {
+  padding: 0;
+  height: 22px;
+  position: relative;
+  z-index: 16000;
+
+  &.is-active {
+    .hamburger-inner,
+    .hamburger-inner:after,
+    .hamburger-inner:before {
+      background: #fff;
+    }
+  }
+
+  .hamburger-box {
+    height: 22px;
+    width: 20.25px;
+  }
+
+  .hamburger-inner,
+  .hamburger-inner:after,
+  .hamburger-inner:before {
+    width: 20.25px;
+    height: 2.25px;
+    @mixin primary-gradient-fill;
+  }
+
+  .hamburger-inner:before {
+    top: -6px;
+  }
+
+  .hamburger-inner:after {
+    bottom: -6px;
+  }
+
+  @media screen and (width >= $md-screen) {
+    display: none;
+  }
+}
+
+.appHeader-accountContainer {
+  margin-left: auto;
+  position: relative;
+}
+
+.appHeader-accountLink {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 16000;
+  text-decoration: none;
+  color: #a1a1a1;
+  cursor: pointer;
+
+  &:hover {
+    color: #888;
+  }
+}
+
+.appHeader-userName {
+  @mixin ellipsis;
+  max-width: 150px;
+  margin-right: 10px;
+  transition: color 0.15s;
+
+  &.overlayIsOpen {
+    color: #fff;
+  }
+}
+
+.appHeader-profilePicture {
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-size: cover;
+  background-image: url('http://lh3.googleusercontent.com/-SFoxuA-9BgQ/AAAAAAAAAAI/AAAAAAAAAAA/ADhl2yoCgd6de7jfz57PsSkdK0WUHJH1IQ/s64-c-mo/photo.jpg');
+  transition: border-color 0.12s 0.06s;
+
+  &.overlayIsOpen {
+    border-color: #5b515f;
+    transition: border-color 0.1s;
+  }
+}
