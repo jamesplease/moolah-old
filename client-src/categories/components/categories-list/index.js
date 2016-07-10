@@ -143,7 +143,7 @@ const CategoriesList = React.createClass({
       });
 
       this.props.alertActions.queueAlert({
-        text: 'Category updated',
+        text: 'Successfully updated.',
         style: 'success',
         isDismissable: true,
         persistent: false

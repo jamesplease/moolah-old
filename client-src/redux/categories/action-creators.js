@@ -77,7 +77,7 @@ export function updateCategory(category) {
 
     window.setTimeout(() => {
       dispatch({
-        type: actionTypes.UPDATE_CATEGORY_SUCCESS,
+        type: actionTypes.UPDATE_CATEGORY_FAILURE,
         category
       });
     }, 1000);

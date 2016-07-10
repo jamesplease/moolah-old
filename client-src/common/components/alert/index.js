@@ -1,5 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {findDOMNode} from 'react-dom';
 import classNames from 'classnames';
+import TransitionFirstChild from '../transition-first-child';
 
 // Each style of alert has a default icon. This maps an
 // alert style to the class name representing that icon
@@ -16,7 +20,25 @@ const Alert = React.createClass({
     if (!this.props.persistent) {
       this._autodestruct = window.setTimeout(() => {
         this.props.dismissCurrentAlert();
-      }, 4000);
+      }, 120000);
+    }
+  },
+
+  componentDidUpdate() {
+    const {
+      setAlertHeight, alertHeight, clearAlertHeight
+    } = this.props;
+
+    const node = ReactDOM.findDOMNode(this.refs.alertBody);
+    if (!node) {
+      if (alertHeight !== null ) {
+        clearAlertHeight();
+      }
+      return;
+    }
+    const nodeHeight = node.offsetHeight;
+    if (nodeHeight > 68 && nodeHeight !== alertHeight) {
+      setAlertHeight(nodeHeight);
     }
   },
 
@@ -81,13 +103,32 @@ const Alert = React.createClass({
       __html: text
     };
 
+    const transitionGroupProps = {
+      transitionName: 'alert',
+      transitionAppear: true,
+      transitionEnterTimeout: 250,
+      transitionLeaveTimeout: 150,
+      transitionAppearTimeout: 250,
+      component: TransitionFirstChild
+    };
+
+    let alert;
+    if (alertIsActive) {
+      alert = (
+        <div className={alertClass} ref="alertBody">
+          <span className="alert-text">
+            <span dangerouslySetInnerHTML={textHtml}/>
+          </span>
+          {dismissIcon}
+        </div>
+      );
+    }
+
     return (
-      <div className={alertClass}>
-        <span className="alert-text">
-          <i className={iconClass}></i>
-          <span dangerouslySetInnerHTML={textHtml}/>
-        </span>
-        {dismissIcon}
+      <div className="alert-container">
+        <ReactCSSTransitionGroup {...transitionGroupProps}>
+          {alert}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

@@ -52,7 +52,7 @@ const CreateCategoriesModal = React.createClass({
       const dismissFailureAlert = categoriesActionCreators.resetUpdateCategoryResolution();
       queueAlert({
         style: 'danger',
-        text: 'Oops – there was an error.<br>Try that one more time?',
+        text: 'Oops – error.<br>Pls try again<br>Thanks<br>See you soon',
         isDismissable: true,
         onDismissAction: dismissFailureAlert
       });
