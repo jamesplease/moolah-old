@@ -10,17 +10,20 @@ Track your finances.
 
 ### Deploying
 
-> **Note:** This app is in very early development, so it might not even deploy
-  to Heroku properly. Don't expect to see anything if you deploy it!
+> **Note:** This app is in very early development, so it doesn't fully function.
+  Keep that in mind if you wish to deploy it!
 
-If you've read the above caveat, and _still_ want to deploy it, just
-[click here](https://heroku.com/deploy?template=https://github.com/jmeas/moolah/tree/master).
+The preferred method to deploy this app is through Heroku. To enable logging in,
+you'll need to set up a Google project with
+[the Google+ API](https://developers.google.com/+/web/api/rest/?hl=en_US) enabled.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/jmeas/moolah/tree/master)
 
 ### Developing
 
 #### Pre-requisites
 
-- [Node](https://nodejs.org/en/) v5+
+- [Node](https://nodejs.org/en/) v6.3.0+
 - [npm](https://docs.npmjs.com/getting-started/installing-node) v3+
 - [Postgres](https://wiki.postgresql.org/wiki/Detailed_installation_guides) v9.4
   - Make sure that a superuser named `postgres` exists (this is required for running the API integration tests locally).
