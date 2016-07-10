@@ -133,6 +133,8 @@ function buildJavaScript() {
       }
       firstBuild = false;
     }))
+    // We need to remove the source maps so that Uglify doesn't explode on them.
+    .pipe($.if(productionMode, $.filter('**/*.js')))
     .pipe($.if(productionMode, $.sourcemaps.init({loadMaps: true})))
     .pipe($.if(productionMode, $.uglify()))
     .pipe($.if(productionMode, $.sourcemaps.write('./')))
