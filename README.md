@@ -69,8 +69,8 @@ The app should now be available in your browser at `http://localhost:5000`.
 
 - `npm run work`: Builds the client-side assets, and sets up a watcher for them.
 - `npm run local-server`: Starts the development web server. Restarts the server if it dies.
-- `npm run test`: Run the unit tests
-- `npm run lint`: Lint the JavaScript files
+- `npm run test`: Lint JS & CSS, then run all unit tests
+- `npm run lint`: Lint the JavaScript and CSS files
 - `npm run test-browser`: Builds the app to run the tests in a local browser
 - `npm run watch-tests`: Run the tests in Node. Then start a watch task to re-run them if you make any changes.
 - `npm run build`: Build a production version of the application
