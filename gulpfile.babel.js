@@ -107,6 +107,11 @@ function watch() {
 function buildJavaScript() {
   var firstBuild = true;
 
+  const webpackPlugins = [];
+  if (productionMode) {
+    webpackPlugins.push(new webpack.EnvironmentPlugin(['NODE_ENV']));
+  }
+
   return gulp.src(path.join('client-src', `${config.entryFileName}.js`))
     .pipe($.plumber())
     .pipe(webpackStream({
@@ -119,6 +124,7 @@ function buildJavaScript() {
           {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
         ]
       },
+      plugins: webpackPlugins,
       devtool: 'source-map'
     }, null, () => {
       if (!working) {
