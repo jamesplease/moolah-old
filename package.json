@@ -13,7 +13,7 @@
     "build": "gulp build",
     "coverage": "gulp coverage",
     "work": "gulp work",
-    "local-server": "nodemon server/index.js | bunyan -o short",
+    "local-server": "nodemon --watch server server/index.js | bunyan -o short",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets; fi",
     "build-assets": "gulp build",
     "migrate:up": "careen -A -e",
