@@ -20,10 +20,12 @@ export default function CategoryListItem(props) {
   return (
     <li className="resource-list-item category-list-item">
       <button className="category-list-item-label-btn" onClick={() => onClickEdit(category)}>
-        <span className="category-list-item-emoji" dangerouslySetInnerHTML={categoryEmojiHtml}/>
-        <span className="category-list-item-label">
-          {category.label}
-        </span>
+        <div className="category-list-item-label-btn-container">
+          <span className="category-list-item-emoji" dangerouslySetInnerHTML={categoryEmojiHtml}/>
+          <span className="category-list-item-label">
+            {category.label}
+          </span>
+        </div>
       </button>
 
       <button
