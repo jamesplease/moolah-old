@@ -12,7 +12,7 @@ else {
   dbConfig = {
     host: 'localhost',
     user: 'postgres',
-    database: 'test_finance_app',
+    database: 'moolah_test_db',
     password: undefined
   };
 }
