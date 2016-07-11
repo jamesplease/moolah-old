@@ -4,7 +4,7 @@
 export default function generateRequireAuth(store) {
   // Specify this as the `onEnter` callback of any route that needs a router
   return function requireAuth(nextState, replace) {
-    const loggedIn = !store.getState().auth.user;
+    const loggedIn = Boolean(store.getState().auth.user);
     if (!loggedIn) {
       replace({
         pathname: '/login',

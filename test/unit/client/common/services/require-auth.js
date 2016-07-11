@@ -11,13 +11,13 @@ describe('generateRequireAuth', function() {
     this.replace = stub();
   });
 
-  describe('when there is no auth.user', () => {
+  describe('when there is an auth.user', () => {
     beforeEach(() => {
       this.store = {
         getState() {
           return {
             auth: {
-              user: null
+              user: {}
             }
           };
         }
@@ -35,13 +35,13 @@ describe('generateRequireAuth', function() {
     });
   });
 
-  describe('when there is an auth.user', () => {
+  describe('when there is no auth.user', () => {
     beforeEach(() => {
       this.store = {
         getState() {
           return {
             auth: {
-              user: {}
+              user: null
             }
           };
         }
