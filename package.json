@@ -18,7 +18,8 @@
     "build-assets": "gulp build",
     "migrate:up": "careen -A -e",
     "migrate:down": "careen -R -e",
-    "migrate:create": "careen -C"
+    "migrate:create": "careen -C",
+    "release": "heroku pipelines:promote -r staging"
   },
   "repository": {
     "type": "git",
