@@ -4,6 +4,11 @@
 
   .category-list-item-label-btn {
     cursor: pointer;
+    min-width: 0;
+  }
+
+  .category-list-item-label-btn-container {
+    display: flex;
   }
 
   .category-list-item-emoji {
@@ -13,7 +18,6 @@
     // 6px + 6px + 3px = 15px
     padding-right: 6px;
     margin-right: 3px;
-    width: 40px;
     min-width: 40px;
     text-align: center;
     display: inline-block;
@@ -30,5 +34,8 @@
     // 6px + 6px + 3px = 15px
     padding: 0 6px;
     margin-right: 15px;
+    flex-grow: 1;
+    // Overriding `text-align: center;` inherited from user agent stylesheets
+    text-align: left;
   }
 }
