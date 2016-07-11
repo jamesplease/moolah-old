@@ -147,40 +147,39 @@ function buildJavaScript() {
     .pipe(gulp.dest(destinationFolder));
 }
 
-function _mochaApiIntegration() {
-  return gulp.src([
-    'test/setup/node.js',
-    'test/integration/api/index.js',
-    'test/integration/**/*.js'
-  ], {read: false})
-    .pipe($.mocha({
-      reporter: 'dot',
-      globals: Object.keys(mochaGlobals.globals),
-      ignoreLeaks: false
-    }));
-}
-
-function _mocha() {
-  return gulp.src(['test/setup/node.js', 'test/unit/**/*.js'], {read: false})
-    .pipe($.mocha({
-      reporter: 'dot',
-      globals: Object.keys(mochaGlobals.globals),
-      ignoreLeaks: false
-    }));
-}
-
 function _registerBabel() {
   require('babel-register');
 }
 
+function runMochaTests(files) {
+  return gulp.src(files, {read: false})
+    .pipe($.mocha({
+      reporter: 'dot',
+      globals: Object.keys(mochaGlobals.globals),
+      ignoreLeaks: false
+    }));
+}
+
+const setupTestFile = 'test/setup/node.js';
+const clientTestFiles = 'test/unit/**/*.js';
+const integrationTestFiles = [
+  'test/integration/api/index.js',
+  'test/integration/**/*.js'
+];
+
+function testUnit() {
+  _registerBabel();
+  return runMochaTests([].concat(setupTestFile, clientTestFiles));
+}
+
 function testApiIntegration() {
   _registerBabel();
-  return _mochaApiIntegration();
+  return runMochaTests([].concat(setupTestFile, integrationTestFiles));
 }
 
 function test() {
   _registerBabel();
-  return _mocha();
+  return runMochaTests([].concat(setupTestFile, clientTestFiles, integrationTestFiles));
 }
 
 function coverage(done) {
@@ -192,7 +191,7 @@ function coverage(done) {
     }))
     .pipe($.istanbul.hookRequire())
     .on('finish', () => {
-      return test()
+      return testUnit()
         .pipe($.istanbul.writeReports())
         .on('end', done);
     });
@@ -301,6 +300,9 @@ gulp.task('css', css);
 
 // Lint and run our tests
 gulp.task('test', ['lint'], test);
+
+// Lint and run our API integration tests
+gulp.task('test:unit', testUnit);
 
 gulp.task('watch:test', ['lint'], watchTests);
 
