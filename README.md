@@ -10,12 +10,29 @@ Track your finances.
 
 ### Deploying
 
-> **Note:** This app is in very early development, so it doesn't fully function.
-  Keep that in mind if you wish to deploy it!
+#### The Production App
+
+The [production version](https://moolah-app-prod.herokuapp.com/) of this app is
+deployed as part of a Heroku pipeline. Only users with access to the Heroku
+app will be able to deploy it.
+
+The release flow is as follows:
+
+- Opening a PR automatically creates a [Review App](https://devcenter.heroku.com/articles/github-integration-review-apps)
+- Merging to the `master` branch will automatically deploy the staging app
+- Running `npm run release` will promote the staging app to production
+
+#### Custom
+
+You can deploy your own version of Moolah, too. This app is in very early
+development, so it doesn't fully function. Keep that in mind if you wish to
+deploy it!
 
 The preferred method to deploy this app is through Heroku. To enable logging in,
 you'll need to set up a Google project with
 [the Google+ API](https://developers.google.com/+/web/api/rest/?hl=en_US) enabled.
+
+Once you've got your Google ClientID and Secret, just click the button below:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/jmeas/moolah/tree/master)
 
@@ -47,10 +64,15 @@ cd moolah && npm install
 
 #### Setting up the Database
 
-This project uses the same database in production as it does for developing locally ([for now](https://github.com/jmeas/moolah/issues/50)). Therefore, you must first deploy the
-application before you can begin developing on it. To deploy the app, follow the [instructions above](#deploying).
+Running this project locally requires a Postgres database. The easiest way to do
+this is to create a Heroku application with
+[the Postgres Heroku add-on](https://elements.heroku.com/addons/heroku-postgresql). Then,
+we can just use that project's database. If you're comfortable setting up your
+own database, then feel free to do that.
 
-Next, you'll need to hook up your local repository with the Heroku app that you just created by adding the app
+To use the Heroku method, begin by deploying the app by following [the instructions above](#deploying).
+
+Once that's done, you'll need to hook up your local repository with the Heroku app that you just created by adding the app
 as a remote. [This guide](https://devcenter.heroku.com/articles/git#creating-a-heroku-remote) can help you
 do that.
 
@@ -81,6 +103,8 @@ The app should now be available in your browser at `http://localhost:5000`.
 - `npm run migrate:up`: Applies migrations
 - `npm run migrate:down`: Reverts migrations
 - `npm run migrate:create`: Create a new migration
+- `npm run release`: Release a new version of the production app by syncing
+  production with staging
 
 ### Target browser support
 
