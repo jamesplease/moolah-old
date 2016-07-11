@@ -20,7 +20,9 @@ The release flow is as follows:
 
 - Opening a PR automatically creates a [Review App](https://devcenter.heroku.com/articles/github-integration-review-apps)
 - Merging to the `master` branch will automatically deploy the staging app
-- Running `npm run release` will promote the staging app to production
+- Running `npm run release` will promote the staging app to production\*
+
+\* _Note: the name of the Heroku remote must be `staging` for this command to work._
 
 #### Custom
 
