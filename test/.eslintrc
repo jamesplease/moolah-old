@@ -11,7 +11,8 @@
   "rules": {
     "strict": 0,
     "no-unused-expressions": 0,
-    "max-nested-callbacks": "off"
+    "max-nested-callbacks": "off",
+    "no-invalid-this": "off"
   },
   "env": {
     "browser": true,

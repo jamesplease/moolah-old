@@ -14,28 +14,26 @@ import Account from './account/components/account';
 import Analytics from './analytics/components/analytics';
 import Transactions from './transactions/components/content';
 import Layout from './common/components/layout';
+import NotFound from './common/components/not-found';
 import About from './meta/components/about';
 import Contact from './meta/components/contact';
 import Privacy from './meta/components/privacy';
 import Terms from './meta/components/terms';
 import SignIn from './meta/components/sign-in';
 import store from './redux/store';
+import generateRequireAuth from './common/services/require-auth';
 
-const NotFound = React.createClass({
-  render() {
-    return (<div>Not found – sorry!</div>);
-  }
-});
+const requireAuth = generateRequireAuth(store);
 
 render((
   <Provider store={store}>
     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
         <IndexRoute component={IndexPage}/>
-        <Route path="/transactions" component={Transactions}/>
-        <Route path="/categories" component={Categories}/>
-        <Route path="/analytics" component={Analytics}/>
-        <Route path="/account" component={Account}/>
+        <Route path="/transactions" component={Transactions} onEnter={requireAuth}/>
+        <Route path="/categories" component={Categories} onEnter={requireAuth}/>
+        <Route path="/analytics" component={Analytics} onEnter={requireAuth}/>
+        <Route path="/account" component={Account} onEnter={requireAuth}/>
         <Route path="/contact" component={Contact}/>
         <Route path="/privacy" component={Privacy}/>
         <Route path="/about" component={About}/>
