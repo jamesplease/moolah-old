@@ -21,25 +21,25 @@ import Privacy from './meta/components/privacy';
 import Terms from './meta/components/terms';
 import SignIn from './meta/components/sign-in';
 import store from './redux/store';
-import generateRequireAuth from './common/services/require-auth';
+import generateAuthCheck from './common/services/auth-check';
 
-const requireAuth = generateRequireAuth(store);
+const authCheck = generateAuthCheck(store);
 
 render((
   <Provider store={store}>
     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
         <IndexRoute component={IndexPage}/>
-        <Route path="/transactions" component={Transactions} onEnter={requireAuth}/>
-        <Route path="/categories" component={Categories} onEnter={requireAuth}/>
-        <Route path="/analytics" component={Analytics} onEnter={requireAuth}/>
-        <Route path="/account" component={Account} onEnter={requireAuth}/>
+        <Route path="/transactions" component={Transactions} onEnter={authCheck.mustBeLoggedIn}/>
+        <Route path="/categories" component={Categories} onEnter={authCheck.mustBeLoggedIn}/>
+        <Route path="/analytics" component={Analytics} onEnter={authCheck.mustBeLoggedIn}/>
+        <Route path="/account" component={Account} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/contact" component={Contact}/>
         <Route path="/privacy" component={Privacy}/>
         <Route path="/about" component={About}/>
         <Route path="/terms" component={Terms}/>
-        <Route path="/login" component={SignIn}/>
-        <Route path="/join" component={SignIn}/>
+        <Route path="/login" component={SignIn} onEnter={authCheck.mustBeLoggedOut}/>
+        <Route path="/join" component={SignIn} onEnter={authCheck.mustBeLoggedOut}/>
         <Redirect from="/dashboard" to="/"/>
         <Route path="*" component={NotFound}/>
       </Route>
