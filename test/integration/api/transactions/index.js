@@ -1,14 +1,10 @@
 import _ from 'lodash';
-import pg from 'pg-promise';
 import request from 'supertest';
-import dbConfig from '../../../../config/db-config';
 import app from '../../../../server/app';
 import serverErrors from '../../../../server/api/util/server-errors';
+import db from '../../../../server/api/services/db';
 import responseValidation from '../utils/response-validation';
 import Inserts from '../utils/concatenate-inserts';
-
-const pgp = pg();
-const db = pgp(dbConfig);
 
 function getInsertQuery(values) {
   // Ensure that each key exists – even if it's null. pg-promise
@@ -28,7 +24,7 @@ function getInsertQuery(values) {
 describe('Transactions', () => {
   // Ensures the tests immediately exit
   afterEach(() => {
-    pgp.end();
+    db.$config.pgp.end();
   });
 
   describe('GET /api/v1/transactions', () => {
