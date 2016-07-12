@@ -1,10 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import CategoryListItem from '../category-list-item';
 import Modal from '../../../common/components/modal';
 import ModifyCategoryModal from '../modify-category-modal';
 import DeleteCategoryModal from '../delete-category-modal';
+import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const CategoriesList = React.createClass({
   getInitialState() {
@@ -197,4 +201,28 @@ const CategoriesList = React.createClass({
   }
 });
 
-export default CategoriesList;
+export {CategoriesList};
+
+function mapStateToProps(state) {
+  return {
+    isOnline: state.connection,
+    categories: state.categories.categories,
+    deletingCategory: state.categories.deletingCategory,
+    deleteCategorySuccess: state.categories.deleteCategorySuccess,
+    deleteCategoryFailure: state.categories.deleteCategoryFailure,
+    retrievingCategories: state.categories.retrievingCategories,
+    updatingCategory: state.categories.updatingCategory,
+    updateCategorySuccess: state.categories.updateCategorySuccess,
+    retrieveCategoriesFailure: state.categories.retrieveCategoriesFailure,
+    updateCategoryFailure: state.categories.updateCategoryFailure
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
+    alertActions: bindActionCreators(alertActionCreators, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);

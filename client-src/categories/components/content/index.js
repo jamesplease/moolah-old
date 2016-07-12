@@ -1,7 +1,6 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as alertActionCreators from '../../../redux/alert/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 import Subheader from '../subheader';
 import CategoriesList from '../categories-list';
@@ -17,11 +16,9 @@ export const Categories = React.createClass({
 
   getContents() {
     const {
-      retrievingCategories, categories, updateCategorySuccess,
-      categoriesActions, deletingCategory, isOnline,
-      deleteCategorySuccess, alertActions, updatingCategory,
-      retrieveCategoriesFailure, updateCategoryFailure,
-      deleteCategoryFailure
+      retrievingCategories, categories,
+      retrieveCategoriesFailure,
+      categoriesActions
     } = this.props;
 
     if (retrievingCategories) {
@@ -38,17 +35,7 @@ export const Categories = React.createClass({
       return <EmptyCategories/>;
     }
 
-    return (<CategoriesList
-      isOnline={isOnline}
-      deletingCategory={deletingCategory}
-      updatingCategory={updatingCategory}
-      categories={categories}
-      deleteCategorySuccess={deleteCategorySuccess}
-      deleteCategoryFailure={deleteCategoryFailure}
-      updateCategorySuccess={updateCategorySuccess}
-      updateCategoryFailure={updateCategoryFailure}
-      categoriesActions={categoriesActions}
-      alertActions={alertActions}/>);
+    return (<CategoriesList/>);
   },
 
   render() {
@@ -63,23 +50,15 @@ export const Categories = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    isOnline: state.connection,
     categories: state.categories.categories,
-    deletingCategory: state.categories.deletingCategory,
-    deleteCategorySuccess: state.categories.deleteCategorySuccess,
-    deleteCategoryFailure: state.categories.deleteCategoryFailure,
     retrievingCategories: state.categories.retrievingCategories,
-    updatingCategory: state.categories.updatingCategory,
-    updateCategorySuccess: state.categories.updateCategorySuccess,
-    retrieveCategoriesFailure: state.categories.retrieveCategoriesFailure,
-    updateCategoryFailure: state.categories.updateCategoryFailure
+    retrieveCategoriesFailure: state.categories.retrieveCategoriesFailure
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
-    alertActions: bindActionCreators(alertActionCreators, dispatch)
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch)
   };
 }
 
