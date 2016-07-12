@@ -112,6 +112,31 @@ The app should now be available in your browser at `http://localhost:5000`.
 
 Evergreen browsers (including Microsoft Edge). No Internet Explorer support.
 
+### Updating the Emoji
+
+This application uses [js-emoji](https://github.com/iamcal/js-emoji), the same
+library that [Slack](https://www.slack.com) uses, for emoji rendering. Sometimes
+when updating that dependency, the emoji will change. When that happens, we need
+to manually update image files in this project.
+
+This is because `js-emoji` doesn't minify the spritesheets. To minify them, this
+project uses `imagemin`.
+
+To begin, install the dependencies:
+
+```sh
+npm i imagemin-cli imagemin-pngquant -g
+```
+
+Next, minify the files using:
+
+```sh
+imagemin --plugin=pngquant server/static/sheet_apple_64.png > server/static/sheet_apple_64.png
+```
+
+I would like to alias this as an `npm` script, but the CLI for this tool
+[doesn't seem to work like that](https://github.com/imagemin/imagemin/issues/185).
+
 ##### Acknowledgements
 
 I'll be trying out using [BrowserStack](https://www.browserstack.com/)'s free
