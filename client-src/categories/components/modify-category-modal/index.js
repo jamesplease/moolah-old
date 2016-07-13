@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
@@ -9,7 +8,7 @@ import * as categoriesActionCreators from '../../../redux/categories/action-crea
 
 const CreateCategoriesModal = React.createClass({
   componentDidMount() {
-    ReactDOM.findDOMNode(this.refs.labelInput).focus();
+    this.labelInput.focus();
   },
 
   getInitialState() {
@@ -152,7 +151,7 @@ const CreateCategoriesModal = React.createClass({
               autoCorrect={true}
               spellCheck={true}
               inputMode="verbatim"
-              ref="labelInput"
+              ref={node => {this.labelInput = node;}}
               maxLength={35}
               {...label}/>
           </div>
