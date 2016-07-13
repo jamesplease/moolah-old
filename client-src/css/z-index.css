@@ -1,0 +1,28 @@
+// Use the lowest z-index that makes sense for your purpose!
+// Aim low – not high.
+// For instance, `$zIndex-fg1` will work for everything in
+// the foreground except for other foreground items. Will
+// anything else in the foreground be visible at the same time
+// as the new thing that you're adding? If so, think about
+// how they should be layered.
+
+// These are for things that sit in the background. Typically
+// the content of the app. Parallax effects would also be
+// a part of the background.
+$zIndex-bg1: 100;
+$zIndex-bg2: 200;
+$zIndex-bg3: 300;
+$zIndex-bg4: 400;
+$zIndex-bg5: 500;
+
+// These are for overlays the separate the background from the foreground.
+// Usually used behind modals/dropdowns.
+$zIndex-overlay: 750;
+
+// This is for everything that floats 'above' the app. Modals, alerts,
+// dropdowns, and so on.
+$zIndex-fg1: 1000;
+$zIndex-fg2: 2000;
+$zIndex-fg3: 3000;
+$zIndex-fg4: 4000;
+$zIndex-fg5: 5000;

@@ -57,7 +57,7 @@
   opacity: 1;
   position: absolute;
   top: 54px;
-  z-index: 20000;
+  z-index: $zIndex-fg1;
   width: 100%;
 
   .mainNav-list {
@@ -86,7 +86,7 @@
 
 .overlayNav {
   position: fixed;
-  z-index: 15000;
+  z-index: $zIndex-overlay;
   top: 0;
   left: 0;
   right: 0;

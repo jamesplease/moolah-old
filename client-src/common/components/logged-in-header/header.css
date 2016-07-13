@@ -3,7 +3,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: 1000;
+  z-index: $zIndex-bg1;
   height: 46px;
   background-color: #fafafa;
   border-bottom: 1px solid #eee;
@@ -38,7 +38,7 @@
   padding: 0;
   height: 22px;
   position: relative;
-  z-index: 16000;
+  z-index: $zIndex-fg1;
 
   &.is-active {
     .hamburger-inner,

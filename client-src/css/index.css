@@ -6,6 +6,7 @@
 // of the application, should be placed into a pod. Shared "common" css
 // can be found in `./client-src/common/css`
 @import './variables';
+@import './z-index';
 @import './mixins';
 @import './reset';
 @import './hamburger-icon';

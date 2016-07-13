@@ -6,7 +6,7 @@
   background-color: #fff;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
-  z-index: 20000;
+  z-index: $zIndex-fg-1;
   overflow: hidden;
 }
 
