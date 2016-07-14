@@ -78,7 +78,7 @@
     "media-feature-range-operator-space-after": "always",
     "media-feature-range-operator-space-before": "always",
 
-    "media-query-parentheses-space-inside": "never",
+    "media-feature-parentheses-space-inside": "never",
 
     "media-query-list-comma-space-after": "always",
     "media-query-list-comma-space-before": "never",
@@ -97,7 +97,7 @@
     "no-empty-source": true,
     "no-eol-whitespace": true,
     "no-extra-semicolons": true,
-    "no-missing-eof-newline": true
+    "no-missing-end-of-source-newline": true
   },
   "ignoreFiles": [
     "./client-src/css/hamburger-icon.css",

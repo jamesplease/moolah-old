@@ -63,7 +63,7 @@
     "gulp-postcss": "^6.1.1",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-stylelint": "^2.0.2",
+    "gulp-stylelint": "^3.0.0",
     "gulp-uglify": "^1.5.1",
     "gulp-watch": "^4.3.8",
     "isparta": "^4.0.0",
@@ -78,7 +78,7 @@
     "run-sequence": "^1.2.1",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "stylelint": "^6.8.0",
+    "stylelint": "^7.0.0",
     "supertest": "^1.1.0",
     "webpack": "^1.12.9",
     "webpack-stream": "^3.1.0"
