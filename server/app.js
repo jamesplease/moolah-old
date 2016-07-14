@@ -111,7 +111,7 @@ module.exports = function() {
       // Explicitly save the session before redirecting!
       req.session.save((err) => {
         if (err) {
-          errorLogs.loginError();
+          errorLogs.loginError(req, res, err);
           res.redirect('/login');
         } else {
           res.redirect('/');
@@ -124,7 +124,7 @@ module.exports = function() {
     req.logout();
     req.session.save((err) => {
       if (err) {
-        errorLogs.logoutError();
+        errorLogs.logoutError(req, res, err);
         // Redirect to the dashboard if the logout fails. Perhaps in the future
         // some state could be passed letting users know that
         // it did not succeed?
