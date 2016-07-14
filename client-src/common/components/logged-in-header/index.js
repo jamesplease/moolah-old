@@ -33,8 +33,6 @@ const LoggedInHeader = React.createClass({
   },
 
   showProfileDropdown() {
-    this.toggleOverlayNav(false);
-
     this.setState({
       isProfileDropdownVisible: true
     });
