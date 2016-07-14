@@ -7,7 +7,7 @@
   line-height: 20px;
   text-align: center;
   color: #fff;
-  z-index: 100;
+  z-index: $zIndex-fg1;
   display: flex;
   align-items: center;
   transition: height 0.25s;
