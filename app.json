@@ -6,10 +6,6 @@
   "addons": [
     "heroku-postgresql:hobby-dev"
   ],
-  "engines": {
-    "node": "6.3.0",
-    "npm": "3.10.5"
-  },
   "env": {
     "NPM_CONFIG_PRODUCTION": {
       "description": "Ensures that all dependencies on installed during deployment.",
