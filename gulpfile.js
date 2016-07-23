@@ -1,19 +1,19 @@
-import gulp from 'gulp';
-import loadPlugins from 'gulp-load-plugins';
-import del from 'del';
-import glob from 'glob';
-import path from 'path';
-import {Instrumenter} from 'isparta';
-import webpack from 'webpack';
-import webpackStream from 'webpack-stream';
-import runSequence from 'run-sequence';
-import precss from 'precss';
-import cssnano from 'cssnano';
-import postcssSass from 'postcss-scss';
-import easyImport from 'postcss-easy-import';
+const gulp = require('gulp');
+const loadPlugins = require('gulp-load-plugins');
+const del = require('del');
+const glob = require('glob');
+const path = require('path');
+const {Instrumenter} = require('isparta');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
+const runSequence = require('run-sequence');
+const precss = require('precss');
+const cssnano = require('cssnano');
+const postcssSass = require('postcss-scss');
+const easyImport = require('postcss-easy-import');
 
-import mochaGlobals from './test/setup/.globals';
-import manifest from './package.json';
+const mochaGlobals = require('./test/setup/.globals');
+const manifest = require('./package.json');
 
 // Load all of our Gulp plugins
 const $ = loadPlugins();
