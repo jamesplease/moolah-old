@@ -9,10 +9,13 @@
     }
   },
   "plugins": [
-    "react"
+    "react",
+    "import"
   ],
   "extends": [
     "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
     "./node_modules/pleaserc/.eslintrc"
   ],
   "rules": {
@@ -27,7 +30,13 @@
     "react/no-danger": "off",
     "react/jsx-no-target-blank": "error",
     "react/jsx-pascal-case": "error",
-    "react/jsx-space-before-closing": ["error", "never"]
+    "react/jsx-space-before-closing": ["error", "never"],
+    "import/no-named-as-default": "off",
+    "import/imports-first": ["error", {"absolute-first": true}],
+    "import/no-duplicates": "error",
+    "import/extensions": "error",
+    "import/newline-after-import": "error",
+    "import/prefer-default-export": "error"
   },
   "env": {
     "browser": true,

@@ -12,7 +12,8 @@
     "strict": 0,
     "no-unused-expressions": 0,
     "max-nested-callbacks": "off",
-    "no-invalid-this": "off"
+    "no-invalid-this": "off",
+    "import/default": "off"
   },
   "env": {
     "browser": true,
