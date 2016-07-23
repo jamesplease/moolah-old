@@ -107,6 +107,7 @@ The app should now be available in your browser at `http://localhost:5000`.
 - `npm run migrate:create`: Create a new migration
 - `npm run release`: Release a new version of the production app by syncing
   production with staging
+- `npm run minify-emoji`: Compress the file located at `server/static/sheet_apple_64.png`
 
 ### Target browser support
 
@@ -122,20 +123,10 @@ to manually update image files in this project.
 This is because `js-emoji` doesn't minify the spritesheets. To minify them, this
 project uses `imagemin`.
 
-To begin, install the dependencies:
+First, download the updated assets from `js-emoji`. Then, copy the
+`sheet_apple_64.png` file into the `server/assets` directly. Lastly, run:
 
-```sh
-npm i imagemin-cli imagemin-pngquant -g
-```
-
-Next, minify the files using:
-
-```sh
-imagemin --plugin=pngquant server/static/sheet_apple_64.png > server/static/sheet_apple_64.png
-```
-
-I would like to alias this as an `npm` script, but the CLI for this tool
-[doesn't seem to work like that](https://github.com/imagemin/imagemin/issues/185).
+`npm run minify-emoji`
 
 ##### Acknowledgements
 

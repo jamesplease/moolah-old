@@ -20,7 +20,8 @@
     "migrate:up": "careen -A -e",
     "migrate:down": "careen -R -e",
     "migrate:create": "careen -C",
-    "release": "heroku pipelines:promote -r staging"
+    "release": "heroku pipelines:promote -r staging",
+    "minify-emoji": "imagemin server/static/sheet_apple_64.png --plugin=pngquant --out-dir=server/static"
   },
   "repository": {
     "type": "git",
@@ -66,6 +67,8 @@
     "gulp-stylelint": "^3.0.0",
     "gulp-uglify": "^1.5.1",
     "gulp-watch": "^4.3.8",
+    "imagemin-cli": "3.0.0",
+    "imagemin-pngquant": "5.0.0",
     "isparta": "^4.0.0",
     "json-loader": "^0.5.3",
     "mocha": "^2.3.4",
