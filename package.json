@@ -129,6 +129,7 @@
     "redux-form": "^5.2.4",
     "redux-thunk": "2.1.0",
     "serve-favicon": "^2.3.0",
-    "throng": "4.0.0"
+    "throng": "4.0.0",
+    "xhr": "2.2.2"
   }
 }
