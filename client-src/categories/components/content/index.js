@@ -11,7 +11,13 @@ import LoadingResourceList from '../../../common/components/loading-resource-lis
 export const Categories = React.createClass({
   componentDidMount() {
     const {categoriesActions} = this.props;
-    categoriesActions.retrieveCategories();
+    this.fetchingCategoriesXhr = categoriesActions.retrieveCategories();
+  },
+
+  componentWillUnmount() {
+    if (this.fetchingCategoriesXhr) {
+      this.fetchingCategoriesXhr.abort();
+    }
   },
 
   getContents() {
