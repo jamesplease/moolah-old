@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
@@ -22,7 +21,9 @@ import Terms from './meta/components/terms';
 import SignIn from './meta/components/sign-in';
 import store from './redux/store';
 import generateAuthCheck from './common/services/auth-check';
+import mockServer from './mock-server';
 
+mockServer.start();
 const authCheck = generateAuthCheck(store);
 
 render((
