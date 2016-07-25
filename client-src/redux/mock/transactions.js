@@ -19,7 +19,9 @@ function lastDayOfMonth(date) {
 }
 
 function formatDate(date) {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const month = date.getMonth() + 1;
+  const formattedMonth = (`0${month}`).slice(-2);
+  return `${date.getFullYear()}-${formattedMonth}-${date.getDate()}`;
 }
 
 export function generateMonthlyRecurring({amount, startDate, description, categoryId}) {
@@ -42,7 +44,8 @@ export function generateMonthlyRecurring({amount, startDate, description, catego
       amount, description,
       categoryId,
       date: formatDate(date),
-      recurring: 'monthly'
+      recurring: true,
+      frequency: 'monthly'
     };
   });
 }

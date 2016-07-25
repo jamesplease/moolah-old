@@ -56,7 +56,7 @@ export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
           </li>
           <li className={listItemClass}>
             <Link
-              to="/transactions"
+              to="/transactions/this-month"
               onClick={onClickNavItem}
               className="mainNav-listItem-link"
               activeClassName="active">

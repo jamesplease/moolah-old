@@ -1,0 +1,16 @@
+.date-menu {
+  @mixin content-padding;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  .date-menu-current-date {
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .date-menu-icon-calendar {
+    margin-right: 5px;
+    display: inline-block;
+  }
+}

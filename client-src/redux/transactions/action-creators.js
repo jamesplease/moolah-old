@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import actionTypes from './action-types';
 import mockTransactions from '../mock/transactions';
 
@@ -38,18 +39,31 @@ export function createTransaction(data) {
   };
 }
 
-export function retrieveTransactions() {
+export function retrieveTransactions({year, month}) {
   return (dispatch, getState) => {
     dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS});
 
     window.setTimeout(() => {
+      // Filter our transactions by the year and month
+      const mocks = _.filter(mockTransactions, t => {
+        const transactionDate = t.date.split('-');
+        return transactionDate[0] === year && transactionDate[1] === month;
+      });
+
       const existingTransactions = getState().transactions.transactions;
-      let transactions;
-      if (!existingTransactions.length) {
-        transactions = [...mockTransactions];
-      } else {
-        transactions = existingTransactions;
-      }
+
+      const newMocks = _.reject(mocks, t => {
+        return _.find(existingTransactions, e => e.id === t.id);
+      });
+
+      // Our new transactions are the ones that already exist, PLUS the ones
+      // with IDs that we don't already have in store. We do this to allow
+      // folks to edit transactions and not get those edits overridden
+      // by the mocks, which never change.
+      const transactions = [
+        ...existingTransactions,
+        ...newMocks
+      ];
 
       dispatch({
         type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
