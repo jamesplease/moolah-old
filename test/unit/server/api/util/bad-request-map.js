@@ -1,10 +1,6 @@
-import requestErrorMap from '../../../server/api/util/bad-request-map';
+import requestErrorMap from '../../../../../server/api/util/bad-request-map';
 
 describe('requestErrorMap', () => {
-  it('should be a function', () => {
-    expect(requestErrorMap).to.be.a('function');
-  });
-
   describe('when passing in nothing', () => {
     it('should return an empty Array', () => {
       expect(requestErrorMap()).to.deep.equal([]);
@@ -25,7 +21,6 @@ describe('requestErrorMap', () => {
       }];
 
       var expected = [{
-        status: '400',
         title: 'Bad Request',
         detail: '"hello" is required'
       }];
@@ -45,11 +40,9 @@ describe('requestErrorMap', () => {
       }];
 
       var expected = [{
-        status: '400',
         title: 'Bad Request',
         detail: '"hello" is required'
       }, {
-        status: '400',
         title: 'Bad Request',
         detail: '"id" is the wrong type'
       }];
