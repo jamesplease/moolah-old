@@ -303,7 +303,6 @@ describe('Transactions', () => {
 
         it('should return the correct error', done => {
           const errors = [{
-            status: '400',
             title: 'Bad Request',
             detail: '"body.date" must be date format'
           }];
@@ -410,7 +409,6 @@ describe('Transactions', () => {
 
       it('should return the correct error', done => {
         const errors = [{
-          status: '400',
           title: 'Bad Request',
           detail: '"body.value" is required'
         }];
@@ -441,7 +439,6 @@ describe('Transactions', () => {
 
       it('should return the correct error', done => {
         const errors = [{
-          status: '400',
           title: 'Bad Request',
           detail: '"body.date" must be date format'
         }];

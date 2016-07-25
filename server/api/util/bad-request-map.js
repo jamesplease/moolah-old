@@ -26,8 +26,7 @@ function createErrors(originalErrors) {
     var kapowError = _.pick(Kapow(code, message), kapowAttrs);
     return {
       title: kapowError.title,
-      detail: kapowError.message,
-      status: kapowError.httpStatus
+      detail: kapowError.message
     };
   });
 }
