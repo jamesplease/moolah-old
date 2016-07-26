@@ -27,13 +27,6 @@ export default (state = initialState, action) => {
       };
     }
 
-    case actionTypes.ANIMTE_OUT_ALERT: {
-      return {
-        ...state,
-        animatingOutAlert: true
-      };
-    }
-
     default: {
       return state;
     }
