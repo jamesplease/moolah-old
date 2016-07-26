@@ -6,23 +6,6 @@ import * as alertActionCreators from '../../../redux/alerts/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const DeleteCategoryModal = React.createClass({
-  componentWillUnmount() {
-    this.props.dismissError();
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.actionFailure && !this.props.actionFailure) {
-      const {queueAlert} = this.props.alertActions;
-      const dismissFailureAlert = categoriesActionCreators.resetDeleteCategoryResolution();
-      queueAlert({
-        style: 'danger',
-        text: 'Oops – there was an error.<br>Try that one more time?',
-        isDismissable: true,
-        onDismissAction: dismissFailureAlert
-      });
-    }
-  },
-
   render() {
     const props = this.props;
 

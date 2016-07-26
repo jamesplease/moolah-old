@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import actionTypes from './action-types';
 import initialState from './initial-state';
+import categoriesActionTypes from '../categories/action-types';
 
 const validActionProps = [
   'text', 'style', 'onDismissAction',
@@ -13,17 +14,54 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case actionTypes.QUEUE_ALERT: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
       return {
         ...state,
-        alerts: [...state.alerts, alertAction],
+        alerts: [...clonedAlerts, alertAction],
       };
     }
 
     case actionTypes.DESTROY_FIRST_ALERT: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
       return {
         ...state,
-        animatingOutAlert: false,
-        alerts: [...state.alerts.slice(1)]
+        alerts: clonedAlerts.slice(1)
+      };
+    }
+
+    case categoriesActionTypes.DELETE_CATEGORY_SUCCESS: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
+      const id = _.uniqueId('alert-');
+      return {
+        ...state,
+        alerts: [
+          ...clonedAlerts,
+          {
+            id,
+            text: 'Category deleted',
+            style: 'success',
+            isDismissable: true,
+            persistent: false
+          }
+        ]
+      };
+    }
+
+    case categoriesActionTypes.DELETE_CATEGORY_FAILURE: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
+      const id = _.uniqueId('alert-');
+      return {
+        ...state,
+        alerts: [
+          ...clonedAlerts,
+          {
+            id,
+            style: 'danger',
+            text: 'Oops – there was an error. Try that one more time?',
+            isDismissable: true,
+            persistent: false
+          }
+        ]
       };
     }
 

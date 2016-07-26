@@ -1,4 +1,3 @@
 export default {
-  alerts: [],
-  animatingOutAlert: false
+  alerts: []
 };
