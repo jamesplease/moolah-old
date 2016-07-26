@@ -21,20 +21,23 @@ const Alert = React.createClass({
   },
 
   componentWillUnmount() {
+    window.clearTimeout(this._autodestruct);
+  },
+
+  componentDidTransition(transitionType) {
     const {
-      showNextAlert, onDismissAction,
-      dispatch
+      showNextAlert, onDismissAction, dispatch
     } = this.props;
 
-    window.clearTimeout(this._autodestruct);
+    if (transitionType === 'leave') {
+      // If the alert was given an action to emit when it unmounts,
+      // then we call that now.
+      if (onDismissAction) {
+        dispatch(onDismissAction);
+      }
 
-    // If the alert was given an action to emit when it unmounts,
-    // then we call that now.
-    if (onDismissAction) {
-      dispatch(onDismissAction);
+      showNextAlert();
     }
-
-    showNextAlert();
   },
 
   render() {

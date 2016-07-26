@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from '../../../vendor/css-transition-group';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../header';

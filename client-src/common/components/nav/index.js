@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from '../../../vendor/css-transition-group';
 import classNames from 'classnames';
 import {Link} from 'react-router';
 import TransitionFirstChild from '../transition-first-child';
