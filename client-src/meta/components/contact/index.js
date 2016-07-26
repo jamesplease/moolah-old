@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
-import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as alertActionCreators from '../../../redux/alerts/action-creators';
 import * as contactActionCreators from '../../../redux/contact/action-creators';
 
 const Contact = React.createClass({

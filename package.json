@@ -122,6 +122,7 @@
     "prevent-scroll": "^1.0.1",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
+    "react-addons-transition-group": "15.2.1",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",

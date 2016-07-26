@@ -3,7 +3,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
-import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as alertActionCreators from '../../../redux/alerts/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const CreateCategoriesModal = React.createClass({

@@ -4,14 +4,15 @@
   left: 0;
   overflow: hidden;
   width: 100%;
-  line-height: 20px;
+  line-height: 46px;
+  height: 46px;
   text-align: center;
   color: #fff;
   z-index: $zIndex-fg1;
   display: flex;
   align-items: center;
   transition: height 0.25s;
-  padding: 15px 0;
+  padding: 0;
 
   @media screen and (width >= $md-screen) {
     left: auto;

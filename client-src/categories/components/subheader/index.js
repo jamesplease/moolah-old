@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
 import ModifyCategoryModal from '../modify-category-modal';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
-import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as alertActionCreators from '../../../redux/alerts/action-creators';
 
 const CategoriesSubheader = React.createClass({
   getInitialState() {

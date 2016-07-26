@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as alertActionCreators from '../../../redux/alert/action-creators';
+import * as alertActionCreators from '../../../redux/alerts/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const DeleteCategoryModal = React.createClass({
