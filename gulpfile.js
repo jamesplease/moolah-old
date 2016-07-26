@@ -85,7 +85,7 @@ function lintServer() {
 }
 
 function lintClient() {
-  return lint('client-src/**/*.js');
+  return lint(['client-src/**/*.js', '!client-src/vendor/**/*.js']);
 }
 
 function lintTest() {
@@ -184,7 +184,7 @@ function test() {
 
 function coverage(done) {
   _registerBabel();
-  gulp.src(['client-src/**/*.js', 'server/**/*.js'])
+  gulp.src(['client-src/**/*.js', 'server/**/*.js', '!client-src/vendor/**/*.js'])
     .pipe($.istanbul({
       instrumenter: Instrumenter,
       includeUntested: true
