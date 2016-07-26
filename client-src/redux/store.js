@@ -7,13 +7,13 @@ import connection from './connection/reducer';
 import categories from './categories/reducer';
 import transactions from './transactions/reducer';
 import contact from './contact/reducer';
-import alert from './alert/reducer';
+import alerts from './alerts/reducer';
 
 import initialData from '../common/services/initial-data';
 
 const reducers = combineReducers({
   auth, form, transactions, categories,
-  connection, alert, contact
+  connection, alerts, contact
 });
 
 export default createStore(
