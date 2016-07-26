@@ -184,37 +184,43 @@ export default (state = initialState, action) => {
 
     // Delete category
     case actionTypes.DELETE_CATEGORY: {
-      const categoriesMeta = state.categoriesMeta.map(c => {
-        return {
-          ...c,
-          isDeleting: c.id === action.categoryId
-        };
+      const clonedMeta = _.cloneDeep(state.categoriesMeta);
+      const categoriesMeta = clonedMeta.map(c => {
+        if (c.id !== action.categoryId) {
+          return c;
+        } else {
+          return {
+            ...c,
+            isDeleting: c.id === action.categoryId
+          };
+        }
       });
 
-      return Object.assign({
+      return {
         ...state,
-        categoriesMeta,
-        deletingCategory: true,
-      });
+        categoriesMeta
+      };
     }
 
     case actionTypes.DELETE_CATEGORY_SUCCESS: {
       const rejectionFn = val => val.id === action.categoryId;
-      let categories = _.reject(state.categories, rejectionFn);
-      let categoriesMeta = _.reject(state.categories, rejectionFn);
-      return Object.assign({
+      const clonedCategories = _.cloneDeep(state.categories);
+      const clonedMeta = _.cloneDeep(state.categoriesMeta);
+
+      let categories = _.reject(clonedCategories, rejectionFn);
+      let categoriesMeta = _.reject(clonedMeta, rejectionFn);
+      return {
         ...state,
-        deletingCategory: false,
-        deleteCategorySuccess: true,
         categories,
         categoriesMeta
-      });
+      };
     }
 
     case actionTypes.DELETE_CATEGORY_FAILURE: {
-      const categoriesMeta = state.categoriesMeta.map(c => {
+      const clonedMeta = _.cloneDeep(state.categoriesMeta);
+      const categoriesMeta = clonedMeta.map(c => {
         if (c.id !== action.categoryId) {
-          return {...c};
+          return c;
         } else {
           return {
             ...c,
@@ -223,20 +229,10 @@ export default (state = initialState, action) => {
         }
       });
 
-      return Object.assign({
+      return {
         ...state,
-        categoriesMeta,
-        deletingCategory: false,
-        deleteCategoryFailure: true,
-      });
-    }
-
-    case actionTypes.DELETE_CATEGORY_RESET_RESOLUTION: {
-      return Object.assign({
-        ...state,
-        deleteCategoryFailure: false,
-        deleteCategorySuccess: false
-      });
+        categoriesMeta
+      };
     }
 
     default: {

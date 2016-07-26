@@ -105,15 +105,12 @@ export function updateCategory(category) {
   };
 }
 
-export function resetDeleteCategoryResolution() {
-  return {
-    type: actionTypes.DELETE_CATEGORY_RESET_RESOLUTION
-  };
-}
-
 export function deleteCategory(categoryId) {
   return dispatch => {
-    dispatch({type: actionTypes.DELETE_CATEGORY});
+    dispatch({
+      type: actionTypes.DELETE_CATEGORY,
+      categoryId
+    });
 
     const req = xhr.del(
       `/api/v1/categories/${categoryId}`,
@@ -122,10 +119,11 @@ export function deleteCategory(categoryId) {
         if (req.aborted) {
           return;
         }
-        if (err) {
-          dispatch({type: actionTypes.DELETE_CATEGORY_FAILURE});
-        } else if (res.statusCode === 404) {
-          dispatch({type: actionTypes.DELETE_CATEGORY_FAILURE});
+        if (err || res.statusCode >= 400) {
+          dispatch({
+            type: actionTypes.DELETE_CATEGORY_FAILURE,
+            categoryId
+          });
         } else {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_SUCCESS,
