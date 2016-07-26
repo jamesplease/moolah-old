@@ -11,32 +11,25 @@ const defaultIconMap = {
 };
 
 const Alert = React.createClass({
-  componentWillMount() {
-    // Dismissable alerts will dismiss themselves after some time
-    if (!this.props.persistent) {
-      this._autodestruct = window.setTimeout(() => {
-        this.props.dismissCurrentAlert();
-      }, 4000);
-    }
-  },
-
-  componentWillUnmount() {
-    window.clearTimeout(this._autodestruct);
-  },
-
   componentDidTransition(transitionType) {
     const {
-      showNextAlert, onDismissAction, dispatch
+      destroyFirstAlert, persistent, animateOutAlert, onDismissAction, dispatch
     } = this.props;
 
-    if (transitionType === 'leave') {
+    if (transitionType === 'enter') {
+      if (!persistent) {
+        this._autodestruct = setTimeout(() => {
+          animateOutAlert();
+        }, 4000);
+      }
+    } else {
+      window.clearTimeout(this._autodestruct);
       // If the alert was given an action to emit when it unmounts,
       // then we call that now.
       if (onDismissAction) {
         dispatch(onDismissAction);
       }
-
-      showNextAlert();
+      destroyFirstAlert();
     }
   },
 
@@ -45,9 +38,9 @@ const Alert = React.createClass({
       style,
       icon,
       text,
-      alertIsActive,
+      animatingAlertOut,
       isDismissable,
-      dismissCurrentAlert
+      animateOutAlert
     } = this.props;
 
     const alertClass = classNames({
@@ -68,13 +61,11 @@ const Alert = React.createClass({
 
     let dismissIcon;
     if (isDismissable) {
-      // If the modal is being hidden, then we can't dismiss it
-      const dismissDisabled = !alertIsActive;
       dismissIcon = (
         <button
           className="alert-dismiss"
-          disabled={dismissDisabled}
-          onClick={() => dismissCurrentAlert()}>
+          disabled={animatingAlertOut}
+          onClick={() => animateOutAlert()}>
           <i className="zmdi zmdi-close"/>
         </button>
       );
