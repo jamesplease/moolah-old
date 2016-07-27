@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
 import ModifyCategoryModal from '../modify-category-modal';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
-import * as alertActionCreators from '../../../redux/alerts/action-creators';
 
 const CategoriesSubheader = React.createClass({
   getInitialState() {
@@ -42,16 +41,14 @@ const CategoriesSubheader = React.createClass({
       categories: this.props.categories,
       confirmInProgress: this.props.creatingCategoryStatus === 'PENDING',
       actionFailure: this.props.creatingCategoryStatus === 'FAILURE',
-      dismissError: this.props.categoriesActions.resetCreateCategoryResolution,
       isEditMode: false
     };
 
-    const modalProps = {
-      children: (<ModifyCategoryModal {...childrenProps}/>),
-      modalClassName: 'create-category-modal-container'
-    };
-
-    return (<Modal {...modalProps}/>);
+    return (
+      <Modal modalClassName="create-category-modal-container">
+        <ModifyCategoryModal {...childrenProps}/>
+      </Modal>
+    );
   },
 
   componentWillReceiveProps(nextProps) {
@@ -107,7 +104,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
-    alertActions: bindActionCreators(alertActionCreators, dispatch)
   };
 }
 
