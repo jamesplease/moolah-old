@@ -33,6 +33,12 @@ export function createCategory(data) {
   };
 }
 
+export function resetRetrieveCategoriesResolution() {
+  return {
+    type: actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION
+  };
+}
+
 export function retrieveCategories() {
   return (dispatch) => {
     dispatch({type: actionTypes.RETRIEVE_CATEGORIES});

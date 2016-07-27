@@ -15,8 +15,10 @@ export const Categories = React.createClass({
   },
 
   componentWillUnmount() {
+    const {categoriesActions} = this.props;
     if (this.fetchingCategoriesXhr) {
       this.fetchingCategoriesXhr.abort();
+      categoriesActions.resetRetrieveCategoriesResolution();
     }
   },
 
@@ -24,8 +26,6 @@ export const Categories = React.createClass({
     const {
       retrievingCategoriesStatus, categories, categoriesActions
     } = this.props;
-
-    console.log('rendering', retrievingCategoriesStatus);
 
     if (retrievingCategoriesStatus === 'PENDING') {
       return <LoadingResourceList/>;

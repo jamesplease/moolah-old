@@ -3,6 +3,62 @@ import reducer from '../../../../../client-src/redux/categories/reducer';
 import actionTypes from '../../../../../client-src/redux/categories/action-types';
 
 describe('categories/reducer', function() {
+  describe('RETRIEVE_CATEGORIES', () => {
+    it('should set `retrievingCategoriesStatus` to PENDING', () => {
+      const state = {oink: true};
+      const action = {type: actionTypes.RETRIEVE_CATEGORIES};
+      var newState = {
+        oink: true,
+        retrievingCategoriesStatus: 'PENDING'
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('RETRIEVE_CATEGORIES_SUCCESS', () => {
+    it('should set `retrievingCategoriesStatus` to SUCCESS while setting data', () => {
+      const state = {oink: true};
+      const action = {
+        type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
+        categories: [{id: 2, name: 'pizza'}, {id: 5, name: 'sandwich'}]
+      };
+      var newState = {
+        oink: true,
+        categories: [{id: 2, name: 'pizza'}, {id: 5, name: 'sandwich'}],
+        categoriesMeta: [
+          {id: 2, updatingStatus: null, isDeleting: false},
+          {id: 5, updatingStatus: null, isDeleting: false}
+        ],
+        retrievingCategoriesStatus: 'SUCCESS'
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('RETRIEVE_CATEGORIES_FAILURE', () => {
+    it('should set `retrievingCategoriesStatus` to FAILURE', () => {
+      const state = {oink: true};
+      const action = {type: actionTypes.RETRIEVE_CATEGORIES_FAILURE};
+      var newState = {
+        oink: true,
+        retrievingCategoriesStatus: 'FAILURE'
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('RETRIEVE_CATEGORIES_RESET_RESOLUTION', () => {
+    it('should set `retrievingCategoriesStatus` to null', () => {
+      const state = {oink: true};
+      const action = {type: actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION};
+      var newState = {
+        oink: true,
+        retrievingCategoriesStatus: null
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
   describe('UPDATE_CATEGORY', () => {
     it('should return a new state with `updatingStatus` set to PENDING for that category', () => {
       const state = {
