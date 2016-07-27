@@ -33,6 +33,12 @@ export function createCategory(data) {
   };
 }
 
+export function resetRetrieveCategoriesResolution() {
+  return {
+    type: actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION
+  };
+}
+
 export function retrieveCategories() {
   return (dispatch) => {
     dispatch({type: actionTypes.RETRIEVE_CATEGORIES});
@@ -44,7 +50,7 @@ export function retrieveCategories() {
         if (req.aborted) {
           return;
         }
-        if (err) {
+        if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.RETRIEVE_CATEGORIES_FAILURE});
         } else {
           dispatch({

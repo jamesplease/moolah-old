@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
       const categoriesMeta = [
         ...state.categoriesMeta,
         {
-          ...action.category,
+          id: action.category.id,
           ...initialResourceMetaState
         }
       ];
@@ -56,22 +56,21 @@ export default (state = initialState, action) => {
     case actionTypes.RETRIEVE_CATEGORIES: {
       return {
         ...state,
-        retrievingCategories: true
+        retrievingCategoriesStatus: 'PENDING'
       };
     }
 
     case actionTypes.RETRIEVE_CATEGORIES_SUCCESS: {
       const categoriesMeta = action.categories.map(c => {
         return {
-          ...c,
+          id: c.id,
           ...initialResourceMetaState
         };
       });
 
       return {
         ...state,
-        retrievingCategories: false,
-        retrieveCategoriesSuccess: true,
+        retrievingCategoriesStatus: 'SUCCESS',
         categories: [...action.categories],
         categoriesMeta
       };
@@ -80,16 +79,14 @@ export default (state = initialState, action) => {
     case actionTypes.RETRIEVE_CATEGORIES_FAILURE: {
       return {
         ...state,
-        retrievingCategories: false,
-        retrieveCategoriesFailure: true
+        retrievingCategoriesStatus: 'FAILURE'
       };
     }
 
     case actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION: {
       return {
         ...state,
-        retrieveCategoriesFailure: false,
-        retrieveCategoriesSuccess: false
+        retrievingCategoriesStatus: null
       };
     }
 

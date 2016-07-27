@@ -15,23 +15,23 @@ export const Categories = React.createClass({
   },
 
   componentWillUnmount() {
+    const {categoriesActions} = this.props;
     if (this.fetchingCategoriesXhr) {
       this.fetchingCategoriesXhr.abort();
+      categoriesActions.resetRetrieveCategoriesResolution();
     }
   },
 
   getContents() {
     const {
-      retrievingCategories, categories,
-      retrieveCategoriesFailure,
-      categoriesActions
+      retrievingCategoriesStatus, categories, categoriesActions
     } = this.props;
 
-    if (retrievingCategories) {
+    if (retrievingCategoriesStatus === 'PENDING') {
       return <LoadingResourceList/>;
     }
 
-    if (retrieveCategoriesFailure) {
+    if (retrievingCategoriesStatus === 'FAILURE') {
       return (<ErrorRetrieving
         retry={categoriesActions.retrieveCategories}
         resourceName="Categories"/>);
@@ -57,8 +57,7 @@ export const Categories = React.createClass({
 function mapStateToProps(state) {
   return {
     categories: state.categories.categories,
-    retrievingCategories: state.categories.retrievingCategories,
-    retrieveCategoriesFailure: state.categories.retrieveCategoriesFailure
+    retrievingCategoriesStatus: state.categories.retrievingCategoriesStatus
   };
 }
 
