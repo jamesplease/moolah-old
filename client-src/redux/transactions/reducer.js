@@ -5,93 +5,93 @@ import initialState from './initial-state';
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_TRANSACTION_UPDATE_ID: {
-      return Object.assign({
+      return {
         ...state,
         transactionIdBeingUpdated: action.transactionId
-      });
+      };
     }
 
     case actionTypes.CLEAR_TRANSACTION_UPDATE_ID: {
-      return Object.assign({
+      return {
         ...state,
         transactionIdBeingUpdated: null
-      });
+      };
     }
 
     // Create transaction
     case actionTypes.CREATE_TRANSACTION: {
-      return Object.assign({
+      return {
         ...state,
         creatingTransaction: true
-      });
+      };
     }
 
     case actionTypes.CREATE_TRANSACTION_SUCCESS: {
       let transactions = [...state.transactions];
       transactions.push(action.transaction);
-      return Object.assign({
+      return {
         ...state,
         creatingTransaction: false,
         createTransactionSuccess: true,
         transactions
-      });
+      };
     }
 
     case actionTypes.CREATE_TRANSACTION_FAILURE: {
-      return Object.assign({
+      return {
         ...state,
         creatingTransaction: false,
         createTransactionFailure: true
-      });
+      };
     }
 
     case actionTypes.CREATE_TRANSACTION_RESET_RESOLUTION: {
-      return Object.assign({
+      return {
         ...state,
         createTransactionSuccess: false,
         createTransactionFailure: false
-      });
+      };
     }
 
     // Retrieving transactions
     case actionTypes.RETRIEVE_TRANSACTIONS: {
-      return Object.assign({
+      return {
         ...state,
         retrievingTransactions: true
-      });
+      };
     }
 
     case actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS: {
-      return Object.assign({
+      return {
         ...state,
         retrievingTransactions: false,
         retrieveTransactionsSuccess: true,
         transactions: action.transactions
-      });
+      };
     }
 
     case actionTypes.RETRIEVE_TRANSACTIONS_FAILURE: {
-      return Object.assign({
+      return {
         ...state,
         retrievingTransactions: false,
         retrieveTransactionsFailure: true
-      });
+      };
     }
 
     case actionTypes.RETRIEVE_TRANSACTIONS_RESET_RESOLUTION: {
-      return Object.assign({
+      return {
         ...state,
         retrieveTransactionsSuccess: false,
         retrieveTransactionsFailure: false
-      });
+      };
     }
 
     // Update transaction
     case actionTypes.UPDATE_TRANSACTION: {
-      return Object.assign({
+      return {
         ...state,
         updatingTransaction: true,
-      });
+      };
     }
 
     case actionTypes.UPDATE_TRANSACTION_SUCCESS: {
@@ -105,63 +105,63 @@ export default (state = initialState, action) => {
         }
       });
 
-      return Object.assign({
+      return {
         ...state,
         updatingTransaction: false,
         updateTransactionSuccess: true,
         transactions
-      });
+      };
     }
 
     case actionTypes.UPDATE_TRANSACTION_FAILURE: {
-      return Object.assign({
+      return {
         ...state,
         updatingTransaction: false,
         updateTransactionFailure: true
-      });
+      };
     }
 
     case actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION: {
-      return Object.assign({
+      return {
         ...state,
         updateTransactionSuccess: false,
         updateTransactionFailure: false
-      });
+      };
     }
 
     // Delete transaction
     case actionTypes.DELETE_TRANSACTION: {
-      return Object.assign({
+      return {
         ...state,
         deletingTransaction: true,
-      });
+      };
     }
 
     case actionTypes.DELETE_TRANSACTION_SUCCESS: {
       const rejectionFn = val => val.id === action.transactionId;
       let transactions = _.reject(state.transactions, rejectionFn);
-      return Object.assign({
+      return {
         ...state,
         deletingTransaction: false,
         deleteTransactionSuccess: true,
         transactions
-      });
+      };
     }
 
     case actionTypes.DELETE_TRANSACTION_FAILURE: {
-      return Object.assign({
+      return {
         ...state,
         deletingTransaction: false,
         deleteTransactionFailure: true,
-      });
+      };
     }
 
     case actionTypes.DELETE_TRANSACTION_RESET_RESOLUTION: {
-      return Object.assign({
+      return {
         ...state,
         deleteTransactionSuccess: false,
         deleteTransactionFailure: false
-      });
+      };
     }
 
     default: {
