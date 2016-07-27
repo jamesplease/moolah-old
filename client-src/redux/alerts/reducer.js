@@ -28,6 +28,42 @@ export default (state = initialState, action) => {
       };
     }
 
+    case categoriesActionTypes.CREATE_CATEGORY_SUCCESS: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
+      const id = _.uniqueId('alert-');
+      return {
+        ...state,
+        alerts: [
+          ...clonedAlerts,
+          {
+            id,
+            text: 'Category created',
+            style: 'success',
+            isDismissable: true,
+            persistent: false
+          }
+        ]
+      };
+    }
+
+    case categoriesActionTypes.CREATE_CATEGORY_FAILURE: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
+      const id = _.uniqueId('alert-');
+      return {
+        ...state,
+        alerts: [
+          ...clonedAlerts,
+          {
+            id,
+            style: 'danger',
+            text: 'Oops – there was an error. Try that one more time?',
+            isDismissable: true,
+            persistent: false
+          }
+        ]
+      };
+    }
+
     case categoriesActionTypes.UPDATE_CATEGORY_SUCCESS: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
