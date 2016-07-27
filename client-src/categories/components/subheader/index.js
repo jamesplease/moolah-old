@@ -40,8 +40,8 @@ const CategoriesSubheader = React.createClass({
       onClickCancel: this.onClickModalCancel,
       onSubmit: this.onClickModalCreate,
       categories: this.props.categories,
-      confirmInProgress: this.props.creatingCategory,
-      actionFailure: this.props.createCategoryFailure,
+      confirmInProgress: this.props.creatingCategoryStatus === 'PENDING',
+      actionFailure: this.props.creatingCategoryStatus === 'FAILURE',
       dismissError: this.props.categoriesActions.resetCreateCategoryResolution,
       isEditMode: false
     };
@@ -57,31 +57,22 @@ const CategoriesSubheader = React.createClass({
   componentWillReceiveProps(nextProps) {
     // If we weren't previously trying to create a category,
     // then there's nothing for us to check.
-    if (!this.props.creatingCategory) {
-      return false;
+    if (this.props.creatingCategoryStatus !== 'PENDING') {
+      return;
     }
 
     // If the creation was successful, then we can close the
     // modal.
-    if (nextProps.createCategorySuccess) {
+    if (nextProps.creatingCategoryStatus === 'SUCCESS') {
       this.setState({
         isModalOpen: false
-      });
-
-      this.props.alertActions.pushAlert({
-        text: 'Category created',
-        style: 'success',
-        isDismissable: true,
-        persistent: false
       });
     }
   },
 
   render() {
     const {isOnline} = this.props;
-
     const disabled = !isOnline;
-
     const modal = this.state.isModalOpen ? this.createModal() : null;
 
     return (
@@ -109,9 +100,7 @@ function mapStateToProps(state) {
   return {
     isOnline: state.connection,
     categories: state.categories.categories,
-    creatingCategory: state.categories.creatingCategory,
-    createCategorySuccess: state.categories.createCategorySuccess,
-    createCategoryFailure: state.categories.createCategoryFailure
+    creatingCategoryStatus: state.categories.creatingCategoryStatus
   };
 }
 

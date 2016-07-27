@@ -3,6 +3,72 @@ import reducer from '../../../../../client-src/redux/categories/reducer';
 import actionTypes from '../../../../../client-src/redux/categories/action-types';
 
 describe('categories/reducer', function() {
+  describe('CREATE_CATEGORY', () => {
+    it('should return a new state with `creatingCategoryStatus` set to PENDING', () => {
+      const state = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: null
+      };
+      const action = {type: actionTypes.CREATE_CATEGORY};
+      var newState = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: 'PENDING'
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('CREATE_CATEGORY_SUCCESS', () => {
+    it('should return a new state with `creatingCategoryStatus` set to SUCCESS and the category', () => {
+      const state = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}]
+      };
+      const action = {
+        type: actionTypes.CREATE_CATEGORY_SUCCESS,
+        category: {
+          id: 4,
+          pasta: 'yum'
+        }
+      };
+      var newState = {
+        categories: [
+          {id: 1},
+          {id: 2},
+          {id: 3},
+          {id: 4, pasta: 'yum'}
+        ],
+        categoriesMeta: [
+          {id: 1},
+          {id: 2},
+          {id: 3},
+          {id: 4, updatingStatus: null, isDeleting: false}
+        ],
+        creatingCategoryStatus: 'SUCCESS'
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('CREATE_CATEGORY_FAILURE', () => {
+    it('should return a new state with `creatingCategoryStatus` set to FAILURE', () => {
+      const state = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: 'PENDING'
+      };
+      const action = {type: actionTypes.CREATE_CATEGORY_FAILURE};
+      var newState = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: 'FAILURE'
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
   describe('RETRIEVE_CATEGORIES', () => {
     it('should set `retrievingCategoriesStatus` to PENDING', () => {
       const state = {oink: true};

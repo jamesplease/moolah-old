@@ -57,6 +57,48 @@ describe('alerts/reducer', function() {
     });
   });
 
+  describe('CREATE_CATEGORY_SUCCESS', () => {
+    it('should add a new alert to the queue', () => {
+      const state = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}]
+      };
+      const action = {
+        type: categoryActionTypes.CREATE_CATEGORY_SUCCESS
+      };
+      const newState = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}, {
+          id: 'asdf',
+          text: 'Category created',
+          style: 'success',
+          isDismissable: true,
+          persistent: false
+        }]
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('CREATE_CATEGORY_FAILURE', () => {
+    it('should add a new alert to the queue', () => {
+      const state = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}]
+      };
+      const action = {
+        type: categoryActionTypes.CREATE_CATEGORY_FAILURE
+      };
+      const newState = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}, {
+          id: 'asdf',
+          style: 'danger',
+          text: 'Oops – there was an error. Try that one more time?',
+          isDismissable: true,
+          persistent: false
+        }]
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
   describe('UPDATE_CATEGORY_SUCCESS', () => {
     it('should add a new alert to the queue', () => {
       const state = {
