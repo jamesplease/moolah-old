@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
       const categoriesMeta = [
         ...state.categoriesMeta,
         {
-          ...action.category,
+          id: action.category.id,
           ...initialResourceMetaState
         }
       ];
@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
     case actionTypes.RETRIEVE_CATEGORIES_SUCCESS: {
       const categoriesMeta = action.categories.map(c => {
         return {
-          ...c,
+          id: c.id,
           ...initialResourceMetaState
         };
       });
