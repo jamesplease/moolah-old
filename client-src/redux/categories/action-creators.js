@@ -59,15 +59,19 @@ export function retrieveCategories() {
   };
 }
 
-export function resetUpdateCategoryResolution() {
+export function resetUpdateCategoryResolution(categoryId) {
   return {
-    type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION
+    type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION,
+    categoryId
   };
 }
 
 export function updateCategory(category) {
   return dispatch => {
-    dispatch({type: actionTypes.UPDATE_CATEGORY, category});
+    dispatch({
+      type: actionTypes.UPDATE_CATEGORY,
+      categoryId: category.id
+    });
 
     const {id} = category;
     const req = xhr.patch(
@@ -77,8 +81,11 @@ export function updateCategory(category) {
         if (req.aborted) {
           return;
         }
-        if (err) {
-          dispatch({type: actionTypes.UPDATE_CATEGORY_FAILURE});
+        if (err || res.statusCode >= 400) {
+          dispatch({
+            type: actionTypes.UPDATE_CATEGORY_FAILURE,
+            categoryId: category.id
+          });
         } else {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_SUCCESS,

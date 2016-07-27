@@ -3,7 +3,7 @@ import actionTypes from './action-types';
 import initialState from './initial-state';
 
 const initialResourceMetaState = {
-  isUpdating: false,
+  updatingStatus: null,
   isDeleting: false
 };
 
@@ -96,16 +96,19 @@ export default (state = initialState, action) => {
     // Update category
     case actionTypes.UPDATE_CATEGORY: {
       const categoriesMeta = state.categoriesMeta.map(c => {
-        return {
-          ...c,
-          isUpdating: c.id === action.categoryId
-        };
+        if (c.id !== action.categoryId) {
+          return {...c};
+        } else {
+          return {
+            ...c,
+            updatingStatus: 'PENDING'
+          };
+        }
       });
 
       return {
         ...state,
-        categoriesMeta,
-        updatingCategory: true
+        categoriesMeta
       };
     }
 
@@ -114,27 +117,25 @@ export default (state = initialState, action) => {
 
       let categories = state.categories.map(c => {
         if (c.id !== id) {
-          return c;
+          return {...c};
         } else {
-          return action.category;
+          return {...action.category};
         }
       });
 
       const categoriesMeta = state.categoriesMeta.map(c => {
-        if (c.id !== action.categoryId) {
+        if (c.id !== id) {
           return {...c};
         } else {
           return {
             ...c,
-            isUpdating: false
+            updatingStatus: 'SUCCESS'
           };
         }
       });
 
       return {
         ...state,
-        updatingCategory: false,
-        updateCategorySuccess: true,
         categories,
         categoriesMeta
       };
@@ -147,24 +148,33 @@ export default (state = initialState, action) => {
         } else {
           return {
             ...c,
-            isUpdating: false
+            updatingStatus: 'FAILURE'
           };
         }
       });
 
       return {
         ...state,
-        categoriesMeta,
-        updatingCategory: false,
-        updateCategoryFailure: true
+        categoriesMeta
       };
     }
 
     case actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION: {
+      const clonedMeta = _.cloneDeep(state.categoriesMeta);
+      const categoriesMeta = clonedMeta.map(c => {
+        if (c.id !== action.categoryId) {
+          return {...c};
+        } else {
+          return {
+            ...c,
+            updatingStatus: null
+          };
+        }
+      });
+
       return {
         ...state,
-        updateCategorySuccess: false,
-        updateCategoryFailure: false,
+        categoriesMeta
       };
     }
 
