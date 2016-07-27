@@ -7,7 +7,6 @@ import CategoryListItem from '../category-list-item';
 import Modal from '../../../common/components/modal';
 import ModifyCategoryModal from '../modify-category-modal';
 import DeleteCategoryModal from '../delete-category-modal';
-import * as alertActionCreators from '../../../redux/alerts/action-creators';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const CategoriesList = React.createClass({
@@ -133,13 +132,6 @@ const CategoriesList = React.createClass({
         categoryToUpdate: null
       });
 
-      this.props.alertActions.pushAlert({
-        text: 'Category updated',
-        style: 'success',
-        isDismissable: true,
-        persistent: false
-      });
-
       this.props.categoriesActions.resetUpdateCategoryResolution({
         categoryId: id
       });
@@ -203,8 +195,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
-    alertActions: bindActionCreators(alertActionCreators, dispatch)
+    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch)
   };
 }
 
