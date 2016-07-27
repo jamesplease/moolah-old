@@ -1,19 +1,6 @@
 import xhr from 'xhr';
 import actionTypes from './action-types';
 
-export function setCategoryUpdateId(categoryId) {
-  return {
-    type: actionTypes.SET_CATEGORY_UPDATE_ID,
-    categoryId
-  };
-}
-
-export function clearCategoryUpdateId() {
-  return {
-    type: actionTypes.CLEAR_CATEGORY_UPDATE_ID
-  };
-}
-
 export function resetCreateCategoryResolution() {
   return {
     type: actionTypes.CREATE_CATEGORY_RESET_RESOLUTION

@@ -8,12 +8,6 @@ const asyncActions = createAsyncConstants(
   'DELETE_CATEGORY'
 );
 
-const syncActions = {
-  SET_CATEGORY_UPDATE_ID: null,
-  CLEAR_CATEGORY_UPDATE_ID: null
-};
-
 export default keyMirror({
-  ...asyncActions,
-  ...syncActions
+  ...asyncActions
 });

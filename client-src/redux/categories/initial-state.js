@@ -10,7 +10,6 @@ export default {
   retrieveCategoriesSuccess: false,
   retrieveCategoriesFailure: false,
 
-  categoryIdBeingUpdated: null,
   updatingCategory: false,
   updateCategorySuccess: false,
   updateCategoryFailure: false
