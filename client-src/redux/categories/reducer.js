@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
     case actionTypes.RETRIEVE_CATEGORIES: {
       return {
         ...state,
-        retrievingCategories: true
+        retrievingCategoriesStatus: 'PENDING'
       };
     }
 
@@ -70,8 +70,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        retrievingCategories: false,
-        retrieveCategoriesSuccess: true,
+        retrievingCategoriesStatus: 'SUCCESS',
         categories: [...action.categories],
         categoriesMeta
       };
@@ -80,16 +79,14 @@ export default (state = initialState, action) => {
     case actionTypes.RETRIEVE_CATEGORIES_FAILURE: {
       return {
         ...state,
-        retrievingCategories: false,
-        retrieveCategoriesFailure: true
+        retrievingCategoriesStatus: 'FAILURE'
       };
     }
 
     case actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION: {
       return {
         ...state,
-        retrieveCategoriesFailure: false,
-        retrieveCategoriesSuccess: false
+        retrievingCategoriesStatus: null
       };
     }
 
