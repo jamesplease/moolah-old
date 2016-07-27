@@ -10,25 +10,25 @@ const initialResourceMetaState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_CATEGORY_UPDATE_ID: {
-      return Object.assign({
+      return {
         ...state,
         categoryIdBeingUpdated: action.categoryId
-      });
+      };
     }
 
     case actionTypes.CLEAR_CATEGORY_UPDATE_ID: {
-      return Object.assign({
+      return {
         ...state,
         categoryIdBeingUpdated: null
-      });
+      };
     }
 
     // Create category
     case actionTypes.CREATE_CATEGORY: {
-      return Object.assign({
+      return {
         ...state,
         creatingCategory: true
-      });
+      };
     }
 
     case actionTypes.CREATE_CATEGORY_SUCCESS: {
@@ -41,37 +41,37 @@ export default (state = initialState, action) => {
           ...initialResourceMetaState
         }
       ];
-      return Object.assign({
+      return {
         ...state,
         creatingCategory: false,
         createCategorySuccess: true,
         categories,
         categoriesMeta
-      });
+      };
     }
 
     case actionTypes.CREATE_CATEGORY_FAILURE: {
-      return Object.assign({
+      return {
         ...state,
         creatingCategory: false,
         createCategoryFailure: true
-      });
+      };
     }
 
     case actionTypes.CREATE_CATEGORY_RESET_RESOLUTION: {
-      return Object.assign({
+      return {
         ...state,
         createCategoryFailure: false,
         createCategorySuccess: false
-      });
+      };
     }
 
     // Retrieving categories
     case actionTypes.RETRIEVE_CATEGORIES: {
-      return Object.assign({
+      return {
         ...state,
         retrievingCategories: true
-      });
+      };
     }
 
     case actionTypes.RETRIEVE_CATEGORIES_SUCCESS: {
@@ -82,29 +82,29 @@ export default (state = initialState, action) => {
         };
       });
 
-      return Object.assign({
+      return {
         ...state,
         retrievingCategories: false,
         retrieveCategoriesSuccess: true,
         categories: [...action.categories],
         categoriesMeta
-      });
+      };
     }
 
     case actionTypes.RETRIEVE_CATEGORIES_FAILURE: {
-      return Object.assign({
+      return {
         ...state,
         retrievingCategories: false,
         retrieveCategoriesFailure: true
-      });
+      };
     }
 
     case actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION: {
-      return Object.assign({
+      return {
         ...state,
         retrieveCategoriesFailure: false,
         retrieveCategoriesSuccess: false
-      });
+      };
     }
 
     // Update category
@@ -116,11 +116,11 @@ export default (state = initialState, action) => {
         };
       });
 
-      return Object.assign({
+      return {
         ...state,
         categoriesMeta,
         updatingCategory: true
-      });
+      };
     }
 
     case actionTypes.UPDATE_CATEGORY_SUCCESS: {
@@ -145,13 +145,13 @@ export default (state = initialState, action) => {
         }
       });
 
-      return Object.assign({
+      return {
         ...state,
         updatingCategory: false,
         updateCategorySuccess: true,
         categories,
         categoriesMeta
-      });
+      };
     }
 
     case actionTypes.UPDATE_CATEGORY_FAILURE: {
@@ -166,20 +166,20 @@ export default (state = initialState, action) => {
         }
       });
 
-      return Object.assign({
+      return {
         ...state,
         categoriesMeta,
         updatingCategory: false,
         updateCategoryFailure: true
-      });
+      };
     }
 
     case actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION: {
-      return Object.assign({
+      return {
         ...state,
         updateCategorySuccess: false,
         updateCategoryFailure: false,
-      });
+      };
     }
 
     // Delete category
