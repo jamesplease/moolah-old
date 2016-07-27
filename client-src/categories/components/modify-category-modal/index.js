@@ -45,37 +45,6 @@ const CreateCategoriesModal = React.createClass({
     });
   },
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.actionFailure && !this.props.actionFailure) {
-      const {pushAlert} = this.props.alertActions;
-      const dismissFailureAlert = categoriesActionCreators.resetUpdateCategoryResolution();
-      pushAlert({
-        style: 'danger',
-        text: 'Oops – there was an error.<br>Try that one more time?',
-        isDismissable: true,
-        onDismissAction: dismissFailureAlert
-      });
-    }
-
-    const nextLabel = nextProps.fields.label;
-    const thisLabel = this.props.fields.label;
-
-    const nextLabelIsInvalid = nextLabel.error && nextLabel.touched;
-    const thisLabelIsInvalid = thisLabel.error && thisLabel.touched;
-
-    // If the next label is invalid, and the current label is valid, then
-    // that means the form has gone from being valid to invalid. In that case,
-    // we display an error message. If the user had already submitted
-    // the form, then they would no longer see the "error occurred" message.
-    // We want to dismiss that "error occurred" message, because if they
-    // fix the form issue then it should be as if the form wasn't submitted.
-    // It'd be weird if the error went BACK to the "error occurred" after
-    // they corrected the issue with the form.
-    if (nextLabelIsInvalid && nextLabelIsInvalid !== thisLabelIsInvalid) {
-      this.props.dismissError();
-    }
-  },
-
   render() {
     const {
       fields: {label},

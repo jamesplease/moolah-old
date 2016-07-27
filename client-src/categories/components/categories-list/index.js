@@ -76,14 +76,18 @@ const CategoriesList = React.createClass({
   },
 
   getEditModal() {
+    const {categoriesMeta} = this.props;
+
+    const categoryId = this.state.categoryToUpdate.id;
+    const categoryBeingUpdatedMeta = _.find(categoriesMeta, {id: categoryId});
+    const isUpdating = categoryBeingUpdatedMeta.updatingStatus === 'PENDING';
+
     const childrenProps = {
       categories: this.props.categories,
       onClickCancel: this.onCancelModel,
       onSubmit: this.onConfirmEditModal,
       category: this.state.categoryToUpdate,
-      actionFailure: this.props.updateCategoryFailure,
-      dismissError: this.props.categoriesActions.resetUpdateCategoryResolution,
-      confirmInProgress: this.props.updatingCategory,
+      confirmInProgress: isUpdating,
       initialValues: this.state.categoryToUpdate,
       // This doesn't need to be passed anymore...
       categoryIdBeingUpdated: this.state.categoryToUpdate.id,
@@ -120,12 +124,11 @@ const CategoriesList = React.createClass({
       return;
     }
 
-    const wasUpdating = this.props.updatingCategory;
-    const successfulUpdate = nextProps.updateCategorySuccess;
+    const {categoriesMeta} = nextProps;
+    const {id} = this.state.categoryToUpdate;
+    const updatingCategoryMeta = _.find(categoriesMeta, {id});
 
-    // If we were updating, and the update is successful, then we can
-    // close the modal and queue an alert.
-    if (wasUpdating && successfulUpdate) {
+    if (updatingCategoryMeta.updatingStatus === 'SUCCESS') {
       this.setState({
         categoryToUpdate: null
       });
@@ -135,6 +138,10 @@ const CategoriesList = React.createClass({
         style: 'success',
         isDismissable: true,
         persistent: false
+      });
+
+      this.props.categoriesActions.resetUpdateCategoryResolution({
+        categoryId: id
       });
     }
   },
@@ -190,12 +197,7 @@ function mapStateToProps(state) {
   return {
     isOnline: state.connection,
     categories: state.categories.categories,
-    categoriesMeta: state.categories.categoriesMeta,
-    retrievingCategories: state.categories.retrievingCategories,
-    updatingCategory: state.categories.updatingCategory,
-    updateCategorySuccess: state.categories.updateCategorySuccess,
-    retrieveCategoriesFailure: state.categories.retrieveCategoriesFailure,
-    updateCategoryFailure: state.categories.updateCategoryFailure
+    categoriesMeta: state.categories.categoriesMeta
   };
 }
 
