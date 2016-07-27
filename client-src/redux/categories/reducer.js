@@ -9,20 +9,6 @@ const initialResourceMetaState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_CATEGORY_UPDATE_ID: {
-      return {
-        ...state,
-        categoryIdBeingUpdated: action.categoryId
-      };
-    }
-
-    case actionTypes.CLEAR_CATEGORY_UPDATE_ID: {
-      return {
-        ...state,
-        categoryIdBeingUpdated: null
-      };
-    }
-
     // Create category
     case actionTypes.CREATE_CATEGORY: {
       return {

@@ -205,19 +205,6 @@ function validate(values, props) {
   return errors;
 }
 
-function mapStateToProps(state) {
-  const categories = state.categories;
-  const categoryIdBeingUpdated = categories.categoryIdBeingUpdated;
-  if (!categoryIdBeingUpdated) {
-    return;
-  }
-
-  return {
-    categoryIdBeingUpdated,
-    initialValues: _.find(categories.categories, {id: categoryIdBeingUpdated})
-  };
-}
-
 function mapDispatchToProps(dispatch) {
   return {
     categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
@@ -231,6 +218,6 @@ export default reduxForm(
     fields: ['label'],
     validate
   },
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(CreateCategoriesModal);
