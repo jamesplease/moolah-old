@@ -19,6 +19,29 @@ describe('alerts/reducer', function() {
     });
   });
 
+  describe('PUSH_ALERT', () => {
+    it('should push an alert into the queue, accepting only valid attrs', () => {
+      const state = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}]
+      };
+      const action = {
+        type: alertsActionTypes.PUSH_ALERT,
+        newAlert: {
+          id: 'food',
+          sandwich: false,
+          style: 'pasta'
+        }
+      };
+      const newState = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}, {
+          id: 'food',
+          style: 'pasta'
+        }]
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
   describe('DESTROY_FIRST_ALERT', () => {
     it('should remove an alert from the queue', () => {
       const state = {
