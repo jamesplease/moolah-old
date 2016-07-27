@@ -1,5 +1,6 @@
 export default {
   categories: [],
+  categoriesMeta: [],
 
   creatingCategory: false,
   createCategorySuccess: false,
@@ -12,9 +13,5 @@ export default {
   categoryIdBeingUpdated: null,
   updatingCategory: false,
   updateCategorySuccess: false,
-  updateCategoryFailure: false,
-
-  deletingCategory: false,
-  deleteCategorySuccess: false,
-  deleteCategoryFailure: false
+  updateCategoryFailure: false
 };

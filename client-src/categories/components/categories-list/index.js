@@ -13,7 +13,6 @@ import * as categoriesActionCreators from '../../../redux/categories/action-crea
 const CategoriesList = React.createClass({
   getInitialState() {
     return {
-      isDeleteModalOpen: false,
       categoryToDelete: null,
       isUpdateModalOpen: false,
       categoryToUpdate: null
@@ -22,7 +21,6 @@ const CategoriesList = React.createClass({
 
   onClickDelete(category) {
     this.setState({
-      isDeleteModalOpen: true,
       categoryToDelete: category
     });
   },
@@ -41,7 +39,6 @@ const CategoriesList = React.createClass({
   onCancelModel() {
     this.props.categoriesActions.clearCategoryUpdateId();
     this.setState({
-      isDeleteModalOpen: false,
       categoryToDelete: null,
       isUpdateModalOpen: false,
       categoryToUpdate: null
@@ -64,21 +61,24 @@ const CategoriesList = React.createClass({
   },
 
   getDeleteModal() {
+    const {categoriesMeta} = this.props;
+
+    const categoryId = this.state.categoryToDelete.id;
+    const categoryBeingDeletedMeta = _.find(categoriesMeta, {id: categoryId});
+    const isDeletingCategory = categoryBeingDeletedMeta.isDeleting;
+
     const childrenProps = {
       onClickCancel: this.onCancelModel,
       onClickDelete: this.onConfirmDeleteModal,
       category: this.state.categoryToDelete,
-      actionFailure: this.props.deleteCategoryFailure,
-      dismissError: this.props.categoriesActions.resetDeleteCategoryResolution,
-      deletingCategory: this.props.deletingCategory
+      deletingCategory: isDeletingCategory
     };
 
-    const modalProps = {
-      children: (<DeleteCategoryModal {...childrenProps}/>),
-      modalClassName: 'delete-category-modal-container'
-    };
-
-    return (<Modal {...modalProps}/>);
+    return (
+      <Modal modalClassName="delete-category-modal-container">
+        <DeleteCategoryModal {...childrenProps}/>
+      </Modal>
+    );
   },
 
   getEditModal() {
@@ -103,26 +103,17 @@ const CategoriesList = React.createClass({
 
   checkForSuccessfulDelete(nextProps) {
     // If the modal isn't open, then there's nothing to check
-    if (!this.state.isDeleteModalOpen) {
+    if (!this.state.categoryToDelete) {
       return;
     }
 
-    const wasDeleting = this.props.deletingCategory;
-    const successfulDelete = nextProps.deleteCategorySuccess;
+    const {categories} = nextProps;
+    const {id} = this.state.categoryToDelete;
 
-    // If we were deleting, and the delete is successful, then we can
-    // close the modal and queue an alert.
-    if (wasDeleting && successfulDelete) {
+    // If the category no longer exists, then it has been deleted
+    if (!_.find(categories, {id})) {
       this.setState({
-        isDeleteModalOpen: false,
         categoryToDelete: null
-      });
-
-      this.props.alertActions.queueAlert({
-        text: 'Category deleted',
-        style: 'success',
-        isDismissable: true,
-        persistent: false
       });
     }
   },
@@ -164,10 +155,10 @@ const CategoriesList = React.createClass({
 
   render() {
     const {
-      categories, deletingCategory, isOnline
+      categories, isOnline
     } = this.props;
 
-    const deleteModal = this.state.isDeleteModalOpen ? this.getDeleteModal() : null;
+    const deleteModal = this.state.categoryToDelete ? this.getDeleteModal() : null;
     const editModal = this.state.isUpdateModalOpen ? this.getEditModal() : null;
 
     // Case-insensitive sort by the category's label
@@ -192,8 +183,7 @@ const CategoriesList = React.createClass({
               category={category}
               key={category.id}
               onClickEdit={this.onClickEdit}
-              onClickDelete={this.onClickDelete}
-              deletingCategory={deletingCategory}/>
+              onClickDelete={this.onClickDelete}/>
           ))}
         </ReactCSSTransitionGroup>
       </div>
@@ -207,9 +197,7 @@ function mapStateToProps(state) {
   return {
     isOnline: state.connection,
     categories: state.categories.categories,
-    deletingCategory: state.categories.deletingCategory,
-    deleteCategorySuccess: state.categories.deleteCategorySuccess,
-    deleteCategoryFailure: state.categories.deleteCategoryFailure,
+    categoriesMeta: state.categories.categoriesMeta,
     retrievingCategories: state.categories.retrievingCategories,
     updatingCategory: state.categories.updatingCategory,
     updateCategorySuccess: state.categories.updateCategorySuccess,
