@@ -1,10 +1,6 @@
 export default {
   categories: [],
   categoriesMeta: [],
-
-  creatingCategory: false,
-  createCategorySuccess: false,
-  createCategoryFailure: false,
-
+  creatingCategoryStatus: null,
   retrievingCategoriesStatus: null
 };

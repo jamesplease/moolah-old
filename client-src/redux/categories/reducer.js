@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
     case actionTypes.CREATE_CATEGORY: {
       return {
         ...state,
-        creatingCategory: true
+        creatingCategoryStatus: 'PENDING'
       };
     }
 
@@ -29,8 +29,7 @@ export default (state = initialState, action) => {
       ];
       return {
         ...state,
-        creatingCategory: false,
-        createCategorySuccess: true,
+        creatingCategoryStatus: 'SUCCESS',
         categories,
         categoriesMeta
       };
@@ -39,16 +38,14 @@ export default (state = initialState, action) => {
     case actionTypes.CREATE_CATEGORY_FAILURE: {
       return {
         ...state,
-        creatingCategory: false,
-        createCategoryFailure: true
+        creatingCategoryStatus: 'FAILURE'
       };
     }
 
     case actionTypes.CREATE_CATEGORY_RESET_RESOLUTION: {
       return {
         ...state,
-        createCategoryFailure: false,
-        createCategorySuccess: false
+        creatingCategoryStatus: null
       };
     }
 

@@ -18,7 +18,7 @@ export function createCategory(data) {
         if (req.aborted) {
           return;
         }
-        if (err) {
+        if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.CREATE_CATEGORY_FAILURE});
         } else {
           dispatch({
