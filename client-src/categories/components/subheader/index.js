@@ -68,7 +68,7 @@ const CategoriesSubheader = React.createClass({
         isModalOpen: false
       });
 
-      this.props.alertActions.queueAlert({
+      this.props.alertActions.pushAlert({
         text: 'Category created',
         style: 'success',
         isDismissable: true,

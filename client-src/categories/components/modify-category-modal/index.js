@@ -47,9 +47,9 @@ const CreateCategoriesModal = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.actionFailure && !this.props.actionFailure) {
-      const {queueAlert} = this.props.alertActions;
+      const {pushAlert} = this.props.alertActions;
       const dismissFailureAlert = categoriesActionCreators.resetUpdateCategoryResolution();
-      queueAlert({
+      pushAlert({
         style: 'danger',
         text: 'Oops – there was an error.<br>Try that one more time?',
         isDismissable: true,
