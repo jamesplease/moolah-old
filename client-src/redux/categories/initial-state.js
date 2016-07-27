@@ -6,7 +6,5 @@ export default {
   createCategorySuccess: false,
   createCategoryFailure: false,
 
-  retrievingCategories: false,
-  retrieveCategoriesSuccess: false,
-  retrieveCategoriesFailure: false,
+  retrievingCategoriesStatus: null
 };

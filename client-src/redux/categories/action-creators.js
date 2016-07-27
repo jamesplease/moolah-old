@@ -44,7 +44,7 @@ export function retrieveCategories() {
         if (req.aborted) {
           return;
         }
-        if (err) {
+        if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.RETRIEVE_CATEGORIES_FAILURE});
         } else {
           dispatch({
