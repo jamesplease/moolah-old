@@ -1,27 +1,26 @@
 import _ from 'lodash';
-import actionTypes from './action-types';
-import initialState from './initial-state';
+import alertsActionTypes from './action-types';
 import categoriesActionTypes from '../categories/action-types';
+import initialState from './initial-state';
 
 const validActionProps = [
-  'text', 'style', 'onDismissAction',
-  'isDismissable', 'persistent',
+  'text', 'style', 'onDismissAction', 'isDismissable', 'persistent',
   'icon', 'id'
 ];
 
 export default (state = initialState, action) => {
-  const alertAction = _.pick(action, validActionProps);
-
   switch (action.type) {
-    case actionTypes.QUEUE_ALERT: {
+    case alertsActionTypes.PUSH_ALERT: {
+      // Make sure we don't accept just anything!
+      const newAlert = _.pick(action.newAlert, validActionProps);
       const clonedAlerts = _.cloneDeep(state.alerts);
       return {
         ...state,
-        alerts: [...clonedAlerts, alertAction],
+        alerts: [...clonedAlerts, newAlert],
       };
     }
 
-    case actionTypes.DESTROY_FIRST_ALERT: {
+    case alertsActionTypes.DESTROY_FIRST_ALERT: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       return {
         ...state,

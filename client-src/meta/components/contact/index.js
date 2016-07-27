@@ -28,8 +28,8 @@ const Contact = React.createClass({
     const {sendMessageFailure} = this.props;
     if (!sendMessageFailure && nextProps.sendMessageFailure) {
       const resetMessageResolutionAction = contactActionCreators.resetMessageResolution();
-      const {queueAlert} = this.props.alertActions;
-      queueAlert({
+      const {pushAlert} = this.props.alertActions;
+      pushAlert({
         style: 'danger',
         text: 'Oops – there was an error.<br>Try that one more time?',
         persistent: true,
