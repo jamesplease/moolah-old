@@ -25,6 +25,8 @@ export const Categories = React.createClass({
       retrievingCategoriesStatus, categories, categoriesActions
     } = this.props;
 
+    console.log('rendering', retrievingCategoriesStatus);
+
     if (retrievingCategoriesStatus === 'PENDING') {
       return <LoadingResourceList/>;
     }
