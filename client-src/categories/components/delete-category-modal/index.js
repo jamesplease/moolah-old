@@ -1,9 +1,5 @@
 import _ from 'lodash';
 import React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import * as alertActionCreators from '../../../redux/alerts/action-creators';
-import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const DeleteCategoryModal = React.createClass({
   render() {
@@ -45,13 +41,4 @@ const DeleteCategoryModal = React.createClass({
   }
 });
 
-export {DeleteCategoryModal};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
-    alertActions: bindActionCreators(alertActionCreators, dispatch)
-  };
-}
-
-export default connect(null, mapDispatchToProps)(DeleteCategoryModal);
+export default DeleteCategoryModal;
