@@ -1,10 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
-import * as alertActionCreators from '../../../redux/alerts/action-creators';
-import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
 const CreateCategoriesModal = React.createClass({
   componentDidMount() {
@@ -174,19 +171,10 @@ function validate(values, props) {
   return errors;
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
-    alertActions: bindActionCreators(alertActionCreators, dispatch)
-  };
-}
-
 export default reduxForm(
   {
     form: 'createCategory',
     fields: ['label'],
     validate
-  },
-  null,
-  mapDispatchToProps
+  }
 )(CreateCategoriesModal);
