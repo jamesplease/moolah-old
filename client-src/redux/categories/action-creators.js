@@ -1,19 +1,6 @@
 import xhr from 'xhr';
 import actionTypes from './action-types';
 
-export function setCategoryUpdateId(categoryId) {
-  return {
-    type: actionTypes.SET_CATEGORY_UPDATE_ID,
-    categoryId
-  };
-}
-
-export function clearCategoryUpdateId() {
-  return {
-    type: actionTypes.CLEAR_CATEGORY_UPDATE_ID
-  };
-}
-
 export function resetCreateCategoryResolution() {
   return {
     type: actionTypes.CREATE_CATEGORY_RESET_RESOLUTION
@@ -72,15 +59,19 @@ export function retrieveCategories() {
   };
 }
 
-export function resetUpdateCategoryResolution() {
+export function resetUpdateCategoryResolution(categoryId) {
   return {
-    type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION
+    type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION,
+    categoryId
   };
 }
 
 export function updateCategory(category) {
   return dispatch => {
-    dispatch({type: actionTypes.UPDATE_CATEGORY, category});
+    dispatch({
+      type: actionTypes.UPDATE_CATEGORY,
+      categoryId: category.id
+    });
 
     const {id} = category;
     const req = xhr.patch(
@@ -90,8 +81,11 @@ export function updateCategory(category) {
         if (req.aborted) {
           return;
         }
-        if (err) {
-          dispatch({type: actionTypes.UPDATE_CATEGORY_FAILURE});
+        if (err || res.statusCode >= 400) {
+          dispatch({
+            type: actionTypes.UPDATE_CATEGORY_FAILURE,
+            categoryId: category.id
+          });
         } else {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_SUCCESS,

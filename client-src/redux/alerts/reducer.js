@@ -64,6 +64,24 @@ export default (state = initialState, action) => {
       };
     }
 
+    case categoriesActionTypes.UPDATE_CATEGORY_FAILURE: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
+      const id = _.uniqueId('alert-');
+      return {
+        ...state,
+        alerts: [
+          ...clonedAlerts,
+          {
+            id,
+            style: 'danger',
+            text: 'Oops – there was an error. Try that one more time?',
+            isDismissable: true,
+            persistent: false
+          }
+        ]
+      };
+    }
+
     default: {
       return state;
     }
