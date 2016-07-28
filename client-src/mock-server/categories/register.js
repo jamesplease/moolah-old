@@ -3,13 +3,15 @@ import _ from 'lodash';
 import data from './data';
 import serverErrors from '../../../server/api/util/server-errors';
 
+let mockData = _.cloneDeep(data);
+
 // This is used to filter out bad keys from requests that are
 // sent over
 const categoryKeys = ['id', 'label', 'emoji'];
 
 // We calculate the `lastId` so that new resources that are created
 // have unique IDs
-let lastId = data[data.length - 1].id;
+let lastId = mockData[mockData.length - 1].id;
 
 export default function register(server) {
   server.respondWith(
@@ -19,7 +21,7 @@ export default function register(server) {
       req.respond(
         200,
         {'Content-Type': 'application/json'},
-        JSON.stringify(data)
+        JSON.stringify(mockData)
       );
     }
   );
@@ -34,6 +36,8 @@ export default function register(server) {
         id: ++lastId
       };
 
+      mockData.push(newCategory);
+
       const jsonResponse = JSON.stringify(newCategory);
       req.respond(
         201,
@@ -47,7 +51,7 @@ export default function register(server) {
     'PATCH',
     /\/api\/v1\/categories\/(\d+)/,
     (req, id) => {
-      const category = _.find(data, {id: parseInt(id)});
+      const category = _.find(mockData, {id: parseInt(id)});
       if (!category) {
         const err = serverErrors.notFound.body();
         req.respond(
@@ -57,12 +61,9 @@ export default function register(server) {
         );
       } else {
         const json = JSON.parse(req.requestBody);
-        const newCategory = {
-          ...category,
-          ...(_.pick(json, categoryKeys))
-        };
+        Object.assign(category, _.pick(json, categoryKeys));
 
-        const jsonResponse = JSON.stringify(newCategory);
+        const jsonResponse = JSON.stringify(category);
         req.respond(
           200,
           {'Content-Type': 'application/json'},
@@ -76,7 +77,8 @@ export default function register(server) {
     'DELETE',
     /\/api\/v1\/categories\/(\d+)/,
     (req, id) => {
-      const category = _.find(data, {id: parseInt(id)});
+      id = parseInt(id);
+      const category = _.find(mockData, {id});
       if (!category) {
         const err = serverErrors.notFound.body();
         req.respond(
@@ -85,6 +87,8 @@ export default function register(server) {
           JSON.stringify(err)
         );
       } else {
+        // Delete this category from our mock data
+        mockData = _.reject(mockData, {id});
         req.respond(204);
       }
     }
