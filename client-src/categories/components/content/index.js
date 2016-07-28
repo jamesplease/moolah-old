@@ -22,33 +22,28 @@ export const Categories = React.createClass({
     }
   },
 
-  getContents() {
+  render() {
+    let contents;
     const {
       retrievingCategoriesStatus, categories, categoriesActions
     } = this.props;
 
     if (retrievingCategoriesStatus === 'PENDING') {
-      return <LoadingResourceList/>;
-    }
-
-    if (retrievingCategoriesStatus === 'FAILURE') {
-      return (<ErrorRetrieving
+      contents = <LoadingResourceList/>;
+    } else if (retrievingCategoriesStatus === 'FAILURE') {
+      contents = (<ErrorRetrieving
         retry={categoriesActions.retrieveCategories}
         resourceName="Categories"/>);
+    } else if (!categories.length) {
+      contents = <EmptyCategories/>;
+    } else {
+      contents = <CategoriesList/>;
     }
 
-    if (!categories.length) {
-      return <EmptyCategories/>;
-    }
-
-    return (<CategoriesList/>);
-  },
-
-  render() {
     return (
       <div>
         <Subheader/>
-        {this.getContents()}
+        {contents}
       </div>
     );
   }
