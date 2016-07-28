@@ -43,7 +43,7 @@ export default function Account() {
                 className="resource-list-account-icon"
                 src={getLoginServiceImgUrl(service.name)}/>
               {service.name}
-              <button className="resourceListItem-delete">
+              <button className="resourceListItem-deleteBtn">
                 Remove
               </button>
             </li>
