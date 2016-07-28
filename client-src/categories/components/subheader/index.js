@@ -69,11 +69,10 @@ const CategoriesSubheader = React.createClass({
 
   render() {
     const {isOnline} = this.props;
-    const disabled = !isOnline;
     const modal = this.state.isModalOpen ? this.createModal() : null;
 
     return (
-      <div className="sub-header list-header">
+      <div className="subheader listHeader">
         {modal}
         <div className="container">
           <h1 className="subheader-title">
@@ -82,7 +81,7 @@ const CategoriesSubheader = React.createClass({
           <button
             className="subheader-action btn"
             onClick={this.onClickNew}
-            disabled={disabled}>
+            disabled={!isOnline}>
             + Category
           </button>
         </div>

@@ -1,4 +1,4 @@
-.sub-header {
+.subheader {
   width: 100%;
   background-color: #fff;
   border-bottom: 1px solid #eee;
@@ -7,7 +7,7 @@
   // Subheaders are for pages with text, but also pages that are just lists,
   // like Categories. When they're on pages that are just lists, we don't
   // want any space between this and the list.
-  &.list-header {
+  &.listHeader {
     margin-bottom: 0;
   }
 
@@ -17,15 +17,15 @@
     display: flex;
     align-items: center;
   }
+}
 
-  .subheader-title {
-    color: $linkColor;
-    font-size: 19px;
-    margin: 0;
-    padding: 0;
-  }
+.subheader-title {
+  color: $linkColor;
+  font-size: 19px;
+  margin: 0;
+  padding: 0;
+}
 
-  .subheader-action {
-    margin-left: auto;
-  }
+.subheader-action {
+  margin-left: auto;
 }
