@@ -165,7 +165,6 @@ function runMochaTests(files) {
 const setupTestFile = 'test/setup/node.js';
 const clientTestFiles = 'test/unit/**/*.js';
 const integrationTestFiles = [
-  'test/integration/api/index.js',
   'test/integration/**/*.js'
 ];
 
@@ -193,7 +192,7 @@ function coverage(done) {
     }))
     .pipe($.istanbul.hookRequire())
     .on('finish', () => {
-      return testUnit()
+      return test()
         .pipe($.istanbul.writeReports())
         .on('end', done);
     });

@@ -4,9 +4,10 @@
   "description": "Track your finances.",
   "main": "client-dist/app.js",
   "scripts": {
-    "test": "npm run lint && npm run test:unit && npm run test:api",
+    "test": "gulp test",
     "test:unit": "gulp test:unit",
     "test:api": "gulp test:api:integration",
+    "pretest": "dropdb moolah_test_db -U postgres || true && createdb moolah_test_db -U postgres",
     "pretest:api": "dropdb moolah_test_db -U postgres || true && createdb moolah_test_db -U postgres",
     "lint": "gulp lint",
     "test-browser": "gulp test-browser",
