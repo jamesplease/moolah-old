@@ -152,7 +152,7 @@ function validate(values, props) {
 
   const duplicate = _.find(props.categories, c => {
     // A label cannot be a duplicate of itself!
-    if (c.id === props.categoryIdBeingUpdated) {
+    if (c.id === _.result(props.category, 'id')) {
       return;
     }
     return c.label.toLowerCase() === _.result(newLabel, 'toLowerCase');

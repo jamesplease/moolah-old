@@ -31,7 +31,7 @@ const CategoriesList = React.createClass({
 
   // We can use one method to close both modals, since the
   // modals will never be open at the same time.
-  onCancelModel() {
+  onClickModalCancel() {
     this.setState({
       categoryToDelete: null,
       categoryToUpdate: null
@@ -61,7 +61,7 @@ const CategoriesList = React.createClass({
     const isDeletingCategory = categoryBeingDeletedMeta.isDeleting;
 
     const childrenProps = {
-      onClickCancel: this.onCancelModel,
+      onClickCancel: this.onClickModalCancel,
       onClickDelete: this.onConfirmDeleteModal,
       category: this.state.categoryToDelete,
       deletingCategory: isDeletingCategory
@@ -83,13 +83,11 @@ const CategoriesList = React.createClass({
 
     const childrenProps = {
       categories: this.props.categories,
-      onClickCancel: this.onCancelModel,
+      onClickCancel: this.onClickModalCancel,
       onSubmit: this.onConfirmEditModal,
       category: this.state.categoryToUpdate,
       confirmInProgress: isUpdating,
       initialValues: this.state.categoryToUpdate,
-      // This doesn't need to be passed anymore...
-      categoryIdBeingUpdated: this.state.categoryToUpdate.id,
       isEditMode: true
     };
 
@@ -161,11 +159,11 @@ const CategoriesList = React.createClass({
       transitionEnterTimeout: 250,
       transitionLeaveTimeout: 250,
       component: 'ul',
-      className: 'resource-list'
+      className: 'resourceList'
     };
 
     return (
-      <div className="categories-list resource-list-container">
+      <div className="categoriesList resourceListContainer">
         {editModal}
         {deleteModal}
         <ReactCSSTransitionGroup {...transitionGroupProps}>
