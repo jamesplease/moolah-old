@@ -12,7 +12,7 @@
     "test-browser": "gulp test-browser",
     "watch-tests": "gulp watch-tests",
     "build": "gulp build",
-    "coverage": "gulp coverage",
+    "coverage": "BABEL_ENV=tests gulp coverage",
     "work": "gulp work",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets; fi",
