@@ -23,12 +23,12 @@ const ModifyCategoryModal = React.createClass({
 
     // redux-form is quick to the draw on making the form invalid. In fact,
     // it happens so fast that simply mousing down on the cancel can cause
-    // the error message to appear. This pushes down the cancel button,
-    // making it override your intention. Not good. This callback is called
-    // before that ever happens, so we set some state to let redux-form
-    // know to wait a second if the form isn't already invalid.
-    // If it is invalid, then in a similar way we don't want the mouse down
-    // to affect the state at all.
+    // the error message to appear. The error message physically moves the
+    // cancel button, making the click miss the button entirely. Not good. This
+    // callback is called before that ever happens, so we set some state to let
+    // redux-form know to wait a second if the form isn't already invalid.
+    // If, on the other hand, it's already invalid, then we don't need to do
+    // this check at all.
     if (!labelIsInvalid) {
       this.setState({
         cancelBegun: true
@@ -66,11 +66,11 @@ const ModifyCategoryModal = React.createClass({
 
     const labelClass = classNames({
       'text-input': true,
-      'new-category-name': true,
+      newCategoryName: true,
       'invalid-input': treatFormInvalid
     });
 
-    const modalTitle = isEditMode ? 'Edit Category' : 'New Category';
+    const modalTitle = isEditMode ? 'Edit category' : 'New category';
 
     let confirmText;
     if (isEditMode) {
@@ -86,13 +86,17 @@ const ModifyCategoryModal = React.createClass({
       errorMsg = 'Category already exists';
     }
 
-    const errorClass = classNames({
-      'modal-error form-error': true,
-      visible: treatFormInvalid
-    });
+    let errorEl;
+    if (treatFormInvalid) {
+      errorEl = (
+        <div className="modal-error form-error">
+          {errorMsg}
+        </div>
+      );
+    }
 
     const modalClass = classNames({
-      'create-category-modal': true,
+      createCategoryModal: true,
       'modal-form-invalid': treatFormInvalid
     });
 
@@ -101,12 +105,10 @@ const ModifyCategoryModal = React.createClass({
         <h1 className="modal-title">
           {modalTitle}
         </h1>
-        <div className={errorClass}>
-          {errorMsg}
-        </div>
+        {errorEl}
         <form onSubmit={onFormSubmit}>
           <div className="form-row">
-            <div className="create-category-modal-emoji-select">
+            <div className="createCategoryModal-emojiSelect">
               🙃
             </div>
             <input
@@ -125,14 +127,14 @@ const ModifyCategoryModal = React.createClass({
             <button
               type="button"
               onClick={onClickCancelBtn}
-              className="btn btn-line create-category-modal-cancel"
+              className="btn btn-line createCategoryModal-cancelBtn"
               disabled={confirmInProgress}
               onMouseDown={this.mouseDownCancel}>
               Cancel
             </button>
             <button
               type="submit"
-              className="btn btn-info create-category-modal-confirm"
+              className="btn btn-info createCategoryModal-confirmBtn"
               disabled={confirmInProgress || treatFormInvalid}>
               {confirmText}
             </button>

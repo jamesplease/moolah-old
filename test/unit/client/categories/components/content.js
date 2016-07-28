@@ -7,7 +7,7 @@ import ErrorRetrieving from '../../../../../client-src/common/components/error-r
 import LoadingResourceList from '../../../../../client-src/common/components/loading-resource-list';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
-describe('Categories Content', function() {
+describe('CategoriesContent', function() {
   describe('rendering', () => {
     beforeEach(() => {
       this.mockXhrAbort = stub();
