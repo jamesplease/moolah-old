@@ -15,7 +15,7 @@ export function TransactionsSubheader({isOnline, transactionsActions}) {
   }
 
   return (
-    <div className="sub-header">
+    <div className="subheader">
       <div className="container">
         <h1 className="subheader-title">
           Transactions
