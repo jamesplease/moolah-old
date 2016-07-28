@@ -3,7 +3,7 @@ import React from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
 
-const CreateCategoriesModal = React.createClass({
+const ModifyCategoryModal = React.createClass({
   componentDidMount() {
     this.labelInput.focus();
   },
@@ -143,7 +143,7 @@ const CreateCategoriesModal = React.createClass({
   }
 });
 
-export {CreateCategoriesModal};
+export {ModifyCategoryModal};
 
 function validate(values, props) {
   const newLabel = _.result(values.label, 'trim');
@@ -177,4 +177,4 @@ export default reduxForm(
     fields: ['label'],
     validate
   }
-)(CreateCategoriesModal);
+)(ModifyCategoryModal);

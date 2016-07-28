@@ -147,8 +147,10 @@ function buildJavaScript() {
     .pipe(gulp.dest(destinationFolder));
 }
 
-function _registerBabel() {
-  require('babel-register');
+function _registerBabelForTests() {
+  require('babel-register')({
+  plugins: ['babel-plugin-rewire']
+});
 }
 
 function runMochaTests(files) {
@@ -168,22 +170,22 @@ const integrationTestFiles = [
 ];
 
 function testUnit() {
-  _registerBabel();
+  _registerBabelForTests();
   return runMochaTests([].concat(setupTestFile, clientTestFiles));
 }
 
 function testApiIntegration() {
-  _registerBabel();
+  _registerBabelForTests();
   return runMochaTests([].concat(setupTestFile, integrationTestFiles));
 }
 
 function test() {
-  _registerBabel();
+  _registerBabelForTests();
   return runMochaTests([].concat(setupTestFile, clientTestFiles, integrationTestFiles));
 }
 
 function coverage(done) {
-  _registerBabel();
+  _registerBabelForTests();
   gulp.src(['client-src/**/*.js', 'server/**/*.js', '!client-src/vendor/**/*.js'])
     .pipe($.istanbul({
       instrumenter: Instrumenter,
