@@ -6,7 +6,7 @@ addons:
 services:
   - postgresql
 sudo: false
--script: "BABEL_ENV=tests gulp coverage"
+script: "BABEL_ENV=tests gulp coverage"
 # Node 6.3.0 (the latest release as of 7/14/16) comes with an outdated npm.
 # This makes sure that we use the latest before installing the packages
 before_install: npm i -g npm@3.10.5
