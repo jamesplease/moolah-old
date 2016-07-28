@@ -1,44 +1,28 @@
-import _ from 'lodash';
 import React from 'react';
 
-const DeleteCategoryModal = React.createClass({
-  render() {
-    const props = this.props;
+export default function DeleteCategoryModal(props) {
+  const {onClickCancel, onClickDelete, deletingCategory, category} = props;
+  const deleteBtnText = deletingCategory ? 'Deleting...' : 'Delete';
 
-    function onClickCancelBtn(e) {
-      e.preventDefault();
-      _.result(props, 'onClickCancel');
-    }
-
-    function onClickDeleteBtn(e) {
-      e.preventDefault();
-      _.result(props, 'onClickDelete');
-    }
-
-    const deleteBtnText = props.deletingCategory ? 'Deleting...' : 'Delete';
-
-    return (
-      <div className="delete-category-modal">
-        <h1 className="modal-title">
-          Delete "{props.category.label}"?
-        </h1>
-        <div className="form-row">
-          <button
-            onClick={onClickCancelBtn}
-            className="btn btn-line delete-category-modal-cancel"
-            disabled={props.deletingCategory}>
-            Cancel
-          </button>
-          <button
-            onClick={onClickDeleteBtn}
-            className="btn btn-danger delete-category-modal-confirm"
-            disabled={props.deletingCategory}>
-            {deleteBtnText}
-          </button>
-        </div>
+  return (
+    <div className="deleteCategoryModal">
+      <h1 className="modal-title">
+        Delete "{category.label}"?
+      </h1>
+      <div className="form-row">
+        <button
+          onClick={() => onClickCancel()}
+          className="btn btn-line deleteCategoryModal-cancelBtn"
+          disabled={deletingCategory}>
+          Cancel
+        </button>
+        <button
+          onClick={() => onClickDelete()}
+          className="btn btn-danger deleteCategoryModal-deleteBtn"
+          disabled={deletingCategory}>
+          {deleteBtnText}
+        </button>
       </div>
-    );
-  }
-});
-
-export default DeleteCategoryModal;
+    </div>
+  );
+}
