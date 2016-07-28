@@ -1,41 +1,41 @@
-.category-list-item {
+.categoryListItem {
   display: flex;
   border-bottom: 1px solid #eee;
+}
 
-  .category-list-item-label-btn {
-    cursor: pointer;
-    min-width: 0;
+.categoryListItem-labelBtn {
+  cursor: pointer;
+  min-width: 0;
+}
+
+.categoryListItem-labelBtn-container {
+  display: flex;
+}
+
+.categoryListItem-emoji {
+  font-size: 20px;
+  // There's 15px of space between the emoji and the text. The space
+  // is divided evenly between the emoji and the text, with a 3px margin
+  // 6px + 6px + 3px = 15px
+  padding-right: 6px;
+  margin-right: 3px;
+  min-width: 40px;
+  text-align: center;
+  display: inline-block;
+
+  @media screen and (width >= $md-screen) {
+    padding-left: 0;
   }
+}
 
-  .category-list-item-label-btn-container {
-    display: flex;
-  }
-
-  .category-list-item-emoji {
-    font-size: 20px;
-    // There's 15px of space between the emoji and the text. The space
-    // is divided evenly between the emoji and the text, with a 3px margin
-    // 6px + 6px + 3px = 15px
-    padding-right: 6px;
-    margin-right: 3px;
-    min-width: 40px;
-    text-align: center;
-    display: inline-block;
-
-    @media screen and (width >= $md-screen) {
-      padding-left: 0;
-    }
-  }
-
-  .category-list-item-label {
-    @mixin ellipsis;
-    // There's 15px of space between the emoji and the text. The space
-    // is divided evenly between the emoji and the text, with a 3px margin
-    // 6px + 6px + 3px = 15px
-    padding: 0 6px;
-    margin-right: 15px;
-    flex-grow: 1;
-    // Overriding `text-align: center;` inherited from user agent stylesheets
-    text-align: left;
-  }
+.categoryListItem-label {
+  @mixin ellipsis;
+  // There's 15px of space between the emoji and the text. The space
+  // is divided evenly between the emoji and the text, with a 3px margin
+  // 6px + 6px + 3px = 15px
+  padding: 0 6px;
+  margin-right: 15px;
+  flex-grow: 1;
+  // Overriding `text-align: center;` inherited from user agent stylesheets
+  text-align: left;
 }

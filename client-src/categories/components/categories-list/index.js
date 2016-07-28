@@ -157,7 +157,7 @@ const CategoriesList = React.createClass({
     const sortedCategories = _.sortBy(categories, c => c.label.toLowerCase());
 
     const transitionGroupProps = {
-      transitionName: 'resource-list-item',
+      transitionName: 'resourceListItem',
       transitionEnterTimeout: 250,
       transitionLeaveTimeout: 250,
       component: 'ul',
