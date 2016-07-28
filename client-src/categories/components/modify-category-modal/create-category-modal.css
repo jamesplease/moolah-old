@@ -2,8 +2,8 @@
   width: 255px;
 }
 
-.create-category-modal {
-  .create-category-modal-emoji-select {
+.createCategoryModal {
+  .createCategoryModal-emojiSelect {
     width: 34px;
     height: 34px;
     line-height: 34px;
@@ -18,12 +18,12 @@
     }
   }
 
-  .create-category-modal-confirm,
-  .create-category-modal-cancel {
+  .createCategoryModal-confirmBtn,
+  .createCategoryModal-cancelBtn {
     width: 50%;
   }
 
-  .new-category-name {
+  .newCategoryName {
     flex: 1;
     // This ensures that the input doesn't force the emoji-select to be
     // smaller than it needs to be
