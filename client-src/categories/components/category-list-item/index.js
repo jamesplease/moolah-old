@@ -3,8 +3,7 @@ import emoji from '../../../common/services/js-emoji';
 
 export default function CategoryListItem(props) {
   const {
-    category, isOnline, onClickDelete,
-    onClickEdit
+    category, isOnline, onClickDelete, onClickEdit
   } = props;
 
   const deleteIsDisabled = !isOnline;
@@ -27,9 +26,8 @@ export default function CategoryListItem(props) {
           </span>
         </div>
       </button>
-
       <button
-        className="resourceListItem-delete"
+        className="resourceListItem-deleteBtn"
         onClick={() => onClickDelete(category)}
         disabled={deleteIsDisabled}>
         Delete

@@ -9,7 +9,7 @@ describe('EmptyCategories', function() {
     });
 
     it('should have the right class name', () => {
-      expect(this.wrapper.hasClass('emptyResourceList')).to.be.ok;
+      expect(this.wrapper.hasClass('emptyResourceList')).to.be.true;
     });
 
     it('should have a message with the right text', () => {
