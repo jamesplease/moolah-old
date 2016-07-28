@@ -1,15 +1,15 @@
-.empty-resource-list {
+.emptyResourceList {
   padding: 0 30px;
   margin-top: 36px;
   text-align: center;
 
-  .empty-resource-list-message {
+  .emptyResourceList-message {
     color: #999;
     font-size: 17px;
     margin-bottom: 10px;
   }
 
-  .empty-resource-list-explanation {
+  .emptyResourceList-explanation {
     color: #aaa;
   }
 }
