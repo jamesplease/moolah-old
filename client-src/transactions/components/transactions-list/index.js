@@ -9,7 +9,7 @@ export const TransactionsList = React.createClass({
     const {transactions, transactionsActions} = this.props;
 
     return (
-      <div className="transaction-list resource-list-container">
+      <div className="transaction-list resourceListContainer">
         <ul className="resource-list">
           {transactions.map(t => (
             <TransactionListItem

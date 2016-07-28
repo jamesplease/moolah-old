@@ -3,5 +3,10 @@
     "es2015",
     "stage-2",
     "react"
-  ]
+  ],
+  "env": {
+    "tests": {
+      "plugins": ["babel-plugin-rewire"]
+    }
+  }
 }

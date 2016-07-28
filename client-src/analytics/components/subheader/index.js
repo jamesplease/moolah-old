@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function AnalyticsSubheader() {
   return (
-    <div className="sub-header">
+    <div className="subheader">
       <div className="container">
         <h1 className="subheader-title">
           Analytics

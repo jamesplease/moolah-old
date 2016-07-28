@@ -3,7 +3,7 @@ import React from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
 
-const CreateCategoriesModal = React.createClass({
+const ModifyCategoryModal = React.createClass({
   componentDidMount() {
     this.labelInput.focus();
   },
@@ -143,7 +143,7 @@ const CreateCategoriesModal = React.createClass({
   }
 });
 
-export {CreateCategoriesModal};
+export {ModifyCategoryModal};
 
 function validate(values, props) {
   const newLabel = _.result(values.label, 'trim');
@@ -152,7 +152,7 @@ function validate(values, props) {
 
   const duplicate = _.find(props.categories, c => {
     // A label cannot be a duplicate of itself!
-    if (c.id === props.categoryIdBeingUpdated) {
+    if (c.id === _.result(props.category, 'id')) {
       return;
     }
     return c.label.toLowerCase() === _.result(newLabel, 'toLowerCase');
@@ -177,4 +177,4 @@ export default reduxForm(
     fields: ['label'],
     validate
   }
-)(CreateCategoriesModal);
+)(ModifyCategoryModal);
