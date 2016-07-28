@@ -15,7 +15,9 @@
     "no-invalid-this": "off",
     "import/default": "off",
     "prefer-arrow-callback": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "no-empty-function": "off",
+    "import/named": "off"
   },
   "env": {
     "browser": true,

@@ -94,7 +94,7 @@ const CategoriesList = React.createClass({
     };
 
     return (
-      <Modal modalClassName="create-category-modal-container">
+      <Modal modalClassName="modifyCategoryModal-container">
         <ModifyCategoryModal {...childrenProps}/>
       </Modal>
     );

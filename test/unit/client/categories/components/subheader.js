@@ -1,10 +1,15 @@
-import {CategoriesSubheader} from '../../../../../client-src/categories/components/subheader';
-import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
+import {
+  CategoriesSubheader, __Rewire__, __ResetDependency__
+} from '../../../../../client-src/categories/components/subheader';
 import Modal from '../../../../../client-src/common/components/modal';
+import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
 describe('CategoriesSubheader', function() {
   describe('rendering', () => {
     beforeEach(() => {
+      this.ModifyCategoryModal = () => {};
+      __Rewire__('ModifyCategoryModal', this.ModifyCategoryModal);
+
       this.createCategory = stub();
       this.defaultProps = {
         categoriesActions: {
@@ -15,6 +20,10 @@ describe('CategoriesSubheader', function() {
         creatingCategoryStatus: null
       };
       this.generator = generateWrapperGenerator(this.defaultProps, CategoriesSubheader);
+    });
+
+    afterEach(() => {
+      __ResetDependency__('ModifyCategoryModal');
     });
 
     it('should have the right class', () => {
@@ -63,7 +72,30 @@ describe('CategoriesSubheader', function() {
       it('should show the modal', () => {
         const modal = this.wrapper.find(Modal);
         expect(modal).to.have.length(1);
-        expect(modal.prop('modalClassName')).to.equal('create-category-modal-container');
+        expect(modal.prop('modalClassName')).to.equal('modifyCategoryModal-container');
+      });
+
+      it('should have a ModifyCategoryModal', () => {
+        const modal = this.wrapper.find(Modal);
+        const modifyCategoryModal = modal.find(this.ModifyCategoryModal);
+        expect(modifyCategoryModal).to.have.length(1);
+      });
+
+      it('should pass the right props to ModifyCategoryModal', () => {
+        const modal = this.wrapper.find(Modal);
+        const modifyCategoryModal = modal.find(this.ModifyCategoryModal);
+        expect(modifyCategoryModal.prop('categories')).to.deep.equal([{id: 1}, {id: 2}]);
+        expect(modifyCategoryModal.prop('isEditMode')).to.be.false;
+        expect(modifyCategoryModal.prop('actionFailure')).to.be.false;
+        expect(modifyCategoryModal.prop('confirmInProgress')).to.be.true;
+        expect(modifyCategoryModal.prop('onClickCancel')).to.equal(this.wrapper.instance().onClickModalCancel);
+        expect(modifyCategoryModal.prop('onSubmit')).to.equal(this.wrapper.instance().onClickModalCreate);
+      });
+
+      it('should close the modal when `onClickModalCancel` is called', () => {
+        this.wrapper.instance().onClickModalCancel();
+        this.wrapper.update();
+        expect(this.wrapper.find(Modal)).to.have.length(0);
       });
 
       it('should close the modal when new props are passed in', () => {
