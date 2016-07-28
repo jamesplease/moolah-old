@@ -38,12 +38,12 @@ export default function Account() {
         </div>
         <ul className="resource-list">
           {loginServices.map(service => (
-            <li className="resource-list-item" key={service.name}>
+            <li className="resourceListItem" key={service.name}>
               <img
                 className="resource-list-account-icon"
                 src={getLoginServiceImgUrl(service.name)}/>
               {service.name}
-              <button className="resource-list-item-delete">
+              <button className="resourceListItem-delete">
                 Remove
               </button>
             </li>
