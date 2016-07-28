@@ -1,4 +1,4 @@
-.resource-list {
+.resourceList {
   margin: 0;
   padding: 0;
   max-width: 800px;
@@ -14,7 +14,7 @@
 // This rule makes it so that when the subheader and resource list are
 // visually next to one another, their borders overlap so as not to produce
 // a double-border effect.
-.subheader + .resource-list,
-.subheader + .resource-list-container {
+.subheader + .resourceList,
+.subheader + .resourceListContainer {
   margin-top: -1px;
 }

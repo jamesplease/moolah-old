@@ -99,10 +99,9 @@ describe('CategoriesSubheader', function() {
       });
 
       it('should close the modal when new props are passed in', () => {
-        this.wrapper.instance().componentWillReceiveProps({
+        this.wrapper.setProps({
           creatingCategoryStatus: 'SUCCESS'
         });
-        this.wrapper.update();
         expect(this.wrapper.find(Modal)).to.have.length(0);
       });
     });
