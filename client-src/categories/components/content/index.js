@@ -8,7 +8,7 @@ import EmptyCategories from '../empty-categories';
 import ErrorRetrieving from '../../../common/components/error-retrieving';
 import LoadingResourceList from '../../../common/components/loading-resource-list';
 
-export const Categories = React.createClass({
+export const Content = React.createClass({
   componentDidMount() {
     const {categoriesActions} = this.props;
     this.fetchingCategoriesXhr = categoriesActions.retrieveCategories();
@@ -18,8 +18,8 @@ export const Categories = React.createClass({
     const {categoriesActions} = this.props;
     if (this.fetchingCategoriesXhr) {
       this.fetchingCategoriesXhr.abort();
-      categoriesActions.resetRetrieveCategoriesResolution();
     }
+    categoriesActions.resetRetrieveCategoriesResolution();
   },
 
   render() {
@@ -62,4 +62,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps, mapDispatchToProps)(Content);
