@@ -1,8 +1,14 @@
 import reducer from '../../../../../client-src/redux/categories/reducer';
-// import initialState from '../../../../../client-src/redux/categories/initial-state';
+import initialState from '../../../../../client-src/redux/categories/initial-state';
 import actionTypes from '../../../../../client-src/redux/categories/action-types';
 
 describe('categories/reducer', function() {
+  describe('An action with no type', () => {
+    it('should return the initial state', () => {
+      expect(reducer(undefined, {})).to.deep.equal(initialState);
+    });
+  });
+
   describe('CREATE_CATEGORY', () => {
     it('should return a new state with `creatingCategoryStatus` set to PENDING', () => {
       const state = {
