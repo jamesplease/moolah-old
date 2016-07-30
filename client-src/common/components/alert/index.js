@@ -13,7 +13,8 @@ const defaultIconMap = {
 const Alert = React.createClass({
   componentDidTransition(transitionType) {
     const {
-      destroyFirstAlert, persistent, animateOutAlert, onDismissAction, dispatch
+      destroyFirstAlert, persistent, animateOutAlert, onDismissAction, dispatch,
+      onTransitionOutAlert
     } = this.props;
 
     if (transitionType === 'enter') {
@@ -30,6 +31,7 @@ const Alert = React.createClass({
         dispatch(onDismissAction);
       }
       destroyFirstAlert();
+      onTransitionOutAlert();
     }
   },
 
