@@ -1,7 +1,6 @@
 # moolah
 
 [![Travis build status](http://img.shields.io/travis/jmeas/moolah.svg?style=flat)](https://travis-ci.org/jmeas/moolah)
-[![Code Climate](https://codeclimate.com/github/jmeas/moolah/badges/gpa.svg)](https://codeclimate.com/github/jmeas/moolah)
 [![Test Coverage](https://codeclimate.com/github/jmeas/moolah/badges/coverage.svg)](https://codeclimate.com/github/jmeas/moolah)
 [![Dependency Status](https://david-dm.org/jmeas/moolah.svg)](https://david-dm.org/jmeas/moolah)
 [![devDependency Status](https://david-dm.org/jmeas/moolah/dev-status.svg)](https://david-dm.org/jmeas/moolah#info=devDependencies)
