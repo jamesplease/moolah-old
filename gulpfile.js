@@ -185,7 +185,12 @@ function test() {
 
 function coverage(done) {
   _registerBabelForTests();
-  gulp.src(['client-src/**/*.js', 'server/**/*.js', '!client-src/vendor/**/*.js'])
+  gulp.src([
+    'client-src/**/*.js',
+    'server/**/*.js',
+    '!client-src/vendor/**/*.js',
+    '!client-src/mock-server/**/*.js',
+  ])
     .pipe($.istanbul({
       instrumenter: Instrumenter,
       includeUntested: true
