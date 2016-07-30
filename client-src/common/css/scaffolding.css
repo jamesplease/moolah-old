@@ -35,29 +35,6 @@ body {
   flex-direction: column;
   // 46px for the fixed position header
   min-height: calc(100vh - 46px);
-  padding-top: 0;
-  transition padding: 0.25s;
-}
-
-// When the alert is visible, we scoot down the content container
-// so that they don't overlap with one another.
-.alert-enter,
-.alert-appear,
-.alert-leave.alert-leave-active {
-  & + .content-container {
-    padding-top: 0;
-  }
-}
-
-.alert,
-.alert-enter.alert-enter-active,
-.alert-appear.alert-appear-active,
-.alert-leave {
-  @media screen and (width < $md-screen) {
-    & + .content-container {
-      padding-top: 48px;
-    }
-  }
 }
 
 main {
