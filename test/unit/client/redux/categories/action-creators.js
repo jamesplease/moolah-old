@@ -12,6 +12,15 @@ describe('categories/actionCreators', function() {
     spy(xhr);
   });
 
+  describe('resetCreateCategoryResolution', () => {
+    it('should return the right action', () => {
+      const result = actionCreators.resetCreateCategoryResolution();
+      expect(result).to.deep.equal({
+        type: actionTypes.CREATE_CATEGORY_RESET_RESOLUTION
+      });
+    });
+  });
+
   describe('createCategory', () => {
     it('should dispatch a begin action before making the request', () => {
       const thunk = actionCreators.createCategory({label: 'pizza'});
