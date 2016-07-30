@@ -42,6 +42,7 @@ export default (state = initialState, action) => {
       };
     }
 
+    case actionTypes.CREATE_CATEGORY_ABORTED:
     case actionTypes.CREATE_CATEGORY_RESET_RESOLUTION: {
       return {
         ...state,
@@ -80,6 +81,7 @@ export default (state = initialState, action) => {
       };
     }
 
+    case actionTypes.RETRIEVE_CATEGORIES_ABORTED:
     case actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION: {
       return {
         ...state,
@@ -153,6 +155,7 @@ export default (state = initialState, action) => {
       };
     }
 
+    case actionTypes.UPDATE_CATEGORY_ABORTED:
     case actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION: {
       const clonedMeta = _.cloneDeep(state.categoriesMeta);
       const categoriesMeta = clonedMeta.map(c => {
@@ -206,7 +209,8 @@ export default (state = initialState, action) => {
       };
     }
 
-    case actionTypes.DELETE_CATEGORY_FAILURE: {
+    case actionTypes.DELETE_CATEGORY_FAILURE:
+    case actionTypes.DELETE_CATEGORY_ABORTED: {
       const clonedMeta = _.cloneDeep(state.categoriesMeta);
       const categoriesMeta = clonedMeta.map(c => {
         if (c.id !== action.categoryId) {

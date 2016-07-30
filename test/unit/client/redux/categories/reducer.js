@@ -75,6 +75,40 @@ describe('categories/reducer', function() {
     });
   });
 
+  describe('CREATE_CATEGORY_ABORTED', () => {
+    it('should return a new state with `creatingCategoryStatus` set to null', () => {
+      const state = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: 'PENDING'
+      };
+      const action = {type: actionTypes.CREATE_CATEGORY_ABORTED};
+      var newState = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: null
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('CREATE_CATEGORY_RESET_RESOLUTION', () => {
+    it('should return a new state with `creatingCategoryStatus` set to null', () => {
+      const state = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: 'PENDING'
+      };
+      const action = {type: actionTypes.CREATE_CATEGORY_RESET_RESOLUTION};
+      var newState = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        creatingCategoryStatus: null
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
   describe('RETRIEVE_CATEGORIES', () => {
     it('should set `retrievingCategoriesStatus` to PENDING', () => {
       const state = {oink: true};
@@ -114,6 +148,18 @@ describe('categories/reducer', function() {
       var newState = {
         oink: true,
         retrievingCategoriesStatus: 'FAILURE'
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('RETRIEVE_CATEGORIES_ABORTED', () => {
+    it('should set `retrievingCategoriesStatus` to null', () => {
+      const state = {oink: true};
+      const action = {type: actionTypes.RETRIEVE_CATEGORIES_ABORTED};
+      var newState = {
+        oink: true,
+        retrievingCategoriesStatus: null
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -204,6 +250,32 @@ describe('categories/reducer', function() {
     });
   });
 
+  describe('UPDATE_CATEGORY_ABORTED', () => {
+    it('should return a new state with `updatingStatus` set to `null` for that category', () => {
+      const state = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [
+          {id: 1},
+          {id: 2, updatingStatus: 'FAILURE'},
+          {id: 3}
+        ]
+      };
+      const action = {
+        type: actionTypes.UPDATE_CATEGORY_ABORTED,
+        categoryId: 2
+      };
+      var newState = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [
+          {id: 1},
+          {id: 2, updatingStatus: null},
+          {id: 3}
+        ]
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
   describe('UPDATE_CATEGORY_RESET_RESOLUTION', () => {
     it('should return a new state with `updatingStatus` set to `null` for that category', () => {
       const state = {
@@ -279,6 +351,32 @@ describe('categories/reducer', function() {
   });
 
   describe('DELETE_CATEGORY_FAILURE', () => {
+    let state, action;
+    beforeEach(() => {
+      state = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [{id: 1}, {id: 2}, {id: 3}]
+      };
+      action = {
+        type: actionTypes.DELETE_CATEGORY_FAILURE,
+        categoryId: 2
+      };
+    });
+
+    it('should return a new state with `isDeleting` set to false for that category', () => {
+      var newState = {
+        categories: [{id: 1}, {id: 2}, {id: 3}],
+        categoriesMeta: [
+          {id: 1},
+          {id: 2, isDeleting: false},
+          {id: 3}
+        ]
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('DELETE_CATEGORY_ABORTED', () => {
     let state, action;
     beforeEach(() => {
       state = {

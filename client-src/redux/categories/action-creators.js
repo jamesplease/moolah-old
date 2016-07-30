@@ -16,9 +16,8 @@ export function createCategory(data) {
       {json: data},
       (err, res, body) => {
         if (req.aborted) {
-          return;
-        }
-        if (err || res.statusCode >= 400) {
+          dispatch({type: actionTypes.CREATE_CATEGORY_ABORTED});
+        } else if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.CREATE_CATEGORY_FAILURE});
         } else {
           dispatch({
@@ -48,9 +47,8 @@ export function retrieveCategories() {
       {json: true},
       (err, res, body) => {
         if (req.aborted) {
-          return;
-        }
-        if (err || res.statusCode >= 400) {
+          dispatch({type: actionTypes.RETRIEVE_CATEGORIES_ABORTED});
+        } else if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.RETRIEVE_CATEGORIES_FAILURE});
         } else {
           dispatch({
@@ -85,9 +83,11 @@ export function updateCategory(category) {
       {json: category},
       (err, res, body) => {
         if (req.aborted) {
-          return;
-        }
-        if (err || res.statusCode >= 400) {
+          dispatch({
+            type: actionTypes.UPDATE_CATEGORY_ABORTED,
+            categoryId: category.id
+          });
+        } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_FAILURE,
             categoryId: category.id
@@ -117,9 +117,11 @@ export function deleteCategory(categoryId) {
       {json: true},
       (err, res) => {
         if (req.aborted) {
-          return;
-        }
-        if (err || res.statusCode >= 400) {
+          dispatch({
+            type: actionTypes.DELETE_CATEGORY_ABORTED,
+            categoryId
+          });
+        } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_FAILURE,
             categoryId
