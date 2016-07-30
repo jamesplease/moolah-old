@@ -36,7 +36,8 @@
     "import/no-duplicates": "error",
     "import/extensions": "error",
     "import/newline-after-import": "error",
-    "import/prefer-default-export": "error"
+    "import/prefer-default-export": "error",
+    "no-tabs": "error"
   },
   "env": {
     "browser": true,
