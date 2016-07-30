@@ -17,6 +17,7 @@ describe('createAsyncConstants', () => {
         pasta: null,
         pasta_SUCCESS: null,
         pasta_FAILURE: null,
+        pasta_ABORTED: null,
         pasta_RESET_RESOLUTION: null,
       });
     });
@@ -28,10 +29,12 @@ describe('createAsyncConstants', () => {
         pasta: null,
         pasta_SUCCESS: null,
         pasta_FAILURE: null,
+        pasta_ABORTED: null,
         pasta_RESET_RESOLUTION: null,
         spaghetti: null,
         spaghetti_SUCCESS: null,
         spaghetti_FAILURE: null,
+        spaghetti_ABORTED: null,
         spaghetti_RESET_RESOLUTION: null,
       });
     });
