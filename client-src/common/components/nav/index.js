@@ -2,7 +2,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from '../../../vendor/css-transition-group';
 import classNames from 'classnames';
 import {Link} from 'react-router';
-import TransitionFirstChild from '../transition-first-child';
+import FirstChild from '../first-child';
 
 export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
   // This ensures that the overlay nav gets closed anytime a link is clicked
@@ -31,7 +31,7 @@ export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
     transitionEnterTimeout: 150,
     transitionLeaveTimeout: 150,
     transitionAppearTimeout: 150,
-    component: TransitionFirstChild
+    component: FirstChild
   };
 
   let overlayMenuBackdrop;
