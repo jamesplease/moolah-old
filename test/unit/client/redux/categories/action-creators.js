@@ -58,9 +58,12 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.createCategory({label: 'pizza'});
       const req = thunk(this.dispatch);
       req.abort();
-      expect(this.dispatch).to.have.been.calledOnce;
-      expect(this.dispatch).to.have.been.calledWithExactly({
+      expect(this.dispatch).to.have.been.calledTwice;
+      expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY
+      });
+      expect(this.dispatch).to.have.been.calledWith({
+        type: actionTypes.CREATE_CATEGORY_ABORTED
       });
     });
 
@@ -135,9 +138,12 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.retrieveCategories();
       const req = thunk(this.dispatch);
       req.abort();
-      expect(this.dispatch).to.have.been.calledOnce;
-      expect(this.dispatch).to.have.been.calledWithExactly({
+      expect(this.dispatch).to.have.been.calledTwice;
+      expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.RETRIEVE_CATEGORIES
+      });
+      expect(this.dispatch).to.have.been.calledWith({
+        type: actionTypes.RETRIEVE_CATEGORIES_ABORTED
       });
     });
 
@@ -214,9 +220,13 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.updateCategory({id: 2, label: 'pizza'});
       const req = thunk(this.dispatch);
       req.abort();
-      expect(this.dispatch).to.have.been.calledOnce;
-      expect(this.dispatch).to.have.been.calledWithExactly({
+      expect(this.dispatch).to.have.been.calledTwice;
+      expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_CATEGORY,
+        categoryId: 2
+      });
+      expect(this.dispatch).to.have.been.calledWith({
+        type: actionTypes.UPDATE_CATEGORY_ABORTED,
         categoryId: 2
       });
     });
@@ -279,9 +289,13 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.deleteCategory(2);
       const req = thunk(this.dispatch);
       req.abort();
-      expect(this.dispatch).to.have.been.calledOnce;
-      expect(this.dispatch).to.have.been.calledWithExactly({
+      expect(this.dispatch).to.have.been.calledTwice;
+      expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_CATEGORY,
+        categoryId: 2
+      });
+      expect(this.dispatch).to.have.been.calledWith({
+        type: actionTypes.DELETE_CATEGORY_ABORTED,
         categoryId: 2
       });
     });
