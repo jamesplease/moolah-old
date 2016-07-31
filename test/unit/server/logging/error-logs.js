@@ -1,4 +1,3 @@
-import bunyan from 'bunyan';
 import log from '../../../../server/logging/log';
 import errorLogs from '../../../../server/logging/error-logs';
 
