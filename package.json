@@ -87,6 +87,7 @@
     "react-addons-test-utils": "15.3.0",
     "react-router-scroll": "^0.2.0",
     "run-sequence": "^1.2.1",
+    "simple-jsdom": "2.0.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
     "stylelint": "^7.0.0",

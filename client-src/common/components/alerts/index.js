@@ -93,7 +93,6 @@ function mapStateToProps(state) {
   return {
     alerts: state.alerts.alerts,
     animatingAlertOut: state.alerts.animatingAlertOut,
-    activeAlert: state.alerts.activeAlert
   };
 }
 

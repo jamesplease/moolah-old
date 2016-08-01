@@ -11,7 +11,6 @@ describe('IndexPage', function() {
         user: {}
       };
       const wrapper = shallow(<IndexPage {...props}/>);
-
       expect(wrapper.type()).to.equal(Dashboard);
     });
   });
@@ -22,7 +21,6 @@ describe('IndexPage', function() {
         user: null
       };
       const wrapper = shallow(<IndexPage {...props}/>);
-
       expect(wrapper.type()).to.equal(LandingPage);
     });
   });
