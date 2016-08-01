@@ -77,8 +77,30 @@ Once that's done, you'll need to hook up your local repository with the Heroku a
 as a remote. [This guide](https://devcenter.heroku.com/articles/git#creating-a-heroku-remote) can help you
 do that.
 
-Lastly, run `heroku config -s` from the project's root directory. Copy and paste the entire line beginning with `DATABASE_URL=` into a file
-in the root directory of this project called `.env`. This will allow you to connect to the remote database when you run `npm run work`.
+#### `.env` file
+
+For local development, secrets are stored in an `.env` file in the project root.
+The values are:
+
+- `DATABASE_URL`: the DB URL to connect to (see below for how to get this)
+- `SESSION_SECRET`: the secret used by [express-session](https://github.com/expressjs/session#secret)
+- `GOOGLE_CLIENT_ID`: the ClientID of [a Google project](https://console.developers.google.com/)
+- `GOOGLE_CLIENT_SECRET`: the secret of the above project
+
+An example snippet from an `.env` file is:
+
+```
+DATABASE_URL='postgres://whatevs'
+SESSION_SECRET='cookies_are_delicious'
+```
+
+The `.env` file is not used when deploying the app to Heroku.
+
+#### Getting the database URL
+
+If you followed the instructions above for setting up the local DB, then you can
+get the database URL by running `heroku config -s` from the project's root
+directory.
 
 #### Local development
 
