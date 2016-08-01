@@ -78,7 +78,7 @@
     "imagemin-pngquant": "5.0.0",
     "isparta": "^4.0.0",
     "json-loader": "^0.5.3",
-    "mocha": "^2.3.4",
+    "mocha": "^3.0.0",
     "nodemon": "^1.9.2",
     "pleaserc": "^2.0.0",
     "postcss-easy-import": "^1.0.1",
