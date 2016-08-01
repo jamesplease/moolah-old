@@ -70,6 +70,11 @@ const LoggedInHeader = React.createClass({
       profileDropdown = <ProfileDropdown closeDropdown={this.hideProfileDropdown}/>;
     }
 
+    const accountLinkClass = classNames({
+      'appHeader-accountLink': true,
+      'appHeader-accountLink-active': this.state.isProfileDropdownVisible
+    });
+
     return (
       <header className="appHeader">
         <div className="container padded-container appHeader-container">
@@ -90,7 +95,7 @@ const LoggedInHeader = React.createClass({
             toggleOverlayNav={() => this.toggleOverlayNav(false)}/>
           <div className="appHeader-accountContainer">
             <div
-              className="appHeader-accountLink"
+              className={accountLinkClass}
               onClick={this.showProfileDropdown}>
               <span className={userNameClass}>
                 James S.

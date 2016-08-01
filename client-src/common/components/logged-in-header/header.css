@@ -86,7 +86,8 @@
   color: #a1a1a1;
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &.appHeader-accountLink-active {
     color: #888;
   }
 }
