@@ -2,8 +2,8 @@
 
 const log = require('./log');
 
-exports.unhandledRejection = (reason, promise) => {
-  const logObj = {promise};
+exports.unhandledRejection = (reason) => {
+  const logObj = {};
 
   // Assign the `reason` to the `err` key if it is
   // an error. This is so that Bunyan's error serializer
