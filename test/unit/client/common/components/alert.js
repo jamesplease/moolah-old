@@ -118,7 +118,7 @@ describe('Alert', function() {
   });
 
   describe('componentDidTransition', () => {
-    describe('and transitionType is \'enter\'', () => {
+    describe('and transitionType is "enter"', () => {
       it('should not call animateOutAlert if persistent is true', () => {
         const wrapper = shallow(<Alert {...this.defaultProps}/>);
         wrapper.instance().componentDidTransition('enter');
@@ -141,7 +141,7 @@ describe('Alert', function() {
       });
     });
 
-    describe('and transitionType is \'leave\'', () => {
+    describe('and transitionType is "leave"', () => {
       it('should prevent animateOutAlert from being called', () => {
         const props = {
           ...this.defaultProps,
@@ -178,5 +178,3 @@ describe('Alert', function() {
     });
   });
 });
-
-
