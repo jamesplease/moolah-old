@@ -13,7 +13,7 @@ describe('Nav', function() {
   });
 
   describe('clicking a link', () => {
-    it('should call toggleOverlayNav when isOverlayNavVisible is false', () => {
+    it('should not call toggleOverlayNav when isOverlayNavVisible is false', () => {
       const wrapper = shallow(<Nav {...this.defaultProps}/>);
       const firstLink = wrapper.find(Link).at(0);
       const firstLinkOnClick = firstLink.prop('onClick');
