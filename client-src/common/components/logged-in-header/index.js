@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router';
 import classNames from 'classnames';
+import preventScroll from 'prevent-scroll';
 import Nav from '../nav';
 import ProfileDropdown from '../profile-dropdown';
-import preventScroll from 'prevent-scroll';
 
 const LoggedInHeader = React.createClass({
   getInitialState() {
@@ -55,16 +55,6 @@ const LoggedInHeader = React.createClass({
       'appHeader-overlayNavToggle': true
     });
 
-    const userNameClass = classNames({
-      'appHeader-userName': true,
-      overlayIsOpen: this.state.isOverlayNavVisible
-    });
-
-    const profilePictureClass = classNames({
-      'appHeader-profilePicture': true,
-      overlayIsOpen: this.state.isOverlayNavVisible
-    });
-
     let profileDropdown;
     if (this.state.isProfileDropdownVisible) {
       profileDropdown = <ProfileDropdown closeDropdown={this.hideProfileDropdown}/>;
@@ -97,10 +87,10 @@ const LoggedInHeader = React.createClass({
             <div
               className={accountLinkClass}
               onClick={this.showProfileDropdown}>
-              <span className={userNameClass}>
+              <span className="appHeader-userName">
                 James S.
               </span>
-              <img className={profilePictureClass}/>
+              <img className="appHeader-profilePicture"/>
             </div>
             {profileDropdown}
           </div>
