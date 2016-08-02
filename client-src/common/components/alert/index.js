@@ -24,7 +24,7 @@ const Alert = React.createClass({
         }, 4000);
       }
     } else {
-      window.clearTimeout(this._autodestruct);
+      clearTimeout(this._autodestruct);
       // If the alert was given an action to emit when it unmounts,
       // then we call that now.
       if (onDismissAction) {
