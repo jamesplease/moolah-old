@@ -5,18 +5,13 @@ import serverErrors from '../../../server/api/util/server-errors';
 
 let mockData = _.cloneDeep(data);
 
-// This is used to filter out bad keys from requests that are
-// sent over
-const validAttrs = ['id', 'label', 'emoji'];
-
-// We calculate the `lastId` so that new resources that are created
-// have unique IDs
+const validAttrs = ['id', 'description', 'value', 'date'];
 let lastId = mockData[mockData.length - 1].id;
 
 export default function register(server) {
   server.respondWith(
     'GET',
-    '/api/v1/categories',
+    '/api/v1/transactions',
     (req) => {
       req.respond(
         200,
@@ -28,17 +23,17 @@ export default function register(server) {
 
   server.respondWith(
     'POST',
-    '/api/v1/categories',
+    '/api/v1/transactions',
     (req) => {
       const json = JSON.parse(req.requestBody);
-      const newCategory = {
+      const newTransaction = {
         ...(_.pick(json, validAttrs)),
         id: ++lastId
       };
 
-      mockData.push(newCategory);
+      mockData.push(newTransaction);
 
-      const jsonResponse = JSON.stringify(newCategory);
+      const jsonResponse = JSON.stringify(newTransaction);
       req.respond(
         201,
         {'Content-Type': 'application/json'},
@@ -49,10 +44,10 @@ export default function register(server) {
 
   server.respondWith(
     'PATCH',
-    /\/api\/v1\/categories\/(\d+)/,
+    /\/api\/v1\/transactions\/(\d+)/,
     (req, id) => {
-      const category = _.find(mockData, {id: parseInt(id)});
-      if (!category) {
+      const transaction = _.find(mockData, {id: parseInt(id)});
+      if (!transaction) {
         const err = serverErrors.notFound.body();
         req.respond(
           404,
@@ -61,9 +56,9 @@ export default function register(server) {
         );
       } else {
         const json = JSON.parse(req.requestBody);
-        Object.assign(category, _.pick(json, validAttrs));
+        Object.assign(transaction, _.pick(json, validAttrs));
 
-        const jsonResponse = JSON.stringify(category);
+        const jsonResponse = JSON.stringify(transaction);
         req.respond(
           200,
           {'Content-Type': 'application/json'},
@@ -75,11 +70,11 @@ export default function register(server) {
 
   server.respondWith(
     'DELETE',
-    /\/api\/v1\/categories\/(\d+)/,
+    /\/api\/v1\/transactions\/(\d+)/,
     (req, id) => {
       id = parseInt(id);
-      const category = _.find(mockData, {id});
-      if (!category) {
+      const transaction = _.find(mockData, {id});
+      if (!transaction) {
         const err = serverErrors.notFound.body();
         req.respond(
           404,
@@ -87,7 +82,7 @@ export default function register(server) {
           JSON.stringify(err)
         );
       } else {
-        // Delete this category from our mock data
+        // Delete this transaction from our mock data
         mockData = _.reject(mockData, {id});
         req.respond(204);
       }
