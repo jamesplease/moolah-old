@@ -8,12 +8,6 @@ const asyncActions = createAsyncConstants(
   'DELETE_TRANSACTION'
 );
 
-const syncActions = {
-  SET_TRANSACTION_UPDATE_ID: null,
-  CLEAR_TRANSACTION_UPDATE_ID: null
-};
-
 export default keyMirror({
-  ...asyncActions,
-  ...syncActions
+  ...asyncActions
 });

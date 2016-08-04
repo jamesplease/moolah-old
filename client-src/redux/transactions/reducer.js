@@ -2,54 +2,51 @@ import _ from 'lodash';
 import actionTypes from './action-types';
 import initialState from './initial-state';
 
+const initialResourceMetaState = {
+  updatingStatus: null,
+  isDeleting: false
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_TRANSACTION_UPDATE_ID: {
-      return {
-        ...state,
-        transactionIdBeingUpdated: action.transactionId
-      };
-    }
-
-    case actionTypes.CLEAR_TRANSACTION_UPDATE_ID: {
-      return {
-        ...state,
-        transactionIdBeingUpdated: null
-      };
-    }
-
     // Create transaction
     case actionTypes.CREATE_TRANSACTION: {
       return {
         ...state,
-        creatingTransaction: true
+        creatingTransactionStatus: 'PENDING'
       };
     }
 
     case actionTypes.CREATE_TRANSACTION_SUCCESS: {
       let transactions = [...state.transactions];
       transactions.push(action.transaction);
+      const transactionsMeta = [
+        ...state.transactionsMeta,
+        {
+          id: action.transaction.id,
+          ...initialResourceMetaState
+        }
+      ];
       return {
         ...state,
-        creatingTransaction: false,
-        createTransactionSuccess: true,
-        transactions
+        creatingTransactionStatus: 'SUCCESS',
+        transactions,
+        transactionsMeta
       };
     }
 
     case actionTypes.CREATE_TRANSACTION_FAILURE: {
       return {
         ...state,
-        creatingTransaction: false,
-        createTransactionFailure: true
+        creatingTransactionStatus: 'FAILURE'
       };
     }
 
+    case actionTypes.CREATE_TRANSACTION_ABORTED:
     case actionTypes.CREATE_TRANSACTION_RESET_RESOLUTION: {
       return {
         ...state,
-        createTransactionSuccess: false,
-        createTransactionFailure: false
+        creatingTransactionStatus: null
       };
     }
 
@@ -57,110 +54,178 @@ export default (state = initialState, action) => {
     case actionTypes.RETRIEVE_TRANSACTIONS: {
       return {
         ...state,
-        retrievingTransactions: true
+        retrievingTransactionsStatus: 'PENDING'
       };
     }
 
     case actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS: {
+      const transactionsMeta = action.transactions.map(c => {
+        return {
+          id: c.id,
+          ...initialResourceMetaState
+        };
+      });
+
       return {
         ...state,
-        retrievingTransactions: false,
-        retrieveTransactionsSuccess: true,
-        transactions: action.transactions
+        retrievingTransactionsStatus: 'SUCCESS',
+        transactions: [...action.transactions],
+        transactionsMeta
       };
     }
 
     case actionTypes.RETRIEVE_TRANSACTIONS_FAILURE: {
       return {
         ...state,
-        retrievingTransactions: false,
-        retrieveTransactionsFailure: true
+        retrievingTransactionsStatus: 'FAILURE'
       };
     }
 
+    case actionTypes.RETRIEVE_TRANSACTIONS_ABORTED:
     case actionTypes.RETRIEVE_TRANSACTIONS_RESET_RESOLUTION: {
       return {
         ...state,
-        retrieveTransactionsSuccess: false,
-        retrieveTransactionsFailure: false
+        retrievingTransactionsStatus: null
       };
     }
 
     // Update transaction
     case actionTypes.UPDATE_TRANSACTION: {
+      const transactionsMeta = state.transactionsMeta.map(c => {
+        if (c.id !== action.transactionId) {
+          return {...c};
+        } else {
+          return {
+            ...c,
+            updatingStatus: 'PENDING'
+          };
+        }
+      });
+
       return {
         ...state,
-        updatingTransaction: true,
+        transactionsMeta
       };
     }
 
     case actionTypes.UPDATE_TRANSACTION_SUCCESS: {
       let id = action.transaction.id;
 
-      let transactions = ([...state.transactions]).map(t => {
-        if (t.id !== id) {
-          return t;
+      let transactions = state.transactions.map(c => {
+        if (c.id !== id) {
+          return {...c};
         } else {
-          return action.transaction;
+          return {...action.transaction};
+        }
+      });
+
+      const transactionsMeta = state.transactionsMeta.map(c => {
+        if (c.id !== id) {
+          return {...c};
+        } else {
+          return {
+            ...c,
+            updatingStatus: 'SUCCESS'
+          };
         }
       });
 
       return {
         ...state,
-        updatingTransaction: false,
-        updateTransactionSuccess: true,
-        transactions
+        transactions,
+        transactionsMeta
       };
     }
 
     case actionTypes.UPDATE_TRANSACTION_FAILURE: {
+      const transactionsMeta = state.transactionsMeta.map(c => {
+        if (c.id !== action.transactionId) {
+          return {...c};
+        } else {
+          return {
+            ...c,
+            updatingStatus: 'FAILURE'
+          };
+        }
+      });
+
       return {
         ...state,
-        updatingTransaction: false,
-        updateTransactionFailure: true
+        transactionsMeta
       };
     }
 
+    case actionTypes.UPDATE_TRANSACTION_ABORTED:
     case actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION: {
+      const clonedMeta = _.cloneDeep(state.transactionsMeta);
+      const transactionsMeta = clonedMeta.map(c => {
+        if (c.id !== action.transactionId) {
+          return {...c};
+        } else {
+          return {
+            ...c,
+            updatingStatus: null
+          };
+        }
+      });
+
       return {
         ...state,
-        updateTransactionSuccess: false,
-        updateTransactionFailure: false
+        transactionsMeta
       };
     }
 
     // Delete transaction
     case actionTypes.DELETE_TRANSACTION: {
+      const clonedMeta = _.cloneDeep(state.transactionsMeta);
+      const transactionsMeta = clonedMeta.map(c => {
+        if (c.id !== action.transactionId) {
+          return c;
+        } else {
+          return {
+            ...c,
+            isDeleting: c.id === action.transactionId
+          };
+        }
+      });
+
       return {
         ...state,
-        deletingTransaction: true,
+        transactionsMeta
       };
     }
 
     case actionTypes.DELETE_TRANSACTION_SUCCESS: {
       const rejectionFn = val => val.id === action.transactionId;
-      let transactions = _.reject(state.transactions, rejectionFn);
+      const clonedTransactions = _.cloneDeep(state.transactions);
+      const clonedMeta = _.cloneDeep(state.transactionsMeta);
+
+      let transactions = _.reject(clonedTransactions, rejectionFn);
+      let transactionsMeta = _.reject(clonedMeta, rejectionFn);
       return {
         ...state,
-        deletingTransaction: false,
-        deleteTransactionSuccess: true,
-        transactions
+        transactions,
+        transactionsMeta
       };
     }
 
-    case actionTypes.DELETE_TRANSACTION_FAILURE: {
-      return {
-        ...state,
-        deletingTransaction: false,
-        deleteTransactionFailure: true,
-      };
-    }
+    case actionTypes.DELETE_TRANSACTION_FAILURE:
+    case actionTypes.DELETE_TRANSACTION_ABORTED: {
+      const clonedMeta = _.cloneDeep(state.transactionsMeta);
+      const transactionsMeta = clonedMeta.map(c => {
+        if (c.id !== action.transactionId) {
+          return c;
+        } else {
+          return {
+            ...c,
+            isDeleting: false
+          };
+        }
+      });
 
-    case actionTypes.DELETE_TRANSACTION_RESET_RESOLUTION: {
       return {
         ...state,
-        deleteTransactionSuccess: false,
-        deleteTransactionFailure: false
+        transactionsMeta
       };
     }
 

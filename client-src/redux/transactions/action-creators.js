@@ -1,20 +1,9 @@
-import _ from 'lodash';
+import xhr from 'xhr';
 import actionTypes from './action-types';
-import mockTransactions from '../mock/transactions';
 
-const transactionsLength = mockTransactions.length;
-let lastId = mockTransactions[transactionsLength - 1].id;
-
-export function setTransactionUpdateId(transactionId) {
+export function resetCreateTransactionResolution() {
   return {
-    type: actionTypes.SET_TRANSACTION_UPDATE_ID,
-    transactionId
-  };
-}
-
-export function clearTransactionUpdateId() {
-  return {
-    type: actionTypes.CLEAR_TRANSACTION_UPDATE_ID
+    type: actionTypes.CREATE_TRANSACTION_RESET_RESOLUTION
   };
 }
 
@@ -22,79 +11,130 @@ export function createTransaction(data) {
   return dispatch => {
     dispatch({type: actionTypes.CREATE_TRANSACTION});
 
-    const newId = ++lastId;
+    const req = xhr.post(
+      '/api/v1/transactions',
+      {json: data},
+      (err, res, body) => {
+        if (req.aborted) {
+          dispatch({type: actionTypes.CREATE_TRANSACTION_ABORTED});
+        } else if (err || res.statusCode >= 400) {
+          dispatch({type: actionTypes.CREATE_TRANSACTION_FAILURE});
+        } else {
+          dispatch({
+            type: actionTypes.CREATE_TRANSACTION_SUCCESS,
+            transaction: body
+          });
+        }
+      }
+    );
 
-    // Simulate fake network latency
-    window.setTimeout(() => {
-      const newTransaction = {
-        ...data,
-        id: newId
-      };
-
-      dispatch({
-        type: actionTypes.CREATE_TRANSACTIONS_SUCCESS,
-        transaction: newTransaction
-      });
-    }, 1000);
+    return req;
   };
 }
 
-export function retrieveTransactions({year, month}) {
-  return (dispatch, getState) => {
+export function resetRetrieveTransactionsResolution() {
+  return {
+    type: actionTypes.RETRIEVE_TRANSACTIONS_RESET_RESOLUTION
+  };
+}
+
+export function retrieveTransactions() {
+  return (dispatch) => {
     dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS});
 
-    window.setTimeout(() => {
-      // Filter our transactions by the year and month
-      const mocks = _.filter(mockTransactions, t => {
-        const transactionDate = t.date.split('-');
-        return transactionDate[0] === year && transactionDate[1] === month;
-      });
+    const req = xhr.get(
+      '/api/v1/transactions',
+      {json: true},
+      (err, res, body) => {
+        if (req.aborted) {
+          dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS_ABORTED});
+        } else if (err || res.statusCode >= 400) {
+          dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS_FAILURE});
+        } else {
+          dispatch({
+            type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
+            transactions: body
+          });
+        }
+      }
+    );
 
-      const existingTransactions = getState().transactions.transactions;
+    return req;
+  };
+}
 
-      const newMocks = _.reject(mocks, t => {
-        return _.find(existingTransactions, e => e.id === t.id);
-      });
-
-      // Our new transactions are the ones that already exist, PLUS the ones
-      // with IDs that we don't already have in store. We do this to allow
-      // folks to edit transactions and not get those edits overridden
-      // by the mocks, which never change.
-      const transactions = [
-        ...existingTransactions,
-        ...newMocks
-      ];
-
-      dispatch({
-        type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
-        transactions
-      });
-    }, 1200);
+export function resetUpdateTransactionResolution(transactionId) {
+  return {
+    type: actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION,
+    transactionId
   };
 }
 
 export function updateTransaction(transaction) {
   return dispatch => {
-    dispatch({type: actionTypes.UPDATE_TRANSACTION, transaction});
+    dispatch({
+      type: actionTypes.UPDATE_TRANSACTION,
+      transactionId: transaction.id
+    });
 
-    window.setTimeout(() => {
-      dispatch({
-        type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
-        transaction
-      });
-    }, 1000);
+    const {id} = transaction;
+    const req = xhr.patch(
+      `/api/v1/transactions/${id}`,
+      {json: transaction},
+      (err, res, body) => {
+        if (req.aborted) {
+          dispatch({
+            type: actionTypes.UPDATE_TRANSACTION_ABORTED,
+            transactionId: transaction.id
+          });
+        } else if (err || res.statusCode >= 400) {
+          dispatch({
+            type: actionTypes.UPDATE_TRANSACTION_FAILURE,
+            transactionId: transaction.id
+          });
+        } else {
+          dispatch({
+            type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
+            transaction: body
+          });
+        }
+      }
+    );
+
+    return req;
   };
 }
 
 export function deleteTransaction(transactionId) {
   return dispatch => {
-    dispatch({type: actionTypes.DELETE_TRANSACTION});
+    dispatch({
+      type: actionTypes.DELETE_TRANSACTION,
+      transactionId
+    });
 
-    window.setTimeout(() => {
-      dispatch({
-        type: actionTypes.DELETE_TRANSACTION_SUCCESS,
-        transactionId
-      });
-    }, 1000);
+    const req = xhr.del(
+      `/api/v1/transactions/${transactionId}`,
+      {json: true},
+      (err, res) => {
+        if (req.aborted) {
+          dispatch({
+            type: actionTypes.DELETE_TRANSACTION_ABORTED,
+            transactionId
+          });
+        } else if (err || res.statusCode >= 400) {
+          dispatch({
+            type: actionTypes.DELETE_TRANSACTION_FAILURE,
+            transactionId
+          });
+        } else {
+          dispatch({
+            type: actionTypes.DELETE_TRANSACTION_SUCCESS,
+            transactionId
+          });
+        }
+      }
+    );
+
+    return req;
   };
 }
