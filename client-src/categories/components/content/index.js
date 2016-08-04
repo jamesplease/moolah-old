@@ -15,11 +15,9 @@ export const Content = React.createClass({
   },
 
   componentWillUnmount() {
-    const {categoriesActions} = this.props;
     if (this.fetchingCategoriesXhr) {
       this.fetchingCategoriesXhr.abort();
     }
-    categoriesActions.resetRetrieveCategoriesResolution();
   },
 
   render() {
