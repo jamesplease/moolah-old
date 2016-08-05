@@ -16,7 +16,6 @@ describe('CategoriesContent', function() {
       };
 
       this.mockCategoriesActions = {
-        resetRetrieveCategoriesResolution: stub(),
         retrieveCategories: stub().returns(this.mockXhr)
       };
 
@@ -43,14 +42,6 @@ describe('CategoriesContent', function() {
         wrapper.instance().componentDidMount();
         wrapper.instance().componentWillUnmount();
         expect(this.mockXhrAbort).to.have.been.calledOnce;
-      });
-
-      it('should call `resetRetrieveCategoriesResolution`', () => {
-        const wrapper = this.generator.shallow();
-        wrapper.instance().componentDidMount();
-        wrapper.instance().componentWillUnmount();
-        const fn = this.mockCategoriesActions.resetRetrieveCategoriesResolution;
-        expect(fn).to.have.been.calledOnce;
       });
     });
 

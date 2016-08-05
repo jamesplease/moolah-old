@@ -13,21 +13,48 @@ import LoadingResourceList from '../../../common/components/loading-resource-lis
 import NotFound from '../../../common/components/not-found';
 import validateTransactionDate from '../../services/validate-transaction-date';
 
-export const Transactions = React.createClass({
+export const Content = React.createClass({
   // When the component is mounted, we make sure that we have the latest
   // categories and the transactions for the current date
   componentWillMount() {
-    const {params, categoriesActions} = this.props;
-    this.fetchTransactions(params.transactionDate);
-    categoriesActions.retrieveCategories();
+    const {params} = this.props;
+    this.fetchResources(params.transactionDate);
   },
 
-  getContents() {
+  componentWillUnmount() {
+    // Abort any outstanding XHR requests when the component unmounts
+    _.result(this.fetchTransactionsXhr, 'abort');
+    _.result(this.fetchCategoriesXhr, 'abort');
+  },
+
+  componentWillReceiveProps(nextProps) {
+    // Anytime the date changes, we need to fetch new transactions
+    if (this.props.params.transactionDate !== nextProps.params.transactionDate) {
+      _.result(this.fetchTransactionsXhr, 'abort');
+      this.fetchResources(nextProps.params.transactionDate);
+    }
+  },
+
+  fetchResources(date) {
+    const {transactionsActions, categoriesActions} = this.props;
+    this.fetchCategoriesXhr = categoriesActions.retrieveCategories();
+    const transactionDate = date.split('-');
+    this.fetchTransactionsXhr = transactionsActions.retrieveTransactions({
+      year: transactionDate[0],
+      month: transactionDate[1]
+    });
+  },
+
+  render() {
     const {
-      retrievingTransactions, transactions,
-      transactionsActions, retrieveTransactionsFailure,
-      params, retrievingCategories
+      retrievingCategoriesStatus, retrievingTransactionsStatus,
+      transactions, params
     } = this.props;
+
+    const transactionDate = params.transactionDate;
+    if (!validateTransactionDate(transactionDate)) {
+      return <NotFound/>;
+    }
 
     const date = params.transactionDate;
     const transactionsToDisplay = _.chain(transactions)
@@ -40,52 +67,29 @@ export const Transactions = React.createClass({
       .sortBy('date')
       .value();
 
-    if (retrievingTransactions || retrievingCategories) {
-      return <LoadingResourceList/>;
-    }
+    const isFetchingCategories = retrievingCategoriesStatus === 'PENDING';
+    const isFetchingTransactions = retrievingTransactionsStatus === 'PENDING';
+    const errorFetchingCategories = retrievingCategoriesStatus === 'FAILURE';
+    const errorFetchingTransactions = retrievingTransactionsStatus === 'FAILURE';
 
-    if (retrieveTransactionsFailure) {
-      return (<ErrorRetrieving
-        retry={transactionsActions.retrieveTransactions}
+    let contents;
+    if (isFetchingCategories || isFetchingTransactions) {
+      contents = <LoadingResourceList/>;
+    } else if (errorFetchingCategories || errorFetchingTransactions) {
+      contents = (<ErrorRetrieving
+        retry={this.fetchResources}
         resourceName="Transactions"/>);
-    }
-
-    if (!transactionsToDisplay.length) {
-      return <EmptyTransactions/>;
-    }
-
-    return (
-      <TransactionsList transactions={transactionsToDisplay}/>
-    );
-  },
-
-  fetchTransactions(date) {
-    const {transactionsActions} = this.props;
-    const transactionDate = date.split('-');
-    transactionsActions.retrieveTransactions({
-      year: transactionDate[0],
-      month: transactionDate[1]
-    });
-  },
-
-  componentWillReceiveProps(nextProps) {
-    // Anytime the date changes, we need to fetch new transactions
-    if (this.props.params.transactionDate !== nextProps.params.transactionDate) {
-      this.fetchTransactions(nextProps.params.transactionDate);
-    }
-  },
-
-  render() {
-    const transactionDate = this.props.params.transactionDate;
-    if (!validateTransactionDate(transactionDate)) {
-      return <NotFound/>;
+    } else if (!transactionsToDisplay.length) {
+      contents = <EmptyTransactions/>;
+    } else {
+      contents = <TransactionsList transactions={transactionsToDisplay}/>;
     }
 
     return (
       <div>
         <Subheader/>
         <DateMenu date={transactionDate}/>
-        {this.getContents()}
+        {contents}
       </div>
     );
   }
@@ -94,9 +98,8 @@ export const Transactions = React.createClass({
 function mapStateToProps(state) {
   return {
     transactions: state.transactions.transactions,
-    retrievingTransactions: state.transactions.retrievingTransactions,
-    retrievingCategories: state.categories.retrievingCategories,
-    retrieveTransactionsFailure: state.transactions.retrieveTransactionsFailure,
+    retrievingTransactionsStatus: state.transactions.retrievingTransactionsStatus,
+    retrievingCategoriesStatus: state.categories.retrievingCategoriesStatus,
   };
 }
 
@@ -107,4 +110,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
+export default connect(mapStateToProps, mapDispatchToProps)(Content);
