@@ -77,7 +77,7 @@ const LoggedInHeader = React.createClass({
             className={overlayNavToggleClass}
             onClick={() => this.toggleOverlayNav()}>
             <span className="hamburger-box">
-              <span className="hamburger-inner"></span>
+              <span className="hamburger-inner"/>
             </span>
           </button>
           <Nav
