@@ -24,35 +24,21 @@ const Contact = React.createClass({
     );
   },
 
-  componentWillReceiveProps(nextProps) {
-    const {sendMessageFailure} = this.props;
-    if (!sendMessageFailure && nextProps.sendMessageFailure) {
-      const resetMessageResolutionAction = contactActionCreators.resetMessageResolution();
-      const {pushAlert} = this.props.alertActions;
-      pushAlert({
-        style: 'danger',
-        text: 'Oops – there was an error.<br>Try that one more time?',
-        persistent: true,
-        isDismissable: true,
-        onDismissAction: resetMessageResolutionAction
-      });
-    }
-  },
-
   getContactForm() {
     const {
       fields: {subject, body},
       handleSubmit,
       contactActions,
-      sendingMessage
+      sendingMessageStatus
     } = this.props;
 
     function onSubmit(data) {
       contactActions.sendMessage(data);
     }
 
-    const sendBtnText = sendingMessage ? 'Sending...' : 'Send';
-    const sendBtnDisabled = sendingMessage;
+    const messageInFlight = sendingMessageStatus === 'PENDING';
+    const sendBtnText = messageInFlight ? 'Sending...' : 'Send';
+    const sendBtnDisabled = messageInFlight;
 
     const placeholder = body.touched && body.error === 'empty' ? 'Please enter a message!' : '';
 
@@ -93,9 +79,10 @@ const Contact = React.createClass({
   },
 
   render() {
-    const {sendMessageSuccess} = this.props;
+    const {sendingMessageStatus} = this.props;
 
-    const contactContent = sendMessageSuccess ? this.getSuccessMessage() : this.getContactForm();
+    const messageSent = sendingMessageStatus === 'SUCCESS';
+    const contactContent = messageSent ? this.getSuccessMessage() : this.getContactForm();
 
     return (
       <div className="container contact-page">
@@ -127,9 +114,7 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    sendingMessage: state.contact.sendingMessage,
-    sendMessageSuccess: state.contact.sendMessageSuccess,
-    sendMessageFailure: state.contact.sendMessageFailure,
+    sendingMessageStatus: state.contact.sendingMessageStatus
   };
 }
 

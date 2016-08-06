@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import alertsActionTypes from './action-types';
 import categoriesActionTypes from '../categories/action-types';
+import contactActionTypes from '../contact/action-types';
 import initialState from './initial-state';
 
 const validActionProps = [
@@ -119,6 +120,24 @@ export default (state = initialState, action) => {
     }
 
     case categoriesActionTypes.DELETE_CATEGORY_FAILURE: {
+      const clonedAlerts = _.cloneDeep(state.alerts);
+      const id = _.uniqueId('alert-');
+      return {
+        ...state,
+        alerts: [
+          ...clonedAlerts,
+          {
+            id,
+            style: 'danger',
+            text: 'Oops – there was an error. Try that one more time?',
+            isDismissable: true,
+            persistent: false
+          }
+        ]
+      };
+    }
+
+    case contactActionTypes.SEND_MESSAGE_FAILURE: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
       return {
