@@ -1,19 +1,8 @@
-.contact-page {
-  .contact-submit-row {
-    display: flex;
-    justify-content: flex-end;
-  }
+.contactPage-submitRow {
+  display: flex;
+  justify-content: flex-end;
+}
 
-  .contact-submit-btn {
-    width: 95px;
-  }
-
-  .contact-page-error {
-    display: none;
-    text-align: center;
-
-    &.visible {
-      display: block;
-    }
-  }
+.contactPage-submitBtn {
+  width: 95px;
 }
