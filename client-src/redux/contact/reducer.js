@@ -6,31 +6,28 @@ export default (state = initialState, action) => {
     case actionTypes.SEND_MESSAGE: {
       return {
         ...state,
-        sendingMessage: true
+        sendingMessageStatus: 'PENDING'
       };
     }
 
     case actionTypes.SEND_MESSAGE_SUCCESS: {
       return {
         ...state,
-        sendingMessage: false,
-        sendMessageSuccess: true,
+        sendingMessageStatus: 'SUCCESS'
       };
     }
 
     case actionTypes.SEND_MESSAGE_FAILURE: {
       return {
         ...state,
-        sendingMessage: false,
-        sendMessageFailure: true
+        sendingMessageStatus: 'FAILURE'
       };
     }
 
     case actionTypes.SEND_MESSAGE_RESET_RESOLUTION: {
       return {
         ...state,
-        sendMessageFailure: false,
-        sendMessageSuccess: false
+        sendingMessageStatus: null
       };
     }
 

@@ -3,6 +3,7 @@ import reducer from '../../../../../client-src/redux/alerts/reducer';
 import initialState from '../../../../../client-src/redux/alerts/initial-state';
 import alertsActionTypes from '../../../../../client-src/redux/alerts/action-types';
 import categoryActionTypes from '../../../../../client-src/redux/categories/action-types';
+import contactActionTypes from '../../../../../client-src/redux/contact/action-types';
 
 describe('alerts/reducer', function() {
   beforeEach(() => {
@@ -169,6 +170,27 @@ describe('alerts/reducer', function() {
       };
       const action = {
         type: categoryActionTypes.DELETE_CATEGORY_FAILURE
+      };
+      const newState = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}, {
+          id: 'asdf',
+          style: 'danger',
+          text: 'Oops – there was an error. Try that one more time?',
+          isDismissable: true,
+          persistent: false
+        }]
+      };
+      expect(reducer(state, action)).to.deep.equal(newState);
+    });
+  });
+
+  describe('SEND_MESSAGE_FAILURE', () => {
+    it('should add a new alert to the queue', () => {
+      const state = {
+        alerts: [{id: 1}, {id: 2}, {id: 3}]
+      };
+      const action = {
+        type: contactActionTypes.SEND_MESSAGE_FAILURE
       };
       const newState = {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
