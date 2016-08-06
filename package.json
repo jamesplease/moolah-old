@@ -85,7 +85,7 @@
     "postcss-scss": "^0.1.8",
     "precss": "^1.4.0",
     "react-addons-test-utils": "15.3.0",
-    "react-router-scroll": "^0.2.0",
+    "react-router-scroll": "^0.3.0",
     "run-sequence": "^1.2.1",
     "simple-jsdom": "2.0.0",
     "sinon": "^1.17.2",
