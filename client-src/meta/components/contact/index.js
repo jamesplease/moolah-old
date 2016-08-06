@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
-import * as alertActionCreators from '../../../redux/alerts/action-creators';
 import * as contactActionCreators from '../../../redux/contact/action-creators';
 
 const Contact = React.createClass({
@@ -32,10 +31,6 @@ const Contact = React.createClass({
       sendingMessageStatus
     } = this.props;
 
-    function onSubmit(data) {
-      contactActions.sendMessage(data);
-    }
-
     const messageInFlight = sendingMessageStatus === 'PENDING';
     const sendBtnText = messageInFlight ? 'Sending...' : 'Send';
     const sendBtnDisabled = messageInFlight;
@@ -47,7 +42,7 @@ const Contact = React.createClass({
         <p className="paragraph">
           Send us feedback, bug reports, feature requests; we’re always looking for ways to improve Moolah.
         </p>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(contactActions.sendMessage)}>
           <div className="form-row">
             <input
               type="text"
@@ -65,9 +60,9 @@ const Contact = React.createClass({
               spellCheck={true}
               {...body}/>
           </div>
-          <div className="form-row contact-submit-row">
+          <div className="form-row contactPage-submitRow">
             <button
-              className="btn btn-info contact-submit-btn"
+              className="btn btn-info contactPage-submitBtn"
               type="submit"
               disabled={sendBtnDisabled}>
               {sendBtnText}
@@ -85,7 +80,7 @@ const Contact = React.createClass({
     const contactContent = messageSent ? this.getSuccessMessage() : this.getContactForm();
 
     return (
-      <div className="container contact-page">
+      <div className="container contactPage">
         <div className="text-container">
           <h1>
             Contact Us
@@ -120,8 +115,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    contactActions: bindActionCreators(contactActionCreators, dispatch),
-    alertActions: bindActionCreators(alertActionCreators, dispatch)
+    contactActions: bindActionCreators(contactActionCreators, dispatch)
   };
 }
 

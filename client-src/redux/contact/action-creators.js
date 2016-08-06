@@ -5,7 +5,7 @@ export function sendMessage() {
     dispatch({type: actionTypes.SEND_MESSAGE});
 
     window.setTimeout(() => {
-      dispatch({type: actionTypes.SEND_MESSAGE_FAILURE});
+      dispatch({type: actionTypes.SEND_MESSAGE_SUCCESS});
     }, 1000);
   };
 }
