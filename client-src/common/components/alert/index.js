@@ -80,7 +80,7 @@ const Alert = React.createClass({
     return (
       <div className={alertClass}>
         <span className="alert-text">
-          <i className={iconClass}></i>
+          <i className={iconClass}/>
           <span dangerouslySetInnerHTML={textHtml}/>
         </span>
         {dismissIcon}
