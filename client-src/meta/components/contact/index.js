@@ -7,7 +7,7 @@ import * as contactActionCreators from '../../../redux/contact/action-creators';
 const Contact = React.createClass({
   componentWillUnmount() {
     const {contactActions} = this.props;
-    contactActions.resetMessageResolution();
+    contactActions.resetSendMessageResolution();
   },
 
   getSuccessMessage() {

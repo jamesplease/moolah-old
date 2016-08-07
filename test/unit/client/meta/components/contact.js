@@ -49,7 +49,7 @@ describe('Contact', function() {
       };
 
       this.contactActions = {
-        resetMessageResolution: stub()
+        resetSendMessageResolution: stub()
       };
 
       this.defaultProps = {
@@ -61,10 +61,10 @@ describe('Contact', function() {
     });
 
     describe('unmounting', () => {
-      it('should call `resetMessageResolution`', () => {
+      it('should call `resetSendMessageResolution`', () => {
         const wrapper = shallow(<Contact {...this.defaultProps}/>);
         wrapper.instance().componentWillUnmount();
-        expect(this.contactActions.resetMessageResolution).to.have.been.calledOnce;
+        expect(this.contactActions.resetSendMessageResolution).to.have.been.calledOnce;
       });
     });
 

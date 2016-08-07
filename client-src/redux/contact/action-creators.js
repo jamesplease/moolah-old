@@ -1,16 +1,31 @@
+import xhr from 'xhr';
 import actionTypes from './action-types';
 
-export function sendMessage() {
+export function sendMessage(data) {
   return (dispatch) => {
     dispatch({type: actionTypes.SEND_MESSAGE});
 
-    window.setTimeout(() => {
-      dispatch({type: actionTypes.SEND_MESSAGE_SUCCESS});
-    }, 1000);
+    const req = xhr.post(
+      '/help/messages',
+      {json: data},
+      (err, res) => {
+        if (req.aborted) {
+          dispatch({type: actionTypes.SEND_MESSAGE_ABORTED});
+        } else if (err || res.statusCode >= 400) {
+          dispatch({type: actionTypes.SEND_MESSAGE_FAILURE});
+        } else {
+          dispatch({
+            type: actionTypes.SEND_MESSAGE_SUCCESS
+          });
+        }
+      }
+    );
+
+    return req;
   };
 }
 
-export function resetMessageResolution() {
+export function resetSendMessageResolution() {
   return {
     type: actionTypes.SEND_MESSAGE_RESET_RESOLUTION
   };
