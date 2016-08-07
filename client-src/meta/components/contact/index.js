@@ -6,8 +6,9 @@ import * as contactActionCreators from '../../../redux/contact/action-creators';
 
 const Contact = React.createClass({
   componentWillUnmount() {
-    const {contactActions} = this.props;
-    contactActions.resetMessageResolution();
+    if (this.sendMessageXhr) {
+      this.sendMessageXhr.abort();
+    }
   },
 
   getSuccessMessage() {
@@ -23,11 +24,15 @@ const Contact = React.createClass({
     );
   },
 
+  sendMessage(data) {
+    const {contactActions} = this.props;
+    this.sendMessageXhr = contactActions.sendMessage(data);
+  },
+
   getContactForm() {
     const {
       fields: {subject, body},
       handleSubmit,
-      contactActions,
       sendingMessageStatus
     } = this.props;
 
@@ -42,7 +47,7 @@ const Contact = React.createClass({
         <p className="paragraph">
           Send us feedback, bug reports, feature requests; we’re always looking for ways to improve Moolah.
         </p>
-        <form onSubmit={handleSubmit(contactActions.sendMessage)}>
+        <form onSubmit={handleSubmit(this.sendMessage)}>
           <div className="form-row">
             <input
               type="text"

@@ -48,8 +48,12 @@ describe('Contact', function() {
         }
       };
 
+      this.mockSendMessageXhr = {
+        abort: stub()
+      };
+
       this.contactActions = {
-        resetMessageResolution: stub()
+        sendMessage: stub().returns(this.mockSendMessageXhr)
       };
 
       this.defaultProps = {
@@ -61,10 +65,11 @@ describe('Contact', function() {
     });
 
     describe('unmounting', () => {
-      it('should call `resetMessageResolution`', () => {
+      it('should call `abort` on the xhr', () => {
         const wrapper = shallow(<Contact {...this.defaultProps}/>);
+        wrapper.instance().sendMessage('hello');
         wrapper.instance().componentWillUnmount();
-        expect(this.contactActions.resetMessageResolution).to.have.been.calledOnce;
+        expect(this.mockSendMessageXhr.abort).to.have.been.calledOnce;
       });
     });
 
