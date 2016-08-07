@@ -6,7 +6,7 @@ import {
   Router, Route, IndexRoute, browserHistory,
   Redirect, applyRouterMiddleware
 } from 'react-router';
-import useScroll from 'react-router-scroll';
+import {useScroll} from 'react-router-scroll';
 import IndexPage from './common/components/index-page';
 import Categories from './categories/components/content';
 import Account from './account/components/account';
