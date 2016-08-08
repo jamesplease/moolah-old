@@ -1,0 +1,10 @@
+import store from '../../../../client-src/redux/store';
+
+describe('redux store', () => {
+  it('should have the right shape', () => {
+    expect(store).to.contain.keys(
+      'dispatch',
+      'getState'
+    );
+  });
+});
