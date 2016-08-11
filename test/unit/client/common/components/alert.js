@@ -17,8 +17,7 @@ describe('Alert', function() {
       isDismissable: true,
       persistent: true,
       animateOutAlert: this.animateOutAlert,
-      destroyFirstAlert: this.destroyFirstAlert,
-      onTransitionOutAlert: this.onTransitionOutAlert
+      destroyFirstAlert: this.destroyFirstAlert
     };
   });
 
@@ -40,16 +39,16 @@ describe('Alert', function() {
 
     it('should have the correct html text', () => {
       const wrapper = shallow(<Alert {...this.defaultProps}/>);
-      const alertText = wrapper.find('.alert-text');
+      const alertTitle = wrapper.find('.alert-title');
 
       // `find` returns itself if it matches the selector, in this case it returns two nodes.
       // We're using a more specific selector to prevent this from happening.
-      const alertTextHtml = alertText.find('> span');
+      const alertTitleHtml = alertTitle.find('> span');
       const textHtml = {
         __html: 'hello<br/>world'
       };
 
-      expect(alertTextHtml.prop('dangerouslySetInnerHTML')).to.deep.equal(textHtml);
+      expect(alertTitleHtml.prop('dangerouslySetInnerHTML')).to.deep.equal(textHtml);
     });
 
     describe('the dismissBtn', () => {
@@ -108,22 +107,6 @@ describe('Alert', function() {
         expect(this.animateOutAlert).to.have.been.calledOnce;
       });
     });
-
-    describe('the alert icon', () => {
-      it('should render the correct alert icon when not overriding icon', () => {
-        const wrapper = shallow(<Alert {...this.defaultProps}/>);
-        expect(wrapper.find('.zmdi.alert-icon.zmdi-check')).to.have.length(1);
-      });
-
-      it('should render the correct alert icon when overriding icon', () => {
-        const props = {
-          ...this.defaultProps,
-          icon: 'pizza'
-        };
-        const wrapper = shallow(<Alert {...props}/>);
-        expect(wrapper.find('.zmdi.alert-icon.pizza')).to.have.length(1);
-      });
-    });
   });
 
   describe('componentDidTransition', () => {
@@ -151,12 +134,10 @@ describe('Alert', function() {
     });
 
     describe('and transitionType is "leave"', () => {
-      it('should call destroyFirstAlert and onTransitionOutAlert', () => {
+      it('should call destroyFirstAlert', () => {
         const wrapper = shallow(<Alert {...this.defaultProps}/>);
         wrapper.instance().componentDidTransition('leave');
         expect(this.destroyFirstAlert).to.have.been.calledOnce;
-        expect(this.destroyFirstAlert).to.have.been.calledBefore(this.onTransitionOutAlert);
-        expect(this.onTransitionOutAlert).to.have.been.calledOnce;
       });
     });
   });

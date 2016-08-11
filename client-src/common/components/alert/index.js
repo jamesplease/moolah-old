@@ -1,19 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-// Each style of alert has a default icon. This maps an
-// alert style to the class name representing that icon
-const defaultIconMap = {
-  success: 'zmdi-check',
-  info: 'zmdi-info-outline',
-  warning: 'zmdi-alert-triangle',
-  danger: 'zmdi-alert-circle-o',
-};
-
 const Alert = React.createClass({
   componentDidTransition(transitionType) {
     const {
-      destroyFirstAlert, persistent, animateOutAlert, onTransitionOutAlert
+      destroyFirstAlert, persistent, animateOutAlert
     } = this.props;
 
     if (transitionType === 'enter') {
@@ -24,7 +15,6 @@ const Alert = React.createClass({
       }
     } else {
       destroyFirstAlert();
-      onTransitionOutAlert();
     }
   },
 
@@ -36,7 +26,7 @@ const Alert = React.createClass({
 
   render() {
     const {
-      style, icon, text, animatingAlertOut, isDismissable
+      style, text, animatingAlertOut, isDismissable
     } = this.props;
 
     const styleClass = `alert-${style}`;
@@ -44,16 +34,6 @@ const Alert = React.createClass({
       alert: true,
       [styleClass]: true,
       'dismissable-alert': isDismissable
-    });
-
-    // If the user has passed an `icon`, then we use that value
-    // for the class of the icon. Otherwise, we use the default value.
-    const materialIconClass = icon ? icon : defaultIconMap[style];
-
-    const iconClass = classNames({
-      zmdi: true,
-      'alert-icon': true,
-      [materialIconClass]: true
     });
 
     let dismissBtn;
@@ -74,8 +54,7 @@ const Alert = React.createClass({
 
     return (
       <div className={alertClass}>
-        <span className="alert-text">
-          <i className={iconClass}/>
+        <span className="alert-title">
           <span dangerouslySetInnerHTML={textHtml}/>
         </span>
         {dismissBtn}

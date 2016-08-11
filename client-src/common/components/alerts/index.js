@@ -2,7 +2,6 @@ import React from 'react';
 import ReactCSSTransitionGroup from '../../../vendor/css-transition-group';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import classNames from 'classnames';
 import Alert from '../alert';
 import * as alertActionCreators from '../../../redux/alerts/action-creators';
 
@@ -23,8 +22,7 @@ const Alerts = React.createClass({
     const firstAlert = alerts[0];
     if (firstAlert) {
       this.setState({
-        activeAlert: firstAlert,
-        alertIsVisible: true
+        activeAlert: firstAlert
       });
     }
   },
@@ -35,21 +33,12 @@ const Alerts = React.createClass({
     });
   },
 
-  onTransitionOutAlert() {
-    if (!this.props.alerts.length) {
-      this.setState({
-        alertIsVisible: false
-      });
-    }
-  },
-
   render() {
     const {
-      animatingAlertOut,
-      alertActions, dispatch
+      animatingAlertOut, alertActions, dispatch
     } = this.props;
 
-    const {activeAlert, alertIsVisible} = this.state;
+    const {activeAlert} = this.state;
 
     let alert;
     if (activeAlert) {
@@ -57,20 +46,14 @@ const Alerts = React.createClass({
         ...activeAlert,
         ...alertActions,
         animatingAlertOut,
-        onTransitionOutAlert: this.onTransitionOutAlert,
         animateOutAlert: this.animateOutAlert,
         dispatch
       };
       alert = <Alert {...alertProps}/>;
     }
 
-    const alertsClass = classNames({
-      alerts: true,
-      alertVisible: alertIsVisible
-    });
-
     const transitionGroupProps = {
-      className: alertsClass,
+      className: 'alerts',
       component: 'div',
       transitionName: 'alert',
       transitionAppear: true,
