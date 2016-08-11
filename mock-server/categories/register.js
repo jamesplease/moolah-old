@@ -1,7 +1,7 @@
 /* eslint import/default: off */
 import _ from 'lodash';
 import data from './data';
-import serverErrors from '../../../server/api/util/server-errors';
+import serverErrors from '../../server/api/util/server-errors';
 
 let mockData = _.cloneDeep(data);
 

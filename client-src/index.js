@@ -22,7 +22,7 @@ import SignIn from './meta/components/sign-in';
 import store from './redux/store';
 import generateAuthCheck from './common/services/auth-check';
 import {getYearMonthStringFromDate} from './transactions/services/format-date';
-import mockServer from './mock-server';
+import mockServer from '../mock-server';
 
 mockServer.start();
 const authCheck = generateAuthCheck(store);

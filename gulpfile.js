@@ -189,7 +189,7 @@ function coverage(done) {
     'client-src/**/*.js',
     'server/**/*.js',
     '!client-src/vendor/**/*.js',
-    '!client-src/mock-server/**/*.js',
+    '!mock-server/**/*.js',
   ])
     .pipe($.istanbul({
       instrumenter: Instrumenter,
