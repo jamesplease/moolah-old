@@ -35,19 +35,19 @@
     transition-timing-function: cubic-bezier(0.1, 0.23, 0.71, 1.65);
   }
 
-  &.warning {
+  &.alert-warning {
     background: radial-gradient(circle at top right, #ffa648, #ff7f1b);
   }
 
-  &.danger {
+  &.alert-danger {
     background: radial-gradient(circle at top right, #f06565, #f43636);
   }
 
-  &.success {
+  &.alert-success {
     background: radial-gradient(circle at top right, #a6d659, #37b645);
   }
 
-  &.info {
+  &.alert-info {
     background: radial-gradient(circle at top right, #36c7f4, #6593f0);
   }
 

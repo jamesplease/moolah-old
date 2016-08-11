@@ -17,7 +17,6 @@ describe('Alert', function() {
       isDismissable: true,
       persistent: true,
       animateOutAlert: this.animateOutAlert,
-      dispatch: this.dispatch,
       destroyFirstAlert: this.destroyFirstAlert,
       onTransitionOutAlert: this.onTransitionOutAlert
     };
@@ -26,7 +25,7 @@ describe('Alert', function() {
   describe('rendering', () => {
     it('should render with the correct className with idDismissable as true', () => {
       const wrapper = shallow(<Alert {...this.defaultProps}/>);
-      expect(wrapper.hasClass('alert success dismissable-alert')).to.be.true;
+      expect(wrapper.hasClass('alert alert-success dismissable-alert')).to.be.true;
     });
 
     it('should render with the correct className with isDismissable as false', () => {
@@ -36,7 +35,7 @@ describe('Alert', function() {
       };
 
       const wrapper = shallow(<Alert {...props}/>);
-      expect(wrapper.hasClass('alert success')).to.be.true;
+      expect(wrapper.hasClass('alert alert-success')).to.be.true;
     });
 
     it('should have the correct html text', () => {
@@ -53,7 +52,7 @@ describe('Alert', function() {
       expect(alertTextHtml.prop('dangerouslySetInnerHTML')).to.deep.equal(textHtml);
     });
 
-    describe('the dismissIcon', () => {
+    describe('the dismissBtn', () => {
       it('should exist when isDismissable is true', () => {
         const wrapper = shallow(<Alert {...this.defaultProps}/>);
         expect(wrapper.find('.alert-dismiss')).to.have.length(1);
@@ -92,11 +91,21 @@ describe('Alert', function() {
         expect(dismiss.prop('disabled')).to.be.true;
       });
 
-      it('should call animatingAlertOut when clicked', () => {
-        const wrapper = shallow(<Alert {...this.defaultProps}/>);
+      it('should call animateOutAlert when clicked, but not 4 seconds later', () => {
+        const props = {
+          ...this.defaultProps,
+          persistent: false
+        };
+
+        const wrapper = shallow(<Alert {...props}/>);
+        wrapper.instance().componentDidTransition('enter');
+        expect(this.animateOutAlert).to.not.have.been.called;
+        this.clock.tick(1000);
         const dismiss = wrapper.find('.alert-dismiss');
         dismiss.simulate('click');
-        expect(this.animateOutAlert).to.be.calledOnce;
+        expect(this.animateOutAlert).to.have.been.calledOnce;
+        this.clock.tick(4000);
+        expect(this.animateOutAlert).to.have.been.calledOnce;
       });
     });
 
@@ -142,32 +151,6 @@ describe('Alert', function() {
     });
 
     describe('and transitionType is "leave"', () => {
-      it('should prevent animateOutAlert from being called', () => {
-        const props = {
-          ...this.defaultProps,
-          persistent: false
-        };
-
-        const wrapper = shallow(<Alert {...props}/>);
-        wrapper.instance().componentDidTransition('enter');
-        expect(this.animateOutAlert).to.not.have.been.called;
-        this.clock.tick(1000);
-        wrapper.instance().componentDidTransition('leave');
-        this.clock.tick(4000);
-        expect(this.animateOutAlert).to.not.have.been.called;
-      });
-
-      it('should call dispatch if onDismissAction has a value', () => {
-        const props = {
-          ...this.defaultProps,
-          onDismissAction: 'action'
-        };
-        const wrapper = shallow(<Alert {...props}/>);
-        wrapper.instance().componentDidTransition('leave');
-        expect(this.dispatch).to.have.been.calledOnce;
-        expect(this.dispatch).to.have.been.calledWith('action');
-      });
-
       it('should call destroyFirstAlert and onTransitionOutAlert', () => {
         const wrapper = shallow(<Alert {...this.defaultProps}/>);
         wrapper.instance().componentDidTransition('leave');

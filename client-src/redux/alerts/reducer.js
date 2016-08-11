@@ -5,7 +5,7 @@ import contactActionTypes from '../contact/action-types';
 import initialState from './initial-state';
 
 const validActionProps = [
-  'text', 'style', 'onDismissAction', 'isDismissable', 'persistent',
+  'text', 'style', 'isDismissable', 'persistent',
   'icon', 'id'
 ];
 
