@@ -13,8 +13,7 @@ const defaultIconMap = {
 const Alert = React.createClass({
   componentDidTransition(transitionType) {
     const {
-      destroyFirstAlert, persistent, animateOutAlert, onDismissAction, dispatch,
-      onTransitionOutAlert
+      destroyFirstAlert, persistent, animateOutAlert, onTransitionOutAlert
     } = this.props;
 
     if (transitionType === 'enter') {
@@ -24,30 +23,26 @@ const Alert = React.createClass({
         }, 4000);
       }
     } else {
-      clearTimeout(this._autodestruct);
-      // If the alert was given an action to emit when it unmounts,
-      // then we call that now.
-      if (onDismissAction) {
-        dispatch(onDismissAction);
-      }
       destroyFirstAlert();
       onTransitionOutAlert();
     }
   },
 
+  onManualDismiss() {
+    const {animateOutAlert} = this.props;
+    clearTimeout(this._autodestruct);
+    animateOutAlert();
+  },
+
   render() {
     const {
-      style,
-      icon,
-      text,
-      animatingAlertOut,
-      isDismissable,
-      animateOutAlert
+      style, icon, text, animatingAlertOut, isDismissable
     } = this.props;
 
+    const styleClass = `alert-${style}`;
     const alertClass = classNames({
       alert: true,
-      [style]: true,
+      [styleClass]: true,
       'dismissable-alert': isDismissable
     });
 
@@ -61,13 +56,13 @@ const Alert = React.createClass({
       [materialIconClass]: true
     });
 
-    let dismissIcon;
+    let dismissBtn;
     if (isDismissable) {
-      dismissIcon = (
+      dismissBtn = (
         <button
           className="alert-dismiss"
           disabled={animatingAlertOut}
-          onClick={() => animateOutAlert()}>
+          onClick={this.onManualDismiss}>
           <i className="zmdi zmdi-close"/>
         </button>
       );
@@ -83,7 +78,7 @@ const Alert = React.createClass({
           <i className={iconClass}/>
           <span dangerouslySetInnerHTML={textHtml}/>
         </span>
-        {dismissIcon}
+        {dismissBtn}
       </div>
     );
   }
