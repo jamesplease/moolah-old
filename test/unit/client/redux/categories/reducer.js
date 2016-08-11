@@ -65,7 +65,13 @@ describe('categories/reducer', function() {
         categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
         creatingCategoryStatus: 'PENDING'
       };
-      const action = {type: actionTypes.CREATE_CATEGORY_FAILURE};
+      const action = {
+        type: actionTypes.CREATE_CATEGORY_FAILURE,
+        category: {
+          id: 4,
+          pasta: 'yum'
+        }
+      };
       var newState = {
         categories: [{id: 1}, {id: 2}, {id: 3}],
         categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
@@ -82,7 +88,13 @@ describe('categories/reducer', function() {
         categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
         creatingCategoryStatus: 'PENDING'
       };
-      const action = {type: actionTypes.CREATE_CATEGORY_ABORTED};
+      const action = {
+        type: actionTypes.CREATE_CATEGORY_ABORTED,
+        category: {
+          id: 4,
+          pasta: 'yum'
+        }
+      };
       var newState = {
         categories: [{id: 1}, {id: 2}, {id: 3}],
         categoriesMeta: [{id: 1}, {id: 2}, {id: 3}],
@@ -185,7 +197,9 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
       var newState = {
         categories: [{id: 1}, {id: 2}, {id: 3}],
@@ -236,7 +250,9 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_FAILURE,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
       var newState = {
         categories: [{id: 1}, {id: 2}, {id: 3}],
@@ -262,7 +278,9 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_ABORTED,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
       var newState = {
         categories: [{id: 1}, {id: 2}, {id: 3}],
@@ -288,7 +306,9 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
       var newState = {
         categories: [{id: 1}, {id: 2}, {id: 3}],
@@ -311,7 +331,9 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
     });
 
@@ -337,7 +359,9 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_SUCCESS,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
     });
 
@@ -359,7 +383,9 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_FAILURE,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
     });
 
@@ -385,7 +411,9 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_FAILURE,
-        categoryId: 2
+        category: {
+          id: 2
+        }
       };
     });
 

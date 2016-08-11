@@ -64,12 +64,15 @@ describe('alerts/reducer', function() {
         alerts: [{id: 1}, {id: 2}, {id: 3}]
       };
       const action = {
-        type: categoryActionTypes.CREATE_CATEGORY_SUCCESS
+        type: categoryActionTypes.CREATE_CATEGORY_SUCCESS,
+        category: {
+          label: 'sandwiches'
+        }
       };
       const newState = {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
           id: 'asdf',
-          text: 'Category created',
+          text: 'Created "sandwiches" category',
           style: 'success',
           isDismissable: true,
           persistent: false
@@ -85,13 +88,16 @@ describe('alerts/reducer', function() {
         alerts: [{id: 1}, {id: 2}, {id: 3}]
       };
       const action = {
-        type: categoryActionTypes.CREATE_CATEGORY_FAILURE
+        type: categoryActionTypes.CREATE_CATEGORY_FAILURE,
+        category: {
+          label: 'pasta'
+        }
       };
       const newState = {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
           id: 'asdf',
           style: 'danger',
-          text: 'Oops – there was an error. Try that one more time?',
+          text: 'There was an error while creating the "pasta" category',
           isDismissable: true,
           persistent: false
         }]
@@ -106,12 +112,15 @@ describe('alerts/reducer', function() {
         alerts: [{id: 1}, {id: 2}, {id: 3}]
       };
       const action = {
-        type: categoryActionTypes.UPDATE_CATEGORY_SUCCESS
+        type: categoryActionTypes.UPDATE_CATEGORY_SUCCESS,
+        category: {
+          label: 'oink'
+        }
       };
       const newState = {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
           id: 'asdf',
-          text: 'Category updated',
+          text: 'Updated "oink" category',
           style: 'success',
           isDismissable: true,
           persistent: false
@@ -127,13 +136,16 @@ describe('alerts/reducer', function() {
         alerts: [{id: 1}, {id: 2}, {id: 3}]
       };
       const action = {
-        type: categoryActionTypes.UPDATE_CATEGORY_FAILURE
+        type: categoryActionTypes.UPDATE_CATEGORY_FAILURE,
+        category: {
+          label: 'asdf'
+        }
       };
       const newState = {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
           id: 'asdf',
           style: 'danger',
-          text: 'Oops – there was an error. Try that one more time?',
+          text: 'There was an error while updating the "asdf" category',
           isDismissable: true,
           persistent: false
         }]
@@ -148,12 +160,15 @@ describe('alerts/reducer', function() {
         alerts: [{id: 1}, {id: 2}, {id: 3}]
       };
       const action = {
-        type: categoryActionTypes.DELETE_CATEGORY_SUCCESS
+        type: categoryActionTypes.DELETE_CATEGORY_SUCCESS,
+        category: {
+          label: 'sandwich'
+        }
       };
       const newState = {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
           id: 'asdf',
-          text: 'Category deleted',
+          text: 'Deleted "sandwich" category',
           style: 'success',
           isDismissable: true,
           persistent: false
@@ -169,13 +184,16 @@ describe('alerts/reducer', function() {
         alerts: [{id: 1}, {id: 2}, {id: 3}]
       };
       const action = {
-        type: categoryActionTypes.DELETE_CATEGORY_FAILURE
+        type: categoryActionTypes.DELETE_CATEGORY_FAILURE,
+        category: {
+          label: 'pasta'
+        }
       };
       const newState = {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
           id: 'asdf',
           style: 'danger',
-          text: 'Oops – there was an error. Try that one more time?',
+          text: 'There was an error while deleting the "pasta" category',
           isDismissable: true,
           persistent: false
         }]
@@ -196,7 +214,7 @@ describe('alerts/reducer', function() {
         alerts: [{id: 1}, {id: 2}, {id: 3}, {
           id: 'asdf',
           style: 'danger',
-          text: 'Oops – there was an error. Try that one more time?',
+          text: 'Oops – there was an error while sending your message. Try submitting it one more time?',
           isDismissable: true,
           persistent: false
         }]

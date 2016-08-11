@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import xhr from 'xhr';
 import actionTypes from './action-types';
 
@@ -9,16 +10,25 @@ export function resetCreateCategoryResolution() {
 
 export function createCategory(data) {
   return dispatch => {
-    dispatch({type: actionTypes.CREATE_CATEGORY});
+    dispatch({
+      type: actionTypes.CREATE_CATEGORY,
+      category: data
+    });
 
     const req = xhr.post(
       '/api/v1/categories',
       {json: data},
       (err, res, body) => {
         if (req.aborted) {
-          dispatch({type: actionTypes.CREATE_CATEGORY_ABORTED});
+          dispatch({
+            type: actionTypes.CREATE_CATEGORY_ABORTED,
+            category: data
+          });
         } else if (err || res.statusCode >= 400) {
-          dispatch({type: actionTypes.CREATE_CATEGORY_FAILURE});
+          dispatch({
+            type: actionTypes.CREATE_CATEGORY_FAILURE,
+            category: data
+          });
         } else {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_SUCCESS,
@@ -74,7 +84,7 @@ export function updateCategory(category) {
   return dispatch => {
     dispatch({
       type: actionTypes.UPDATE_CATEGORY,
-      categoryId: category.id
+      category
     });
 
     const {id} = category;
@@ -85,12 +95,12 @@ export function updateCategory(category) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_ABORTED,
-            categoryId: category.id
+            category
           });
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_FAILURE,
-            categoryId: category.id
+            category
           });
         } else {
           dispatch({
@@ -106,10 +116,13 @@ export function updateCategory(category) {
 }
 
 export function deleteCategory(categoryId) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const categoryList = getState().categories.categories;
+    const categoryToDelete = _.find(categoryList, {id: categoryId});
+
     dispatch({
       type: actionTypes.DELETE_CATEGORY,
-      categoryId
+      category: categoryToDelete
     });
 
     const req = xhr.del(
@@ -119,17 +132,17 @@ export function deleteCategory(categoryId) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_ABORTED,
-            categoryId
+            category: categoryToDelete
           });
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_FAILURE,
-            categoryId
+            category: categoryToDelete
           });
         } else {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_SUCCESS,
-            categoryId
+            category: categoryToDelete
           });
         }
       }
