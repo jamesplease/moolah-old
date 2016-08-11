@@ -3,16 +3,21 @@
   max-width: 80vw;
   line-height: 20px;
   color: #fff;
-  text-align: center;
   display: flex;
   align-items: center;
-  padding: 14px 0;
+  padding: 10px 0;
   border-radius: 6px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 5px;
+  left: 0;
+  right: 0;
+  z-index: 20000;
+  width: 300px;
+  margin: 0 auto;
 
   &.alert-enter,
-  &.alert-appear,
-  &.alert-leave.alert-leave-active {
+  &.alert-appear {
     opacity: 0.01;
     transform: scale(0.92);
   }
@@ -25,8 +30,10 @@
   }
 
   &.alert-leave.alert-leave-active {
-    transition: opacity 0.15s, transform 0.15s;
-    transition-timing-function: linear;
+    transition: opacity 0.2s, transform 0.2s;
+    transition-timing-function: ease;
+    opacity: 0.01;
+    transform: scale(0.85);
   }
 
   &.alert-appear.alert-appear-active,
@@ -51,19 +58,16 @@
     background: radial-gradient(circle at top right, #36c7f4, #6593f0);
   }
 
-  .alert-text {
+  .alert-title {
     flex: 1;
     padding: 0 15px;
+    font-weight: bold;
   }
 
   &.dismissable-alert .alert-text {
     // The left padding is so large to account for the space taken up
     // by the `dismiss` icon.
     padding-left: 37px;
-  }
-
-  .alert-icon {
-    margin-right: 7px;
   }
 
   .alert-dismiss {

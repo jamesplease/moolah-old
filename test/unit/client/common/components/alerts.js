@@ -60,7 +60,7 @@ describe('Alerts', function() {
         alerts: [{id: 1, persistent: false}]
       });
 
-      expect(wrapper.prop('className')).to.equal('alerts alertVisible');
+      expect(wrapper.prop('className')).to.equal('alerts');
       expect(wrapper.prop('component')).to.equal('div');
       expect(wrapper.prop('transitionName')).to.equal('alert');
       expect(wrapper.prop('transitionAppear')).to.equal(true);
@@ -80,7 +80,6 @@ describe('Alerts', function() {
       expect(alert).to.have.length(1);
       expect(alert.prop('dispatch')).to.equal(this.dispatch);
       expect(alert.prop('animateOutAlert')).to.equal(wrapper.instance().animateOutAlert);
-      expect(alert.prop('onTransitionOutAlert')).to.equal(wrapper.instance().onTransitionOutAlert);
       expect(alert.prop('animatingAlertOut')).to.be.false;
       expect(alert.prop('pizza')).to.be.true;
       expect(alert.prop('id')).to.equal(1);
@@ -112,7 +111,7 @@ describe('Alerts', function() {
         ]
       });
 
-      expect(wrapper.prop('className')).to.equal('alerts alertVisible');
+      expect(wrapper.prop('className')).to.equal('alerts');
       expect(wrapper.prop('component')).to.equal('div');
       expect(wrapper.prop('transitionName')).to.equal('alert');
       expect(wrapper.prop('transitionAppear')).to.equal(true);
@@ -135,7 +134,6 @@ describe('Alerts', function() {
       expect(alert).to.have.length(1);
       expect(alert.prop('dispatch')).to.equal(this.dispatch);
       expect(alert.prop('animateOutAlert')).to.equal(wrapper.instance().animateOutAlert);
-      expect(alert.prop('onTransitionOutAlert')).to.equal(wrapper.instance().onTransitionOutAlert);
       expect(alert.prop('animatingAlertOut')).to.be.false;
       expect(alert.prop('pizza')).to.be.true;
       expect(alert.prop('id')).to.equal(1);
@@ -160,55 +158,6 @@ describe('Alerts', function() {
       expect(alert).to.have.length(0);
     });
   });
-
-  describe('when onTransitionOutAlert is called', () => {
-    describe('and has a queued alert', () => {
-      it('should retain the classNames', () => {
-        const wrapper = shallow(<Alerts {...this.defaultProps}/>);
-
-        wrapper.setProps({
-          alerts: [
-            {id: 1, persistent: false},
-          ]
-        });
-
-        expect(wrapper.prop('className')).to.equal('alerts alertVisible');
-
-        const alert = wrapper.find(Alert);
-        alert.prop('onTransitionOutAlert')();
-        wrapper.update();
-        expect(wrapper.prop('className')).to.equal('alerts alertVisible');
-      });
-    });
-
-    describe('and has no queued alerts', () => {
-      it('should have the correct className', () => {
-        const wrapper = shallow(<Alerts {...this.defaultProps}/>);
-
-        wrapper.setProps({
-          alerts: [
-            {id: 1, persistent: false},
-          ]
-        });
-
-        expect(wrapper.prop('className')).to.equal('alerts alertVisible');
-
-        const alert = wrapper.find(Alert);
-        wrapper.setProps({
-          alerts: []
-        });
-        alert.prop('onTransitionOutAlert')();
-        wrapper.update();
-        expect(wrapper.prop('className')).to.equal('alerts');
-      });
-    });
-  });
-
-
-  // test for conditions to bail out
-  // case when no alerts are queued (alert to no alert)
-  // case when alert is queued (one alert to different alert)
-  // (check for Alert prop id
 
   describe('when componentWillReceiveProps is called', () => {
     it('should not change activeAlert when animatingAlertOut is true', () => {
@@ -243,7 +192,7 @@ describe('Alerts', function() {
         ]
       });
 
-      expect(wrapper.prop('className')).to.equal('alerts alertVisible');
+      expect(wrapper.prop('className')).to.equal('alerts');
 
       alert = wrapper.find(Alert);
       expect(alert).to.have.length(1);
@@ -277,7 +226,7 @@ describe('Alerts', function() {
         ]
       });
 
-      expect(wrapper.prop('className')).to.equal('alerts alertVisible');
+      expect(wrapper.prop('className')).to.equal('alerts');
       let alert = wrapper.find(Alert);
       expect(alert).to.have.length(1);
       expect(alert.prop('id')).to.equal(1);
@@ -290,7 +239,7 @@ describe('Alerts', function() {
         ]
       });
 
-      expect(wrapper.prop('className')).to.equal('alerts alertVisible');
+      expect(wrapper.prop('className')).to.equal('alerts');
 
       alert = wrapper.find(Alert);
       expect(alert).to.have.length(1);
