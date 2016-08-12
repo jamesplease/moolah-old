@@ -92,7 +92,7 @@ export default (state = initialState, action) => {
     // Update category
     case actionTypes.UPDATE_CATEGORY: {
       const categoriesMeta = state.categoriesMeta.map(c => {
-        if (c.id !== action.categoryId) {
+        if (c.id !== action.category.id) {
           return {...c};
         } else {
           return {
@@ -139,7 +139,7 @@ export default (state = initialState, action) => {
 
     case actionTypes.UPDATE_CATEGORY_FAILURE: {
       const categoriesMeta = state.categoriesMeta.map(c => {
-        if (c.id !== action.categoryId) {
+        if (c.id !== action.category.id) {
           return {...c};
         } else {
           return {
@@ -157,9 +157,10 @@ export default (state = initialState, action) => {
 
     case actionTypes.UPDATE_CATEGORY_ABORTED:
     case actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION: {
+      const id = action.category ? action.category.id : action.categoryId;
       const clonedMeta = _.cloneDeep(state.categoriesMeta);
       const categoriesMeta = clonedMeta.map(c => {
-        if (c.id !== action.categoryId) {
+        if (c.id !== id) {
           return {...c};
         } else {
           return {
@@ -179,12 +180,12 @@ export default (state = initialState, action) => {
     case actionTypes.DELETE_CATEGORY: {
       const clonedMeta = _.cloneDeep(state.categoriesMeta);
       const categoriesMeta = clonedMeta.map(c => {
-        if (c.id !== action.categoryId) {
+        if (c.id !== action.category.id) {
           return c;
         } else {
           return {
             ...c,
-            isDeleting: c.id === action.categoryId
+            isDeleting: c.id === action.category.id
           };
         }
       });
@@ -196,7 +197,7 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.DELETE_CATEGORY_SUCCESS: {
-      const rejectionFn = val => val.id === action.categoryId;
+      const rejectionFn = val => val.id === action.category.id;
       const clonedCategories = _.cloneDeep(state.categories);
       const clonedMeta = _.cloneDeep(state.categoriesMeta);
 
@@ -213,7 +214,7 @@ export default (state = initialState, action) => {
     case actionTypes.DELETE_CATEGORY_ABORTED: {
       const clonedMeta = _.cloneDeep(state.categoriesMeta);
       const categoriesMeta = clonedMeta.map(c => {
-        if (c.id !== action.categoryId) {
+        if (c.id !== action.category.id) {
           return c;
         } else {
           return {
