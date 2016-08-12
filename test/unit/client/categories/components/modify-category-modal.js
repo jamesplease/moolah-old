@@ -170,6 +170,14 @@ describe('ModifyCategoryModal', function() {
         expect(labelInput.hasClass('invalid-input')).to.be.false;
         expect(labelInput.prop('type')).to.equal('text');
         expect(labelInput.prop('placeholder')).to.equal('Enter name');
+        expect(labelInput.prop('disabled')).to.be.falsey;
+      });
+
+      it('should have a disabled input when a creation is in progress', () => {
+        const props = {confirmInProgress: true};
+        const form = this.generator.shallow(props).find('form');
+        const labelInput = form.find('.newCategoryName');
+        expect(labelInput.prop('disabled')).to.be.true;
       });
 
       it('should call preventDefault and `handleSubmit` when submitted', () => {

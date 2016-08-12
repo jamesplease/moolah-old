@@ -117,6 +117,7 @@ const ModifyCategoryModal = React.createClass({
               placeholder="Enter name"
               autoComplete="off"
               autoCorrect={true}
+              disabled={confirmInProgress}
               spellCheck={true}
               inputMode="verbatim"
               ref={node => {this.labelInput = node;}}
