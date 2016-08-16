@@ -12,7 +12,7 @@ describe('Alert', function() {
 
     this.defaultProps = {
       style: 'success',
-      text: 'hello<br/>world',
+      text: 'pasta is good',
       animatingAlertOut: false,
       isDismissable: true,
       persistent: true,
@@ -40,15 +40,7 @@ describe('Alert', function() {
     it('should have the correct html text', () => {
       const wrapper = shallow(<Alert {...this.defaultProps}/>);
       const alertTitle = wrapper.find('.alert-title');
-
-      // `find` returns itself if it matches the selector, in this case it returns two nodes.
-      // We're using a more specific selector to prevent this from happening.
-      const alertTitleHtml = alertTitle.find('> span');
-      const textHtml = {
-        __html: 'hello<br/>world'
-      };
-
-      expect(alertTitleHtml.prop('dangerouslySetInnerHTML')).to.deep.equal(textHtml);
+      expect(alertTitle.text()).to.equal('pasta is good')
     });
 
     describe('the dismissBtn', () => {

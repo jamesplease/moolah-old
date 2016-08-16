@@ -48,14 +48,10 @@ const Alert = React.createClass({
       );
     }
 
-    const textHtml = {
-      __html: text
-    };
-
     return (
       <div className={alertClass}>
         <span className="alert-title">
-          <span dangerouslySetInnerHTML={textHtml}/>
+          {text}
         </span>
         {dismissBtn}
       </div>
