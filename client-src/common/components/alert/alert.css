@@ -17,6 +17,11 @@
   margin: 0 auto;
 
   &.alert-enter,
+  &.alert-leave {
+    will-change: opacity, transform;
+  }
+
+  &.alert-enter,
   &.alert-appear {
     opacity: 0.01;
     transform: scale(0.92);
