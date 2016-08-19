@@ -7,7 +7,7 @@ import {truncateAt} from '../../common/services/string-util';
 
 const validActionProps = [
   'text', 'style', 'isDismissable', 'persistent',
-  'icon', 'id'
+  'icon', 'id', 'details'
 ];
 
 export default (state = initialState, action) => {

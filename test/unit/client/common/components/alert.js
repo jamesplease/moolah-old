@@ -12,7 +12,7 @@ describe('Alert', function() {
 
     this.defaultProps = {
       style: 'success',
-      text: 'hello<br/>world',
+      text: 'pasta is good',
       animatingAlertOut: false,
       isDismissable: true,
       persistent: true,
@@ -40,15 +40,42 @@ describe('Alert', function() {
     it('should have the correct html text', () => {
       const wrapper = shallow(<Alert {...this.defaultProps}/>);
       const alertTitle = wrapper.find('.alert-title');
+      expect(alertTitle.text()).to.equal('pasta is good');
+    });
 
-      // `find` returns itself if it matches the selector, in this case it returns two nodes.
-      // We're using a more specific selector to prevent this from happening.
-      const alertTitleHtml = alertTitle.find('> span');
-      const textHtml = {
-        __html: 'hello<br/>world'
-      };
+    it('should not have a details list', () => {
+      const wrapper = shallow(<Alert {...this.defaultProps}/>);
+      expect(wrapper.find('.alert-details-list')).to.have.length(0);
+    });
 
-      expect(alertTitleHtml.prop('dangerouslySetInnerHTML')).to.deep.equal(textHtml);
+    describe('with details', () => {
+      it('should render a details list', () => {
+        const props = {
+          ...this.defaultProps,
+          details: [
+            'hello'
+          ]
+        };
+
+        const wrapper = shallow(<Alert {...props}/>);
+        expect(wrapper.find('.alert-details-list')).to.have.length(1);
+      });
+
+      it('should render the passed-in details', () => {
+        const props = {
+          ...this.defaultProps,
+          details: [
+            'hello',
+            'friend'
+          ]
+        };
+
+        const wrapper = shallow(<Alert {...props}/>);
+        const detailsList = wrapper.find('.alert-details-list');
+        expect(detailsList.children()).to.have.length(2);
+        expect(detailsList.childAt(0).text()).to.equal('hello');
+        expect(detailsList.childAt(1).text()).to.equal('friend');
+      });
     });
 
     describe('the dismissBtn', () => {

@@ -26,13 +26,14 @@ const Alert = React.createClass({
 
   render() {
     const {
-      style, text, animatingAlertOut, isDismissable
+      style, text, animatingAlertOut, isDismissable, details
     } = this.props;
 
     const styleClass = `alert-${style}`;
     const alertClass = classNames({
       alert: true,
       [styleClass]: true,
+      'alert-with-details': details,
       'dismissable-alert': isDismissable
     });
 
@@ -48,16 +49,26 @@ const Alert = React.createClass({
       );
     }
 
-    const textHtml = {
-      __html: text
-    };
+    let detailsList;
+    if (details && details.length) {
+      detailsList = (
+        <ul className="alert-details-list">
+          {details.map(detail => (
+            <li key={detail}>{detail}</li>
+          ))}
+        </ul>
+      );
+    }
 
     return (
       <div className={alertClass}>
-        <span className="alert-title">
-          <span dangerouslySetInnerHTML={textHtml}/>
-        </span>
-        {dismissBtn}
+        <div className="alert-title-container">
+          <span className="alert-title">
+            {text}
+          </span>
+          {dismissBtn}
+        </div>
+        {detailsList}
       </div>
     );
   }

@@ -3,9 +3,7 @@
   max-width: 80vw;
   line-height: 20px;
   color: #fff;
-  display: flex;
   align-items: center;
-  padding: 10px 0;
   border-radius: 6px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
   position: fixed;
@@ -15,6 +13,20 @@
   z-index: 20000;
   width: 300px;
   margin: 0 auto;
+
+  .alert-title-container {
+    display: flex;
+  }
+
+  .alert-details-list {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    list-style-type: disc;
+    padding-top: 6px;
+    padding-left: 32px;
+    padding-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.07);
+    line-height: 1.4;
+  }
 
   &.alert-enter,
   &.alert-leave {
@@ -65,8 +77,12 @@
 
   .alert-title {
     flex: 1;
-    padding: 0 15px;
+    padding: 10px 15px;
     font-weight: bold;
+  }
+
+  &.alert-with-details .alert-title {
+    padding-bottom: 8px;
   }
 
   &.dismissable-alert .alert-text {
