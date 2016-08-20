@@ -105,8 +105,11 @@ const ModifyCategoryModal = React.createClass({
         <h1 className="modal-title">
           {modalTitle}
         </h1>
-        {errorEl}
-        <form onSubmit={onFormSubmit}>
+        <form
+          onSubmit={onFormSubmit}
+          id="modify-category-modal-form"
+          className="modal-body">
+          {errorEl}
           <div className="form-row">
             <div className="createCategoryModal-emojiSelect">
               🙃
@@ -124,23 +127,24 @@ const ModifyCategoryModal = React.createClass({
               maxLength={35}
               {...label}/>
           </div>
-          <div className="form-row">
-            <button
-              type="button"
-              onClick={onClickCancelBtn}
-              className="btn btn-line createCategoryModal-cancelBtn"
-              disabled={confirmInProgress}
-              onMouseDown={this.mouseDownCancel}>
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="btn btn-info createCategoryModal-confirmBtn"
-              disabled={confirmInProgress || treatFormInvalid}>
-              {confirmText}
-            </button>
-          </div>
         </form>
+        <div className="modal-footer">
+          <button
+            type="button"
+            onClick={onClickCancelBtn}
+            className="btn btn-line createCategoryModal-cancelBtn"
+            disabled={confirmInProgress}
+            onMouseDown={this.mouseDownCancel}>
+            Cancel
+          </button>
+          <button
+            form="modify-category-modal-form"
+            type="submit"
+            className="btn btn-info createCategoryModal-confirmBtn"
+            disabled={confirmInProgress || treatFormInvalid}>
+            {confirmText}
+          </button>
+        </div>
       </div>
     );
   }

@@ -190,14 +190,14 @@ describe('ModifyCategoryModal', function() {
 
       describe('cancel button', () => {
         it('should exist', () => {
-          const form = this.generator.shallow().find('form');
-          const cancelBtn = form.find('.createCategoryModal-cancelBtn');
+          const wrapper = this.generator.shallow();
+          const cancelBtn = wrapper.find('.createCategoryModal-cancelBtn');
           expect(cancelBtn).to.have.length(1);
         });
 
         it('should not be disabled when no confirm is in progress', () => {
-          const form = this.generator.shallow().find('form');
-          const cancelBtn = form.find('.createCategoryModal-cancelBtn');
+          const wrapper = this.generator.shallow();
+          const cancelBtn = wrapper.find('.createCategoryModal-cancelBtn');
           expect(cancelBtn.prop('disabled')).to.be.falsey;
         });
 
@@ -210,28 +210,28 @@ describe('ModifyCategoryModal', function() {
               }
             }
           };
-          const form = this.generator.shallow(props).find('form');
-          const cancelBtn = form.find('.createCategoryModal-cancelBtn');
+          const wrapper = this.generator.shallow(props);
+          const cancelBtn = wrapper.find('.createCategoryModal-cancelBtn');
           expect(cancelBtn.prop('disabled')).to.be.falsey;
         });
 
         it('should be disabled when a creation is in progress', () => {
           const props = {confirmInProgress: true};
-          const form = this.generator.shallow(props).find('form');
-          const cancelBtn = form.find('.createCategoryModal-cancelBtn');
+          const wrapper = this.generator.shallow(props);
+          const cancelBtn = wrapper.find('.createCategoryModal-cancelBtn');
           expect(cancelBtn.prop('disabled')).to.be.true;
         });
 
         it('should have the right text', () => {
-          const form = this.generator.shallow().find('form');
-          const cancelBtn = form.find('.createCategoryModal-cancelBtn');
+          const wrapper = this.generator.shallow();
+          const cancelBtn = wrapper.find('.createCategoryModal-cancelBtn');
           expect(cancelBtn.text()).to.equal('Cancel');
         });
 
         it('should preventDefault and call `onClickCancel` when clicked', () => {
           const preventDefault = stub();
-          const form = this.generator.shallow().find('form');
-          const cancelBtn = form.find('.createCategoryModal-cancelBtn');
+          const wrapper = this.generator.shallow();
+          const cancelBtn = wrapper.find('.createCategoryModal-cancelBtn');
           cancelBtn.simulate('click', {preventDefault});
           expect(preventDefault).to.have.been.calledOnce;
           expect(this.onClickCancel).to.have.been.calledOnce;
@@ -240,20 +240,20 @@ describe('ModifyCategoryModal', function() {
 
       describe('confirm button', () => {
         it('should exist', () => {
-          const form = this.generator.shallow().find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow();
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn).to.have.length(1);
         });
 
         it('should be the submit button', () => {
-          const form = this.generator.shallow().find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow();
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.prop('type')).to.equal('submit');
         });
 
         it('should not be disabled when there are no errors & no save in progress', () => {
-          const form = this.generator.shallow().find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow();
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.prop('disabled')).to.be.falsey;
         });
 
@@ -266,8 +266,8 @@ describe('ModifyCategoryModal', function() {
               }
             }
           };
-          const form = this.generator.shallow(props).find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow(props);
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.prop('disabled')).to.be.falsey;
         });
 
@@ -280,33 +280,33 @@ describe('ModifyCategoryModal', function() {
               }
             }
           };
-          const form = this.generator.shallow(props).find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow(props);
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.prop('disabled')).to.be.true;
         });
 
         it('should be disabled when a creation is in progress', () => {
           const props = {confirmInProgress: true};
-          const form = this.generator.shallow(props).find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow(props);
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.prop('disabled')).to.be.true;
         });
 
         it('should have the right text', () => {
-          const form = this.generator.shallow().find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow();
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.text()).to.equal('Create');
         });
 
         it('should have the right text when edit mode is true', () => {
-          const form = this.generator.shallow({isEditMode: true}).find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow({isEditMode: true});
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.text()).to.equal('Edit');
         });
 
         it('should have the right text when a create is in progress', () => {
-          const form = this.generator.shallow({confirmInProgress: true}).find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow({confirmInProgress: true});
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.text()).to.equal('Creating...');
         });
 
@@ -315,8 +315,8 @@ describe('ModifyCategoryModal', function() {
             confirmInProgress: true,
             isEditMode: true
           };
-          const form = this.generator.shallow(props).find('form');
-          const confirmBtn = form.find('.createCategoryModal-confirmBtn');
+          const wrapper = this.generator.shallow(props);
+          const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');
           expect(confirmBtn.text()).to.equal('Editing...');
         });
       });

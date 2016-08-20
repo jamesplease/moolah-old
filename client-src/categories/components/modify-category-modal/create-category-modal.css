@@ -1,5 +1,5 @@
 .modifyCategoryModal-container {
-  width: 255px;
+  width: 320px;
 }
 
 .createCategoryModal {
@@ -16,11 +16,6 @@
     &:hover {
       background: #fafafa;
     }
-  }
-
-  .createCategoryModal-confirmBtn,
-  .createCategoryModal-cancelBtn {
-    width: 50%;
   }
 
   .newCategoryName {
