@@ -17,7 +17,10 @@
     "prefer-arrow-callback": "off",
     "max-len": "off",
     "no-empty-function": "off",
-    "import/named": "off"
+    "import/named": "off",
+    // This is for the string syntax provided by pg-promise used in integration
+    // tests.
+    "no-template-curly-in-string": "off"
   },
   "env": {
     "browser": true,

@@ -7,13 +7,13 @@ import _ from 'lodash';
 
 function hasAttr(attr, res) {
   if (!(attr in res.body)) {
-    throw new Error('Response missing `${attr}` attribute.');
+    throw new Error(`Response missing "${attr}" attribute.`);
   }
 }
 
 function doesNotHaveAttr(attr, res) {
   if (attr in res.body) {
-    throw new Error('Response has `${attr}` attribute.');
+    throw new Error(`Response has "${attr}" attribute.`);
   }
 }
 
