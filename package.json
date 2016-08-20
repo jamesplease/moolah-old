@@ -36,8 +36,8 @@
     "url": "https://github.com/jmeas/moolah/issues"
   },
   "engines": {
-    "node": "6.3.1",
-    "npm": "3.10.5"
+    "node": "6.4.0",
+    "npm": "3.10.6"
   },
   "homepage": "https://github.com/jmeas/moolah",
   "devDependencies": {
