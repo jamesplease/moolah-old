@@ -30,6 +30,8 @@
     "react/jsx-key": "error",
     "react/no-danger": "off",
     "react/jsx-no-target-blank": "error",
+    "react/forbid-component-props": "off",
+    "react/no-danger-with-children": "error",
     "react/jsx-pascal-case": "error",
     "react/jsx-space-before-closing": ["error", "never"],
     "import/no-named-as-default": "off",
