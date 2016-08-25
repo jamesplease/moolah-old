@@ -6,6 +6,11 @@ import * as contactActionCreators from '../../../redux/contact/action-creators';
 
 const Contact = React.createClass({
   componentWillUnmount() {
+    const {contactActions} = this.props;
+    // This ensures that if the user leaves the page, then comes back, that
+    // they can always send another message. Without it, the success message
+    // would stick around forever.
+    contactActions.resetSendMessageResolution();
     if (this.sendMessageXhr) {
       this.sendMessageXhr.abort();
     }
