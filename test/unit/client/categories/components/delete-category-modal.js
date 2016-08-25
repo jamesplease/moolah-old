@@ -26,7 +26,7 @@ describe('DeleteCategoryModal', function() {
 
     it('should have the category label in the title', () => {
       const wrapper = this.generator.shallow();
-      expect(wrapper.find('.modal-title').text()).to.equal('Delete "pasta"?');
+      expect(wrapper.find('.modal-title').text()).to.equal('Delete "pasta" category?');
     });
 
     describe('cancel button', () => {

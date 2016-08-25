@@ -16,27 +16,46 @@
   max-width: 85%;
   // When the header doesn't span the full width, then all of the whitespace
   // around it makes the top appear visually to have more padding than it does
-  padding: 22px 27px 27px;
+  //padding: 22px 27px 27px;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.25);
   margin: 0 auto;
   margin-top: 20vh;
 
+  .modal-container {
+    width: 320px;
+  }
+
   .modal-title {
     font-size: 17px;
     font-weight: normal;
-    padding: 0;
-    margin: 0 0 15px;
+    padding: 7px 15px;
+    margin: 0;
     text-align: center;
+    border-bottom: 1px solid #eaeaea;
+
+    + .modal-footer {
+      position: relative;
+      top: -1px;
+    }
   }
 
-  .modal-form-invalid {
-    .modal-title {
-      margin-bottom: 6px;
-    }
+  .modal-body {
+    padding: 15px;
   }
 
   .modal-error {
     text-align: center;
     margin-bottom: 13px;
+  }
+
+  .modal-footer {
+    padding: 7px 15px;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: flex-end;
+
+    .btn {
+      margin-left: 10px;
+    }
   }
 }
