@@ -80,7 +80,7 @@
     "json-loader": "0.5.4",
     "mocha": "3.0.2",
     "nodemon": "1.10.2",
-    "pleaserc": "2.2.0",
+    "pleaserc": "2.3.0",
     "postcss-easy-import": "1.0.1",
     "postcss-scss": "0.2.0",
     "precss": "1.4.0",
