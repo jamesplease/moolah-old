@@ -1,21 +1,67 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {Alerts} from '../../../../../client-src/common/components/alerts';
+import {
+  Alerts, __Rewire__, __ResetDependency__, __get__
+} from '../../../../../client-src/common/components/alerts';
 import Alert from '../../../../../client-src/common/components/alert';
 import ReactCSSTransitionGroup from '../../../../../client-src/vendor/css-transition-group';
 
+const mapStateToProps = __get__('mapStateToProps');
+const mapDispatchToProps = __get__('mapDispatchToProps');
+
 describe('Alerts', function() {
+  describe('mapStateToProps', () => {
+    it('returns the right props', () => {
+      expect(mapStateToProps({
+        alerts: {
+          alerts: [1, 2, 3],
+          animatingAlertOut: false
+        },
+        categories: {},
+        transactions: []
+      })).to.deep.equal({
+        alerts: [1, 2, 3],
+        animatingAlertOut: false
+      });
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    beforeEach(() => {
+      this.destroyFirstAlert = stub().returns({pasta: true});
+      __Rewire__('alertActionCreators', {
+        destroyFirstAlert: this.destroyFirstAlert
+      });
+
+      this.dispatch = stub();
+      this.props = mapDispatchToProps(this.dispatch);
+    });
+
+    afterEach(() => {
+      __ResetDependency__('alertActionCreators');
+    });
+
+    it('returns the right props', () => {
+      expect(this.props).to.have.keys(['destroyFirstAlert']);
+    });
+
+    it('returns a functioning `destroyFirstAlert`', () => {
+      this.props.destroyFirstAlert();
+      expect(this.destroyFirstAlert).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
+    });
+  });
+
   beforeEach(() => {
     this.dispatch = stub();
-    this.alertActions = {
-      pizza: true
-    };
+    this.destroyFirstAlert = () => {};
 
     this.defaultProps = {
       animatingAlertOut: false,
       alerts: [],
       dispatch: this.dispatch,
-      alertActions: this.alertActions
+      destroyFirstAlert: this.destroyFirstAlert
     };
   });
 
@@ -81,7 +127,7 @@ describe('Alerts', function() {
       expect(alert.prop('dispatch')).to.equal(this.dispatch);
       expect(alert.prop('animateOutAlert')).to.equal(wrapper.instance().animateOutAlert);
       expect(alert.prop('animatingAlertOut')).to.be.false;
-      expect(alert.prop('pizza')).to.be.true;
+      expect(alert.prop('destroyFirstAlert')).to.equal(this.destroyFirstAlert);
       expect(alert.prop('id')).to.equal(1);
       expect(alert.prop('persistent')).to.be.false;
     });
@@ -135,7 +181,7 @@ describe('Alerts', function() {
       expect(alert.prop('dispatch')).to.equal(this.dispatch);
       expect(alert.prop('animateOutAlert')).to.equal(wrapper.instance().animateOutAlert);
       expect(alert.prop('animatingAlertOut')).to.be.false;
-      expect(alert.prop('pizza')).to.be.true;
+      expect(alert.prop('destroyFirstAlert')).to.equal(this.destroyFirstAlert);
       expect(alert.prop('id')).to.equal(1);
       expect(alert.prop('persistent')).to.be.false;
     });

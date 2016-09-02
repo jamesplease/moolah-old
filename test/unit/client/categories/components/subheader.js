@@ -1,10 +1,58 @@
 import {
-  CategoriesSubheader, __Rewire__, __ResetDependency__
+  CategoriesSubheader, __Rewire__, __ResetDependency__, __get__
 } from '../../../../../client-src/categories/components/subheader';
 import Modal from '../../../../../client-src/common/components/modal';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
+const mapStateToProps = __get__('mapStateToProps');
+const mapDispatchToProps = __get__('mapDispatchToProps');
+
 describe('CategoriesSubheader', function() {
+  describe('mapStateToProps', () => {
+    it('returns the right props', () => {
+      expect(mapStateToProps({
+        connection: true,
+        categories: {
+          categories: [1, 2, 3],
+          creatingCategoryStatus: 'hello'
+        },
+        transactions: {},
+        oink: true
+      })).to.deep.equal({
+        isOnline: true,
+        categories: [1, 2, 3],
+        creatingCategoryStatus: 'hello'
+      });
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    beforeEach(() => {
+      this.createCategory = stub().returns({pasta: true});
+      __Rewire__('categoriesActionCreators', {
+        createCategory: this.createCategory
+      });
+
+      this.dispatch = stub();
+      this.props = mapDispatchToProps(this.dispatch);
+    });
+
+    afterEach(() => {
+      __ResetDependency__('categoriesActionCreators');
+    });
+
+    it('returns the right props', () => {
+      expect(this.props).to.have.keys(['createCategory']);
+    });
+
+    it('returns a functioning `createCategory`', () => {
+      this.props.createCategory();
+      expect(this.createCategory).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
+    });
+  });
+
   describe('rendering', () => {
     beforeEach(() => {
       this.ModifyCategoryModal = () => {};
@@ -12,9 +60,7 @@ describe('CategoriesSubheader', function() {
 
       this.createCategory = stub();
       this.defaultProps = {
-        categoriesActions: {
-          createCategory: this.createCategory
-        },
+        createCategory: this.createCategory,
         isOnline: true,
         categories: [{id: 1}, {id: 2}],
         creatingCategoryStatus: null
@@ -26,35 +72,35 @@ describe('CategoriesSubheader', function() {
       __ResetDependency__('ModifyCategoryModal');
     });
 
-    it('should have the right class', () => {
+    it('has the right class', () => {
       const wrapper = this.generator.shallow();
       expect(wrapper.hasClass('subheader listHeader')).to.be.true;
     });
 
-    it('should have a title with the right text', () => {
+    it('has a title with the right text', () => {
       const wrapper = this.generator.shallow();
       expect(wrapper.find('.subheader-title').text()).to.equal('Categories');
     });
 
-    it('should not render the modal', () => {
+    it('does not render the modal', () => {
       const wrapper = this.generator.shallow();
       expect(wrapper.find(Modal)).to.have.length(0);
     });
 
     describe('create button', () => {
-      it('should have the right text', () => {
+      it('has the right text', () => {
         const wrapper = this.generator.shallow();
         const createBtn = wrapper.find('.subheader-action');
         expect(createBtn.text()).to.equal('+ Category');
       });
 
-      it('should not be disabled', () => {
+      it('is not disabled', () => {
         const wrapper = this.generator.shallow();
         const createBtn = wrapper.find('.subheader-action');
         expect(createBtn.prop('disabled')).to.be.false;
       });
 
-      it('should be disabled when the user is not online', () => {
+      it('is disabled when the user is not online', () => {
         const wrapper = this.generator.shallow({isOnline: false});
         const createBtn = wrapper.find('.subheader-action');
         expect(createBtn.prop('disabled')).to.be.true;
@@ -69,19 +115,19 @@ describe('CategoriesSubheader', function() {
         this.wrapper.update();
       });
 
-      it('should show the modal', () => {
+      it('shows the modal', () => {
         const modal = this.wrapper.find(Modal);
         expect(modal).to.have.length(1);
         expect(modal.prop('modalClassName')).to.equal('modifyCategoryModal-container');
       });
 
-      it('should have a ModifyCategoryModal', () => {
+      it('has a ModifyCategoryModal', () => {
         const modal = this.wrapper.find(Modal);
         const modifyCategoryModal = modal.find(this.ModifyCategoryModal);
         expect(modifyCategoryModal).to.have.length(1);
       });
 
-      it('should pass the right props to ModifyCategoryModal', () => {
+      it('passes the right props to ModifyCategoryModal', () => {
         const modal = this.wrapper.find(Modal);
         const modifyCategoryModal = modal.find(this.ModifyCategoryModal);
         expect(modifyCategoryModal.prop('categories')).to.deep.equal([{id: 1}, {id: 2}]);
@@ -92,13 +138,13 @@ describe('CategoriesSubheader', function() {
         expect(modifyCategoryModal.prop('onSubmit')).to.equal(this.wrapper.instance().onClickModalCreate);
       });
 
-      it('should close the modal when `onClickModalCancel` is called', () => {
+      it('closes the modal when `onClickModalCancel` is called', () => {
         this.wrapper.instance().onClickModalCancel();
         this.wrapper.update();
         expect(this.wrapper.find(Modal)).to.have.length(0);
       });
 
-      it('should close the modal when new props are passed in', () => {
+      it('closes the modal when new props are passed in', () => {
         this.wrapper.setProps({
           creatingCategoryStatus: 'SUCCESS'
         });
@@ -107,7 +153,7 @@ describe('CategoriesSubheader', function() {
     });
 
     describe('onClickModalCreate', () => {
-      it('should call `createCategory` with the props', () => {
+      it('calls `createCategory` with the props', () => {
         const wrapper = this.generator.shallow();
         wrapper.instance().onClickModalCreate({
           label: '  pizza   ',
@@ -120,7 +166,7 @@ describe('CategoriesSubheader', function() {
         });
       });
 
-      it('should call `createCategory`, filling in missing props', () => {
+      it('calls `createCategory`, filling in missing props', () => {
         const wrapper = this.generator.shallow();
         wrapper.instance().onClickModalCreate();
         expect(this.createCategory).to.have.been.calledOnce;

@@ -1,5 +1,7 @@
 import React from 'react';
-import {Content} from '../../../../../client-src/categories/components/content';
+import {
+  Content, __Rewire__, __ResetDependency__, __get__
+} from '../../../../../client-src/categories/components/content';
 import Subheader from '../../../../../client-src/categories/components/subheader';
 import CategoriesList from '../../../../../client-src/categories/components/categories-list';
 import EmptyCategories from '../../../../../client-src/categories/components/empty-categories';
@@ -7,7 +9,53 @@ import ErrorRetrieving from '../../../../../client-src/common/components/error-r
 import LoadingResourceList from '../../../../../client-src/common/components/loading-resource-list';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
+const mapStateToProps = __get__('mapStateToProps');
+const mapDispatchToProps = __get__('mapDispatchToProps');
+
 describe('CategoriesContent', function() {
+  describe('mapStateToProps', () => {
+    it('returns the right props', () => {
+      expect(mapStateToProps({
+        categories: {
+          categories: [1, 2, 3],
+          retrievingCategoriesStatus: 'hello'
+        },
+        transactions: {},
+        oink: true
+      })).to.deep.equal({
+        categories: [1, 2, 3],
+        retrievingCategoriesStatus: 'hello'
+      });
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    beforeEach(() => {
+      this.retrieveCategories = stub().returns({pasta: true});
+      __Rewire__('categoriesActionCreators', {
+        retrieveCategories: this.retrieveCategories
+      });
+
+      this.dispatch = stub();
+      this.props = mapDispatchToProps(this.dispatch);
+    });
+
+    afterEach(() => {
+      __ResetDependency__('categoriesActionCreators');
+    });
+
+    it('returns the right props', () => {
+      expect(this.props).to.have.keys(['retrieveCategories']);
+    });
+
+    it('returns a functioning `retrieveCategories`', () => {
+      this.props.retrieveCategories();
+      expect(this.retrieveCategories).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
+    });
+  });
+
   describe('rendering', () => {
     beforeEach(() => {
       this.mockXhrAbort = stub();
@@ -15,14 +63,12 @@ describe('CategoriesContent', function() {
         abort: this.mockXhrAbort
       };
 
-      this.mockCategoriesActions = {
-        retrieveCategories: stub().returns(this.mockXhr)
-      };
-
       this.mockCategories = [{id: 1}, {id: 2}];
 
+      this.retrieveCategories = stub().returns(this.mockXhr);
+
       this.defaultProps = {
-        categoriesActions: this.mockCategoriesActions,
+        retrieveCategories: this.retrieveCategories,
         categories: this.mockCategories,
         retrieveCategoriesStatus: null
       };
@@ -33,7 +79,7 @@ describe('CategoriesContent', function() {
     it('should call `retrieveCategories` on mount', () => {
       const wrapper = this.generator.shallow();
       wrapper.instance().componentDidMount();
-      expect(this.mockCategoriesActions.retrieveCategories).to.have.been.calledOnce;
+      expect(this.retrieveCategories).to.have.been.calledOnce;
     });
 
     describe('unmounting', () => {
@@ -63,7 +109,7 @@ describe('CategoriesContent', function() {
       });
       const errorRetrieving = (
         <ErrorRetrieving
-          retry={this.mockCategoriesActions.retrieveCategories}
+          retry={this.retrieveCategories}
           resourceName="Categories"/>
       );
       expect(wrapper.contains(errorRetrieving)).to.be.true;

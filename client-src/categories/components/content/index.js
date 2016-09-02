@@ -10,8 +10,8 @@ import LoadingResourceList from '../../../common/components/loading-resource-lis
 
 export const Content = React.createClass({
   componentDidMount() {
-    const {categoriesActions} = this.props;
-    this.fetchingCategoriesXhr = categoriesActions.retrieveCategories();
+    const {retrieveCategories} = this.props;
+    this.fetchingCategoriesXhr = retrieveCategories();
   },
 
   componentWillUnmount() {
@@ -23,14 +23,14 @@ export const Content = React.createClass({
   render() {
     let contents;
     const {
-      retrievingCategoriesStatus, categories, categoriesActions
+      retrievingCategoriesStatus, categories, retrieveCategories
     } = this.props;
 
     if (retrievingCategoriesStatus === 'PENDING') {
       contents = <LoadingResourceList/>;
     } else if (retrievingCategoriesStatus === 'FAILURE') {
       contents = (<ErrorRetrieving
-        retry={categoriesActions.retrieveCategories}
+        retry={retrieveCategories}
         resourceName="Categories"/>);
     } else if (!categories.length) {
       contents = <EmptyCategories/>;
@@ -55,9 +55,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch)
-  };
+  return bindActionCreators({
+    retrieveCategories: categoriesActionCreators.retrieveCategories
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Content);

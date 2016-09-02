@@ -1,10 +1,28 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {IndexPage} from '../../../../../client-src/common/components/index-page';
+import {IndexPage, __get__} from '../../../../../client-src/common/components/index-page';
 import Dashboard from '../../../../../client-src/dashboard/components/dashboard';
 import LandingPage from '../../../../../client-src/meta/components/landing-page';
 
+const mapStateToProps = __get__('mapStateToProps');
+
 describe('IndexPage', function() {
+  describe('mapStateToProps', () => {
+    it('returns the right props', () => {
+      expect(mapStateToProps({
+        auth: {
+          user: {
+            name: 'oink'
+          }
+        },
+        transactions: [],
+        categories: {}
+      })).to.deep.equal({
+        user: {name: 'oink'}
+      });
+    });
+  });
+
   describe('rendering with a user', () => {
     it('should render the Dashboard', () => {
       const props = {
