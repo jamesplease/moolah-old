@@ -39,15 +39,15 @@ const CategoriesList = React.createClass({
   },
 
   onConfirmDeleteModal() {
-    const {categoriesActions} = this.props;
+    const {deleteCategory} = this.props;
     const category = this.state.categoryToDelete;
-    categoriesActions.deleteCategory(category.id);
+    deleteCategory(category.id);
   },
 
   onConfirmEditModal(fields) {
-    const {categoriesActions} = this.props;
+    const {updateCategory} = this.props;
     const categoryId = this.state.categoryToUpdate.id;
-    categoriesActions.updateCategory({
+    updateCategory({
       id: categoryId,
       ...fields
     });
@@ -130,7 +130,7 @@ const CategoriesList = React.createClass({
         categoryToUpdate: null
       });
 
-      this.props.categoriesActions.resetUpdateCategoryResolution({
+      this.props.resetUpdateCategoryResolution({
         categoryId: id
       });
     }
@@ -192,9 +192,13 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch)
-  };
+  const {
+    deleteCategory, updateCategory, resetUpdateCategoryResolution
+  } = categoriesActionCreators;
+
+  return bindActionCreators({
+    deleteCategory, updateCategory, resetUpdateCategoryResolution
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);

@@ -31,7 +31,7 @@ const CategoriesSubheader = React.createClass({
       label: ''
     });
     newCategory.label = newCategory.label.trim();
-    this.props.categoriesActions.createCategory(newCategory);
+    this.props.createCategory(newCategory);
   },
 
   createModal() {
@@ -101,9 +101,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch),
-  };
+  return bindActionCreators({
+    createCategory: categoriesActionCreators.createCategory
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesSubheader);

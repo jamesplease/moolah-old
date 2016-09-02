@@ -1,5 +1,5 @@
 import {
-  CategoriesList, __Rewire__, __ResetDependency__
+  CategoriesList, __Rewire__, __ResetDependency__, __get__
 } from '../../../../../client-src/categories/components/categories-list';
 import CategoryListItem from '../../../../../client-src/categories/components/category-list-item';
 import DeleteCategoryModal from '../../../../../client-src/categories/components/delete-category-modal';
@@ -7,7 +7,75 @@ import Modal from '../../../../../client-src/common/components/modal';
 import ReactCSSTransitionGroup from '../../../../../client-src/vendor/css-transition-group';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
+const mapStateToProps = __get__('mapStateToProps');
+const mapDispatchToProps = __get__('mapDispatchToProps');
+
 describe('CategoriesList', function() {
+  describe('mapStateToProps', () => {
+    it('returns the right props', () => {
+      expect(mapStateToProps({
+        connection: true,
+        categories: {
+          categories: [1, 2, 3],
+          categoriesMeta: 'hello'
+        },
+        transactions: {},
+        oink: true
+      })).to.deep.equal({
+        isOnline: true,
+        categories: [1, 2, 3],
+        categoriesMeta: 'hello'
+      });
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    beforeEach(() => {
+      this.deleteCategory = stub().returns({pasta: true});
+      this.updateCategory = stub().returns([1, 2, 3]);
+      this.resetUpdateCategoryResolution = stub().returns(true);
+      __Rewire__('categoriesActionCreators', {
+        deleteCategory: this.deleteCategory,
+        updateCategory: this.updateCategory,
+        resetUpdateCategoryResolution: this.resetUpdateCategoryResolution
+      });
+
+      this.dispatch = stub();
+      this.props = mapDispatchToProps(this.dispatch);
+    });
+
+    afterEach(() => {
+      __ResetDependency__('categoriesActionCreators');
+    });
+
+    it('returns the right props', () => {
+      expect(this.props).to.have.keys([
+        'deleteCategory', 'updateCategory', 'resetUpdateCategoryResolution'
+      ]);
+    });
+
+    it('returns a functioning `deleteCategory`', () => {
+      this.props.deleteCategory();
+      expect(this.deleteCategory).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
+    });
+
+    it('returns a functioning `updateCategory`', () => {
+      this.props.updateCategory();
+      expect(this.updateCategory).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly([1, 2, 3]);
+    });
+
+    it('returns a functioning `resetUpdateCategoryResolution`', () => {
+      this.props.resetUpdateCategoryResolution();
+      expect(this.resetUpdateCategoryResolution).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly(true);
+    });
+  });
+
   beforeEach(() => {
     this.ModifyCategoryModal = () => {};
     __Rewire__('ModifyCategoryModal', this.ModifyCategoryModal);
@@ -28,11 +96,9 @@ describe('CategoriesList', function() {
         {id: 5, updatingStatus: 'PENDING'}
       ],
       isOnline: true,
-      categoriesActions: {
-        deleteCategory: this.deleteCategory,
-        updateCategory: this.updateCategory,
-        resetUpdateCategoryResolution: this.resetUpdateCategoryResolution
-      }
+      deleteCategory: this.deleteCategory,
+      updateCategory: this.updateCategory,
+      resetUpdateCategoryResolution: this.resetUpdateCategoryResolution
     };
     this.generator = generateWrapperGenerator(this.defaultProps, CategoriesList);
   });
