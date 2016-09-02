@@ -1,12 +1,64 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {
-  Contact, __GetDependency__
+  Contact, __Rewire__, __ResetDependency__, __GetDependency__
 } from '../../../../../client-src/meta/components/contact';
 
 const validate = __GetDependency__('validate');
+const mapStateToProps = __GetDependency__('mapStateToProps');
+const mapDispatchToProps = __GetDependency__('mapDispatchToProps');
 
 describe('Contact', function() {
+  describe('mapStateToProps', () => {
+    it('returns the right props', () => {
+      expect(mapStateToProps({
+        contact: {
+          sendingMessageStatus: 'success'
+        },
+        transactions: [1, 2, 3],
+        oink: true
+      })).to.deep.equal({
+        sendingMessageStatus: 'success'
+      });
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    beforeEach(() => {
+      this.resetSendMessageResolution = stub().returns({pasta: true});
+      this.sendMessage = stub().returns(false);
+      __Rewire__('contactActionCreators', {
+        resetSendMessageResolution: this.resetSendMessageResolution,
+        sendMessage: this.sendMessage,
+      });
+
+      this.dispatch = stub();
+      this.props = mapDispatchToProps(this.dispatch);
+    });
+
+    afterEach(() => {
+      __ResetDependency__('contactActionCreators');
+    });
+
+    it('returns the right props', () => {
+      expect(this.props).to.have.keys(['resetSendMessageResolution', 'sendMessage']);
+    });
+
+    it('returns a functioning `resetSendMessageResolution`', () => {
+      this.props.resetSendMessageResolution();
+      expect(this.resetSendMessageResolution).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
+    });
+
+    it('returns a functioning `sendMessage`', () => {
+      this.props.sendMessage();
+      expect(this.sendMessage).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly(false);
+    });
+  });
+
   describe('validate', () => {
     it('should return an empty obj when there is a value', () => {
       const values = {
@@ -52,16 +104,15 @@ describe('Contact', function() {
         abort: stub()
       };
 
-      this.contactActions = {
-        sendMessage: stub().returns(this.mockSendMessageXhr),
-        resetSendMessageResolution: stub()
-      };
+      this.sendMessage = stub().returns(this.mockSendMessageXhr);
+      this.resetSendMessageResolution = stub();
 
       this.defaultProps = {
         fields: this.fields,
         sendingMessageStatus: null,
         handleSubmit: this.handleSubmit,
-        contactActions: this.contactActions
+        sendMessage: this.sendMessage,
+        resetSendMessageResolution: this.resetSendMessageResolution
       };
     });
 
@@ -69,7 +120,7 @@ describe('Contact', function() {
       it('should call `resetSendMessageResolution`', () => {
         const wrapper = shallow(<Contact {...this.defaultProps}/>);
         wrapper.instance().componentWillUnmount();
-        expect(this.contactActions.resetSendMessageResolution).to.have.been.calledOnce;
+        expect(this.resetSendMessageResolution).to.have.been.calledOnce;
       });
 
       it('should call `abort` on the xhr', () => {
