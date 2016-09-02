@@ -7,33 +7,15 @@ import Alerts from '../alerts';
 import * as connectionActionCreators from '../../../redux/connection/action-creators';
 
 const Layout = React.createClass({
-  // When the user goes offline, we update the connection status
-  // and show an alert
-  onOffline() {
-    const {
-      connectionActions
-    } = this.props;
-
-    connectionActions.userOffline();
-  },
-
-  // When the user comes back online, we update the connection
-  // status and dismiss the alert
-  onOnline() {
-    const {connectionActions} = this.props;
-
-    connectionActions.userOnline();
-  },
-
   componentDidMount() {
     // This handles the user being offline at the
-    // time of the app launching
+    // time of the apxp launching
     if (!window.navigator.onLine) {
-      this.onOffline();
+      this.props.userOffline();
     }
 
-    window.addEventListener('offline', this.onOffline);
-    window.addEventListener('online', this.onOnline);
+    window.addEventListener('offline', this.props.userOffline);
+    window.addEventListener('online', this.props.userOnline);
   },
 
   render() {
@@ -66,10 +48,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    connectionActions: bindActionCreators(connectionActionCreators, dispatch),
-    dispatch
-  };
+  return bindActionCreators({
+    userOffline: connectionActionCreators.userOffline,
+    userOnline: connectionActionCreators.userOnline,
+  }, dispatch);
 }
 
 export default connect(

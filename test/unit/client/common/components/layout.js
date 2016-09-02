@@ -1,53 +1,89 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {Layout} from '../../../../../client-src/common/components/layout';
+import {
+  Layout, __Rewire__, __ResetDependency__, __get__
+} from '../../../../../client-src/common/components/layout';
 import Alerts from '../../../../../client-src/common/components/alerts';
 import Header from '../../../../../client-src/common/components/header';
 import Footer from '../../../../../client-src/common/components/footer';
 
+const mapStateToProps = __get__('mapStateToProps');
+const mapDispatchToProps = __get__('mapDispatchToProps');
+
 describe('Layout', function() {
+  describe('mapStateToProps', () => {
+    it('returns the right props', () => {
+      expect(mapStateToProps({
+        auth: {
+          user: {
+            name: 'oink'
+          }
+        },
+        transactions: [1, 2, 3],
+        oink: true
+      })).to.deep.equal({
+        user: {name: 'oink'}
+      });
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    beforeEach(() => {
+      this.userOffline = stub().returns({pasta: true});
+      this.userOnline = stub().returns(false);
+      __Rewire__('connectionActionCreators', {
+        userOffline: this.userOffline,
+        userOnline: this.userOnline,
+      });
+
+      this.dispatch = stub();
+      this.props = mapDispatchToProps(this.dispatch);
+    });
+
+    afterEach(() => {
+      __ResetDependency__('connectionActionCreators');
+    });
+
+    it('returns the right props', () => {
+      expect(this.props).to.have.keys(['userOffline', 'userOnline']);
+    });
+
+    it('returns a functioning `userOffline`', () => {
+      this.props.userOffline();
+      expect(this.userOffline).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
+    });
+
+    it('returns a functioning `userOnline`', () => {
+      this.props.userOnline();
+      expect(this.userOnline).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledOnce;
+      expect(this.dispatch).to.have.been.calledWithExactly(false);
+    });
+  });
+
   describe('mounting', () => {
     beforeEach(() => {
       stub(window, 'addEventListener');
       this.userOffline = stub();
       this.userOnline = stub();
-      this.connectionActions = {
-        userOffline: this.userOffline,
-        userOnline: this.userOnline
-      };
     });
 
     it('should register event listeners', () => {
       const props = {
-        connectionActions: this.connectionActions
+        userOffline: this.userOffline,
+        userOnline: this.userOnline,
       };
       const wrapper = shallow(<Layout {...props}/>);
       wrapper.instance().componentDidMount();
       expect(window.addEventListener).to.have.been.calledTwice;
       expect(window.addEventListener).to.have.been.calledWith(
-        'offline', wrapper.instance().onOffline
+        'offline', this.userOffline
       );
       expect(window.addEventListener).to.have.been.calledWith(
-        'online', wrapper.instance().onOnline
+        'online', this.userOnline
       );
-    });
-
-    it('should call `userOffline` when offline', () => {
-      const props = {
-        connectionActions: this.connectionActions
-      };
-      const wrapper = shallow(<Layout {...props}/>);
-      wrapper.instance().onOffline();
-      expect(this.userOffline).to.have.been.calledOnce;
-    });
-
-    it('should call `userOnline` when online', () => {
-      const props = {
-        connectionActions: this.connectionActions
-      };
-      const wrapper = shallow(<Layout {...props}/>);
-      wrapper.instance().onOnline();
-      expect(this.userOnline).to.have.been.calledOnce;
     });
   });
 

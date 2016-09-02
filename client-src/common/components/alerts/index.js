@@ -35,7 +35,7 @@ const Alerts = React.createClass({
 
   render() {
     const {
-      animatingAlertOut, alertActions, dispatch
+      animatingAlertOut, destroyFirstAlert, dispatch
     } = this.props;
 
     const {activeAlert} = this.state;
@@ -44,7 +44,7 @@ const Alerts = React.createClass({
     if (activeAlert) {
       const alertProps = {
         ...activeAlert,
-        ...alertActions,
+        destroyFirstAlert,
         animatingAlertOut,
         animateOutAlert: this.animateOutAlert,
         dispatch
@@ -80,10 +80,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    alertActions: bindActionCreators(alertActionCreators, dispatch),
-    dispatch
-  };
+  return bindActionCreators({
+    destroyFirstAlert: alertActionCreators.destroyFirstAlert
+  }, dispatch);
 }
 
 export default connect(
