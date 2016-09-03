@@ -1,12 +1,19 @@
 import React from 'react';
 import {Link} from 'react-router';
+import classNames from 'classnames';
 import {
   formatDate, getNextMonth, getPrevMonth,
-  splitDate, ensureLeadingZero
+  splitDate, ensureLeadingZero, getYearMonthStringFromDate
 } from '../../services/format-date';
+import monthDiff from '../../services/month-diff';
 
 export default function DateMenu({date}) {
   const formattedDate = formatDate(date);
+  const currentDate = new Date();
+  const currentDateString = getYearMonthStringFromDate(currentDate);
+  const diff = monthDiff(currentDateString, date);
+
+  const isNextMonth = diff === 1;
 
   const {year, month} = splitDate(date);
   const dateObj = new Date(year, month - 1, 1);
@@ -16,6 +23,10 @@ export default function DateMenu({date}) {
   const nextMonthString = ensureLeadingZero(nextMonthObj.month);
   const prevMonthLinkTo = `/transactions/${prevMonthObj.year}-${prevMonthString}`;
   const nextMonthLinkTo = `/transactions/${nextMonthObj.year}-${nextMonthString}`;
+
+  const nextMonthLinkClass = classNames('date-menu-next', {
+    'date-menu-next-disabled': isNextMonth
+  });
 
   return (
     <div className="date-menu container">
@@ -29,7 +40,7 @@ export default function DateMenu({date}) {
         {" "}
         {formattedDate}
       </div>
-      <Link className="date-menu-next" to={nextMonthLinkTo}>
+      <Link className={nextMonthLinkClass} to={nextMonthLinkTo}>
         Next
         {" "}
         <i className="zmdi zmdi-caret-right"/>

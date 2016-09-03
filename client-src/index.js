@@ -41,11 +41,11 @@ render((
     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
         <IndexRoute component={IndexPage}/>
-        <Route path="/transactions/this-month" onEnter={onTransactionsEnter}/>
+        <Route path="/transactions" onEnter={onTransactionsEnter}/>
         <Route
           path="/transactions/:transactionDate"
-          component={Transactions}/>
-        <Redirect from="/transactions" to="/transactions/this-month"/>
+          component={Transactions}
+          onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/categories" component={Categories} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/account" component={Account} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/contact" component={Contact}/>

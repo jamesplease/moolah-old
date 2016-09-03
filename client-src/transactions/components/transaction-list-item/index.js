@@ -1,33 +1,26 @@
 import React from 'react';
-import serialize from 'form-serialize';
+import {formatDateForTransactionList} from '../../services/format-date';
 
 export default function Transaction(props) {
-  const {transaction, deleteTransaction, updateTransaction} = props;
-
-  function deleteSelf() {
-    deleteTransaction(transaction.id);
-  }
-
-  const formId = `transaction-form-${transaction.id}`;
-
-  function updateSelf() {
-    let form = document.getElementById(formId);
-    let formData = serialize(form, {hash: true});
-    updateTransaction(transaction.id, formData);
-  }
+  const {transaction} = props;
 
   return (
-    <li className="transaction">
-      <form id={formId} className="transaction-form">
-        <input className="transaction-date" value={transaction.date} name="date"/>
-        <input className="transaction-description" value={transaction.description} name="description"/>
-        <input className="transaction-value" value={transaction.value} name="value"/>
-      </form>
-      <button className="save-transaction" onClick={updateSelf}>
-        Save
+    <li className="resourceListItem">
+      <button className="transactionListItem-btn">
+        <div className="transactionListItem-editBtn-container">
+          <span className="transactionListItem-description">
+            {transaction.description}
+          </span>
+          <span className="transactionListItem-date">
+            {formatDateForTransactionList(transaction.date)}
+          </span>
+          <span className="transactionListItem-amount">
+            {transaction.amount}
+          </span>
+        </div>
       </button>
-      <button className="delete-transaction" onClick={deleteSelf}>
-        Delete
+      <button className="resourceListItem-deleteBtn transactionListItem-deleteBtn">
+        ×
       </button>
     </li>
   );

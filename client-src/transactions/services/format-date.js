@@ -1,10 +1,26 @@
 import monthMap from './month-map';
 
+export function getYearFromDate(date) {
+  return date.split('-')[0];
+}
+
+export function getMonthFromDate(date) {
+  return date.split('-')[0];
+}
+
+export function getDayFromDate(date) {
+  return date.split('-')[2];
+}
+
 // "2016-10" => "October 2016"
 export function formatDate(date) {
   const dateArr = date.split('-');
   const monthName = monthMap[Number(dateArr[1])];
   return `${monthName} ${dateArr[0]}`;
+}
+
+export function formatDateForTransactionList(date) {
+  return getDayFromDate(date);
 }
 
 // "2015-10" => {

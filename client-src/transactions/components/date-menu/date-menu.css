@@ -2,15 +2,29 @@
   @mixin content-padding;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  align-items: center;
+  background-color: #fcfcfc;
+  height: 59px;
+  border-bottom: 1px solid #eee;
+}
 
-  .date-menu-current-date {
-    height: 20px;
-    line-height: 20px;
-  }
+.date-menu-current-date {
+  height: 20px;
+  line-height: 20px;
+}
 
-  .date-menu-icon-calendar {
-    margin-right: 5px;
-    display: inline-block;
-  }
+.date-menu-next,
+.date-menu-prev {
+  color: #8f8f8f;
+  text-decoration: none;
+}
+
+.date-menu-icon-calendar {
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.date-menu-next-disabled {
+  pointer-events: none;
+  color: #ccc;
 }

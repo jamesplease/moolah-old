@@ -1,36 +1,33 @@
-.transaction {
+.transactionListItem-btn {
+  width: calc(100% - 20px);
+}
+
+.transactionListItem-editBtn-container {
   display: flex;
-  border-style: solid;
-  border-color: #e4e4e4;
-  border-width: 0;
-  border-bottom-width: 1px;
-  margin-bottom: 10px 0;
-  padding: 10px 1px 10px 5px;
+  justify-content: space-between;
+}
 
-  &:first-child {
-    border-top-width: 1px;
-  }
+.transactionListItem-description,
+.transactionListItem-date,
+.transactionListItem-amount {
+  @mixin ellipsis;
+  width: 33%;
+  font-size: 16px;
+}
 
-  .transaction-form {
-    .transaction-description {
-      @mixin ellipsis;
-      width: 120px;
-    }
+.transactionListItem-description {
+  text-align: left;
+}
 
-    .transaction-date {
-      width: 70px;
-    }
+.transactionListItem-date {
+  text-align: center;
+}
 
-    .transaction-value {
-      width: 50px;
-    }
-  }
+.transactionListItem-amount {
+  text-align: right;
+}
 
-  .save-transaction {
-    color: #4cc1fc;
-  }
-
-  .delete-transaction {
-    color: #ff6c6c;
-  }
+.transactionListItem-deleteBtn {
+  width: 20px;
+  text-align: right;
 }
