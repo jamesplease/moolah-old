@@ -84,7 +84,7 @@
     "postcss-easy-import": "1.0.1",
     "postcss-scss": "0.2.1",
     "precss": "1.4.0",
-    "react-addons-test-utils": "15.3.0",
+    "react-addons-test-utils": "15.3.2",
     "react-router-scroll": "0.3.2",
     "run-sequence": "1.2.2",
     "simple-jsdom": "2.0.0",
