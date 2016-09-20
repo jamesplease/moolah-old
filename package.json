@@ -127,7 +127,7 @@
     "pg-promise": "^5.2.6",
     "prevent-scroll": "1.0.2",
     "react": "15.3.1",
-    "react-addons-transition-group": "15.3.1",
+    "react-addons-transition-group": "15.3.2",
     "react-dom": "15.3.1",
     "react-redux": "4.4.5",
     "react-router": "2.8.1",
