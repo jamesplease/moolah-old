@@ -88,7 +88,7 @@
     "react-router-scroll": "0.3.2",
     "run-sequence": "1.2.2",
     "simple-jsdom": "2.0.0",
-    "sinon": "1.17.5",
+    "sinon": "1.17.6",
     "sinon-chai": "2.8.0",
     "stylelint": "7.1.0",
     "supertest": "2.0.0",
