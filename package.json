@@ -116,7 +116,7 @@
     "express-routebuilder": "2.1.0",
     "express-session": "1.14.1",
     "form-serialize": "0.7.1",
-    "helmet": "2.1.2",
+    "helmet": "2.1.3",
     "is-my-json-valid": "2.13.1",
     "js-emoji": "git+https://github.com/iamcal/js-emoji.git#65bb0c504efc6dd875fb251b77e6f27e84e67d1a",
     "kapow": "1.0.0",
