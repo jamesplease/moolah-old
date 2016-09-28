@@ -100,7 +100,7 @@
     "mainVarName": "financeApp"
   },
   "dependencies": {
-    "babel-polyfill": "6.13.0",
+    "babel-polyfill": "6.16.0",
     "body-parser": "1.15.2",
     "bunyan": "1.8.1",
     "careen": "0.1.1",
