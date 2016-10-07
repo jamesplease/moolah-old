@@ -121,7 +121,7 @@
     "js-emoji": "git+https://github.com/iamcal/js-emoji.git#65bb0c504efc6dd875fb251b77e6f27e84e67d1a",
     "kapow": "1.0.0",
     "keymirror": "0.1.1",
-    "lodash": "4.16.2",
+    "lodash": "4.16.4",
     "passport": "0.3.2",
     "passport-google-oauth20": "1.0.0",
     "pg-promise": "^5.2.6",
