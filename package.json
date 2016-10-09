@@ -71,7 +71,7 @@
     "gulp-postcss": "6.2.0",
     "gulp-rename": "1.2.2",
     "gulp-sourcemaps": "1.6.0",
-    "gulp-stylelint": "3.2.0",
+    "gulp-stylelint": "3.3.0",
     "gulp-uglify": "2.0.0",
     "gulp-watch": "4.3.10",
     "imagemin-cli": "3.0.0",
