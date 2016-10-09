@@ -82,7 +82,7 @@
     "nodemon": "1.11.0",
     "pleaserc": "2.3.0",
     "postcss-easy-import": "1.0.1",
-    "postcss-scss": "0.2.1",
+    "postcss-scss": "0.3.0",
     "precss": "1.4.0",
     "react-addons-test-utils": "15.3.2",
     "react-router-scroll": "0.3.2",
