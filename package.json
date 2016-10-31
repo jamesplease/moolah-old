@@ -114,7 +114,7 @@
     "express-handlebars": "3.0.0",
     "express-request-id": "1.1.0",
     "express-routebuilder": "2.1.0",
-    "express-session": "1.14.1",
+    "express-session": "1.14.2",
     "form-serialize": "0.7.1",
     "helmet": "2.1.3",
     "is-my-json-valid": "2.14.0",
