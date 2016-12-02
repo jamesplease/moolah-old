@@ -102,7 +102,7 @@
   "dependencies": {
     "babel-polyfill": "6.16.0",
     "body-parser": "1.15.2",
-    "bunyan": "1.8.1",
+    "bunyan": "1.8.5",
     "careen": "0.1.1",
     "classnames": "2.2.5",
     "compression": "1.6.2",
