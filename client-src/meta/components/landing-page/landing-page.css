@@ -1,5 +1,5 @@
 .landingPage_heroTextContainer {
-  padding-top: 80px;
+  padding-top: calc(50vh - 200px);
   background-image: linear-gradient(-134deg, #3023ae 0%, #c96dd8 100%);
   height: calc(100vh - $headerHeight - $footerHeight);
   text-align: center;
