@@ -12,6 +12,8 @@ footer {
   }
 
   @media screen and (width >= $md-screen) {
+    height: $expandedFooterHeight;
+
     > .container {
       display: flex;
     }
