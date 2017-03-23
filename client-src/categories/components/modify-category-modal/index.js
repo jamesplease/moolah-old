@@ -132,7 +132,7 @@ const ModifyCategoryModal = React.createClass({
           <button
             type="button"
             onClick={onClickCancelBtn}
-            className="btn btn-line createCategoryModal-cancelBtn"
+            className="btn btn-secondary createCategoryModal-cancelBtn"
             disabled={confirmInProgress}
             onMouseDown={this.mouseDownCancel}>
             Cancel

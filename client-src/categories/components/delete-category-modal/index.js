@@ -12,7 +12,7 @@ export default function DeleteCategoryModal(props) {
       <div className="modal-footer">
         <button
           onClick={() => onClickCancel()}
-          className="btn btn-line deleteCategoryModal-cancelBtn"
+          className="btn btn-secondary deleteCategoryModal-cancelBtn"
           disabled={deletingCategory}>
           Cancel
         </button>

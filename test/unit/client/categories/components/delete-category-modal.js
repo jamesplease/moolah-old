@@ -33,7 +33,7 @@ describe('DeleteCategoryModal', function() {
       it('should have the right btn class', () => {
         const wrapper = this.generator.shallow();
         const cancelBtn = wrapper.find('.deleteCategoryModal-cancelBtn');
-        expect(cancelBtn.hasClass('btn btn-line')).to.be.true;
+        expect(cancelBtn.hasClass('btn btn-secondary')).to.be.true;
       });
 
       it('should have the text "Cancel"', () => {
