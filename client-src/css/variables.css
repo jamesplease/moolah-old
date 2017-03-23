@@ -8,7 +8,7 @@ $appWidth: 800px;
 // the app's content from smooshing against the side of the browser window.
 $appPadding: 20px;
 
-$rootFontSize: 15px;
+$rootFontSize: 16px;
 $textColor: #000;
 $lightTextColor: #aaa;
 $linkColor: #c45184;
@@ -19,3 +19,7 @@ $borderColor: #e7e7e7;
 // to target the different screen sizes.
 $lg-screen: 1024px;
 $md-screen: 768px;
+
+$headerHeight: 50px;
+$footerHeight: 65px;
+$expandedFooterHeight: 47px;

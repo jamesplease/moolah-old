@@ -70,7 +70,7 @@ const ModifyCategoryModal = React.createClass({
       'invalid-input': treatFormInvalid
     });
 
-    const modalTitle = isEditMode ? 'Edit category' : 'New category';
+    const modalTitle = isEditMode ? 'Edit category' : 'Create new category';
 
     let confirmText;
     if (isEditMode) {
@@ -132,7 +132,7 @@ const ModifyCategoryModal = React.createClass({
           <button
             type="button"
             onClick={onClickCancelBtn}
-            className="btn btn-line createCategoryModal-cancelBtn"
+            className="btn btn-secondary createCategoryModal-cancelBtn"
             disabled={confirmInProgress}
             onMouseDown={this.mouseDownCancel}>
             Cancel

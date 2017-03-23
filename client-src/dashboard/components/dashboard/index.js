@@ -5,7 +5,7 @@ export default function Dashboard() {
   return (
     <div>
       <Subheader/>
-      <div className="dashboard-content container padded-container">
+      <div className="dashboard-content container padded-container container-bottomSpaced">
         Dashboard is here
       </div>
     </div>

@@ -13,7 +13,7 @@ export default function Account() {
   return (
     <div>
       <Subheader/>
-      <div className="account container">
+      <div className="account container container-bottomSpaced">
         <div className="account-form-row">
           <label className="account-label">Profile Photo</label>
           <div className="photo-input">

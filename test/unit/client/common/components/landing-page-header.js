@@ -24,13 +24,5 @@ describe('LandingPageHeader', function() {
       expect(headerLink.prop('to')).to.equal('/login');
       expect(headerLink.prop('children')).to.equal('Log In');
     });
-
-    it('should have a link to sign up', () => {
-      const wrapper = shallow(<LandingPageHeader/>);
-      const linkContainer = wrapper.find('.landingPageHeader-buttonContainer');
-      const headerLink = linkContainer.find(Link).at(1);
-      expect(headerLink.prop('to')).to.equal('/join');
-      expect(headerLink.prop('children')).to.equal('Sign Up');
-    });
   });
 });

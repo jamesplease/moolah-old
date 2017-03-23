@@ -4,7 +4,7 @@
   font-family: 'Source Sans Pro', sans-serif;
   display: inline-block;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 29px;
   height: 31px;
   text-align: center;
@@ -86,17 +86,26 @@
     }
   }
 
-  &.btn-line {
-    color: #a0a0a0;
-    background: #fff;
-    border: 1px solid #b6b6b6;
+  &.btn-secondary {
+    color: #7a7a7a;
+    background: #e8e8e8;
 
     &:hover {
-      background-color: #f9f9f9;
+      background-color: #dfdfdf;
     }
 
     &:active {
-      background-color: #f1f1f1;
+      background-color: #dfdfdf;
     }
+  }
+
+  &.btn-promotion {
+    color: #fff;
+    background: #60b9f7;
+    font-size: 20px;
+    height: 47px;
+    line-height: 47px;
+    padding: 0 23px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.22);
   }
 }

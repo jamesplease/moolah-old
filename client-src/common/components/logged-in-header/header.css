@@ -4,7 +4,7 @@
   right: 0;
   left: 0;
   z-index: $zIndex-bg1;
-  height: 50px;
+  height: $headerHeight;
   background-color: #fafafa;
   border-bottom: 1px solid #eee;
 }
@@ -32,6 +32,7 @@
   @mixin clip-bg-to-text;
   font-size: 21px;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .appHeader-overlayNavToggle {
