@@ -30,6 +30,10 @@ body {
   @mixin content-padding;
 }
 
+.container-bottomSpaced {
+  margin-bottom: 40px;
+}
+
 .content-container {
   display: flex;
   flex-direction: column;

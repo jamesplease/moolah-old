@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Privacy() {
   return (
-    <div className="container">
+    <div className="container container-bottomSpaced">
       <div className="text-container">
         <h1>
           Privacy Policy

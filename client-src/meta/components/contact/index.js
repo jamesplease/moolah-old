@@ -88,7 +88,7 @@ const Contact = React.createClass({
     const contactContent = messageSent ? this.getSuccessMessage() : this.getContactForm();
 
     return (
-      <div className="container contactPage">
+      <div className="container container-bottomSpaced contactPage">
         <div className="text-container">
           <h1>
             Contact Us

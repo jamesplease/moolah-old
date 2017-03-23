@@ -37,6 +37,10 @@ h6 {
   @mixin content-padding;
   margin-top: 15px;
 
+  h1 {
+    font-weight: bold;
+  }
+
   p,
   h1,
   h2 {

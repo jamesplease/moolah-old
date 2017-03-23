@@ -86,7 +86,7 @@ export const Content = React.createClass({
     }
 
     return (
-      <div>
+      <div className="container-bottomSpaced">
         <Subheader/>
         <DateMenu date={transactionDate}/>
         {contents}

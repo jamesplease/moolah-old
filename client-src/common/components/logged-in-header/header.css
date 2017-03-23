@@ -32,6 +32,7 @@
   @mixin clip-bg-to-text;
   font-size: 21px;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .appHeader-overlayNavToggle {
