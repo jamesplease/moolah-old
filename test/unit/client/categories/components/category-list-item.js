@@ -38,7 +38,7 @@ describe('CategoryListItem', function() {
         const wrapper = this.generator.shallow();
         const emojiContainer = wrapper.find('.categoryListItem-emoji');
         expect(emojiContainer.prop('dangerouslySetInnerHTML')).to.deep.equal({
-          __html: '<b>hello</b>'
+          __html: ':)'
         });
       });
 

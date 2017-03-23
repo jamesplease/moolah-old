@@ -19,3 +19,6 @@ $borderColor: #e7e7e7;
 // to target the different screen sizes.
 $lg-screen: 1024px;
 $md-screen: 768px;
+
+$headerHeight: 50px;
+$footerHeight: 65px;

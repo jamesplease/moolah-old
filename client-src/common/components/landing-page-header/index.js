@@ -11,11 +11,8 @@ export default function LandingPageHeader() {
           </Link>
         </h1>
         <div className="landingPageHeader-buttonContainer">
-          <Link to="/login" className="btn btn-line landingPageHeader-btn">
+          <Link to="/login" className="btn btn-secondary landingPageHeader-btn">
             Log In
-          </Link>
-          <Link to="/join" className="btn landingPageHeader-btn">
-            Sign Up
           </Link>
         </div>
       </div>

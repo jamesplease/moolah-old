@@ -16,7 +16,7 @@ body {
 
 body {
   // This is the size of the header
-  padding-top: 46px;
+  padding-top: $headerHeight;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -33,11 +33,9 @@ body {
 .content-container {
   display: flex;
   flex-direction: column;
-  // 46px for the fixed position header
-  min-height: calc(100vh - 46px);
+  min-height: calc(100vh - $headerHeight);
 }
 
 main {
-  margin-bottom: 40px;
   flex: 1;
 }
