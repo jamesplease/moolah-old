@@ -90,7 +90,7 @@ describe('ModifyCategoryModal', function() {
 
     it('should have the right modal title when edit mode is false', () => {
       const wrapper = this.generator.shallow();
-      expect(wrapper.find('.modal-title').text()).to.equal('New category');
+      expect(wrapper.find('.modal-title').text()).to.equal('Create new category');
     });
 
     it('should have the right modal title when edit mode is true', () => {
