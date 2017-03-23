@@ -70,7 +70,7 @@ const ModifyCategoryModal = React.createClass({
       'invalid-input': treatFormInvalid
     });
 
-    const modalTitle = isEditMode ? 'Edit category' : 'New category';
+    const modalTitle = isEditMode ? 'Edit category' : 'Create new category';
 
     let confirmText;
     if (isEditMode) {
