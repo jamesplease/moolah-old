@@ -5,7 +5,8 @@ import serverErrors from '../../../../server/api/util/server-errors';
 import db from '../../../../server/api/services/db';
 import responseValidation from '../utils/response-validation';
 import Inserts from '../utils/concatenate-inserts';
-import loadMocks from '../load-mocks';
+import wipeDb from '../utils/wipe-db';
+import migrate from '../../../../server/api/util/migrate';
 
 function getInsertQuery(values) {
   // Ensure that each key exists – even if it's null. pg-promise
@@ -24,7 +25,8 @@ function getInsertQuery(values) {
 
 describe('Transactions', () => {
   beforeEach(() => {
-    loadMocks();
+    return wipeDb(db)
+      .then(migrate.up);
   });
 
   // Ensures the tests immediately exit
