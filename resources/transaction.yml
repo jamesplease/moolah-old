@@ -1,0 +1,11 @@
+name: 'transaction'
+
+pagination:
+  default_page_size: 40
+
+attributes:
+  description: 'VARCHAR(30)'
+  value:
+    type: 'NUMERIC(9, 2)'
+    nullable: false
+  date: 'DATE'

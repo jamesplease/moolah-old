@@ -2,8 +2,8 @@
 
 const _ = require('lodash');
 const pgp = require('pg-promise');
-const baseSql = require('../api/util/base-sql');
-const db = require('../api/services/db');
+const baseSql = require('./base-sql');
+const db = require('./db');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 

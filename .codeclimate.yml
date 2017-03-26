@@ -9,7 +9,6 @@ ratings:
    - "**.js"
 exclude_paths:
 - "gulpfile.babel.js"
-- "careen.js"
 - "README.md"
 - "Procfile"
 - "app.json"
