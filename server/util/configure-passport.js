@@ -3,24 +3,24 @@
 const _ = require('lodash');
 const pgp = require('pg-promise');
 const baseSql = require('./base-sql');
-const db = require('./db');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-function findUser(googleId) {
+function findUser(db, googleId) {
   return db.one(`SELECT * FROM user_account WHERE google_id=$[googleId]`, {googleId});
 }
 
-module.exports = function() {
+module.exports = function(db) {
   function passportCallback(accessToken, refreshToken, profile, done) {
     const googleId = profile.id;
 
-    findUser(googleId)
+    findUser(db, googleId)
       .then(
         result => {
           done(null, result);
         },
         err => {
+          console.log('hello', err);
           const queryErrorCode = pgp.errors.queryResultErrorCode;
           const errorKey = _.findKey(queryErrorCode, c => c === err.code);
 

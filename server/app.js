@@ -76,18 +76,20 @@ module.exports = function() {
     cookie: {maxAge: 30 * 24 * 60 * 60 * 1000}
   }));
 
-  configurePassport();
+  const resourcesDirectory = path.join(__dirname, '..', 'resources');
+
+  const apiPls = new ApiPls({
+    apiVersion: 1,
+    databaseUrl: dbConfig,
+    resourcesDirectory,
+    // Our db URL already has SSL configured, so we don't need ApiPls to add it
+    connectWithSsl: false
+  });
+
+  configurePassport(apiPls.db);
 
   app.use(passport.initialize());
   app.use(passport.session());
-
-  const resourcesDirectory = path.join(__dirname, '..', 'resources');
-  const resourceModels = ApiPls.loadResourceModels(resourcesDirectory);
-  app.use('/api', ApiPls.ApiRouter({
-    apiVersion: 1,
-    databaseUrl: dbConfig,
-    resourceModels
-  }));
 
   // Configure the templating engine
   const hbsOptions = {
@@ -140,6 +142,8 @@ module.exports = function() {
       }
     });
   });
+
+  app.use('/api', apiPls.apiRouter());
 
   // Every other route is served by our JS app
   app.get('*', (req, res) => {
