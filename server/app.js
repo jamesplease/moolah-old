@@ -11,6 +11,7 @@ const session = require('express-session');
 const compress = require('compression');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
+const ApiPls = require('api-pls');
 const pgSession = require('connect-pg-simple')(session);
 const errorLogs = require('./logging/error-logs');
 const infoLogs = require('./logging/info-logs');
@@ -20,7 +21,6 @@ require('dotenv').config({path: envPath});
 
 const configurePassport = require('./util/configure-passport');
 const dbConfig = require('../config/db-config');
-const api = require('./api');
 
 // Heroku sets NODE_ENV to production by default. So if we're not
 // on Heroku, we assume that we're developing locally.
@@ -81,7 +81,13 @@ module.exports = function() {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.use('/api', api);
+  const resourcesDirectory = path.join(__dirname, '..', 'resources');
+  const resourceModels = ApiPls.loadResourceModels(resourcesDirectory);
+  app.use('/api', ApiPls.ApiRouter({
+    apiVersion: 1,
+    databaseUrl: dbConfig,
+    resourceModels
+  }));
 
   // Configure the templating engine
   const hbsOptions = {

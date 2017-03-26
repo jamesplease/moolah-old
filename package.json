@@ -19,9 +19,6 @@
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets; fi",
     "build-assets": "gulp build",
-    "migrate:up": "careen -A -e",
-    "migrate:down": "careen -R -e",
-    "migrate:create": "careen -C",
     "release": "heroku pipelines:promote -r staging",
     "minify-emoji": "imagemin server/static/sheet_apple_64.png --plugin=pngquant --out-dir=server/static"
   },
@@ -100,10 +97,10 @@
     "mainVarName": "financeApp"
   },
   "dependencies": {
+    "api-pls": "0.13.0",
     "babel-polyfill": "6.16.0",
     "body-parser": "1.15.2",
     "bunyan": "1.8.1",
-    "careen": "0.1.1",
     "classnames": "2.2.5",
     "compression": "1.6.2",
     "connect-ensure-login": "0.1.1",

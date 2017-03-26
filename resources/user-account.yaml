@@ -1,0 +1,15 @@
+name: 'user_account'
+
+actions:
+  create: true
+  read_one: true
+  # Currently, Moolah does not need to support reading more than one account
+  # at a time.
+  read_many: false
+  update: true
+  # Although accounts can be deactivated, we do not remove them from the
+  # database.
+  delete: false
+
+attributes:
+  google_id: 'TEXT'
