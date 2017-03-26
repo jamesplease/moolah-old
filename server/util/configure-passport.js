@@ -20,7 +20,6 @@ module.exports = function(db) {
           done(null, result);
         },
         err => {
-          console.log('hello', err);
           const queryErrorCode = pgp.errors.queryResultErrorCode;
           const errorKey = _.findKey(queryErrorCode, c => c === err.code);
 

@@ -127,7 +127,8 @@ The app should now be available in your browser at `http://localhost:5000`.
   production with staging
 - `npm run reset-database`: Delete all data in the database specified in `.env`.
   Can be useful for debugging.
--  `npm run migrate`: Synchronize the database with the models in `./resources`
+-  `npm run sync`: Synchronize the database with the models in `./resources`,
+  and the SQL scripts in `./migrations`
 - `npm run minify-emoji`: Compress the file located at `server/static/sheet_apple_64.png`
 
 ### Target browser support
