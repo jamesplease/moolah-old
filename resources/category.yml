@@ -1,0 +1,14 @@
+name: 'category'
+plural_form: 'categories'
+
+pagination:
+  default_page_size: 100
+
+relationships:
+  transactions:
+    resource: 'transaction'
+    cardinality: 'many-to-one'
+
+attributes:
+  label: 'VARCHAR(30)'
+  emoji: 'VARCHAR(30)'
