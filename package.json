@@ -16,6 +16,8 @@
     "build": "gulp build",
     "coverage": "BABEL_ENV=tests gulp coverage",
     "work": "gulp work",
+    "reset-database": "pls reset-database",
+    "sync": "pls sync && node migrate.js",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets; fi",
     "build-assets": "gulp build",
