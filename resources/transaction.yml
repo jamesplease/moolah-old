@@ -3,6 +3,9 @@ name: 'transaction'
 pagination:
   default_page_size: 40
 
+relationships:
+  category: 'many-to-one'
+
 attributes:
   description: 'VARCHAR(30)'
   value:
