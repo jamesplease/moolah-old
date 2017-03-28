@@ -99,7 +99,7 @@
     "mainVarName": "financeApp"
   },
   "dependencies": {
-    "api-pls": "0.13.0",
+    "api-pls": "0.14.0",
     "babel-polyfill": "6.16.0",
     "body-parser": "1.15.2",
     "bunyan": "1.8.1",
