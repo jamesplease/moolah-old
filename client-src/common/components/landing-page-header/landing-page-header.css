@@ -9,3 +9,7 @@
     margin-right: 0;
   }
 }
+
+.appHeader-appLogo.appHeader_appLogo-persistent {
+  display: flex;
+}

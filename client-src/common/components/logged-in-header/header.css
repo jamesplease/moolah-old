@@ -23,8 +23,19 @@
   font-weight: bold;
 
   @media screen and (width >= $md-screen) {
-    display: block;
+    display: flex;
   }
+}
+
+.appHeader_alphaRelease {
+  background: #29aeff;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 13px;
+  padding: 0 7px;
+  margin-top: 5px;
 }
 
 .appHeader-appLogo-Link {
@@ -33,6 +44,7 @@
   font-size: 21px;
   text-decoration: none;
   font-weight: bold;
+  margin-right: 4px;
 }
 
 .appHeader-overlayNavToggle {

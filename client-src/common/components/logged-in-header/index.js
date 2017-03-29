@@ -72,6 +72,9 @@ const LoggedInHeader = React.createClass({
             <Link to="/" className="appHeader-appLogo-Link">
               Moolah
             </Link>
+            <div className="appHeader_alphaRelease">
+              Alpha
+            </div>
           </h1>
           <button
             className={overlayNavToggleClass}
