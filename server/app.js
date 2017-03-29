@@ -112,6 +112,27 @@ module.exports = function() {
     failureRedirect: '/login'
   };
 
+  // Enforce HTTPS in production
+  if (app.get('env') === 'production') {
+    app.use((req, res, next) => {
+      // Heroku will set this header
+      if (req.headers['x-forwarded-proto'] === 'https') {
+        return next();
+      }
+
+      // This catches non-Heroku environments
+      else if (req.secure) {
+        return next();
+      }
+
+      // If neither of those pass, then we must be using HTTP, so we redirect to
+      // https
+      else {
+        res.redirect(`https://${req.hostname + req.url}`);
+      }
+    });
+  }
+
   app.get(
     '/auth/google/callback',
     passport.authenticate('google', redirects),
