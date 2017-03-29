@@ -18,7 +18,7 @@
     "work": "gulp work",
     "reset-database": "pls reset-database",
     "sync": "pls sync && node migrate.js",
-    "sync:force": "pls sync -f && node migrate.js",
+    "sync:force": "pls reset-database -f --verbose && pls sync -f --verbose && node migrate.js",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets && npm run sync:force; fi",
     "build-assets": "gulp build",
