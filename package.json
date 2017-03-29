@@ -44,7 +44,7 @@
     "babel-core": "6.16.0",
     "babel-eslint": "7.0.0",
     "babel-loader": "6.2.5",
-    "babel-plugin-rewire": "1.0.0-rc-6",
+    "babel-plugin-rewire": "1.0.0",
     "babel-preset-latest": "6.16.0",
     "babel-preset-react": "6.16.0",
     "babel-preset-stage-2": "6.13.0",
