@@ -39,9 +39,7 @@ module.exports = function(db) {
   }
 
   // These should be configurable via env variables
-  const localUrl = 'http://localhost:5000';
-  const prodUrl = 'https://www.moolah-app.com';
-  const appUrlBase = process.env.NODE_ENV === 'production' ? prodUrl : localUrl;
+  const appUrlBase = process.env.APP_DOMAIN ? process.env.APP_DOMAIN : 'http://localhost:5000';
 
   const googleStrategy = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,

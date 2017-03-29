@@ -7,6 +7,10 @@
     "heroku-postgresql:hobby-dev"
   ],
   "env": {
+    "APP_DOMAIN": {
+      "description": "The domain of the application. i.e.; https://www.moolah-app.com",
+      "value": "https://www.example.com"
+    },
     "NPM_CONFIG_PRODUCTION": {
       "description": "Ensures that all dependencies on installed during deployment.",
       "value": "false"
