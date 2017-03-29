@@ -18,8 +18,9 @@
     "work": "gulp work",
     "reset-database": "pls reset-database",
     "sync": "pls sync && node migrate.js",
+    "sync:force": "pls sync -f && node migrate.js",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
-    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets && npm run sync -- -f; fi",
+    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build-assets && npm run sync:force; fi",
     "build-assets": "gulp build",
     "release": "heroku pipelines:promote -r staging",
     "minify-emoji": "imagemin server/static/sheet_apple_64.png --plugin=pngquant --out-dir=server/static"
