@@ -1,11 +1,7 @@
 language: node_js
 # Trying to configure npm as well? Look a little bit further down this file.
 node_js:
-  - "6.4.0"
-addons:
-  postgresql: "9.4"
-services:
-  - postgresql
+  - "7.7.4"
 sudo: false
 script: "BABEL_ENV=tests npm run coverage"
 # This makes sure that we use the latest npm before installing the packages
