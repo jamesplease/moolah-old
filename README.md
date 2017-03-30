@@ -44,7 +44,6 @@ Once you've got your Google ClientID and Secret, just click the button below:
 - [Node](https://nodejs.org/en/) v6.3.0+
 - [npm](https://docs.npmjs.com/getting-started/installing-node) v3+
 - [Postgres](https://wiki.postgresql.org/wiki/Detailed_installation_guides) v9.4
-  - Make sure that a superuser named `postgres` exists (this is required for running the API integration tests locally).
 - [Heroku](heroku.com) account
 - [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command)
   - Be sure to [log in!](https://devcenter.heroku.com/articles/heroku-command#logging-in)
