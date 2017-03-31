@@ -6,9 +6,10 @@
   "scripts": {
     "test": "gulp test",
     "lint": "gulp lint",
-    "test-browser": "gulp test-browser",
+    "test-browser": "gulp pre-test-browser && BROWSER_TESTING=true webpack -p --bail",
     "watch-tests": "gulp watch-tests",
-    "build": "gulp build",
+    "build": "gulp build && webpack -p --bail",
+    "analyze-build": "NODE_ENV=production ANALYZE_BUILD=true webpack -p --bail",
     "coverage": "BABEL_ENV=tests gulp coverage",
     "work": "gulp work",
     "reset-database": "pls reset-database",
@@ -87,8 +88,8 @@
     "sinon-chai": "2.8.0",
     "stylelint": "7.3.1",
     "supertest": "2.0.0",
-    "webpack": "1.13.2",
-    "webpack-stream": "3.2.0"
+    "webpack": "2.3.2",
+    "webpack-bundle-analyzer": "2.3.1"
   },
   "babelBoilerplateOptions": {
     "entryFileName": "index",
