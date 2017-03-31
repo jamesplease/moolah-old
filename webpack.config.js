@@ -34,6 +34,17 @@ const plugins = [
   isBuildingForTests && new webpack.optimize.LimitChunkCountPlugin({
     maxChunks: 1
   }),
+
+  !isBuildingForTests && new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks(module) {
+      return module.context && module.context.indexOf('node_modules') !== -1;
+    }
+  }),
+  !isBuildingForTests && new webpack.optimize.CommonsChunkPlugin({
+    name: 'manifest',
+    minChunks: Infinity
+  }),
 ].filter(Boolean);
 
 const testFiles = glob.sync('./test/unit/client/**/*.js');
@@ -60,7 +71,7 @@ module.exports = {
 
   output: {
     path: isBuildingForTests ? local('./tmp') : local('./client-dist'),
-    filename: isBuildingForTests ? '__spec-build.js' : 'app.js',
+    filename: isBuildingForTests ? '__spec-build.js' : '[name].js',
   },
 
   module: {
