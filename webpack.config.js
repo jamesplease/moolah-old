@@ -31,16 +31,23 @@ const plugins = [
     }
   }),
 
+  // When testing, we use lots of entries, but we want to ensure we only have
+  // one output file.
   isBuildingForTests && new webpack.optimize.LimitChunkCountPlugin({
     maxChunks: 1
   }),
 
+  // Splits out the vendor code from our app code. Vendor code is much larger
+  // than our app code, and it changes far less.
   !isBuildingForTests && new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     minChunks(module) {
       return module.context && module.context.indexOf('node_modules') !== -1;
     }
   }),
+
+  // This splits out the Webpack initialization code into a separate bundle.
+  // It is useful to enable us to set long cache times on the vendor bundle.
   !isBuildingForTests && new webpack.optimize.CommonsChunkPlugin({
     name: 'manifest',
     minChunks: Infinity
@@ -49,6 +56,8 @@ const plugins = [
 
 const testFiles = glob.sync('./test/unit/client/**/*.js');
 const allTestFiles = ['./test/setup/browser.js'].concat(testFiles);
+
+// These externals are required for Enzyme to build properly for the browser
 const externals = isBuildingForTests ? {
   cheerio: 'window',
   'react/addons': true,
