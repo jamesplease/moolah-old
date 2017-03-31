@@ -3,6 +3,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const glob = require('glob');
+const AssetsPlugin = require('assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const local = path.join.bind(path, __dirname);
@@ -52,6 +53,8 @@ const plugins = [
     name: 'manifest',
     minChunks: Infinity
   }),
+
+  !isBuildingForTests && new AssetsPlugin(),
 ].filter(Boolean);
 
 const testFiles = glob.sync('./test/unit/client/**/*.js');
@@ -80,7 +83,7 @@ module.exports = {
 
   output: {
     path: isBuildingForTests ? local('./tmp') : local('./client-dist'),
-    filename: isBuildingForTests ? '__spec-build.js' : '[name].js',
+    filename: isBuildingForTests ? '__spec-build.js' : '[name].[hash].js',
   },
 
   module: {
