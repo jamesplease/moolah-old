@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const {cleanDist, cleanTmp} = require('./gulp/clean');
 const {lintJs, lintCss} = require('./gulp/lint');
 const {buildCss, build, work} = require('./gulp/build');
-const {test, coverage, watchTests} = require('./gulp/test');
+const {test, coverage, watchTests, sauceRunner} = require('./gulp/test');
 
 gulp.task('clean', cleanDist);
 gulp.task('clean-tmp', cleanTmp);
@@ -25,5 +25,6 @@ gulp.task('watch-tests', ['lint'], watchTests);
 // Generate a coverage report
 gulp.task('coverage', ['lint'], coverage);
 gulp.task('pre-test-browser', ['lint', 'clean-tmp']);
+gulp.task('test-cross-browser', sauceRunner);
 
 gulp.task('default', ['test']);
