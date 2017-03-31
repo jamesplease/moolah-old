@@ -7,6 +7,7 @@ window.onload = function() {
   var runner = window.mocha.run();
   require('./setup')(window);
 
+  // This code is for alerting SauceLabs of our successes and failures
   var failedTests = [];
   runner.on('end', function() {
     window.mochaResults = runner.stats;

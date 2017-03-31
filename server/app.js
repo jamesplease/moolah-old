@@ -15,6 +15,7 @@ const ApiPls = require('api-pls');
 const pgSession = require('connect-pg-simple')(session);
 const errorLogs = require('./logging/error-logs');
 const infoLogs = require('./logging/info-logs');
+const webpackAssets = require('../webpack-assets.json');
 
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
@@ -39,9 +40,6 @@ module.exports = function() {
   app.use(helmet({
     // This application should never appear in an iFrame
     frameguard: {action: 'deny'},
-    // No HTTPS at the moment. See: https://github.com/jmeas/moolah/issues/321
-    hsts: false,
-    noCache: {}
   }));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
@@ -175,6 +173,8 @@ module.exports = function() {
         user: req.user
       }
     });
+
+    res.locals.webpackAssets = webpackAssets;
 
     return res.render('index');
   });

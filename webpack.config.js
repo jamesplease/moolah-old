@@ -3,6 +3,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const glob = require('glob');
+const AssetsPlugin = require('assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const local = path.join.bind(path, __dirname);
@@ -31,13 +32,35 @@ const plugins = [
     }
   }),
 
+  // When testing, we use lots of entries, but we want to ensure we only have
+  // one output file.
   isBuildingForTests && new webpack.optimize.LimitChunkCountPlugin({
     maxChunks: 1
   }),
+
+  // Splits out the vendor code from our app code. Vendor code is much larger
+  // than our app code, and it changes far less.
+  !isBuildingForTests && new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks(module) {
+      return module.context && module.context.indexOf('node_modules') !== -1;
+    }
+  }),
+
+  // This splits out the Webpack initialization code into a separate bundle.
+  // It is useful to enable us to set long cache times on the vendor bundle.
+  !isBuildingForTests && new webpack.optimize.CommonsChunkPlugin({
+    name: 'manifest',
+    minChunks: Infinity
+  }),
+
+  !isBuildingForTests && new AssetsPlugin(),
 ].filter(Boolean);
 
 const testFiles = glob.sync('./test/unit/client/**/*.js');
 const allTestFiles = ['./test/setup/browser.js'].concat(testFiles);
+
+// These externals are required for Enzyme to build properly for the browser
 const externals = isBuildingForTests ? {
   cheerio: 'window',
   'react/addons': true,
@@ -60,7 +83,7 @@ module.exports = {
 
   output: {
     path: isBuildingForTests ? local('./tmp') : local('./client-dist'),
-    filename: isBuildingForTests ? '__spec-build.js' : 'app.js',
+    filename: isBuildingForTests ? '__spec-build.js' : '[name].[hash].js',
   },
 
   module: {
