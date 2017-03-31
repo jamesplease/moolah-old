@@ -32,6 +32,8 @@ const ASSETS_PATH = path.join(PROJECT_ROOT, 'client-dist');
 const STATIC_PATH = path.join(BASE_DIR, 'static');
 const VIEWS_DIR = path.join(BASE_DIR, 'views');
 
+const isDevelopmentEnv = NODE_ENV === 'development';
+
 module.exports = function() {
   const app = express();
 
@@ -40,6 +42,41 @@ module.exports = function() {
   app.use(helmet({
     // This application should never appear in an iFrame
     frameguard: {action: 'deny'},
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: [
+          "'self'",
+        ],
+        scriptSrc: [
+          "'self'",
+          // Unsafe eval is used for Webpack source maps
+          isDevelopmentEnv && "'unsafe-eval'",
+          // Inline is used to set up the LiveReload script
+          isDevelopmentEnv && "'unsafe-inline'",
+          // The LiveReload server is located here
+          isDevelopmentEnv && 'localhost:35729'
+        ],
+        styleSrc: [
+          "'self'",
+          // Normalize, Material design iconic font
+          'cdnjs.cloudflare.com',
+          // Google fonts
+          'fonts.googleapis.com',
+        ],
+        imgSrc: [
+          "'self'",
+          // User profile pictures from Google
+          '*.googleusercontent.com',
+        ],
+        fontSrc: [
+          "'self'",
+          // Material design iconic font
+          'cdnjs.cloudflare.com',
+          // Google fonts
+          'fonts.gstatic.com',
+        ]
+      }
+    }
   }));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
