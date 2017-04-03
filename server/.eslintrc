@@ -1,4 +1,8 @@
 {
+  "extends": [
+    "../.eslintrc",
+    "../node_modules/pleaserc/.eslintrc-server"
+  ],
   "globals": {
     "Promise": true,
   },
