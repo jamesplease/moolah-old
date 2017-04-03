@@ -13,7 +13,12 @@ export function createTransaction(data) {
 
     const req = xhr.post(
       '/api/v1/transactions',
-      {json: data},
+      {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res, body) => {
         if (req.aborted) {
           dispatch({type: actionTypes.CREATE_TRANSACTION_ABORTED});
@@ -22,7 +27,7 @@ export function createTransaction(data) {
         } else {
           dispatch({
             type: actionTypes.CREATE_TRANSACTION_SUCCESS,
-            transaction: body
+            transaction: JSON.parse(body).data
           });
         }
       }
@@ -44,7 +49,11 @@ export function retrieveTransactions() {
 
     const req = xhr.get(
       '/api/v1/transactions',
-      {json: true},
+      {
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res, body) => {
         if (req.aborted) {
           dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS_ABORTED});
@@ -53,7 +62,7 @@ export function retrieveTransactions() {
         } else {
           dispatch({
             type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
-            transactions: body
+            transactions: JSON.parse(body).data
           });
         }
       }
@@ -80,7 +89,12 @@ export function updateTransaction(transaction) {
     const {id} = transaction;
     const req = xhr.patch(
       `/api/v1/transactions/${id}`,
-      {json: transaction},
+      {
+        body: JSON.stringify(transaction),
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res, body) => {
         if (req.aborted) {
           dispatch({
@@ -95,7 +109,7 @@ export function updateTransaction(transaction) {
         } else {
           dispatch({
             type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
-            transaction: body
+            transaction: JSON.parse(body).data
           });
         }
       }
@@ -114,7 +128,11 @@ export function deleteTransaction(transactionId) {
 
     const req = xhr.del(
       `/api/v1/transactions/${transactionId}`,
-      {json: true},
+      {
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res) => {
         if (req.aborted) {
           dispatch({

@@ -17,7 +17,12 @@ export function createCategory(data) {
 
     const req = xhr.post(
       '/api/v1/categories',
-      {json: data},
+      {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res, body) => {
         if (req.aborted) {
           dispatch({
@@ -32,7 +37,7 @@ export function createCategory(data) {
         } else {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_SUCCESS,
-            category: body
+            category: JSON.parse(body).data
           });
         }
       }
@@ -54,7 +59,11 @@ export function retrieveCategories() {
 
     const req = xhr.get(
       '/api/v1/categories',
-      {json: true},
+      {
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res, body) => {
         if (req.aborted) {
           dispatch({type: actionTypes.RETRIEVE_CATEGORIES_ABORTED});
@@ -63,7 +72,7 @@ export function retrieveCategories() {
         } else {
           dispatch({
             type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-            categories: body
+            categories: JSON.parse(body).data
           });
         }
       }
@@ -90,7 +99,12 @@ export function updateCategory(category) {
     const {id} = category;
     const req = xhr.patch(
       `/api/v1/categories/${id}`,
-      {json: category},
+      {
+        body: JSON.stringify(category),
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res, body) => {
         if (req.aborted) {
           dispatch({
@@ -105,7 +119,7 @@ export function updateCategory(category) {
         } else {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-            category: body
+            category: JSON.parse(body).data
           });
         }
       }
@@ -127,7 +141,11 @@ export function deleteCategory(categoryId) {
 
     const req = xhr.del(
       `/api/v1/categories/${categoryId}`,
-      {json: true},
+      {
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res) => {
         if (req.aborted) {
           dispatch({
