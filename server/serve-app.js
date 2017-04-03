@@ -20,6 +20,11 @@ module.exports = function serveApp(req, res) {
     }
   });
 
+  let lrSnippet = '';
+  if (devMode) {
+    lrSnippet = `<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>`;
+  }
+
   const markup = `
     <!doctype html>
     <html lang="en">
@@ -39,7 +44,7 @@ module.exports = function serveApp(req, res) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/style.css">
-        ${devMode && `<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>`}
+        ${lrSnippet}
       </head>
       <body>
         <div class="app-container"></div>
