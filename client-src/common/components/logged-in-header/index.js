@@ -1,53 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import preventScroll from 'prevent-scroll';
 import Nav from '../nav';
 import ProfileDropdown from '../profile-dropdown';
 
-const LoggedInHeader = React.createClass({
-  getInitialState() {
-    return {
-      isOverlayNavVisible: false,
-      isProfileDropdownVisible: false
-    };
-  },
-
-  toggleOverlayNav(showOverlayNav) {
-    let newValue;
-    if (typeof showOverlayNav === 'undefined') {
-      newValue = !this.state.isOverlayNavVisible;
-    } else {
-      newValue = showOverlayNav;
-    }
-
-    if (newValue) {
-      preventScroll.on();
-    } else {
-      preventScroll.off();
-    }
-
-    this.setState({
-      isOverlayNavVisible: newValue
-    });
-  },
-
-  showProfileDropdown() {
-    this.setState({
-      isProfileDropdownVisible: true
-    });
-
-    preventScroll.on();
-  },
-
-  hideProfileDropdown() {
-    this.setState({
-      isProfileDropdownVisible: false
-    });
-
-    preventScroll.off();
-  },
-
+export class LoggedInHeader extends Component {
   render() {
     const overlayNavToggleClass = classNames({
       'is-active': this.state.isOverlayNavVisible,
@@ -101,6 +59,49 @@ const LoggedInHeader = React.createClass({
       </header>
     );
   }
-});
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOverlayNavVisible: false,
+      isProfileDropdownVisible: false
+    };
+  }
+
+  toggleOverlayNav = (showOverlayNav) => {
+    let newValue;
+    if (typeof showOverlayNav === 'undefined') {
+      newValue = !this.state.isOverlayNavVisible;
+    } else {
+      newValue = showOverlayNav;
+    }
+
+    if (newValue) {
+      preventScroll.on();
+    } else {
+      preventScroll.off();
+    }
+
+    this.setState({
+      isOverlayNavVisible: newValue
+    });
+  }
+
+  showProfileDropdown = () => {
+    this.setState({
+      isProfileDropdownVisible: true
+    });
+
+    preventScroll.on();
+  }
+
+  hideProfileDropdown = () => {
+    this.setState({
+      isProfileDropdownVisible: false
+    });
+
+    preventScroll.off();
+  }
+}
 
 export default LoggedInHeader;

@@ -1,18 +1,19 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactCSSTransitionGroup from '../../../vendor/css-transition-group';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Alert from '../alert';
 import * as alertActionCreators from '../../../redux/alerts/action-creators';
 
-const Alerts = React.createClass({
-  getInitialState() {
-    return {
+export class Alerts extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       activeAlert: null
     };
-  },
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     const {animatingAlertOut, alerts} = nextProps;
 
     if (animatingAlertOut || this.state.activeAlert) {
@@ -25,13 +26,13 @@ const Alerts = React.createClass({
         activeAlert: firstAlert
       });
     }
-  },
+  }
 
-  animateOutAlert() {
+  animateOutAlert = () => {
     this.setState({
       activeAlert: null
     });
-  },
+  }
 
   render() {
     const {
@@ -68,9 +69,7 @@ const Alerts = React.createClass({
       </ReactCSSTransitionGroup>
     );
   }
-});
-
-export {Alerts};
+}
 
 function mapStateToProps(state) {
   return {

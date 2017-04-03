@@ -1,47 +1,9 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
 
-const ModifyCategoryModal = React.createClass({
-  componentDidMount() {
-    this.labelInput.focus();
-  },
-
-  getInitialState() {
-    return {
-      cancelBegun: false
-    };
-  },
-
-  mouseDownCancel() {
-    const {
-      fields: {label}
-    } = this.props;
-
-    const labelIsInvalid = label.error && label.touched;
-
-    // redux-form is quick to the draw on making the form invalid. In fact,
-    // it happens so fast that simply mousing down on the cancel can cause
-    // the error message to appear. The error message physically moves the
-    // cancel button, making the click miss the button entirely. Not good. This
-    // callback is called before that ever happens, so we set some state to let
-    // redux-form know to wait a second if the form isn't already invalid.
-    // If, on the other hand, it's already invalid, then we don't need to do
-    // this check at all.
-    if (!labelIsInvalid) {
-      this.setState({
-        cancelBegun: true
-      });
-    }
-  },
-
-  mouseUpOnComponent() {
-    this.setState({
-      cancelBegun: false
-    });
-  },
-
+export class ModifyCategoryModal extends Component {
   render() {
     const {
       fields: {label},
@@ -148,9 +110,46 @@ const ModifyCategoryModal = React.createClass({
       </div>
     );
   }
-});
 
-export {ModifyCategoryModal};
+  constructor(props) {
+    super(props);
+    this.state = {
+      cancelBegun: false
+    };
+  }
+
+  componentDidMount = () => {
+    this.labelInput.focus();
+  }
+
+  mouseDownCancel = () => {
+    const {
+      fields: {label}
+    } = this.props;
+
+    const labelIsInvalid = label.error && label.touched;
+
+    // redux-form is quick to the draw on making the form invalid. In fact,
+    // it happens so fast that simply mousing down on the cancel can cause
+    // the error message to appear. The error message physically moves the
+    // cancel button, making the click miss the button entirely. Not good. This
+    // callback is called before that ever happens, so we set some state to let
+    // redux-form know to wait a second if the form isn't already invalid.
+    // If, on the other hand, it's already invalid, then we don't need to do
+    // this check at all.
+    if (!labelIsInvalid) {
+      this.setState({
+        cancelBegun: true
+      });
+    }
+  }
+
+  mouseUpOnComponent = () => {
+    this.setState({
+      cancelBegun: false
+    });
+  }
+}
 
 function validate(values, props) {
   const newLabel = _.result(values.label, 'trim');

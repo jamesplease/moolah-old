@@ -1,16 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 import preventScroll from 'prevent-scroll';
 
-export default React.createClass({
-  componentDidMount() {
-    preventScroll.on();
-  },
-
-  componentWillUnmount() {
-    preventScroll.off();
-  },
-
+export default class Modal extends Component {
   render() {
     const modalClassProp = this.props.modalClassName || '';
 
@@ -29,4 +21,12 @@ export default React.createClass({
       </div>
     );
   }
-});
+
+  componentDidMount() {
+    preventScroll.on();
+  }
+
+  componentWillUnmount() {
+    preventScroll.off();
+  }
+}

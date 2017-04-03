@@ -1,11 +1,29 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
 import * as contactActionCreators from '../../../redux/contact/action-creators';
 
-const Contact = React.createClass({
-  componentWillUnmount() {
+export class Contact extends Component {
+  render() {
+    const {sendingMessageStatus} = this.props;
+
+    const messageSent = sendingMessageStatus === 'SUCCESS';
+    const contactContent = messageSent ? this.getSuccessMessage() : this.getContactForm();
+
+    return (
+      <div className="container container-bottomSpaced contactPage">
+        <div className="text-container">
+          <h1>
+            Contact Us
+          </h1>
+          {contactContent}
+        </div>
+      </div>
+    );
+  }
+
+  componentWillUnmount = () => {
     // This ensures that if the user leaves the page, then comes back, that
     // they can always send another message. Without it, the success message
     // would stick around forever.
@@ -13,7 +31,7 @@ const Contact = React.createClass({
     if (this.sendMessageXhr) {
       this.sendMessageXhr.abort();
     }
-  },
+  }
 
   getSuccessMessage() {
     return (
@@ -26,13 +44,13 @@ const Contact = React.createClass({
         </p>
       </div>
     );
-  },
+  }
 
-  sendMessage(data) {
+  sendMessage = (data) => {
     this.sendMessageXhr = this.props.sendMessage(data);
-  },
+  }
 
-  getContactForm() {
+  getContactForm = () => {
     const {
       fields: {subject, body},
       handleSubmit,
@@ -79,28 +97,8 @@ const Contact = React.createClass({
         </form>
       </div>
     );
-  },
-
-  render() {
-    const {sendingMessageStatus} = this.props;
-
-    const messageSent = sendingMessageStatus === 'SUCCESS';
-    const contactContent = messageSent ? this.getSuccessMessage() : this.getContactForm();
-
-    return (
-      <div className="container container-bottomSpaced contactPage">
-        <div className="text-container">
-          <h1>
-            Contact Us
-          </h1>
-          {contactContent}
-        </div>
-      </div>
-    );
   }
-});
-
-export {Contact};
+}
 
 function validate(values) {
   const body = _.result(values.body, 'trim');
