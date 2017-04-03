@@ -54,7 +54,7 @@ const plugins = [
     minChunks: Infinity
   }),
 
-  !isBuildingForTests && new AssetsPlugin(),
+  isProduction && new AssetsPlugin(),
 ].filter(Boolean);
 
 const testFiles = glob.sync('./test/unit/client/**/*.js');
@@ -72,6 +72,15 @@ const babelLoaderOptions = isBuildingForTests ? {
   plugins: 'babel-plugin-rewire'
 } : {};
 
+let filename;
+if (isBuildingForTests) {
+  filename = '__spec-build.js';
+} else if (isProduction) {
+  filename = '[name].[hash].js';
+} else {
+  filename = '[name].js';
+}
+
 module.exports = {
   devtool: isProduction ? 'source-map' : 'eval-source-map',
   plugins,
@@ -83,7 +92,7 @@ module.exports = {
 
   output: {
     path: isBuildingForTests ? local('./tmp') : local('./client-dist'),
-    filename: isBuildingForTests ? '__spec-build.js' : '[name].[hash].js',
+    filename
   },
 
   module: {

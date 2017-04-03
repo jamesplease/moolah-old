@@ -2,10 +2,17 @@
 
 /* eslint max-len: "off" */
 
-const webpackAssets = require('../webpack-assets.json');
+function getAssetPaths(devMode) {
+  return !devMode ? require('../webpack-assets.json') : {
+    manifest: {js: 'manifest.js'},
+    vendor: {js: 'vendor.js'},
+    app: {js: 'app.js'},
+  };
+}
 
 module.exports = function serveApp(req, res) {
   const devMode = res.app.get('env') === 'development';
+  const assets = getAssetPaths(devMode);
 
   const initialData = JSON.stringify({
     auth: {
@@ -39,9 +46,9 @@ module.exports = function serveApp(req, res) {
         <script type="text/json" id="initial-data">
           ${initialData}
         </script>
-        <script src="/${webpackAssets.manifest.js}"></script>
-        <script src="/${webpackAssets.vendor.js}"></script>
-        <script async src="/${webpackAssets.app.js}"></script>
+        <script src="/${assets.manifest.js}"></script>
+        <script src="/${assets.vendor.js}"></script>
+        <script async src="/${assets.app.js}"></script>
       </body>
     </html>
   `;
