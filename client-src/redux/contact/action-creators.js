@@ -7,7 +7,12 @@ export function sendMessage(data) {
 
     const req = xhr.post(
       '/help/messages',
-      {json: data},
+      {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/vnd.api+json'
+        }
+      },
       (err, res) => {
         if (req.aborted) {
           dispatch({type: actionTypes.SEND_MESSAGE_ABORTED});

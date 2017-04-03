@@ -47,8 +47,10 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.createCategory({label: 'pizza'});
       const req = thunk(this.dispatch);
       const respBody = JSON.stringify({
-        id: 10,
-        label: 'pizza'
+        data: {
+          id: 10,
+          label: 'pizza'
+        }
       });
       req.respond(200, {}, respBody);
       expect(this.dispatch).to.have.been.calledTwice;
@@ -130,10 +132,12 @@ describe('categories/actionCreators', function() {
     it('should respond appropriately when there are no errors', () => {
       const thunk = actionCreators.retrieveCategories();
       const req = thunk(this.dispatch);
-      const respBody = JSON.stringify([
-        {id: 1},
-        {id: 2}
-      ]);
+      const respBody = JSON.stringify({
+        data: [
+          {id: 1},
+          {id: 2}
+        ]
+      });
       req.respond(200, {}, respBody);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
@@ -212,8 +216,10 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.updateCategory({id: 2, label: 'pizza'});
       const req = thunk(this.dispatch);
       const respBody = JSON.stringify({
-        id: 2,
-        label: 'pizza'
+        data: {
+          id: 2,
+          label: 'pizza'
+        }
       });
       req.respond(200, {}, respBody);
       expect(this.dispatch).to.have.been.calledTwice;
