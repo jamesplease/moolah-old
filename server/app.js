@@ -6,7 +6,6 @@ const helmet = require('helmet');
 const express = require('express');
 const passport = require('passport');
 const addRequestId = require('express-request-id');
-const exphbs = require('express-handlebars');
 const session = require('express-session');
 const compress = require('compression');
 const favicon = require('serve-favicon');
@@ -15,7 +14,7 @@ const ApiPls = require('api-pls');
 const pgSession = require('connect-pg-simple')(session);
 const errorLogs = require('./logging/error-logs');
 const infoLogs = require('./logging/info-logs');
-const webpackAssets = require('../webpack-assets.json');
+const serveApp = require('./serve-app');
 
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
@@ -30,7 +29,6 @@ const BASE_DIR = __dirname;
 const PROJECT_ROOT = path.normalize(`${BASE_DIR}/..`);
 const ASSETS_PATH = path.join(PROJECT_ROOT, 'client-dist');
 const STATIC_PATH = path.join(BASE_DIR, 'static');
-const VIEWS_DIR = path.join(BASE_DIR, 'views');
 
 const isDevelopmentEnv = NODE_ENV === 'development';
 
@@ -126,17 +124,6 @@ module.exports = function() {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  // Configure the templating engine
-  const hbsOptions = {
-    extname: '.hbs',
-    layoutsDir: `${VIEWS_DIR}/layouts`,
-    partialsDir: `${VIEWS_DIR}/partials`,
-    defaultLayout: 'main'
-  };
-  app.set('view engine', '.hbs');
-  app.set('views', VIEWS_DIR);
-  app.engine('.hbs', exphbs(hbsOptions));
-
   const port = process.env.PORT || 5000;
   app.set('port', port);
 
@@ -200,21 +187,7 @@ module.exports = function() {
   });
 
   app.use('/api', apiPls.apiRouter());
-
-  // Every other route is served by our JS app
-  app.get('*', (req, res) => {
-    res.locals.devMode = res.app.get('env') === 'development';
-
-    res.locals.initialData = JSON.stringify({
-      auth: {
-        user: req.user
-      }
-    });
-
-    res.locals.webpackAssets = webpackAssets;
-
-    return res.render('index');
-  });
+  app.get('*', serveApp);
 
   if (!global.TESTING) {
     app.listen(port, () => {
