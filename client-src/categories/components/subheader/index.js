@@ -1,72 +1,12 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
 import ModifyCategoryModal from '../modify-category-modal';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
 
-const CategoriesSubheader = React.createClass({
-  getInitialState() {
-    return {
-      isModalOpen: false
-    };
-  },
-
-  onClickNew() {
-    this.setState({
-      isModalOpen: true
-    });
-  },
-
-  onClickModalCancel() {
-    this.setState({
-      isModalOpen: false
-    });
-  },
-
-  onClickModalCreate(fields) {
-    const newCategory = _.defaults(fields, {
-      emoji: null,
-      label: ''
-    });
-    newCategory.label = newCategory.label.trim();
-    this.props.createCategory(newCategory);
-  },
-
-  createModal() {
-    const childrenProps = {
-      onClickCancel: this.onClickModalCancel,
-      onSubmit: this.onClickModalCreate,
-      categories: this.props.categories,
-      confirmInProgress: this.props.creatingCategoryStatus === 'PENDING',
-      actionFailure: this.props.creatingCategoryStatus === 'FAILURE',
-      isEditMode: false
-    };
-
-    return (
-      <Modal modalClassName="modifyCategoryModal-container">
-        <ModifyCategoryModal {...childrenProps}/>
-      </Modal>
-    );
-  },
-
-  componentWillReceiveProps(nextProps) {
-    // If we weren't previously trying to create a category,
-    // then there's nothing for us to check.
-    if (this.props.creatingCategoryStatus !== 'PENDING') {
-      return;
-    }
-
-    // If the creation was successful, then we can close the
-    // modal.
-    if (nextProps.creatingCategoryStatus === 'SUCCESS') {
-      this.setState({
-        isModalOpen: false
-      });
-    }
-  },
-
+export class CategoriesSubheader extends Component {
   render() {
     const {isOnline} = this.props;
     const modal = this.state.isModalOpen ? this.createModal() : null;
@@ -88,9 +28,68 @@ const CategoriesSubheader = React.createClass({
       </div>
     );
   }
-});
 
-export {CategoriesSubheader};
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false
+    };
+  }
+
+  onClickNew = () => {
+    this.setState({
+      isModalOpen: true
+    });
+  }
+
+  onClickModalCancel = () => {
+    this.setState({
+      isModalOpen: false
+    });
+  }
+
+  onClickModalCreate = (fields) => {
+    const newCategory = _.defaults(fields, {
+      emoji: null,
+      label: ''
+    });
+    newCategory.label = newCategory.label.trim();
+    this.props.createCategory(newCategory);
+  }
+
+  createModal = () => {
+    const childrenProps = {
+      onClickCancel: this.onClickModalCancel,
+      onSubmit: this.onClickModalCreate,
+      categories: this.props.categories,
+      confirmInProgress: this.props.creatingCategoryStatus === 'PENDING',
+      actionFailure: this.props.creatingCategoryStatus === 'FAILURE',
+      isEditMode: false
+    };
+
+    return (
+      <Modal modalClassName="modifyCategoryModal-container">
+        <ModifyCategoryModal {...childrenProps}/>
+      </Modal>
+    );
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    // If we weren't previously trying to create a category,
+    // then there's nothing for us to check.
+    if (this.props.creatingCategoryStatus !== 'PENDING') {
+      return;
+    }
+
+    // If the creation was successful, then we can close the
+    // modal.
+    if (nextProps.creatingCategoryStatus === 'SUCCESS') {
+      this.setState({
+        isModalOpen: false
+      });
+    }
+  }
+}
 
 function mapStateToProps(state) {
   return {

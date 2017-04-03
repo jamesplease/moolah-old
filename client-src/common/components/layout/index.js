@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Header from '../header';
@@ -6,18 +6,7 @@ import Footer from '../footer';
 import Alerts from '../alerts';
 import * as connectionActionCreators from '../../../redux/connection/action-creators';
 
-const Layout = React.createClass({
-  componentDidMount() {
-    // This handles the user being offline at the
-    // time of the apxp launching
-    if (!window.navigator.onLine) {
-      this.props.userOffline();
-    }
-
-    window.addEventListener('offline', this.props.userOffline);
-    window.addEventListener('online', this.props.userOnline);
-  },
-
+export class Layout extends Component {
   render() {
     const {
       children,
@@ -37,9 +26,18 @@ const Layout = React.createClass({
       </div>
     );
   }
-});
 
-export {Layout};
+  componentDidMount = () => {
+    // This handles the user being offline at the
+    // time of the apxp launching
+    if (!window.navigator.onLine) {
+      this.props.userOffline();
+    }
+
+    window.addEventListener('offline', this.props.userOffline);
+    window.addEventListener('online', this.props.userOnline);
+  }
+}
 
 function mapStateToProps(state) {
   return {

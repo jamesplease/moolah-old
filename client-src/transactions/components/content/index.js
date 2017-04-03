@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as transactionsActionCreators from '../../../redux/transactions/action-creators';
@@ -13,38 +13,7 @@ import LoadingResourceList from '../../../common/components/loading-resource-lis
 import NotFound from '../../../common/components/not-found';
 import validateTransactionDate from '../../services/validate-transaction-date';
 
-export const Content = React.createClass({
-  // When the component is mounted, we make sure that we have the latest
-  // categories and the transactions for the current date
-  componentWillMount() {
-    const {params} = this.props;
-    this.fetchResources(params.transactionDate);
-  },
-
-  componentWillUnmount() {
-    // Abort any outstanding XHR requests when the component unmounts
-    _.result(this.fetchTransactionsXhr, 'abort');
-    _.result(this.fetchCategoriesXhr, 'abort');
-  },
-
-  componentWillReceiveProps(nextProps) {
-    // Anytime the date changes, we need to fetch new transactions
-    if (this.props.params.transactionDate !== nextProps.params.transactionDate) {
-      _.result(this.fetchTransactionsXhr, 'abort');
-      this.fetchResources(nextProps.params.transactionDate);
-    }
-  },
-
-  fetchResources(date) {
-    const {transactionsActions, categoriesActions} = this.props;
-    this.fetchCategoriesXhr = categoriesActions.retrieveCategories();
-    const transactionDate = date.split('-');
-    this.fetchTransactionsXhr = transactionsActions.retrieveTransactions({
-      year: transactionDate[0],
-      month: transactionDate[1]
-    });
-  },
-
+export class Content extends Component {
   render() {
     const {
       retrievingCategoriesStatus, retrievingTransactionsStatus,
@@ -93,7 +62,38 @@ export const Content = React.createClass({
       </div>
     );
   }
-});
+
+  // When the component is mounted, we make sure that we have the latest
+  // categories and the transactions for the current date
+  componentWillMount = () => {
+    const {params} = this.props;
+    this.fetchResources(params.transactionDate);
+  }
+
+  componentWillUnmount = () => {
+    // Abort any outstanding XHR requests when the component unmounts
+    _.result(this.fetchTransactionsXhr, 'abort');
+    _.result(this.fetchCategoriesXhr, 'abort');
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    // Anytime the date changes, we need to fetch new transactions
+    if (this.props.params.transactionDate !== nextProps.params.transactionDate) {
+      _.result(this.fetchTransactionsXhr, 'abort');
+      this.fetchResources(nextProps.params.transactionDate);
+    }
+  }
+
+  fetchResources = (date) => {
+    const {transactionsActions, categoriesActions} = this.props;
+    this.fetchCategoriesXhr = categoriesActions.retrieveCategories();
+    const transactionDate = date.split('-');
+    this.fetchTransactionsXhr = transactionsActions.retrieveTransactions({
+      year: transactionDate[0],
+      month: transactionDate[1]
+    });
+  }
+}
 
 function mapStateToProps(state) {
   return {

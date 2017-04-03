@@ -1,29 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import classNames from 'classnames';
 
-const Alert = React.createClass({
-  componentDidTransition(transitionType) {
-    const {
-      destroyFirstAlert, persistent, animateOutAlert
-    } = this.props;
-
-    if (transitionType === 'enter') {
-      if (!persistent) {
-        this._autodestruct = setTimeout(() => {
-          animateOutAlert();
-        }, 4000);
-      }
-    } else {
-      destroyFirstAlert();
-    }
-  },
-
-  onManualDismiss() {
-    const {animateOutAlert} = this.props;
-    clearTimeout(this._autodestruct);
-    animateOutAlert();
-  },
-
+export default class Alert extends Component {
   render() {
     const {
       style, text, animatingAlertOut, isDismissable, details
@@ -72,6 +50,26 @@ const Alert = React.createClass({
       </div>
     );
   }
-});
 
-export default Alert;
+  componentDidTransition = (transitionType) => {
+    const {
+      destroyFirstAlert, persistent, animateOutAlert
+    } = this.props;
+
+    if (transitionType === 'enter') {
+      if (!persistent) {
+        this._autodestruct = setTimeout(() => {
+          animateOutAlert();
+        }, 4000);
+      }
+    } else {
+      destroyFirstAlert();
+    }
+  }
+
+  onManualDismiss = () => {
+    const {animateOutAlert} = this.props;
+    clearTimeout(this._autodestruct);
+    animateOutAlert();
+  }
+}

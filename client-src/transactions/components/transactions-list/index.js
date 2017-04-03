@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import TransactionListItem from '../transaction-list-item';
 import * as transactionsActionCreators from '../../../redux/transactions/action-creators';
 
-export const TransactionsList = React.createClass({
+export class TransactionsList extends Component {
   render() {
     const {transactions, transactionsActions} = this.props;
 
@@ -22,7 +22,7 @@ export const TransactionsList = React.createClass({
       </div>
     );
   }
-});
+}
 
 function mapDispatchToProps(dispatch) {
   return {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import ReactCSSTransitionGroupChild from './css-transition-group-child';
 
@@ -32,10 +32,10 @@ function createTransitionTimeoutPropValidator(transitionType) {
  * enters or leaves the DOM.
  * See https://facebook.github.io/react/docs/animation.html#high-level-api-reactcsstransitiongroup
  */
-const ReactCSSTransitionGroup = React.createClass({
-  displayName: 'ReactCSSTransitionGroup',
+class ReactCSSTransitionGroup extends Component {
+  static displayName = 'ReactCSSTransitionGroup';
 
-  propTypes: {
+  static propTypes = {
     transitionName: ReactCSSTransitionGroupChild.propTypes.name,
 
     transitionAppear: React.PropTypes.bool,
@@ -44,17 +44,15 @@ const ReactCSSTransitionGroup = React.createClass({
     transitionAppearTimeout: createTransitionTimeoutPropValidator('Appear'),
     transitionEnterTimeout: createTransitionTimeoutPropValidator('Enter'),
     transitionLeaveTimeout: createTransitionTimeoutPropValidator('Leave'),
-  },
+  };
 
-  getDefaultProps: function() {
-    return {
-      transitionAppear: false,
-      transitionEnter: true,
-      transitionLeave: true,
-    };
-  },
+  static defaultProps = {
+    transitionAppear: false,
+    transitionEnter: true,
+    transitionLeave: true,
+  };
 
-  _wrapChild: function(child) {
+  _wrapChild = (child) => {
     // We need to lmao this childFactory so that
     // ReactCSSTransitionGroupChild can receive updates to name, enter, and
     // leave while it is leaving.
@@ -70,15 +68,15 @@ const ReactCSSTransitionGroup = React.createClass({
         leaveTimeout: this.props.transitionLeaveTimeout,
       },
       child
-    );
-  },
+    )
+  }
 
-  render: function() {
+  render() {
     return React.createElement(
       ReactTransitionGroup,
       Object.assign({}, this.props, {childFactory: this._wrapChild})
     );
-  },
-});
+  }
+}
 
 export default ReactCSSTransitionGroup;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as categoriesActionCreators from '../../../redux/categories/action-creators';
@@ -8,18 +8,7 @@ import EmptyCategories from '../empty-categories';
 import ErrorRetrieving from '../../../common/components/error-retrieving';
 import LoadingResourceList from '../../../common/components/loading-resource-list';
 
-export const Content = React.createClass({
-  componentDidMount() {
-    const {retrieveCategories} = this.props;
-    this.fetchingCategoriesXhr = retrieveCategories();
-  },
-
-  componentWillUnmount() {
-    if (this.fetchingCategoriesXhr) {
-      this.fetchingCategoriesXhr.abort();
-    }
-  },
-
+export class Content extends Component {
   render() {
     let contents;
     const {
@@ -45,7 +34,18 @@ export const Content = React.createClass({
       </div>
     );
   }
-});
+
+  componentDidMount = () => {
+    const {retrieveCategories} = this.props;
+    this.fetchingCategoriesXhr = retrieveCategories();
+  }
+
+  componentWillUnmount = () => {
+    if (this.fetchingCategoriesXhr) {
+      this.fetchingCategoriesXhr.abort();
+    }
+  }
+}
 
 function mapStateToProps(state) {
   return {
