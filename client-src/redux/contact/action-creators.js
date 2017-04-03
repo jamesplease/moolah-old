@@ -1,5 +1,6 @@
 import xhr from 'xhr';
 import actionTypes from './action-types';
+import authActionTypes from '../auth/action-types';
 
 export function sendMessage(data) {
   return (dispatch) => {
@@ -16,6 +17,8 @@ export function sendMessage(data) {
       (err, res) => {
         if (req.aborted) {
           dispatch({type: actionTypes.SEND_MESSAGE_ABORTED});
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.SEND_MESSAGE_FAILURE});
         } else {

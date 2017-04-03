@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import xhr from 'xhr';
 import actionTypes from './action-types';
+import authActionTypes from '../auth/action-types';
 
 export function resetCreateCategoryResolution() {
   return {
@@ -29,6 +30,8 @@ export function createCategory(data) {
             type: actionTypes.CREATE_CATEGORY_ABORTED,
             category: data
           });
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_FAILURE,
@@ -67,6 +70,8 @@ export function retrieveCategories() {
       (err, res, body) => {
         if (req.aborted) {
           dispatch({type: actionTypes.RETRIEVE_CATEGORIES_ABORTED});
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.RETRIEVE_CATEGORIES_FAILURE});
         } else {
@@ -111,6 +116,8 @@ export function updateCategory(category) {
             type: actionTypes.UPDATE_CATEGORY_ABORTED,
             category
           });
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_FAILURE,
@@ -152,6 +159,8 @@ export function deleteCategory(categoryId) {
             type: actionTypes.DELETE_CATEGORY_ABORTED,
             category: categoryToDelete
           });
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_FAILURE,

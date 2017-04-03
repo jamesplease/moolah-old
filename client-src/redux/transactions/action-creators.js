@@ -1,5 +1,6 @@
 import xhr from 'xhr';
 import actionTypes from './action-types';
+import authActionTypes from '../auth/action-types';
 
 export function resetCreateTransactionResolution() {
   return {
@@ -22,6 +23,8 @@ export function createTransaction(data) {
       (err, res, body) => {
         if (req.aborted) {
           dispatch({type: actionTypes.CREATE_TRANSACTION_ABORTED});
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.CREATE_TRANSACTION_FAILURE});
         } else {
@@ -57,6 +60,8 @@ export function retrieveTransactions() {
       (err, res, body) => {
         if (req.aborted) {
           dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS_ABORTED});
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS_FAILURE});
         } else {
@@ -101,6 +106,8 @@ export function updateTransaction(transaction) {
             type: actionTypes.UPDATE_TRANSACTION_ABORTED,
             transactionId: transaction.id
           });
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_TRANSACTION_FAILURE,
@@ -139,6 +146,8 @@ export function deleteTransaction(transactionId) {
             type: actionTypes.DELETE_TRANSACTION_ABORTED,
             transactionId
           });
+        } else if (res.statusCode === 401) {
+          dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.DELETE_TRANSACTION_FAILURE,
