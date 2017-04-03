@@ -115,7 +115,7 @@
     "form-serialize": "0.7.1",
     "helmet": "2.1.3",
     "is-my-json-valid": "2.14.0",
-    "js-emoji": "git+https://github.com/iamcal/js-emoji.git#65bb0c504efc6dd875fb251b77e6f27e84e67d1a",
+    "js-emoji": "git+https://github.com/iamcal/js-emoji.git#75750a73f7ecbe8eed950613592953753c96a70f",
     "kapow": "1.0.0",
     "keymirror": "0.1.1",
     "lodash": "4.16.4",
