@@ -72,15 +72,6 @@ export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
               Categories
             </Link>
           </li>
-          <li className={listItemClass}>
-            <Link
-              to="/analytics"
-              onClick={onClickNavItem}
-              className="mainNav-listItem-link"
-              activeClassName="active">
-              Analytics
-            </Link>
-          </li>
         </ul>
       </nav>
       <ReactCSSTransitionGroup {...transitionGroupProps}>

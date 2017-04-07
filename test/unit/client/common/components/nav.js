@@ -55,8 +55,8 @@ describe('Nav', function() {
         const wrapper = shallow(<Nav {...this.defaultProps}/>);
         const links = wrapper.find(Link);
         const linkListItems = wrapper.find('.mainNav-listItem');
-        expect(links).to.have.length(4);
-        expect(linkListItems).to.have.length(4);
+        expect(links).to.have.length(3);
+        expect(linkListItems).to.have.length(3);
 
         expect(links.at(0).prop('children')).to.equal('Dashboard');
         expect(links.at(0).prop('to')).to.equal('/');
@@ -69,10 +69,6 @@ describe('Nav', function() {
         expect(links.at(2).prop('children')).to.equal('Categories');
         expect(links.at(2).prop('to')).to.equal('/categories');
         expect(linkListItems.at(2).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
-
-        expect(links.at(3).prop('children')).to.equal('Analytics');
-        expect(links.at(3).prop('to')).to.equal('/analytics');
-        expect(linkListItems.at(3).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
       });
     });
 
