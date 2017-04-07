@@ -10,7 +10,6 @@ import {useScroll} from 'react-router-scroll';
 import IndexPage from './common/components/index-page';
 import Categories from './categories/components/content';
 import Account from './account/components/account';
-import Analytics from './analytics/components/analytics';
 import Transactions from './transactions/components/content';
 import Layout from './common/components/layout';
 import NotFound from './common/components/not-found';
@@ -48,7 +47,6 @@ render((
           component={Transactions}/>
         <Redirect from="/transactions" to="/transactions/this-month"/>
         <Route path="/categories" component={Categories} onEnter={authCheck.mustBeLoggedIn}/>
-        <Route path="/analytics" component={Analytics} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/account" component={Account} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/contact" component={Contact}/>
         <Route path="/privacy" component={Privacy}/>
