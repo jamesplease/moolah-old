@@ -1,5 +1,5 @@
 import React from 'react';
-// import emoji from '../../../common/services/js-emoji';
+import emoji from '../../../common/services/js-emoji';
 
 export default function CategoryListItem(props) {
   const {
@@ -13,8 +13,7 @@ export default function CategoryListItem(props) {
   };
 
   if (category.emoji) {
-    // categoryEmojiHtml.__html = emoji.replace_colons(category.emoji);
-    categoryEmojiHtml.__html = ':)';
+    categoryEmojiHtml.__html = emoji.replace_colons(category.emoji);
   }
 
   return (

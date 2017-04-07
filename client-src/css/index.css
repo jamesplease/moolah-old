@@ -1,4 +1,4 @@
-/* @import '../../node_modules/js-emoji/demo/emoji'; */
+@import '../../node_modules/js-emoji/demo/emoji';
 
 // The "./css" directory is for files that need to be either be loaded in a
 // specific order, or need to be loaded before the rest of the app.

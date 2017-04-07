@@ -1,10 +1,10 @@
 import CategoryListItem from '../../../../../client-src/categories/components/category-list-item';
-// import emoji from '../../../../../client-src/common/services/js-emoji';
+import emoji from '../../../../../client-src/common/services/js-emoji';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
 describe('CategoryListItem', function() {
   beforeEach(() => {
-    // stub(emoji, 'replace_colons').returns('<b>hello</b>');
+    stub(emoji, 'replace_colons').returns('<b>hello</b>');
 
     this.onClickDelete = stub();
     this.onClickEdit = stub();
@@ -38,7 +38,7 @@ describe('CategoryListItem', function() {
         const wrapper = this.generator.shallow();
         const emojiContainer = wrapper.find('.categoryListItem-emoji');
         expect(emojiContainer.prop('dangerouslySetInnerHTML')).to.deep.equal({
-          __html: ':)'
+          __html: '<b>hello</b>'
         });
       });
 
