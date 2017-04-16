@@ -63,7 +63,7 @@ describe('Nav', function() {
         expect(linkListItems.at(0).hasClass('mainNav-listItem-smallScreenOnly')).to.be.true;
 
         expect(links.at(1).prop('children')).to.equal('Transactions');
-        expect(links.at(1).prop('to')).to.equal('/transactions/this-month');
+        expect(links.at(1).prop('to')).to.equal('/transactions');
         expect(linkListItems.at(1).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
 
         expect(links.at(2).prop('children')).to.equal('Categories');

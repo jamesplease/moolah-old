@@ -7,7 +7,7 @@ export default function EmptyTransactions() {
         There are no transactions.
       </div>
       <div className="emptyResourceList-explanation">
-        This page will list your transactions. Transactions are events when you
+        This page will list your transactions. Transactions are events where you
         gain or spend money.
       </div>
     </div>

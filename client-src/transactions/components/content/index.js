@@ -11,7 +11,9 @@ import EmptyTransactions from '../empty-transactions';
 import ErrorRetrieving from '../../../common/components/error-retrieving';
 import LoadingResourceList from '../../../common/components/loading-resource-list';
 import NotFound from '../../../common/components/not-found';
+import {getYearMonthStringFromDate} from '../../services/format-date';
 import validateTransactionDate from '../../services/validate-transaction-date';
+import monthDiff from '../../services/month-diff';
 
 export class Content extends Component {
   render() {
@@ -20,8 +22,14 @@ export class Content extends Component {
       transactions, params
     } = this.props;
 
+    const currentDateString = getYearMonthStringFromDate(new Date());
     const transactionDate = params.transactionDate;
     if (!validateTransactionDate(transactionDate)) {
+      return <NotFound/>;
+    }
+
+    const monthDifference = monthDiff(currentDateString, transactionDate);
+    if (monthDifference > 1) {
       return <NotFound/>;
     }
 
@@ -56,8 +64,8 @@ export class Content extends Component {
 
     return (
       <div className="container-bottomSpaced">
-        <Subheader/>
         <DateMenu date={transactionDate}/>
+        <Subheader/>
         {contents}
       </div>
     );

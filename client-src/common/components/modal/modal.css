@@ -28,8 +28,10 @@
   .modal-title {
     font-size: 17px;
     font-weight: normal;
-    padding: 13px 15px;
+    padding: 0 15px;
     margin: 0;
+    height: 42px;
+    line-height: 42px;
     text-align: center;
     border-bottom: 1px solid #eaeaea;
 
