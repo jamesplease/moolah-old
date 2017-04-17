@@ -104,7 +104,7 @@ export function updateCategory(resource) {
   return (dispatch, getState) => {
     const {id} = resource;
 
-    const resourceList = getState().categories.categories;
+    const resourceList = getState().categories.resources;
     const resourceToUpdate = _.find(resourceList, {id});
 
     dispatch({
@@ -153,7 +153,7 @@ export function updateCategory(resource) {
 
 export function deleteCategory(categoryId) {
   return (dispatch, getState) => {
-    const resourceList = getState().categories.categories;
+    const resourceList = getState().categories.resources;
     const resourceToDelete = _.find(resourceList, {id: categoryId});
 
     dispatch({

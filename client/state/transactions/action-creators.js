@@ -41,7 +41,7 @@ export function createTransaction(resource) {
         } else {
           dispatch({
             type: actionTypes.CREATE_TRANSACTION_SUCCESS,
-            transaction: JSON.parse(body).data
+            resource: JSON.parse(body).data
           });
         }
       }
@@ -78,7 +78,7 @@ export function retrieveTransactions() {
         } else {
           dispatch({
             type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
-            transactions: JSON.parse(body).data
+            resources: JSON.parse(body).data
           });
         }
       }
@@ -101,7 +101,7 @@ export function updateTransaction(resource) {
   return (dispatch, getState) => {
     const {id} = resource;
 
-    const resourceList = getState().transactions.transactions;
+    const resourceList = getState().transactions.resources;
     const resourceToUpdate = _.find(resourceList, {id});
 
     dispatch({
@@ -148,7 +148,7 @@ export function updateTransaction(resource) {
 
 export function deleteTransaction(id) {
   return (dispatch, getState) => {
-    const resourceList = getState().transactions.transactions;
+    const resourceList = getState().transactions.resources;
     const resourceToDelete = _.find(resourceList, {id});
 
     dispatch({

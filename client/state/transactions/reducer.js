@@ -18,20 +18,20 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.CREATE_TRANSACTION_SUCCESS: {
-      let transactions = [...state.transactions];
-      transactions.push(action.transaction);
-      const transactionsMeta = [
-        ...state.transactionsMeta,
+      let resources = [...state.resources];
+      resources.push(action.resource);
+      const resourcesMeta = [
+        ...state.resourcesMeta,
         {
-          id: action.transaction.id,
+          id: action.resource.id,
           ...initialResourceMetaState
         }
       ];
       return {
         ...state,
         creatingTransactionStatus: 'SUCCESS',
-        transactions,
-        transactionsMeta
+        resources,
+        resourcesMeta
       };
     }
 
@@ -59,7 +59,7 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS: {
-      const transactionsMeta = action.transactions.map(c => {
+      const resourcesMeta = action.resources.map(c => {
         return {
           id: c.id,
           ...initialResourceMetaState
@@ -69,8 +69,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         retrievingTransactionsStatus: 'SUCCESS',
-        transactions: [...action.transactions],
-        transactionsMeta
+        resources: [...action.resources],
+        resourcesMeta
       };
     }
 
@@ -91,8 +91,8 @@ export default (state = initialState, action) => {
 
     // Update transaction
     case actionTypes.UPDATE_TRANSACTION: {
-      const transactionsMeta = state.transactionsMeta.map(c => {
-        if (c.id !== action.transactionId) {
+      const resourcesMeta = state.resourcesMeta.map(c => {
+        if (c.id !== action.resource.id) {
           return {...c};
         } else {
           return {
@@ -104,22 +104,22 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        transactionsMeta
+        resourcesMeta
       };
     }
 
     case actionTypes.UPDATE_TRANSACTION_SUCCESS: {
-      let id = action.transaction.id;
+      let id = action.resource.id;
 
-      let transactions = state.transactions.map(c => {
+      let resources = state.resources.map(c => {
         if (c.id !== id) {
           return {...c};
         } else {
-          return {...action.transaction};
+          return {...action.resource};
         }
       });
 
-      const transactionsMeta = state.transactionsMeta.map(c => {
+      const resourcesMeta = state.resourcesMeta.map(c => {
         if (c.id !== id) {
           return {...c};
         } else {
@@ -132,14 +132,14 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        transactions,
-        transactionsMeta
+        resources,
+        resourcesMeta
       };
     }
 
     case actionTypes.UPDATE_TRANSACTION_FAILURE: {
-      const transactionsMeta = state.transactionsMeta.map(c => {
-        if (c.id !== action.transactionId) {
+      const resourcesMeta = state.resourcesMeta.map(c => {
+        if (c.id !== action.resource.id) {
           return {...c};
         } else {
           return {
@@ -151,15 +151,15 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        transactionsMeta
+        resourcesMeta
       };
     }
 
     case actionTypes.UPDATE_TRANSACTION_ABORTED:
     case actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION: {
-      const clonedMeta = _.cloneDeep(state.transactionsMeta);
-      const transactionsMeta = clonedMeta.map(c => {
-        if (c.id !== action.transactionId) {
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
+      const resourcesMeta = clonedMeta.map(c => {
+        if (c.id !== action.resource.id) {
           return {...c};
         } else {
           return {
@@ -171,14 +171,14 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        transactionsMeta
+        resourcesMeta
       };
     }
 
     // Delete transaction
     case actionTypes.DELETE_TRANSACTION: {
-      const clonedMeta = _.cloneDeep(state.transactionsMeta);
-      const transactionsMeta = clonedMeta.map(c => {
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
+      const resourcesMeta = clonedMeta.map(c => {
         if (c.id !== action.resource.id) {
           return c;
         } else {
@@ -191,28 +191,28 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        transactionsMeta
+        resourcesMeta
       };
     }
 
     case actionTypes.DELETE_TRANSACTION_SUCCESS: {
       const rejectionFn = val => val.id === action.resource.id;
-      const clonedTransactions = _.cloneDeep(state.transactions);
-      const clonedMeta = _.cloneDeep(state.transactionsMeta);
+      const clonedResources = _.cloneDeep(state.resources);
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
 
-      let transactions = _.reject(clonedTransactions, rejectionFn);
-      let transactionsMeta = _.reject(clonedMeta, rejectionFn);
+      let resources = _.reject(clonedResources, rejectionFn);
+      let resourcesMeta = _.reject(clonedMeta, rejectionFn);
       return {
         ...state,
-        transactions,
-        transactionsMeta
+        resources,
+        resourcesMeta
       };
     }
 
     case actionTypes.DELETE_TRANSACTION_FAILURE:
     case actionTypes.DELETE_TRANSACTION_ABORTED: {
-      const clonedMeta = _.cloneDeep(state.transactionsMeta);
-      const transactionsMeta = clonedMeta.map(c => {
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
+      const resourcesMeta = clonedMeta.map(c => {
         if (c.id !== action.resource.id) {
           return c;
         } else {
@@ -225,7 +225,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        transactionsMeta
+        resourcesMeta
       };
     }
 

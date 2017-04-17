@@ -13,7 +13,7 @@ describe('CategoriesSubheader', function() {
       expect(mapStateToProps({
         connection: true,
         categories: {
-          categories: [1, 2, 3],
+          resources: [1, 2, 3],
           creatingCategoryStatus: 'hello'
         },
         transactions: {},

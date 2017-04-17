@@ -185,8 +185,8 @@ export class CategoriesList extends Component {
 function mapStateToProps(state) {
   return {
     isOnline: state.connection,
-    categories: state.categories.categories,
-    categoriesMeta: state.categories.categoriesMeta
+    categories: state.categories.resources,
+    categoriesMeta: state.categories.resourcesMeta
   };
 }
 

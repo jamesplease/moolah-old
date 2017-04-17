@@ -16,8 +16,8 @@ describe('CategoriesList', function() {
       expect(mapStateToProps({
         connection: true,
         categories: {
-          categories: [1, 2, 3],
-          categoriesMeta: 'hello'
+          resources: [1, 2, 3],
+          resourcesMeta: 'hello'
         },
         transactions: {},
         oink: true
