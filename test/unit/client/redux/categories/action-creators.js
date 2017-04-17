@@ -28,7 +28,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.CREATE_CATEGORY,
-        category: {
+        resource: {
           type: 'categories',
           attributes: {label: 'pizza'}
         }
@@ -69,7 +69,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           id: 10,
           type: 'categories',
           attributes: {
@@ -79,7 +79,7 @@ describe('categories/actionCreators', function() {
       });
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           id: 10,
           type: 'categories',
           attributes: {
@@ -96,14 +96,14 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY,
-        category: {
+        resource: {
           type: 'categories',
           attributes: {label: 'pizza'}
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_ABORTED,
-        category: {
+        resource: {
           type: 'categories',
           attributes: {label: 'pizza'}
         }
@@ -117,14 +117,14 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           type: 'categories',
           attributes: {label: 'pizza'}
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           type: 'categories',
           attributes: {label: 'pizza'}
         }
@@ -173,7 +173,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        categories: [
+        resources: [
           {id: 1},
           {id: 2}
         ]
@@ -203,7 +203,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        categories: undefined
+        resources: undefined
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.RETRIEVE_CATEGORIES_FAILURE
@@ -245,7 +245,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.UPDATE_CATEGORY,
-        category: {
+        resource: {
           id: 10,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -277,7 +277,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           id: 2,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -285,7 +285,7 @@ describe('categories/actionCreators', function() {
       });
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.UPDATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           id: 2,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -300,7 +300,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_CATEGORY,
-        category: {
+        resource: {
           id: 2,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -308,7 +308,7 @@ describe('categories/actionCreators', function() {
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_CATEGORY_ABORTED,
-        category: {
+        resource: {
           id: 2,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -323,7 +323,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           id: 2,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -331,7 +331,7 @@ describe('categories/actionCreators', function() {
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           id: 2,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -364,7 +364,7 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.DELETE_CATEGORY,
-        category: {
+        resource: {
           id: 2,
           type: 'categories',
           attributes: {label: 'pizza'}
@@ -388,11 +388,11 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_CATEGORY_SUCCESS,
-        category: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.DELETE_CATEGORY_FAILURE,
-        category: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
       });
     });
 
@@ -403,11 +403,11 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_CATEGORY,
-        category: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_CATEGORY_ABORTED,
-        category: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
       });
     });
 
@@ -418,11 +418,11 @@ describe('categories/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.DELETE_CATEGORY_SUCCESS,
-        category: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_CATEGORY_FAILURE,
-        category: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
       });
     });
   });

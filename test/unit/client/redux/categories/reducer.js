@@ -34,7 +34,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.CREATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           id: 4,
           pasta: 'yum'
         }
@@ -67,7 +67,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.CREATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           id: 4,
           pasta: 'yum'
         }
@@ -90,7 +90,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.CREATE_CATEGORY_ABORTED,
-        category: {
+        resource: {
           id: 4,
           pasta: 'yum'
         }
@@ -138,7 +138,7 @@ describe('categories/reducer', function() {
       const state = {oink: true};
       const action = {
         type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        categories: [{id: 2, name: 'pizza'}, {id: 5, name: 'sandwich'}]
+        resources: [{id: 2, name: 'pizza'}, {id: 5, name: 'sandwich'}]
       };
       var newState = {
         oink: true,
@@ -197,7 +197,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY,
-        category: {
+        resource: {
           id: 2
         }
       };
@@ -221,7 +221,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           id: 2,
           pasta: 'yum'
         }
@@ -250,7 +250,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           id: 2
         }
       };
@@ -278,7 +278,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_ABORTED,
-        category: {
+        resource: {
           id: 2
         }
       };
@@ -306,7 +306,7 @@ describe('categories/reducer', function() {
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION,
-        category: {
+        resource: {
           id: 2
         }
       };
@@ -331,7 +331,7 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY,
-        category: {
+        resource: {
           id: 2
         }
       };
@@ -359,7 +359,7 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           id: 2
         }
       };
@@ -383,7 +383,7 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           id: 2
         }
       };
@@ -411,7 +411,7 @@ describe('categories/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           id: 2
         }
       };

@@ -18,7 +18,7 @@ export function createCategory(attributes) {
   return dispatch => {
     dispatch({
       type: actionTypes.CREATE_CATEGORY,
-      category: categoryResource
+      resource: categoryResource
     });
 
     const req = xhr.post(
@@ -35,19 +35,19 @@ export function createCategory(attributes) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_ABORTED,
-            category: categoryResource
+            resource: categoryResource
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_FAILURE,
-            category: categoryResource
+            resource: categoryResource
           });
         } else {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_SUCCESS,
-            category: JSON.parse(body).data
+            resource: JSON.parse(body).data
           });
         }
       }
@@ -84,7 +84,7 @@ export function retrieveCategories() {
         } else {
           dispatch({
             type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-            categories: JSON.parse(body).data
+            resources: JSON.parse(body).data
           });
         }
       }
@@ -112,7 +112,7 @@ export function updateCategory(categoryResource) {
 
     dispatch({
       type: actionTypes.UPDATE_CATEGORY,
-      category: categoryResource
+      resource: categoryResource
     });
 
     const req = xhr.patch(
@@ -127,19 +127,19 @@ export function updateCategory(categoryResource) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_ABORTED,
-            category: categoryResource
+            resource: categoryResource
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_FAILURE,
-            category: categoryResource
+            resource: categoryResource
           });
         } else {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-            category: {
+            resource: {
               // Fortune's JSON API implementation returns a 204, so we must
               // merge the existing resource with the one that we sent over
               ...categoryToUpdate,
@@ -161,7 +161,7 @@ export function deleteCategory(categoryId) {
 
     dispatch({
       type: actionTypes.DELETE_CATEGORY,
-      category: categoryToDelete
+      resource: categoryToDelete
     });
 
     const req = xhr.del(
@@ -175,19 +175,19 @@ export function deleteCategory(categoryId) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_ABORTED,
-            category: categoryToDelete
+            resource: categoryToDelete
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_FAILURE,
-            category: categoryToDelete
+            resource: categoryToDelete
           });
         } else {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_SUCCESS,
-            category: categoryToDelete
+            resource: categoryToDelete
           });
         }
       }
