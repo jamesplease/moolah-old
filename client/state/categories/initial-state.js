@@ -1,6 +1,6 @@
 export default {
-  categories: [],
-  categoriesMeta: [],
+  resources: [],
+  resourcesMeta: [],
   creatingCategoryStatus: null,
   retrievingCategoriesStatus: null
 };

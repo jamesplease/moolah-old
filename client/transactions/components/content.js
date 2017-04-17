@@ -105,7 +105,7 @@ export class Content extends Component {
 
 function mapStateToProps(state) {
   return {
-    transactions: state.transactions.transactions,
+    transactions: state.transactions.resources,
     retrievingTransactionsStatus: state.transactions.retrievingTransactionsStatus,
     retrievingCategoriesStatus: state.categories.retrievingCategoriesStatus,
   };

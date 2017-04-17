@@ -118,7 +118,7 @@ export class TransactionsList extends Component {
 function mapStateToProps(state) {
   return {
     isOnline: state.connection,
-    transactionsMeta: state.transactions.transactionsMeta
+    transactionsMeta: state.transactions.resourcesMeta
   };
 }
 

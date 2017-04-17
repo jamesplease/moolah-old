@@ -18,10 +18,10 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.CREATE_CATEGORY_SUCCESS: {
-      let categories = [...state.categories];
-      categories.push(action.resource);
-      const categoriesMeta = [
-        ...state.categoriesMeta,
+      let resources = [...state.resources];
+      resources.push(action.resource);
+      const resourcesMeta = [
+        ...state.resourcesMeta,
         {
           id: action.resource.id,
           ...initialResourceMetaState
@@ -30,8 +30,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         creatingCategoryStatus: 'SUCCESS',
-        categories,
-        categoriesMeta
+        resources,
+        resourcesMeta
       };
     }
 
@@ -59,7 +59,7 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.RETRIEVE_CATEGORIES_SUCCESS: {
-      const categoriesMeta = action.resources.map(c => {
+      const resourcesMeta = action.resources.map(c => {
         return {
           id: c.id,
           ...initialResourceMetaState
@@ -69,8 +69,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         retrievingCategoriesStatus: 'SUCCESS',
-        categories: [...action.resources],
-        categoriesMeta
+        resources: [...action.resources],
+        resourcesMeta
       };
     }
 
@@ -91,7 +91,7 @@ export default (state = initialState, action) => {
 
     // Update category
     case actionTypes.UPDATE_CATEGORY: {
-      const categoriesMeta = state.categoriesMeta.map(c => {
+      const resourcesMeta = state.resourcesMeta.map(c => {
         if (c.id !== action.resource.id) {
           return {...c};
         } else {
@@ -104,14 +104,14 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        categoriesMeta
+        resourcesMeta
       };
     }
 
     case actionTypes.UPDATE_CATEGORY_SUCCESS: {
       let id = action.resource.id;
 
-      let categories = state.categories.map(c => {
+      let resources = state.resources.map(c => {
         if (c.id !== id) {
           return {...c};
         } else {
@@ -119,7 +119,7 @@ export default (state = initialState, action) => {
         }
       });
 
-      const categoriesMeta = state.categoriesMeta.map(c => {
+      const resourcesMeta = state.resourcesMeta.map(c => {
         if (c.id !== id) {
           return {...c};
         } else {
@@ -132,13 +132,13 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        categories,
-        categoriesMeta
+        resources,
+        resourcesMeta
       };
     }
 
     case actionTypes.UPDATE_CATEGORY_FAILURE: {
-      const categoriesMeta = state.categoriesMeta.map(c => {
+      const resourcesMeta = state.resourcesMeta.map(c => {
         if (c.id !== action.resource.id) {
           return {...c};
         } else {
@@ -151,15 +151,15 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        categoriesMeta
+        resourcesMeta
       };
     }
 
     case actionTypes.UPDATE_CATEGORY_ABORTED:
     case actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION: {
       const id = action.resource ? action.resource.id : action.resourceId;
-      const clonedMeta = _.cloneDeep(state.categoriesMeta);
-      const categoriesMeta = clonedMeta.map(c => {
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
+      const resourcesMeta = clonedMeta.map(c => {
         if (c.id !== id) {
           return {...c};
         } else {
@@ -172,14 +172,14 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        categoriesMeta
+        resourcesMeta
       };
     }
 
     // Delete category
     case actionTypes.DELETE_CATEGORY: {
-      const clonedMeta = _.cloneDeep(state.categoriesMeta);
-      const categoriesMeta = clonedMeta.map(c => {
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
+      const resourcesMeta = clonedMeta.map(c => {
         if (c.id !== action.resource.id) {
           return c;
         } else {
@@ -192,28 +192,28 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        categoriesMeta
+        resourcesMeta
       };
     }
 
     case actionTypes.DELETE_CATEGORY_SUCCESS: {
       const rejectionFn = val => val.id === action.resource.id;
-      const clonedCategories = _.cloneDeep(state.categories);
-      const clonedMeta = _.cloneDeep(state.categoriesMeta);
+      const clonedResources = _.cloneDeep(state.resources);
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
 
-      let categories = _.reject(clonedCategories, rejectionFn);
-      let categoriesMeta = _.reject(clonedMeta, rejectionFn);
+      let resources = _.reject(clonedResources, rejectionFn);
+      let resourcesMeta = _.reject(clonedMeta, rejectionFn);
       return {
         ...state,
-        categories,
-        categoriesMeta
+        resources,
+        resourcesMeta
       };
     }
 
     case actionTypes.DELETE_CATEGORY_FAILURE:
     case actionTypes.DELETE_CATEGORY_ABORTED: {
-      const clonedMeta = _.cloneDeep(state.categoriesMeta);
-      const categoriesMeta = clonedMeta.map(c => {
+      const clonedMeta = _.cloneDeep(state.resourcesMeta);
+      const resourcesMeta = clonedMeta.map(c => {
         if (c.id !== action.resource.id) {
           return c;
         } else {
@@ -226,7 +226,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        categoriesMeta
+        resourcesMeta
       };
     }
 

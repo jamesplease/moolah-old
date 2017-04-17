@@ -49,7 +49,7 @@ export class Content extends Component {
 
 function mapStateToProps(state) {
   return {
-    categories: state.categories.categories,
+    categories: state.categories.resources,
     retrievingCategoriesStatus: state.categories.retrievingCategoriesStatus
   };
 }

@@ -94,7 +94,7 @@ export class CategoriesSubheader extends Component {
 function mapStateToProps(state) {
   return {
     isOnline: state.connection,
-    categories: state.categories.categories,
+    categories: state.categories.resources,
     creatingCategoryStatus: state.categories.creatingCategoryStatus
   };
 }

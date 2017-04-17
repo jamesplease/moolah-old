@@ -70,7 +70,7 @@ describe('transactions/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_TRANSACTION_SUCCESS,
-        transaction: {
+        resource: {
           id: 10,
           attributes: {
             label: 'pizza'
@@ -114,7 +114,7 @@ describe('transactions/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.CREATE_TRANSACTION_SUCCESS,
-        transaction: {
+        resource: {
           type: 'transactions',
           attributes: {
             label: 'pizza'
@@ -174,7 +174,7 @@ describe('transactions/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
-        transactions: [
+        resources: [
           {id: 1},
           {id: 2}
         ]
@@ -204,7 +204,7 @@ describe('transactions/actionCreators', function() {
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
-        transactions: undefined
+        resources: undefined
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.RETRIEVE_TRANSACTIONS_FAILURE
@@ -227,7 +227,7 @@ describe('transactions/actionCreators', function() {
       this.getState = function() {
         return {
           transactions: {
-            transactions: [
+            resources: [
               {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
               {id: 10, type: 'transactions', attributes: {label: 'what'}}
             ]
@@ -365,7 +365,7 @@ describe('transactions/actionCreators', function() {
       this.getState = function() {
         return {
           transactions: {
-            transactions: [
+            resources: [
               {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
               {id: 10, type: 'transactions', attributes: {label: 'what'}}
             ]

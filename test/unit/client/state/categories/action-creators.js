@@ -226,7 +226,7 @@ describe('categories/actionCreators', function() {
       this.getState = function() {
         return {
           categories: {
-            categories: [
+            resources: [
               {id: 2, type: 'categories', attributes: {label: 'pizza'}},
               {id: 10, type: 'categories', attributes: {label: 'what'}}
             ]
@@ -345,7 +345,7 @@ describe('categories/actionCreators', function() {
       this.getState = function() {
         return {
           categories: {
-            categories: [
+            resources: [
               {id: 2, type: 'categories', attributes: {label: 'pizza'}},
               {id: 10, type: 'categories', attributes: {label: 'what'}}
             ]

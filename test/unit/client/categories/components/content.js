@@ -17,7 +17,7 @@ describe('CategoriesContent', function() {
     it('returns the right props', () => {
       expect(mapStateToProps({
         categories: {
-          categories: [1, 2, 3],
+          resources: [1, 2, 3],
           retrievingCategoriesStatus: 'hello'
         },
         transactions: {},
