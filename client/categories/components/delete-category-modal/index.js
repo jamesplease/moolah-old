@@ -7,7 +7,7 @@ export default function DeleteCategoryModal(props) {
   return (
     <div className="deleteCategoryModal">
       <h1 className="modal-title">
-        Delete "{category.label}" category?
+        Delete "{category.attributes.label}" category?
       </h1>
       <div className="modal-footer">
         <button

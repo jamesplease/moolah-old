@@ -9,8 +9,10 @@ describe('DeleteCategoryModal', function() {
       this.defaultProps = {
         category: {
           id: 2,
-          label: 'pasta',
-          emoji: ':tada:'
+          attributes: {
+            label: 'pasta',
+            emoji: ':tada:'
+          }
         },
         deletingCategory: false,
         onClickDelete: this.onClickDelete,

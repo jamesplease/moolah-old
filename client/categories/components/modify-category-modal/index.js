@@ -6,7 +6,7 @@ import classNames from 'classnames';
 export class ModifyCategoryModal extends Component {
   render() {
     const {
-      fields: {label},
+      fields: {label, emoji},
       handleSubmit,
       confirmInProgress,
       onClickCancel,
@@ -72,6 +72,19 @@ export class ModifyCategoryModal extends Component {
           id="modify-category-modal-form"
           className="modal-body">
           {errorEl}
+          <div className="form-row">
+            <input
+              type="text"
+              className="text-input"
+              placeholder="Enter emoji"
+              autoComplete="off"
+              autoCorrect={true}
+              disabled={confirmInProgress}
+              spellCheck={true}
+              inputMode="verbatim"
+              maxLength={35}
+              {...emoji}/>
+          </div>
           <div className="form-row">
             <div className="createCategoryModal-emojiSelect">
               🙃
@@ -177,10 +190,16 @@ function validate(values, props) {
   return errors;
 }
 
-export default reduxForm(
-  {
-    form: 'createCategory',
-    fields: ['label'],
-    validate
-  }
-)(ModifyCategoryModal);
+const reduxFormOptions = {
+  form: 'createCategory',
+  fields: ['label', 'emoji'],
+  validate
+};
+
+function reduxFormInitialState(state, nextProps) {
+  return {
+    initialValues: _.get(nextProps.category, 'attributes')
+  };
+}
+
+export default reduxForm(reduxFormOptions, reduxFormInitialState)(ModifyCategoryModal);
