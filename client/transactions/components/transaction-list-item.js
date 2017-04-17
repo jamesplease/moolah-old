@@ -1,8 +1,8 @@
 import React from 'react';
-import {formatDateForTransactionList} from '../../services/format-date';
+import {formatDateForTransactionList} from '../services/format-date';
 
 export default function Transaction(props) {
-  const {transaction} = props;
+  const {transaction, onClickDelete} = props;
   const attrs = transaction.attributes;
 
   return (
@@ -20,7 +20,9 @@ export default function Transaction(props) {
           </span>
         </div>
       </button>
-      <button className="resourceListItem-deleteBtn transactionListItem-deleteBtn">
+      <button
+        className="resourceListItem-deleteBtn transactionListItem-deleteBtn"
+        onClick={() => onClickDelete(transaction)}>
         ×
       </button>
     </li>

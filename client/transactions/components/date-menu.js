@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import {
   formatDate, getNextMonth, getPrevMonth,
   splitDate, ensureLeadingZero, getYearMonthStringFromDate
-} from '../../services/format-date';
-import monthDiff from '../../services/month-diff';
+} from '../services/format-date';
+import monthDiff from '../services/month-diff';
 
 export default function DateMenu({date}) {
   const formattedDate = formatDate(date);
