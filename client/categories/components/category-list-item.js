@@ -1,5 +1,5 @@
 import React from 'react';
-import emoji from '../../../common/services/js-emoji';
+import emoji from '../../common/services/js-emoji';
 
 export default function CategoryListItem(props) {
   const {

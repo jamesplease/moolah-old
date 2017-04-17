@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
-import * as contactActionCreators from '../../../state/contact/action-creators';
+import * as contactActionCreators from '../../state/contact/action-creators';
 
 export class Contact extends Component {
   render() {

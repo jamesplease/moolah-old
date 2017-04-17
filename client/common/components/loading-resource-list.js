@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadingIndicator from '../loading-indicator';
+import LoadingIndicator from './loading-indicator';
 
 export default function LoadingResourceList() {
   return (

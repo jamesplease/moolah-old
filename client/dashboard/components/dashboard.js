@@ -1,5 +1,5 @@
 import React from 'react';
-import Subheader from '../subheader';
+import Subheader from './subheader';
 
 export default function Dashboard() {
   return (

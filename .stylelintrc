@@ -101,6 +101,6 @@
   },
   "ignoreFiles": [
     "./client/css/hamburger-icon.css",
-    "./client/common/components/loading-indicator/loading-indicator.css"
+    "./client/common/components/loading-indicator.css"
   ]
 }

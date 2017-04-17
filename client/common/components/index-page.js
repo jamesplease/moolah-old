@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Dashboard from '../../../dashboard/components/dashboard';
-import LandingPage from '../../../meta/components/landing-page';
+import Dashboard from '../../dashboard/components/dashboard';
+import LandingPage from '../../meta/components/landing-page';
 
 export function IndexPage({user}) {
   const loggedIn = Boolean(user);

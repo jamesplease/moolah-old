@@ -1,6 +1,6 @@
 import React from 'react';
-import Subheader from '../subheader';
-import loginServices from '../../../common/services/login-services';
+import Subheader from './subheader';
+import loginServices from '../../common/services/login-services';
 
 const imgSrc = 'http://lh3.googleusercontent.com' +
   '/-SFoxuA-9BgQ/AAAAAAAAAAI/AAAAAAAAAAA/ADhl2yoCgd6de7jfz57PsSkdK0WUHJH1IQ/s64-c-mo/photo.jpg';

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import ReactCSSTransitionGroup from '../../../vendor/css-transition-group';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Alert from '../alert';
-import * as alertActionCreators from '../../../state/alerts/action-creators';
+import Alert from './alert';
+import ReactCSSTransitionGroup from '../../vendor/css-transition-group';
+import * as alertActionCreators from '../../state/alerts/action-creators';
 
 export class Alerts extends Component {
   constructor(props) {

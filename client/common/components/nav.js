@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactCSSTransitionGroup from '../../../vendor/css-transition-group';
 import classNames from 'classnames';
 import {Link} from 'react-router';
-import FirstChild from '../first-child';
+import ReactCSSTransitionGroup from '../../vendor/css-transition-group';
+import FirstChild from './first-child';
 
 export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
   // This ensures that the overlay nav gets closed anytime a link is clicked
