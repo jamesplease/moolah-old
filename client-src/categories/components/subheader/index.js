@@ -49,12 +49,12 @@ export class CategoriesSubheader extends Component {
   }
 
   onClickModalCreate = (fields) => {
-    const newCategory = _.defaults(fields, {
+    const attributes = _.defaults(fields, {
       emoji: null,
       label: ''
     });
-    newCategory.label = newCategory.label.trim();
-    this.props.createCategory(newCategory);
+    attributes.label = attributes.label.trim();
+    this.props.createCategory({attributes});
   }
 
   createModal = () => {

@@ -9,23 +9,20 @@ export function resetCreateCategoryResolution() {
   };
 }
 
-export function createCategory(attributes) {
-  const categoryResource = {
-    type: 'categories',
-    attributes
-  };
+export function createCategory(resource) {
+  resource.type = 'categories';
 
   return dispatch => {
     dispatch({
       type: actionTypes.CREATE_CATEGORY,
-      resource: categoryResource
+      resource
     });
 
     const req = xhr.post(
       '/api/categories',
       {
         body: JSON.stringify({
-          data: categoryResource
+          data: resource
         }),
         headers: {
           'Content-Type': 'application/vnd.api+json'
@@ -35,14 +32,14 @@ export function createCategory(attributes) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_ABORTED,
-            resource: categoryResource
+            resource
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_FAILURE,
-            resource: categoryResource
+            resource
           });
         } else {
           dispatch({
@@ -101,24 +98,24 @@ export function resetUpdateCategoryResolution(categoryId) {
   };
 }
 
-export function updateCategory(categoryResource) {
-  categoryResource.type = 'categories';
+export function updateCategory(resource) {
+  resource.type = 'categories';
 
   return (dispatch, getState) => {
-    const {id} = categoryResource;
+    const {id} = resource;
 
-    const categoryList = getState().categories.categories;
-    const categoryToUpdate = _.find(categoryList, {id});
+    const resourceList = getState().categories.categories;
+    const resourceToUpdate = _.find(resourceList, {id});
 
     dispatch({
       type: actionTypes.UPDATE_CATEGORY,
-      resource: categoryResource
+      resource
     });
 
     const req = xhr.patch(
       `/api/categories/${id}`,
       {
-        body: JSON.stringify({data: categoryResource}),
+        body: JSON.stringify({data: resource}),
         headers: {
           'Content-Type': 'application/vnd.api+json'
         }
@@ -127,14 +124,14 @@ export function updateCategory(categoryResource) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_ABORTED,
-            resource: categoryResource
+            resource
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_FAILURE,
-            resource: categoryResource
+            resource
           });
         } else {
           dispatch({
@@ -142,8 +139,8 @@ export function updateCategory(categoryResource) {
             resource: {
               // Fortune's JSON API implementation returns a 204, so we must
               // merge the existing resource with the one that we sent over
-              ...categoryToUpdate,
-              ...categoryResource
+              ...resourceToUpdate,
+              ...resource
             }
           });
         }
@@ -156,12 +153,12 @@ export function updateCategory(categoryResource) {
 
 export function deleteCategory(categoryId) {
   return (dispatch, getState) => {
-    const categoryList = getState().categories.categories;
-    const categoryToDelete = _.find(categoryList, {id: categoryId});
+    const resourceList = getState().categories.categories;
+    const resourceToDelete = _.find(resourceList, {id: categoryId});
 
     dispatch({
       type: actionTypes.DELETE_CATEGORY,
-      resource: categoryToDelete
+      resource: resourceToDelete
     });
 
     const req = xhr.del(
@@ -175,19 +172,19 @@ export function deleteCategory(categoryId) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_ABORTED,
-            resource: categoryToDelete
+            resource: resourceToDelete
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_FAILURE,
-            resource: categoryToDelete
+            resource: resourceToDelete
           });
         } else {
           dispatch({
             type: actionTypes.DELETE_CATEGORY_SUCCESS,
-            resource: categoryToDelete
+            resource: resourceToDelete
           });
         }
       }

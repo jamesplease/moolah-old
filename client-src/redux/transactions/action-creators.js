@@ -9,11 +9,8 @@ export function resetCreateTransactionResolution() {
   };
 }
 
-export function createTransaction(attributes) {
-  const resource = {
-    type: 'transactions',
-    attributes
-  };
+export function createTransaction(resource) {
+  resource.type = 'transactions';
 
   return dispatch => {
     dispatch({

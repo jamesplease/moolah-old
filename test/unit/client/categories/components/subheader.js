@@ -28,7 +28,7 @@ describe('CategoriesSubheader', function() {
 
   describe('mapDispatchToProps', () => {
     beforeEach(() => {
-      this.createCategory = stub().returns({pasta: true});
+      this.createCategory = stub().returns({attributes: {pasta: true}});
       __Rewire__('categoriesActionCreators', {
         createCategory: this.createCategory
       });
@@ -49,7 +49,9 @@ describe('CategoriesSubheader', function() {
       this.props.createCategory();
       expect(this.createCategory).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledOnce;
-      expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
+      expect(this.dispatch).to.have.been.calledWithExactly({
+        attributes: {pasta: true}
+      });
     });
   });
 
@@ -161,8 +163,10 @@ describe('CategoriesSubheader', function() {
         });
         expect(this.createCategory).to.have.been.calledOnce;
         expect(this.createCategory).to.have.been.calledWithExactly({
-          label: 'pizza',
-          emoji: ':tada:'
+          attributes: {
+            label: 'pizza',
+            emoji: ':tada:'
+          }
         });
       });
 
@@ -171,8 +175,10 @@ describe('CategoriesSubheader', function() {
         wrapper.instance().onClickModalCreate();
         expect(this.createCategory).to.have.been.calledOnce;
         expect(this.createCategory).to.have.been.calledWithExactly({
-          label: '',
-          emoji: null
+          attributes: {
+            label: '',
+            emoji: null
+          }
         });
       });
     });

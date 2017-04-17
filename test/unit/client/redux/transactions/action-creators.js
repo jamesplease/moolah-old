@@ -23,7 +23,7 @@ describe('transactions/actionCreators', function() {
 
   describe('createTransaction', () => {
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.createTransaction({label: 'pizza'});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       thunk(this.dispatch);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
@@ -39,24 +39,24 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.createTransaction({label: 'pizza'});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/transactions');
       expect(req.method).to.equal('POST');
       const expectedBody = JSON.stringify({
         data: {
-          type: 'transactions',
           attributes: {
             label: 'pizza'
-          }
+          },
+          type: 'transactions',
         }
       });
       expect(req.requestBody).to.deep.equal(expectedBody);
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.createTransaction({label: 'pizza'});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch);
       const respBody = JSON.stringify({
         data: {
@@ -83,7 +83,7 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.createTransaction({label: 'pizza'});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
@@ -108,7 +108,7 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.createTransaction({label: 'pizza'});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;

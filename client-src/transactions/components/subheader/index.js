@@ -8,9 +8,11 @@ export function TransactionsSubheader({isOnline, transactionsActions}) {
 
   function onClickNew() {
     transactionsActions.createTransaction({
-      value: Math.random(),
-      description: 'Hot off the press',
-      date: '2017-04-10'
+      attributes: {
+        value: Math.random(),
+        description: 'Hot off the press',
+        date: '2017-04-10'
+      }
     });
   }
 
