@@ -65,7 +65,7 @@ describe('alerts/reducer', function() {
       };
       const action = {
         type: categoryActionTypes.CREATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           attributes: {label: 'sandwiches'}
         }
       };
@@ -89,7 +89,7 @@ describe('alerts/reducer', function() {
       };
       const action = {
         type: categoryActionTypes.CREATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           attributes: {label: 'pasta'}
         }
       };
@@ -113,7 +113,7 @@ describe('alerts/reducer', function() {
       };
       const action = {
         type: categoryActionTypes.UPDATE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           attributes: {label: 'oink'}
         }
       };
@@ -137,7 +137,7 @@ describe('alerts/reducer', function() {
       };
       const action = {
         type: categoryActionTypes.UPDATE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           attributes: {label: 'asdf'}
         }
       };
@@ -161,7 +161,7 @@ describe('alerts/reducer', function() {
       };
       const action = {
         type: categoryActionTypes.DELETE_CATEGORY_SUCCESS,
-        category: {
+        resource: {
           attributes: {label: 'sandwich'}
         }
       };
@@ -185,7 +185,7 @@ describe('alerts/reducer', function() {
       };
       const action = {
         type: categoryActionTypes.DELETE_CATEGORY_FAILURE,
-        category: {
+        resource: {
           attributes: {label: 'pasta'}
         }
       };

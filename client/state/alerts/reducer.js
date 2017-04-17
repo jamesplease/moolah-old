@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
     case categoriesActionTypes.CREATE_CATEGORY_SUCCESS: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
-      const categoryLabel = truncateAt(action.category.attributes.label, 35);
+      const categoryLabel = truncateAt(action.resource.attributes.label, 35);
       return {
         ...state,
         alerts: [
@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
     case categoriesActionTypes.CREATE_CATEGORY_FAILURE: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
-      const categoryLabel = truncateAt(action.category.attributes.label, 35);
+      const categoryLabel = truncateAt(action.resource.attributes.label, 35);
       return {
         ...state,
         alerts: [
@@ -71,7 +71,7 @@ export default (state = initialState, action) => {
     case categoriesActionTypes.UPDATE_CATEGORY_SUCCESS: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
-      const categoryLabel = truncateAt(action.category.attributes.label, 35);
+      const categoryLabel = truncateAt(action.resource.attributes.label, 35);
       return {
         ...state,
         alerts: [
@@ -90,7 +90,7 @@ export default (state = initialState, action) => {
     case categoriesActionTypes.UPDATE_CATEGORY_FAILURE: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
-      const categoryLabel = truncateAt(action.category.attributes.label, 35);
+      const categoryLabel = truncateAt(action.resource.attributes.label, 35);
       return {
         ...state,
         alerts: [
@@ -109,7 +109,7 @@ export default (state = initialState, action) => {
     case categoriesActionTypes.DELETE_CATEGORY_SUCCESS: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
-      const categoryLabel = truncateAt(action.category.attributes.label, 35);
+      const categoryLabel = truncateAt(action.resource.attributes.label, 35);
       return {
         ...state,
         alerts: [
@@ -128,7 +128,7 @@ export default (state = initialState, action) => {
     case categoriesActionTypes.DELETE_CATEGORY_FAILURE: {
       const clonedAlerts = _.cloneDeep(state.alerts);
       const id = _.uniqueId('alert-');
-      const categoryLabel = truncateAt(action.category.attributes.label, 35);
+      const categoryLabel = truncateAt(action.resource.attributes.label, 35);
       return {
         ...state,
         alerts: [
