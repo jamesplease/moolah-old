@@ -38,10 +38,10 @@ describe('ModifyCategoryModal', function() {
         const errors = validate(
           {label: 'sandwich'},
           {
-            category: {id: 1, label: 'pizza'},
+            category: {id: 1, attributes: {label: 'pizza'}},
             categories: [
-              {id: 3, label: 'sandwich'},
-              {id: 4, label: 'pasta'},
+              {id: 3, attributes: {label: 'sandwich'}},
+              {id: 4, attributes: {label: 'pasta'}},
             ]
           }
         );
@@ -52,11 +52,11 @@ describe('ModifyCategoryModal', function() {
         const errors = validate(
           {label: 'sandwich'},
           {
-            category: {id: 1, label: 'sandwich'},
+            category: {id: 1, attributes: {label: 'sandwich'}},
             categories: [
-              {id: 1, label: 'sandwich'},
-              {id: 3, label: 'pizza'},
-              {id: 4, label: 'pasta'},
+              {id: 1, attributes: {label: 'sandwich'}},
+              {id: 3, attributes: {label: 'pizza'}},
+              {id: 4, attributes: {label: 'pasta'}},
             ]
           }
         );

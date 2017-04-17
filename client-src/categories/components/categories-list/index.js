@@ -19,7 +19,7 @@ export class CategoriesList extends Component {
     const editModal = this.state.categoryToUpdate ? this.getEditModal() : null;
 
     // Case-insensitive sort by the category's label
-    const sortedCategories = _.sortBy(categories, c => c.label.toLowerCase());
+    const sortedCategories = _.sortBy(categories, c => c.attributes.label.toLowerCase());
 
     const transitionGroupProps = {
       transitionName: 'resourceListItem',
@@ -87,7 +87,7 @@ export class CategoriesList extends Component {
     const categoryId = this.state.categoryToUpdate.id;
     updateCategory({
       id: categoryId,
-      ...fields
+      attributes: {...fields}
     });
   }
 

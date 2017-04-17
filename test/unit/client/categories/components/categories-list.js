@@ -86,9 +86,9 @@ describe('CategoriesList', function() {
 
     this.defaultProps = {
       categories: [
-        {id: 10, label: 'pizza'},
-        {id: 2, label: 'asdf'},
-        {id: 5, label: 'zebras'}
+        {id: 10, attributes: {label: 'pizza'}},
+        {id: 2, attributes: {label: 'asdf'}},
+        {id: 5, attributes: {label: 'zebras'}}
       ],
       categoriesMeta: [
         {id: 10},
@@ -135,19 +135,19 @@ describe('CategoriesList', function() {
 
       expect(transitionGroup.childAt(0).type()).to.equal(CategoryListItem);
       expect(transitionGroup.childAt(0).prop('isOnline')).to.equal(true);
-      expect(transitionGroup.childAt(0).prop('category')).to.deep.equal({id: 2, label: 'asdf'});
+      expect(transitionGroup.childAt(0).prop('category')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
       expect(transitionGroup.childAt(0).prop('onClickEdit')).to.equal(wrapper.instance().onClickEdit);
       expect(transitionGroup.childAt(0).prop('onClickDelete')).to.equal(wrapper.instance().onClickDelete);
 
       expect(transitionGroup.childAt(1).type()).to.equal(CategoryListItem);
       expect(transitionGroup.childAt(1).prop('isOnline')).to.equal(true);
-      expect(transitionGroup.childAt(1).prop('category')).to.deep.equal({id: 10, label: 'pizza'});
+      expect(transitionGroup.childAt(1).prop('category')).to.deep.equal({id: 10, attributes: {label: 'pizza'}});
       expect(transitionGroup.childAt(1).prop('onClickEdit')).to.equal(wrapper.instance().onClickEdit);
       expect(transitionGroup.childAt(1).prop('onClickDelete')).to.equal(wrapper.instance().onClickDelete);
 
       expect(transitionGroup.childAt(2).type()).to.equal(CategoryListItem);
       expect(transitionGroup.childAt(2).prop('isOnline')).to.equal(true);
-      expect(transitionGroup.childAt(2).prop('category')).to.deep.equal({id: 5, label: 'zebras'});
+      expect(transitionGroup.childAt(2).prop('category')).to.deep.equal({id: 5, attributes: {label: 'zebras'}});
       expect(transitionGroup.childAt(2).prop('onClickEdit')).to.equal(wrapper.instance().onClickEdit);
       expect(transitionGroup.childAt(2).prop('onClickDelete')).to.equal(wrapper.instance().onClickDelete);
     });
@@ -155,7 +155,7 @@ describe('CategoriesList', function() {
     describe('calling `onClickDelete` with a category that is not being deleting', () => {
       beforeEach(() => {
         this.wrapper = this.generator.shallow();
-        this.wrapper.instance().onClickDelete({id: 2, label: 'asdf'});
+        this.wrapper.instance().onClickDelete({id: 2, attributes: {label: 'asdf'}});
         this.wrapper.update();
       });
 
@@ -176,7 +176,7 @@ describe('CategoriesList', function() {
         const deleteCategoryModal = modal.find(DeleteCategoryModal);
         expect(deleteCategoryModal.prop('onClickCancel')).to.equal(this.wrapper.instance().onClickModalCancel);
         expect(deleteCategoryModal.prop('onClickDelete')).to.equal(this.wrapper.instance().onConfirmDeleteModal);
-        expect(deleteCategoryModal.prop('category')).to.deep.equal({id: 2, label: 'asdf'});
+        expect(deleteCategoryModal.prop('category')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(deleteCategoryModal.prop('deletingCategory')).to.be.falsey;
       });
 
@@ -189,8 +189,8 @@ describe('CategoriesList', function() {
       it('should close the modal when new props are passed in', () => {
         this.wrapper.setProps({
           categories: [
-            {id: 10, label: 'pizza'},
-            {id: 5, label: 'zebras'}
+            {id: 10, attributes: {label: 'pizza'}},
+            {id: 5, attributes: {label: 'zebras'}}
           ]
         });
         expect(this.wrapper.find(Modal)).to.have.length(0);
@@ -212,7 +212,7 @@ describe('CategoriesList', function() {
             {id: 5}
           ]
         });
-        this.wrapper.instance().onClickDelete({id: 2, label: 'asdf'});
+        this.wrapper.instance().onClickDelete({id: 2, attributes: {label: 'asdf'}});
         this.wrapper.update();
       });
 
@@ -221,7 +221,7 @@ describe('CategoriesList', function() {
         const deleteCategoryModal = modal.find(DeleteCategoryModal);
         expect(deleteCategoryModal.prop('onClickCancel')).to.equal(this.wrapper.instance().onClickModalCancel);
         expect(deleteCategoryModal.prop('onClickDelete')).to.equal(this.wrapper.instance().onConfirmDeleteModal);
-        expect(deleteCategoryModal.prop('category')).to.deep.equal({id: 2, label: 'asdf'});
+        expect(deleteCategoryModal.prop('category')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(deleteCategoryModal.prop('deletingCategory')).to.be.true;
       });
     });
@@ -229,7 +229,7 @@ describe('CategoriesList', function() {
     describe('calling `onClickEdit` with a category that is not being edited', () => {
       beforeEach(() => {
         this.wrapper = this.generator.shallow();
-        this.wrapper.instance().onClickEdit({id: 2, label: 'asdf'});
+        this.wrapper.instance().onClickEdit({id: 2, attributes: {label: 'asdf'}});
         this.wrapper.update();
       });
 
@@ -249,15 +249,15 @@ describe('CategoriesList', function() {
         const modal = this.wrapper.find(Modal);
         const modifyCategoryModal = modal.find(this.ModifyCategoryModal);
         expect(modifyCategoryModal.prop('categories')).to.deep.equal([
-          {id: 10, label: 'pizza'},
-          {id: 2, label: 'asdf'},
-          {id: 5, label: 'zebras'}
+          {id: 10, attributes: {label: 'pizza'}},
+          {id: 2, attributes: {label: 'asdf'}},
+          {id: 5, attributes: {label: 'zebras'}}
         ]);
         expect(modifyCategoryModal.prop('onClickCancel')).to.equal(this.wrapper.instance().onClickModalCancel);
         expect(modifyCategoryModal.prop('onSubmit')).to.equal(this.wrapper.instance().onConfirmEditModal);
-        expect(modifyCategoryModal.prop('category')).to.deep.equal({id: 2, label: 'asdf'});
+        expect(modifyCategoryModal.prop('category')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(modifyCategoryModal.prop('confirmInProgress')).to.be.false;
-        expect(modifyCategoryModal.prop('initialValues')).to.deep.equal({id: 2, label: 'asdf'});
+        expect(modifyCategoryModal.prop('initialValues')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(modifyCategoryModal.prop('isEditMode')).to.be.true;
       });
 
@@ -287,8 +287,10 @@ describe('CategoriesList', function() {
         expect(this.updateCategory).to.have.been.calledOnce;
         expect(this.updateCategory).to.have.been.calledWithExactly({
           id: 2,
-          label: 'pizza',
-          emoji: ':tada:'
+          attributes: {
+            label: 'pizza',
+            emoji: ':tada:'
+          }
         });
       });
     });
@@ -302,7 +304,7 @@ describe('CategoriesList', function() {
             {id: 5}
           ]
         });
-        this.wrapper.instance().onClickEdit({id: 2, label: 'asdf'});
+        this.wrapper.instance().onClickEdit({id: 2, attributes: {label: 'asdf'}});
         this.wrapper.update();
       });
 
@@ -310,15 +312,15 @@ describe('CategoriesList', function() {
         const modal = this.wrapper.find(Modal);
         const modifyCategoryModal = modal.find(this.ModifyCategoryModal);
         expect(modifyCategoryModal.prop('categories')).to.deep.equal([
-          {id: 10, label: 'pizza'},
-          {id: 2, label: 'asdf'},
-          {id: 5, label: 'zebras'}
+          {id: 10, attributes: {label: 'pizza'}},
+          {id: 2, attributes: {label: 'asdf'}},
+          {id: 5, attributes: {label: 'zebras'}}
         ]);
         expect(modifyCategoryModal.prop('onClickCancel')).to.equal(this.wrapper.instance().onClickModalCancel);
         expect(modifyCategoryModal.prop('onSubmit')).to.equal(this.wrapper.instance().onConfirmEditModal);
-        expect(modifyCategoryModal.prop('category')).to.deep.equal({id: 2, label: 'asdf'});
+        expect(modifyCategoryModal.prop('category')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(modifyCategoryModal.prop('confirmInProgress')).to.be.true;
-        expect(modifyCategoryModal.prop('initialValues')).to.deep.equal({id: 2, label: 'asdf'});
+        expect(modifyCategoryModal.prop('initialValues')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(modifyCategoryModal.prop('isEditMode')).to.be.true;
       });
     });

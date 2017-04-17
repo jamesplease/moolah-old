@@ -7,13 +7,14 @@ export default function CategoryListItem(props) {
   } = props;
 
   const deleteIsDisabled = !isOnline;
+  const attrs = category.attributes;
 
   const categoryEmojiHtml = {
     __html: ''
   };
 
-  if (category.emoji) {
-    categoryEmojiHtml.__html = emoji.replace_colons(category.emoji);
+  if (attrs.emoji) {
+    categoryEmojiHtml.__html = emoji.replace_colons(attrs.emoji);
   }
 
   return (
@@ -22,7 +23,7 @@ export default function CategoryListItem(props) {
         <div className="categoryListItem-labelBtn-container">
           <span className="categoryListItem-emoji" dangerouslySetInnerHTML={categoryEmojiHtml}/>
           <span className="categoryListItem-label">
-            {category.label}
+            {attrs.label}
           </span>
         </div>
       </button>

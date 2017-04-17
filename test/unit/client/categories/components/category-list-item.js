@@ -12,8 +12,10 @@ describe('CategoryListItem', function() {
     this.defaultProps = {
       category: {
         id: 2,
-        label: 'pasta',
-        emoji: ':tada:'
+        attributes: {
+          label: 'pasta',
+          emoji: ':tada:'
+        }
       },
       isOnline: true,
       onClickDelete: this.onClickDelete,
@@ -54,8 +56,10 @@ describe('CategoryListItem', function() {
         expect(this.onClickEdit).to.have.been.calledOnce;
         expect(this.onClickEdit).to.have.been.calledWithExactly({
           id: 2,
-          label: 'pasta',
-          emoji: ':tada:'
+          attributes: {
+            label: 'pasta',
+            emoji: ':tada:'
+          }
         });
       });
     });
@@ -91,8 +95,10 @@ describe('CategoryListItem', function() {
         expect(this.onClickDelete).to.have.been.calledOnce;
         expect(this.onClickDelete).to.have.been.calledWithExactly({
           id: 2,
-          label: 'pasta',
-          emoji: ':tada:'
+          attributes: {
+            label: 'pasta',
+            emoji: ':tada:'
+          }
         });
       });
     });

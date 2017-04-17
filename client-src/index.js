@@ -22,6 +22,10 @@ import store from './redux/store';
 import generateAuthCheck from './common/services/auth-check';
 import {getYearMonthStringFromDate} from './transactions/services/format-date';
 
+if (process.NODE_ENV !== 'production') {
+  window.store = store;
+}
+
 const authCheck = generateAuthCheck(store);
 
 // When we enter `/transactions/this-month`, we dynamically redirect them to a
