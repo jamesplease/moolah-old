@@ -13,7 +13,7 @@ export function createTransaction(data) {
     dispatch({type: actionTypes.CREATE_TRANSACTION});
 
     const req = xhr.post(
-      '/api/v1/transactions',
+      '/api/transactions',
       {
         body: JSON.stringify(data),
         headers: {
@@ -51,7 +51,7 @@ export function retrieveTransactions() {
     dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS});
 
     const req = xhr.get(
-      '/api/v1/transactions',
+      '/api/transactions',
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'
@@ -93,7 +93,7 @@ export function updateTransaction(transaction) {
 
     const {id} = transaction;
     const req = xhr.patch(
-      `/api/v1/transactions/${id}`,
+      `/api/transactions/${id}`,
       {
         body: JSON.stringify(transaction),
         headers: {
@@ -134,7 +134,7 @@ export function deleteTransaction(transactionId) {
     });
 
     const req = xhr.del(
-      `/api/v1/transactions/${transactionId}`,
+      `/api/transactions/${transactionId}`,
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'

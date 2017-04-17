@@ -10,11 +10,14 @@ const session = require('express-session');
 const compress = require('compression');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
-const ApiPls = require('api-pls');
+const fortuneHTTP = require('fortune-http');
+const jsonApiSerializer = require('fortune-json-api');
 const pgSession = require('connect-pg-simple')(session);
 const errorLogs = require('./logging/error-logs');
 const infoLogs = require('./logging/info-logs');
 const serveApp = require('./serve-app');
+const store = require('./store');
+const db = require('./util/db');
 
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
@@ -109,17 +112,7 @@ module.exports = function() {
     cookie: {maxAge: 30 * 24 * 60 * 60 * 1000}
   }));
 
-  const resourcesDirectory = path.join(__dirname, '..', 'resources');
-
-  const apiPls = new ApiPls({
-    apiVersion: 1,
-    databaseUrl: dbConfig,
-    resourcesDirectory,
-    // Our db URL already has SSL configured, so we don't need ApiPls to add it
-    connectWithSsl: false
-  });
-
-  configurePassport(apiPls.db);
+  configurePassport(db);
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -186,7 +179,17 @@ module.exports = function() {
     });
   });
 
-  app.use('/api', apiPls.apiRouter());
+  const listener = fortuneHTTP(store, {
+    serializers: [
+      [jsonApiSerializer]
+    ]
+  });
+
+  app.use('/api', (request, response) => {
+    return listener(request, response)
+      .catch(err => console.log(err));
+  });
+
   app.get('*', serveApp);
 
   if (!global.TESTING) {
