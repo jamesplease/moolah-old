@@ -146,10 +146,10 @@ export function updateTransaction(resource) {
   };
 }
 
-export function deleteTransaction(resourceId) {
+export function deleteTransaction(id) {
   return (dispatch, getState) => {
     const resourceList = getState().transactions.transactions;
-    const resourceToDelete = _.find(resourceList, {id: resourceId});
+    const resourceToDelete = _.find(resourceList, {id});
 
     dispatch({
       type: actionTypes.DELETE_TRANSACTION,
@@ -157,7 +157,7 @@ export function deleteTransaction(resourceId) {
     });
 
     const req = xhr.del(
-      `/api/transactions/${resourceId}`,
+      `/api/transactions/${id}`,
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'

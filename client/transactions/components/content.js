@@ -2,18 +2,18 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as transactionsActionCreators from '../../../state/transactions/action-creators';
-import * as categoriesActionCreators from '../../../state/categories/action-creators';
-import Subheader from '../subheader';
-import DateMenu from '../date-menu';
-import TransactionsList from '../transactions-list';
-import EmptyTransactions from '../empty-transactions';
-import ErrorRetrieving from '../../../common/components/error-retrieving';
-import LoadingResourceList from '../../../common/components/loading-resource-list';
-import NotFound from '../../../common/components/not-found';
-import {getYearMonthStringFromDate} from '../../services/format-date';
-import validateTransactionDate from '../../services/validate-transaction-date';
-import monthDiff from '../../services/month-diff';
+import * as transactionsActionCreators from '../../state/transactions/action-creators';
+import * as categoriesActionCreators from '../../state/categories/action-creators';
+import Subheader from './subheader';
+import DateMenu from './date-menu';
+import TransactionsList from './transactions-list';
+import EmptyTransactions from './empty-transactions';
+import ErrorRetrieving from '../../common/components/error-retrieving';
+import LoadingResourceList from '../../common/components/loading-resource-list';
+import NotFound from '../../common/components/not-found';
+import {getYearMonthStringFromDate} from '../services/format-date';
+import validateTransactionDate from '../services/validate-transaction-date';
+import monthDiff from '../services/month-diff';
 
 export class Content extends Component {
   render() {

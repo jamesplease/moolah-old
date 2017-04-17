@@ -179,12 +179,12 @@ export default (state = initialState, action) => {
     case actionTypes.DELETE_TRANSACTION: {
       const clonedMeta = _.cloneDeep(state.transactionsMeta);
       const transactionsMeta = clonedMeta.map(c => {
-        if (c.id !== action.transactionId) {
+        if (c.id !== action.resource.id) {
           return c;
         } else {
           return {
             ...c,
-            isDeleting: c.id === action.transactionId
+            isDeleting: c.id === action.resource.id
           };
         }
       });
@@ -196,7 +196,7 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.DELETE_TRANSACTION_SUCCESS: {
-      const rejectionFn = val => val.id === action.transactionId;
+      const rejectionFn = val => val.id === action.resource.id;
       const clonedTransactions = _.cloneDeep(state.transactions);
       const clonedMeta = _.cloneDeep(state.transactionsMeta);
 
@@ -213,7 +213,7 @@ export default (state = initialState, action) => {
     case actionTypes.DELETE_TRANSACTION_ABORTED: {
       const clonedMeta = _.cloneDeep(state.transactionsMeta);
       const transactionsMeta = clonedMeta.map(c => {
-        if (c.id !== action.transactionId) {
+        if (c.id !== action.resource.id) {
           return c;
         } else {
           return {
