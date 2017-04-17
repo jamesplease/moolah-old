@@ -1,13 +1,13 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {Content} from '../../../../../client-src/transactions/components/content';
-import Subheader from '../../../../../client-src/transactions/components/subheader';
-import DateMenu from '../../../../../client-src/transactions/components/date-menu';
-import TransactionsList from '../../../../../client-src/transactions/components/transactions-list';
-import LoadingResourceList from '../../../../../client-src/common/components/loading-resource-list';
-import ErrorRetrieving from '../../../../../client-src/common/components/error-retrieving';
-import NotFound from '../../../../../client-src/common/components/not-found';
-import EmptyTransactions from '../../../../../client-src/transactions/components/empty-transactions';
+import {Content} from '../../../../../client/transactions/components/content';
+import Subheader from '../../../../../client/transactions/components/subheader';
+import DateMenu from '../../../../../client/transactions/components/date-menu';
+import TransactionsList from '../../../../../client/transactions/components/transactions-list';
+import LoadingResourceList from '../../../../../client/common/components/loading-resource-list';
+import ErrorRetrieving from '../../../../../client/common/components/error-retrieving';
+import NotFound from '../../../../../client/common/components/not-found';
+import EmptyTransactions from '../../../../../client/transactions/components/empty-transactions';
 
 describe('TransactionsContent', function() {
   describe('rendering', () => {

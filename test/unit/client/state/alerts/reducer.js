@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import reducer from '../../../../../client-src/state/alerts/reducer';
-import initialState from '../../../../../client-src/state/alerts/initial-state';
-import alertsActionTypes from '../../../../../client-src/state/alerts/action-types';
-import categoryActionTypes from '../../../../../client-src/state/categories/action-types';
-import contactActionTypes from '../../../../../client-src/state/contact/action-types';
+import reducer from '../../../../../client/state/alerts/reducer';
+import initialState from '../../../../../client/state/alerts/initial-state';
+import alertsActionTypes from '../../../../../client/state/alerts/action-types';
+import categoryActionTypes from '../../../../../client/state/categories/action-types';
+import contactActionTypes from '../../../../../client/state/contact/action-types';
 
 describe('alerts/reducer', function() {
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import CategoryListItem from '../../../../../client-src/categories/components/category-list-item';
-import emoji from '../../../../../client-src/common/services/js-emoji';
+import CategoryListItem from '../../../../../client/categories/components/category-list-item';
+import emoji from '../../../../../client/common/services/js-emoji';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
 describe('CategoryListItem', function() {

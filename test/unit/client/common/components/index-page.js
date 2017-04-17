@@ -1,8 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {IndexPage, __get__} from '../../../../../client-src/common/components/index-page';
-import Dashboard from '../../../../../client-src/dashboard/components/dashboard';
-import LandingPage from '../../../../../client-src/meta/components/landing-page';
+import {IndexPage, __get__} from '../../../../../client/common/components/index-page';
+import Dashboard from '../../../../../client/dashboard/components/dashboard';
+import LandingPage from '../../../../../client/meta/components/landing-page';
 
 const mapStateToProps = __get__('mapStateToProps');
 

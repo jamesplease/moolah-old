@@ -1,6 +1,6 @@
-import reducer from '../../../../../client-src/state/transactions/reducer';
-import initialState from '../../../../../client-src/state/transactions/initial-state';
-import actionTypes from '../../../../../client-src/state/transactions/action-types';
+import reducer from '../../../../../client/state/transactions/reducer';
+import initialState from '../../../../../client/state/transactions/initial-state';
+import actionTypes from '../../../../../client/state/transactions/action-types';
 
 describe('transactions/reducer', function() {
   describe('An action with no type', () => {

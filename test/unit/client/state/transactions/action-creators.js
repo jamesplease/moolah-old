@@ -1,7 +1,7 @@
 import xhr from 'xhr';
 import sinon from 'sinon';
-import * as actionCreators from '../../../../../client-src/state/transactions/action-creators';
-import actionTypes from '../../../../../client-src/state/transactions/action-types';
+import * as actionCreators from '../../../../../client/state/transactions/action-creators';
+import actionTypes from '../../../../../client/state/transactions/action-types';
 
 describe('transactions/actionCreators', function() {
   beforeEach(() => {

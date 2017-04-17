@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import preventScroll from 'prevent-scroll';
-import Modal from '../../../../../client-src/common/components/modal';
+import Modal from '../../../../../client/common/components/modal';
 
 describe('Modal', function() {
   describe('mounting', () => {

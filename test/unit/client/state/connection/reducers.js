@@ -1,6 +1,6 @@
-import reducer from '../../../../../client-src/state/connection/reducer';
-import initialState from '../../../../../client-src/state/connection/initial-state';
-import actionTypes from '../../../../../client-src/state/connection/action-types';
+import reducer from '../../../../../client/state/connection/reducer';
+import initialState from '../../../../../client/state/connection/initial-state';
+import actionTypes from '../../../../../client/state/connection/action-types';
 
 describe('connection/reducers', () => {
   describe('An action with no type', () => {

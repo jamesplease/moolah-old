@@ -1,4 +1,4 @@
-import createAsyncConstants from '../../../../../client-src/state/util/create-async-constants';
+import createAsyncConstants from '../../../../../client/state/util/create-async-constants';
 
 describe('createAsyncConstants', () => {
   it('should be a function', () => {

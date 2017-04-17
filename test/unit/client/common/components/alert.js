@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Alert from '../../../../../client-src/common/components/alert';
+import Alert from '../../../../../client/common/components/alert';
 
 describe('Alert', function() {
   beforeEach(() => {

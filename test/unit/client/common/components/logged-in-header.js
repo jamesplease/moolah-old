@@ -2,9 +2,9 @@ import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
 import preventScroll from 'prevent-scroll';
-import LoggedInHeader from '../../../../../client-src/common/components/logged-in-header';
-import ProfileDropdown from '../../../../../client-src/common/components/profile-dropdown';
-import Nav from '../../../../../client-src/common/components/nav';
+import LoggedInHeader from '../../../../../client/common/components/logged-in-header';
+import ProfileDropdown from '../../../../../client/common/components/profile-dropdown';
+import Nav from '../../../../../client/common/components/nav';
 
 describe('LoggedInHeader', function() {
   beforeEach(() => {

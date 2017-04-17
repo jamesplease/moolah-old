@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import NotFound from '../../../../../client-src/common/components/not-found';
+import NotFound from '../../../../../client/common/components/not-found';
 
 describe('NotFound', function() {
   describe('rendering', () => {

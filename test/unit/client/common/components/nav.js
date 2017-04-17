@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
-import Nav from '../../../../../client-src/common/components/nav';
+import Nav from '../../../../../client/common/components/nav';
 
 describe('Nav', function() {
   beforeEach(() => {

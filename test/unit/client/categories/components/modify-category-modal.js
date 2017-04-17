@@ -1,6 +1,6 @@
 import {
   ModifyCategoryModal, __GetDependency__
-} from '../../../../../client-src/categories/components/modify-category-modal';
+} from '../../../../../client/categories/components/modify-category-modal';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
 const validate = __GetDependency__('validate');

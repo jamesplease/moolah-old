@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import ErrorRetrieving from '../../../../../client-src/common/components/error-retrieving';
+import ErrorRetrieving from '../../../../../client/common/components/error-retrieving';
 
 describe('ErrorRetrieving', function() {
   describe('rendering', () => {

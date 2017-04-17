@@ -87,7 +87,7 @@ module.exports = {
   externals,
 
   entry: {
-    app: isBuildingForTests ? allTestFiles : './client-src/index'
+    app: isBuildingForTests ? allTestFiles : './client/index'
   },
 
   output: {

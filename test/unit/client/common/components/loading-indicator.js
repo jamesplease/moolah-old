@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import LoadingIndicator from '../../../../../client-src/common/components/loading-indicator';
+import LoadingIndicator from '../../../../../client/common/components/loading-indicator';
 
 describe('LoadingIndicator', function() {
   describe('rendering', () => {

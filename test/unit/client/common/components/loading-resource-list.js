@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import LoadingResourceList from '../../../../../client-src/common/components/loading-resource-list';
-import LoadingIndicator from '../../../../../client-src/common/components/loading-indicator';
+import LoadingResourceList from '../../../../../client/common/components/loading-resource-list';
+import LoadingIndicator from '../../../../../client/common/components/loading-indicator';
 
 describe('LoadingResourceList', function() {
   describe('rendering', () => {

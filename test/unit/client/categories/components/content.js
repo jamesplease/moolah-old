@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   Content, __Rewire__, __ResetDependency__, __get__
-} from '../../../../../client-src/categories/components/content';
-import Subheader from '../../../../../client-src/categories/components/subheader';
-import CategoriesList from '../../../../../client-src/categories/components/categories-list';
-import EmptyCategories from '../../../../../client-src/categories/components/empty-categories';
-import ErrorRetrieving from '../../../../../client-src/common/components/error-retrieving';
-import LoadingResourceList from '../../../../../client-src/common/components/loading-resource-list';
+} from '../../../../../client/categories/components/content';
+import Subheader from '../../../../../client/categories/components/subheader';
+import CategoriesList from '../../../../../client/categories/components/categories-list';
+import EmptyCategories from '../../../../../client/categories/components/empty-categories';
+import ErrorRetrieving from '../../../../../client/common/components/error-retrieving';
+import LoadingResourceList from '../../../../../client/common/components/loading-resource-list';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
 const mapStateToProps = __get__('mapStateToProps');

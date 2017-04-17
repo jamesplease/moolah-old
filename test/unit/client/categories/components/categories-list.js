@@ -1,10 +1,10 @@
 import {
   CategoriesList, __Rewire__, __ResetDependency__, __get__
-} from '../../../../../client-src/categories/components/categories-list';
-import CategoryListItem from '../../../../../client-src/categories/components/category-list-item';
-import DeleteCategoryModal from '../../../../../client-src/categories/components/delete-category-modal';
-import Modal from '../../../../../client-src/common/components/modal';
-import ReactCSSTransitionGroup from '../../../../../client-src/vendor/css-transition-group';
+} from '../../../../../client/categories/components/categories-list';
+import CategoryListItem from '../../../../../client/categories/components/category-list-item';
+import DeleteCategoryModal from '../../../../../client/categories/components/delete-category-modal';
+import Modal from '../../../../../client/common/components/modal';
+import ReactCSSTransitionGroup from '../../../../../client/vendor/css-transition-group';
 import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
 
 const mapStateToProps = __get__('mapStateToProps');

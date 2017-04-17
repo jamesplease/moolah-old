@@ -1,5 +1,5 @@
-import reducer from '../../../../../client-src/state/auth/reducer';
-import initialState from '../../../../../client-src/state/auth/initial-state';
+import reducer from '../../../../../client/state/auth/reducer';
+import initialState from '../../../../../client/state/auth/initial-state';
 
 describe('auth/reducers', () => {
   describe('An action with no type', () => {

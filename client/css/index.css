@@ -4,7 +4,7 @@
 // specific order, or need to be loaded before the rest of the app.
 // Files that can be loaded in any order, and are scoped to a particular piece
 // of the application, should be placed into a pod. Shared "common" css
-// can be found in `./client-src/common/css`
+// can be found in `./client/common/css`
 @import './variables';
 @import './z-index';
 @import './mixins';
