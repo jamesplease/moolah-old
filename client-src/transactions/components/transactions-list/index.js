@@ -12,7 +12,7 @@ export class TransactionsList extends Component {
 
     const sortedTransactions = _.sortBy(
       transactions,
-      t => -Number(getDayFromDate(t.date)),
+      t => -Number(getDayFromDate(t.attributes.date)),
       'amount'
     );
 

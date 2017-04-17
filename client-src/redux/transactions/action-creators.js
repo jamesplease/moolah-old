@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import xhr from 'xhr';
 import actionTypes from './action-types';
 import authActionTypes from '../auth/action-types';
@@ -8,25 +9,38 @@ export function resetCreateTransactionResolution() {
   };
 }
 
-export function createTransaction(data) {
+export function createTransaction(attributes) {
+  const resource = {
+    type: 'transactions',
+    attributes
+  };
+
   return dispatch => {
-    dispatch({type: actionTypes.CREATE_TRANSACTION});
+    dispatch({
+      type: actionTypes.CREATE_TRANSACTION,
+      resource
+    });
 
     const req = xhr.post(
       '/api/transactions',
       {
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          data: resource
+        }),
         headers: {
           'Content-Type': 'application/vnd.api+json'
         }
       },
       (err, res, body) => {
         if (req.aborted) {
-          dispatch({type: actionTypes.CREATE_TRANSACTION_ABORTED});
+          dispatch({
+            type: actionTypes.CREATE_TRANSACTION_ABORTED,
+            resource
+          });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
-          dispatch({type: actionTypes.CREATE_TRANSACTION_FAILURE});
+          dispatch({type: actionTypes.CREATE_TRANSACTION_FAILURE, resource});
         } else {
           dispatch({
             type: actionTypes.CREATE_TRANSACTION_SUCCESS,
@@ -77,46 +91,55 @@ export function retrieveTransactions() {
   };
 }
 
-export function resetUpdateTransactionResolution(transactionId) {
+export function resetUpdateTransactionResolution(resourceId) {
   return {
     type: actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION,
-    transactionId
+    resourceId
   };
 }
 
-export function updateTransaction(transaction) {
-  return dispatch => {
+export function updateTransaction(resource) {
+  resource.type = 'transactions';
+
+  return (dispatch, getState) => {
+    const {id} = resource;
+
+    const resourceList = getState().transactions.transactions;
+    const resourceToUpdate = _.find(resourceList, {id});
+
     dispatch({
       type: actionTypes.UPDATE_TRANSACTION,
-      transactionId: transaction.id
+      resource
     });
 
-    const {id} = transaction;
     const req = xhr.patch(
       `/api/transactions/${id}`,
       {
-        body: JSON.stringify(transaction),
+        body: JSON.stringify({data: resource}),
         headers: {
           'Content-Type': 'application/vnd.api+json'
         }
       },
-      (err, res, body) => {
+      (err, res) => {
         if (req.aborted) {
           dispatch({
             type: actionTypes.UPDATE_TRANSACTION_ABORTED,
-            transactionId: transaction.id
+            resource
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_TRANSACTION_FAILURE,
-            transactionId: transaction.id
+            resource
           });
         } else {
           dispatch({
             type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
-            transaction: JSON.parse(body).data
+            resource: {
+              ...resourceToUpdate,
+              ...resource
+            }
           });
         }
       }
@@ -126,15 +149,18 @@ export function updateTransaction(transaction) {
   };
 }
 
-export function deleteTransaction(transactionId) {
-  return dispatch => {
+export function deleteTransaction(resourceId) {
+  return (dispatch, getState) => {
+    const resourceList = getState().transactions.transactions;
+    const resourceToDelete = _.find(resourceList, {id: resourceId});
+
     dispatch({
       type: actionTypes.DELETE_TRANSACTION,
-      transactionId
+      resource: resourceToDelete
     });
 
     const req = xhr.del(
-      `/api/transactions/${transactionId}`,
+      `/api/transactions/${resourceId}`,
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'
@@ -144,19 +170,19 @@ export function deleteTransaction(transactionId) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.DELETE_TRANSACTION_ABORTED,
-            transactionId
+            resource: resourceToDelete
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.DELETE_TRANSACTION_FAILURE,
-            transactionId
+            resource: resourceToDelete
           });
         } else {
           dispatch({
             type: actionTypes.DELETE_TRANSACTION_SUCCESS,
-            transactionId
+            resource: resourceToDelete
           });
         }
       }

@@ -10,7 +10,7 @@ export function TransactionsSubheader({isOnline, transactionsActions}) {
     transactionsActions.createTransaction({
       value: Math.random(),
       description: 'Hot off the press',
-      date: '2015-10-02'
+      date: '2017-04-10'
     });
   }
 

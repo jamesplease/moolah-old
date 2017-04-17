@@ -27,7 +27,13 @@ describe('transactions/actionCreators', function() {
       thunk(this.dispatch);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
-        type: actionTypes.CREATE_TRANSACTION
+        type: actionTypes.CREATE_TRANSACTION,
+        resource: {
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
+        }
       });
       expect(this.dispatch).to.have.been.calledBefore(xhr.post);
     });
@@ -38,7 +44,14 @@ describe('transactions/actionCreators', function() {
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/transactions');
       expect(req.method).to.equal('POST');
-      const expectedBody = JSON.stringify({label: 'pizza'});
+      const expectedBody = JSON.stringify({
+        data: {
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
+        }
+      });
       expect(req.requestBody).to.deep.equal(expectedBody);
     });
 
@@ -48,7 +61,9 @@ describe('transactions/actionCreators', function() {
       const respBody = JSON.stringify({
         data: {
           id: 10,
-          label: 'pizza'
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       req.respond(200, {}, respBody);
@@ -57,7 +72,9 @@ describe('transactions/actionCreators', function() {
         type: actionTypes.CREATE_TRANSACTION_SUCCESS,
         transaction: {
           id: 10,
-          label: 'pizza'
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.not.have.been.calledWith({
@@ -71,10 +88,22 @@ describe('transactions/actionCreators', function() {
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.CREATE_TRANSACTION
+        type: actionTypes.CREATE_TRANSACTION,
+        resource: {
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
+        }
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.CREATE_TRANSACTION_ABORTED
+        type: actionTypes.CREATE_TRANSACTION_ABORTED,
+        resource: {
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
+        }
       });
     });
 
@@ -86,12 +115,20 @@ describe('transactions/actionCreators', function() {
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.CREATE_TRANSACTION_SUCCESS,
         transaction: {
-          id: 10,
-          label: 'pizza'
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.CREATE_TRANSACTION_FAILURE
+        type: actionTypes.CREATE_TRANSACTION_FAILURE,
+        resource: {
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
+        }
       });
     });
   });
@@ -180,106 +217,183 @@ describe('transactions/actionCreators', function() {
       const result = actionCreators.resetUpdateTransactionResolution(2);
       expect(result).to.deep.equal({
         type: actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION,
-        transactionId: 2
+        resourceId: 2
       });
     });
   });
 
   describe('updateTransaction', () => {
+    beforeEach(() => {
+      this.getState = function() {
+        return {
+          transactions: {
+            transactions: [
+              {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
+              {id: 10, type: 'transactions', attributes: {label: 'what'}}
+            ]
+          }
+        };
+      };
+    });
+
+    afterEach(() => {
+      this.getState = null;
+    });
+
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.updateTransaction({id: 10, label: 'pizza'});
-      thunk(this.dispatch);
+      const thunk = actionCreators.updateTransaction({id: 10, attributes: {label: 'pizza'}});
+      thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.UPDATE_TRANSACTION,
-        transactionId: 10
+        resource: {
+          type: 'transactions',
+          id: 10,
+          attributes: {label: 'pizza'}
+        }
       });
       expect(this.dispatch).to.have.been.calledBefore(xhr.patch);
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.updateTransaction({id: 2, label: 'pizza'});
-      const req = thunk(this.dispatch);
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
+      const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/transactions/2');
       expect(req.method).to.equal('PATCH');
-      const expectedBody = JSON.stringify({id: 2, label: 'pizza'});
+      const expectedBody = JSON.stringify({
+        data: {
+          id: 2,
+          attributes: {
+            label: 'pizza'
+          },
+          type: 'transactions',
+        }
+      });
       expect(req.requestBody).to.deep.equal(expectedBody);
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.updateTransaction({id: 2, label: 'pizza'});
-      const req = thunk(this.dispatch);
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
+      const req = thunk(this.dispatch, this.getState);
       const respBody = JSON.stringify({
         data: {
           id: 2,
-          label: 'pizza'
+          attributes: {
+            label: 'pizza'
+          },
+          type: 'transactions'
         }
       });
       req.respond(200, {}, respBody);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
-        transaction: {
+        resource: {
           id: 2,
-          label: 'pizza'
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.UPDATE_TRANSACTION_FAILURE,
-        transactionId: 2
+        resource: {
+          id: 2,
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
+        }
       });
     });
 
     it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.updateTransaction({id: 2, label: 'pizza'});
-      const req = thunk(this.dispatch);
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
+      const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_TRANSACTION,
-        transactionId: 2
+        resource: {
+          type: 'transactions',
+          id: 2,
+          attributes: {label: 'pizza'}
+        }
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_TRANSACTION_ABORTED,
-        transactionId: 2
+        resource: {
+          type: 'transactions',
+          id: 2,
+          attributes: {label: 'pizza'}
+        }
       });
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.updateTransaction({id: 2, label: 'pizza'});
-      const req = thunk(this.dispatch);
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
+      const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
-        transaction: {
+        resource: {
           id: 2,
-          label: 'pizza'
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.UPDATE_TRANSACTION_FAILURE,
-        transactionId: 2
+        resource: {
+          id: 2,
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
+        }
       });
     });
   });
 
   describe('deleteTransaction', () => {
+    beforeEach(() => {
+      this.getState = function() {
+        return {
+          transactions: {
+            transactions: [
+              {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
+              {id: 10, type: 'transactions', attributes: {label: 'what'}}
+            ]
+          }
+        };
+      };
+    });
+
+    afterEach(() => {
+      this.getState = null;
+    });
+
     it('should dispatch a begin action before making the request', () => {
       const thunk = actionCreators.deleteTransaction(2);
-      thunk(this.dispatch);
+      thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.DELETE_TRANSACTION,
-        transactionId: 2
+        resource: {
+          id: 2, type: 'transactions', attributes: {label: 'pizza'}
+        }
       });
       expect(this.dispatch).to.have.been.calledBefore(xhr.del);
     });
 
     it('should generate the expected request', () => {
       const thunk = actionCreators.deleteTransaction(2);
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/transactions/2');
       expect(req.method).to.equal('DELETE');
@@ -287,46 +401,46 @@ describe('transactions/actionCreators', function() {
 
     it('should respond appropriately when there are no errors', () => {
       const thunk = actionCreators.deleteTransaction(2);
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.respond(200);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_TRANSACTION_SUCCESS,
-        transactionId: 2
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.DELETE_TRANSACTION_FAILURE,
-        transactionId: 2
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
     });
 
     it('should respond appropriately when aborted', () => {
       const thunk = actionCreators.deleteTransaction(2);
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_TRANSACTION,
-        transactionId: 2
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_TRANSACTION_ABORTED,
-        transactionId: 2
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
     });
 
     it('should respond appropriately when a error status code is returned', () => {
       const thunk = actionCreators.deleteTransaction(2);
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.DELETE_TRANSACTION_SUCCESS,
-        transactionId: 2
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.DELETE_TRANSACTION_FAILURE,
-        transactionId: 2
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
     });
   });
