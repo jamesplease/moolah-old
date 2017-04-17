@@ -25,8 +25,8 @@ describe('TransactionsContent', function() {
       };
 
       this.mockTransactions = [
-        {id: 15, date: '2015-07-10'},
-        {id: 25, date: '2015-10-10'}
+        {id: 15, attributes: {date: '2015-07-10'}},
+        {id: 25, attributes: {date: '2015-10-10'}}
       ];
 
       this.defaultProps = {
@@ -170,7 +170,7 @@ describe('TransactionsContent', function() {
     it('should render a TransactionsList when there are transactions', () => {
       const wrapper = shallow(<Content {...this.defaultProps}/>);
       const transactionsList = (<TransactionsList
-        transactions={[{id: 15, date: '2015-07-10'}]}/>);
+        transactions={[{id: 15, attributes: {date: '2015-07-10'}}]}/>);
       expect(wrapper.contains(transactionsList)).to.be.true;
     });
   });

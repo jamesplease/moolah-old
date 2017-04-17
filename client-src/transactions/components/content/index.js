@@ -40,7 +40,7 @@ export class Content extends Component {
       // 2014-06-10
       // 1234567
       // This is used to match the date in the URL for this route
-      .filter(t => t.date.substring(0, 7) === date)
+      .filter(t => t.attributes.date.substring(0, 7) === date)
       .sortBy('date')
       .value();
 
