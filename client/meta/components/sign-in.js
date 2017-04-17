@@ -1,5 +1,5 @@
 import React from 'react';
-import loginServices from '../../../common/services/login-services';
+import loginServices from '../../common/services/login-services';
 
 export default function SignIn() {
   return (

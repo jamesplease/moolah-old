@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import DropdownOverlay from '../dropdown-overlay';
+import DropdownOverlay from './dropdown-overlay';
 
 export default function ProfileDropdown({closeDropdown}) {
   return (

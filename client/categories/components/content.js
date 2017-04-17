@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as categoriesActionCreators from '../../../state/categories/action-creators';
-import Subheader from '../subheader';
-import CategoriesList from '../categories-list';
-import EmptyCategories from '../empty-categories';
-import ErrorRetrieving from '../../../common/components/error-retrieving';
-import LoadingResourceList from '../../../common/components/loading-resource-list';
+import * as categoriesActionCreators from '../../state/categories/action-creators';
+import Subheader from './subheader';
+import CategoriesList from './categories-list';
+import EmptyCategories from './empty-categories';
+import ErrorRetrieving from '../../common/components/error-retrieving';
+import LoadingResourceList from '../../common/components/loading-resource-list';
 
 export class Content extends Component {
   render() {

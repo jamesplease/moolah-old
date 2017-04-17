@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import preventScroll from 'prevent-scroll';
-import Nav from '../nav';
-import ProfileDropdown from '../profile-dropdown';
+import Nav from './nav';
+import ProfileDropdown from './profile-dropdown';
 
 export class LoggedInHeader extends Component {
   render() {
