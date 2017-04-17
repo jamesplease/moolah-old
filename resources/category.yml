@@ -1,9 +1,0 @@
-name: 'category'
-plural_form: 'categories'
-
-pagination:
-  default_page_size: 100
-
-attributes:
-  label: 'VARCHAR(30)'
-  emoji: 'VARCHAR(30)'

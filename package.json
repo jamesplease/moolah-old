@@ -13,10 +13,8 @@
     "analyze-build": "NODE_ENV=production ANALYZE_BUILD=true webpack -p --bail",
     "coverage": "BABEL_ENV=tests gulp coverage",
     "work": "gulp work",
-    "reset-database": "pls reset-database",
-    "sync": "pls sync && node migrate.js",
-    "sync:force": "pls reset-database -f --verbose && pls sync -f --verbose && node migrate.js",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
+    "sync": "node migrate.js",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build && npm run sync:force; fi",
     "release": "heroku pipelines:promote -r staging",
     "minify-emoji": "imagemin server/static/sheet_apple_64.png --plugin=pngquant --out-dir=server/static"
@@ -98,7 +96,6 @@
     "mainVarName": "financeApp"
   },
   "dependencies": {
-    "api-pls": "0.15.0",
     "babel-polyfill": "6.16.0",
     "body-parser": "1.15.2",
     "bunyan": "1.8.1",
@@ -113,6 +110,9 @@
     "express-routebuilder": "2.1.0",
     "express-session": "1.14.1",
     "form-serialize": "0.7.1",
+    "fortune": "5.1.0",
+    "fortune-http": "1.0.5",
+    "fortune-json-api": "2.1.1",
     "helmet": "2.1.3",
     "is-my-json-valid": "2.14.0",
     "js-emoji": "git+https://github.com/jmeas/js-emoji.git#3e987214b915a2960024c5b43678ce186332a562",

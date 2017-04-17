@@ -17,7 +17,7 @@ export function createCategory(data) {
     });
 
     const req = xhr.post(
-      '/api/v1/categories',
+      '/api/categories',
       {
         body: JSON.stringify(data),
         headers: {
@@ -61,7 +61,7 @@ export function retrieveCategories() {
     dispatch({type: actionTypes.RETRIEVE_CATEGORIES});
 
     const req = xhr.get(
-      '/api/v1/categories',
+      '/api/categories',
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'
@@ -103,7 +103,7 @@ export function updateCategory(category) {
 
     const {id} = category;
     const req = xhr.patch(
-      `/api/v1/categories/${id}`,
+      `/api/categories/${id}`,
       {
         body: JSON.stringify(category),
         headers: {
@@ -147,7 +147,7 @@ export function deleteCategory(categoryId) {
     });
 
     const req = xhr.del(
-      `/api/v1/categories/${categoryId}`,
+      `/api/categories/${categoryId}`,
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'

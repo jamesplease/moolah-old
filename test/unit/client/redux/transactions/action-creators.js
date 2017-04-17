@@ -36,7 +36,7 @@ describe('transactions/actionCreators', function() {
       const thunk = actionCreators.createTransaction({label: 'pizza'});
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/transactions');
+      expect(req.url).to.equal('/api/transactions');
       expect(req.method).to.equal('POST');
       const expectedBody = JSON.stringify({label: 'pizza'});
       expect(req.requestBody).to.deep.equal(expectedBody);
@@ -120,7 +120,7 @@ describe('transactions/actionCreators', function() {
       const thunk = actionCreators.retrieveTransactions();
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/transactions');
+      expect(req.url).to.equal('/api/transactions');
       expect(req.method).to.equal('GET');
     });
 
@@ -201,7 +201,7 @@ describe('transactions/actionCreators', function() {
       const thunk = actionCreators.updateTransaction({id: 2, label: 'pizza'});
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/transactions/2');
+      expect(req.url).to.equal('/api/transactions/2');
       expect(req.method).to.equal('PATCH');
       const expectedBody = JSON.stringify({id: 2, label: 'pizza'});
       expect(req.requestBody).to.deep.equal(expectedBody);
@@ -281,7 +281,7 @@ describe('transactions/actionCreators', function() {
       const thunk = actionCreators.deleteTransaction(2);
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/transactions/2');
+      expect(req.url).to.equal('/api/transactions/2');
       expect(req.method).to.equal('DELETE');
     });
 

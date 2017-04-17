@@ -37,7 +37,7 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.createCategory({label: 'pizza'});
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/categories');
+      expect(req.url).to.equal('/api/categories');
       expect(req.method).to.equal('POST');
       const expectedBody = JSON.stringify({label: 'pizza'});
       expect(req.requestBody).to.deep.equal(expectedBody);
@@ -125,7 +125,7 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.retrieveCategories();
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/categories');
+      expect(req.url).to.equal('/api/categories');
       expect(req.method).to.equal('GET');
     });
 
@@ -206,7 +206,7 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.updateCategory({id: 2, label: 'pizza'});
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/categories/2');
+      expect(req.url).to.equal('/api/categories/2');
       expect(req.method).to.equal('PATCH');
       const expectedBody = JSON.stringify({id: 2, label: 'pizza'});
       expect(req.requestBody).to.deep.equal(expectedBody);
@@ -314,7 +314,7 @@ describe('categories/actionCreators', function() {
       const thunk = actionCreators.deleteCategory(2);
       const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/v1/categories/2');
+      expect(req.url).to.equal('/api/categories/2');
       expect(req.method).to.equal('DELETE');
     });
 
