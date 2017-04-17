@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as categoriesActionCreators from '../../../redux/categories/action-creators';
+import * as categoriesActionCreators from '../../../state/categories/action-creators';
 import Subheader from '../subheader';
 import CategoriesList from '../categories-list';
 import EmptyCategories from '../empty-categories';

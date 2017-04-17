@@ -1,7 +1,7 @@
 import xhr from 'xhr';
 import sinon from 'sinon';
-import * as actionCreators from '../../../../../client-src/redux/contact/action-creators';
-import actionTypes from '../../../../../client-src/redux/contact/action-types';
+import * as actionCreators from '../../../../../client-src/state/contact/action-creators';
+import actionTypes from '../../../../../client-src/state/contact/action-types';
 
 describe('contact/actionCreators', function() {
   beforeEach(() => {

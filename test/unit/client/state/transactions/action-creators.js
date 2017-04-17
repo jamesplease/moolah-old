@@ -1,9 +1,9 @@
 import xhr from 'xhr';
 import sinon from 'sinon';
-import * as actionCreators from '../../../../../client-src/redux/categories/action-creators';
-import actionTypes from '../../../../../client-src/redux/categories/action-types';
+import * as actionCreators from '../../../../../client-src/state/transactions/action-creators';
+import actionTypes from '../../../../../client-src/state/transactions/action-types';
 
-describe('categories/actionCreators', function() {
+describe('transactions/actionCreators', function() {
   beforeEach(() => {
     useFakeXMLHttpRequest();
     xhr.XMLHttpRequest = sinon.FakeXMLHttpRequest;
@@ -12,54 +12,55 @@ describe('categories/actionCreators', function() {
     spy(xhr);
   });
 
-  describe('resetCreateCategoryResolution', () => {
+  describe('resetCreateTransactionResolution', () => {
     it('should return the right action', () => {
-      const result = actionCreators.resetCreateCategoryResolution();
+      const result = actionCreators.resetCreateTransactionResolution();
       expect(result).to.deep.equal({
-        type: actionTypes.CREATE_CATEGORY_RESET_RESOLUTION
+        type: actionTypes.CREATE_TRANSACTION_RESET_RESOLUTION
       });
     });
   });
 
-  describe('createCategory', () => {
+  describe('createTransaction', () => {
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       thunk(this.dispatch);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
-        type: actionTypes.CREATE_CATEGORY,
+        type: actionTypes.CREATE_TRANSACTION,
         resource: {
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.have.been.calledBefore(xhr.post);
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/categories');
+      expect(req.url).to.equal('/api/transactions');
       expect(req.method).to.equal('POST');
       const expectedBody = JSON.stringify({
         data: {
           attributes: {
             label: 'pizza'
           },
-          type: 'categories',
+          type: 'transactions',
         }
       });
       expect(req.requestBody).to.deep.equal(expectedBody);
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch);
       const respBody = JSON.stringify({
         data: {
           id: 10,
-          type: 'categories',
           attributes: {
             label: 'pizza'
           }
@@ -68,100 +69,100 @@ describe('categories/actionCreators', function() {
       req.respond(200, {}, respBody);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.CREATE_CATEGORY_SUCCESS,
-        resource: {
+        type: actionTypes.CREATE_TRANSACTION_SUCCESS,
+        transaction: {
           id: 10,
-          type: 'categories',
           attributes: {
             label: 'pizza'
           }
         }
       });
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.CREATE_CATEGORY_FAILURE,
+        type: actionTypes.CREATE_TRANSACTION_FAILURE
+      });
+    });
+
+    it('should respond appropriately when aborted', () => {
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
+      const req = thunk(this.dispatch);
+      req.abort();
+      expect(this.dispatch).to.have.been.calledTwice;
+      expect(this.dispatch).to.have.been.calledWith({
+        type: actionTypes.CREATE_TRANSACTION,
         resource: {
-          id: 10,
-          type: 'categories',
+          type: 'transactions',
           attributes: {
             label: 'pizza'
           }
         }
       });
-    });
-
-    it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
-      req.abort();
-      expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.CREATE_CATEGORY,
+        type: actionTypes.CREATE_TRANSACTION_ABORTED,
         resource: {
-          type: 'categories',
-          attributes: {label: 'pizza'}
-        }
-      });
-      expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.CREATE_CATEGORY_ABORTED,
-        resource: {
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
+      const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.CREATE_CATEGORY_SUCCESS,
-        resource: {
-          type: 'categories',
-          attributes: {label: 'pizza'}
+        type: actionTypes.CREATE_TRANSACTION_SUCCESS,
+        transaction: {
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.CREATE_CATEGORY_FAILURE,
+        type: actionTypes.CREATE_TRANSACTION_FAILURE,
         resource: {
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
     });
   });
 
-  describe('resetRetrieveCategoriesResolution', () => {
+  describe('resetRetrieveTransactionsResolution', () => {
     it('should return the right action', () => {
-      const result = actionCreators.resetRetrieveCategoriesResolution();
+      const result = actionCreators.resetRetrieveTransactionsResolution();
       expect(result).to.deep.equal({
-        type: actionTypes.RETRIEVE_CATEGORIES_RESET_RESOLUTION
+        type: actionTypes.RETRIEVE_TRANSACTIONS_RESET_RESOLUTION
       });
     });
   });
 
-  describe('retrieveCategories', () => {
+  describe('retrieveTransactions', () => {
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.retrieveTransactions();
       thunk(this.dispatch);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
-        type: actionTypes.RETRIEVE_CATEGORIES
+        type: actionTypes.RETRIEVE_TRANSACTIONS
       });
       expect(this.dispatch).to.have.been.calledBefore(xhr.get);
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.retrieveTransactions();
       const req = thunk(this.dispatch);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/categories');
+      expect(req.url).to.equal('/api/transactions');
       expect(req.method).to.equal('GET');
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.retrieveTransactions();
       const req = thunk(this.dispatch);
       const respBody = JSON.stringify({
         data: [
@@ -172,63 +173,63 @@ describe('categories/actionCreators', function() {
       req.respond(200, {}, respBody);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        resources: [
+        type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
+        transactions: [
           {id: 1},
           {id: 2}
         ]
       });
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.RETRIEVE_CATEGORIES_FAILURE
+        type: actionTypes.RETRIEVE_TRANSACTIONS_FAILURE
       });
     });
 
     it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.retrieveTransactions();
       const req = thunk(this.dispatch);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.RETRIEVE_CATEGORIES
+        type: actionTypes.RETRIEVE_TRANSACTIONS
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.RETRIEVE_CATEGORIES_ABORTED
+        type: actionTypes.RETRIEVE_TRANSACTIONS_ABORTED
       });
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.retrieveTransactions();
       const req = thunk(this.dispatch);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.RETRIEVE_CATEGORIES_SUCCESS,
-        resources: undefined
+        type: actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS,
+        transactions: undefined
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.RETRIEVE_CATEGORIES_FAILURE
+        type: actionTypes.RETRIEVE_TRANSACTIONS_FAILURE
       });
     });
   });
 
-  describe('resetUpdateCategoryResolution', () => {
+  describe('resetUpdateTransactionResolution', () => {
     it('should return the right action', () => {
-      const result = actionCreators.resetUpdateCategoryResolution(2);
+      const result = actionCreators.resetUpdateTransactionResolution(2);
       expect(result).to.deep.equal({
-        type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION,
-        categoryId: 2
+        type: actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION,
+        resourceId: 2
       });
     });
   });
 
-  describe('updateCategory', () => {
+  describe('updateTransaction', () => {
     beforeEach(() => {
       this.getState = function() {
         return {
-          categories: {
-            categories: [
-              {id: 2, type: 'categories', attributes: {label: 'pizza'}},
-              {id: 10, type: 'categories', attributes: {label: 'what'}}
+          transactions: {
+            transactions: [
+              {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
+              {id: 10, type: 'transactions', attributes: {label: 'what'}}
             ]
           }
         };
@@ -240,14 +241,14 @@ describe('categories/actionCreators', function() {
     });
 
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.updateCategory({id: 10, attributes: {label: 'pizza'}});
+      const thunk = actionCreators.updateTransaction({id: 10, attributes: {label: 'pizza'}});
       thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
-        type: actionTypes.UPDATE_CATEGORY,
+        type: actionTypes.UPDATE_TRANSACTION,
         resource: {
+          type: 'transactions',
           id: 10,
-          type: 'categories',
           attributes: {label: 'pizza'}
         }
       });
@@ -255,99 +256,118 @@ describe('categories/actionCreators', function() {
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.updateCategory({id: 2, attributes: {label: 'pizza'}});
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/categories/2');
+      expect(req.url).to.equal('/api/transactions/2');
       expect(req.method).to.equal('PATCH');
       const expectedBody = JSON.stringify({
         data: {
           id: 2,
-          attributes: {label: 'pizza'},
-          type: 'categories'
+          attributes: {
+            label: 'pizza'
+          },
+          type: 'transactions',
         }
       });
       expect(req.requestBody).to.deep.equal(expectedBody);
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.updateCategory({id: 2, attributes: {label: 'pizza'}});
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch, this.getState);
-      req.respond(204, {});
+      const respBody = JSON.stringify({
+        data: {
+          id: 2,
+          attributes: {
+            label: 'pizza'
+          },
+          type: 'transactions'
+        }
+      });
+      req.respond(200, {}, respBody);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.UPDATE_CATEGORY_SUCCESS,
+        type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
         resource: {
           id: 2,
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.UPDATE_CATEGORY_FAILURE,
+        type: actionTypes.UPDATE_TRANSACTION_FAILURE,
         resource: {
           id: 2,
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
     });
 
     it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.updateCategory({id: 2, attributes: {label: 'pizza'}});
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.UPDATE_CATEGORY,
+        type: actionTypes.UPDATE_TRANSACTION,
         resource: {
+          type: 'transactions',
           id: 2,
-          type: 'categories',
           attributes: {label: 'pizza'}
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.UPDATE_CATEGORY_ABORTED,
+        type: actionTypes.UPDATE_TRANSACTION_ABORTED,
         resource: {
+          type: 'transactions',
           id: 2,
-          type: 'categories',
           attributes: {label: 'pizza'}
         }
       });
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.updateCategory({id: 2, attributes: {label: 'pizza'}});
+      const thunk = actionCreators.updateTransaction({id: 2, attributes: {label: 'pizza'}});
       const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.UPDATE_CATEGORY_SUCCESS,
+        type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
         resource: {
           id: 2,
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.UPDATE_CATEGORY_FAILURE,
+        type: actionTypes.UPDATE_TRANSACTION_FAILURE,
         resource: {
           id: 2,
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          type: 'transactions',
+          attributes: {
+            label: 'pizza'
+          }
         }
       });
     });
   });
 
-  describe('deleteCategory', () => {
+  describe('deleteTransaction', () => {
     beforeEach(() => {
       this.getState = function() {
         return {
-          categories: {
-            categories: [
-              {id: 2, type: 'categories', attributes: {label: 'pizza'}},
-              {id: 10, type: 'categories', attributes: {label: 'what'}}
+          transactions: {
+            transactions: [
+              {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
+              {id: 10, type: 'transactions', attributes: {label: 'what'}}
             ]
           }
         };
@@ -359,70 +379,68 @@ describe('categories/actionCreators', function() {
     });
 
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.deleteCategory(2);
+      const thunk = actionCreators.deleteTransaction(2);
       thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
-        type: actionTypes.DELETE_CATEGORY,
+        type: actionTypes.DELETE_TRANSACTION,
         resource: {
-          id: 2,
-          type: 'categories',
-          attributes: {label: 'pizza'}
+          id: 2, type: 'transactions', attributes: {label: 'pizza'}
         }
       });
       expect(this.dispatch).to.have.been.calledBefore(xhr.del);
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.deleteCategory(2);
+      const thunk = actionCreators.deleteTransaction(2);
       const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/categories/2');
+      expect(req.url).to.equal('/api/transactions/2');
       expect(req.method).to.equal('DELETE');
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.deleteCategory(2);
+      const thunk = actionCreators.deleteTransaction(2);
       const req = thunk(this.dispatch, this.getState);
       req.respond(200);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.DELETE_CATEGORY_SUCCESS,
-        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        type: actionTypes.DELETE_TRANSACTION_SUCCESS,
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.DELETE_CATEGORY_FAILURE,
-        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        type: actionTypes.DELETE_TRANSACTION_FAILURE,
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
     });
 
     it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.deleteCategory(2);
+      const thunk = actionCreators.deleteTransaction(2);
       const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.DELETE_CATEGORY,
-        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        type: actionTypes.DELETE_TRANSACTION,
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.DELETE_CATEGORY_ABORTED,
-        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        type: actionTypes.DELETE_TRANSACTION_ABORTED,
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.deleteCategory(2);
+      const thunk = actionCreators.deleteTransaction(2);
       const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
-        type: actionTypes.DELETE_CATEGORY_SUCCESS,
-        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        type: actionTypes.DELETE_TRANSACTION_SUCCESS,
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
       expect(this.dispatch).to.have.been.calledWith({
-        type: actionTypes.DELETE_CATEGORY_FAILURE,
-        resource: {id: 2, type: 'categories', attributes: {label: 'pizza'}}
+        type: actionTypes.DELETE_TRANSACTION_FAILURE,
+        resource: {id: 2, type: 'transactions', attributes: {label: 'pizza'}}
       });
     });
   });

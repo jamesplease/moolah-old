@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Modal from '../../../common/components/modal';
 import ModifyCategoryModal from '../modify-category-modal';
-import * as categoriesActionCreators from '../../../redux/categories/action-creators';
+import * as categoriesActionCreators from '../../../state/categories/action-creators';
 
 export class CategoriesSubheader extends Component {
   render() {

@@ -1,6 +1,6 @@
-import reducer from '../../../../../client-src/redux/transactions/reducer';
-import initialState from '../../../../../client-src/redux/transactions/initial-state';
-import actionTypes from '../../../../../client-src/redux/transactions/action-types';
+import reducer from '../../../../../client-src/state/transactions/reducer';
+import initialState from '../../../../../client-src/state/transactions/initial-state';
+import actionTypes from '../../../../../client-src/state/transactions/action-types';
 
 describe('transactions/reducer', function() {
   describe('An action with no type', () => {

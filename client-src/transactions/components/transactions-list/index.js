@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import TransactionListItem from '../transaction-list-item';
-import * as transactionsActionCreators from '../../../redux/transactions/action-creators';
+import * as transactionsActionCreators from '../../../state/transactions/action-creators';
 import {getDayFromDate} from '../../services/format-date';
 
 export class TransactionsList extends Component {

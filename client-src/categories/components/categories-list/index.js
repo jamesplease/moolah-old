@@ -7,7 +7,7 @@ import CategoryListItem from '../category-list-item';
 import Modal from '../../../common/components/modal';
 import ModifyCategoryModal from '../modify-category-modal';
 import DeleteCategoryModal from '../delete-category-modal';
-import * as categoriesActionCreators from '../../../redux/categories/action-creators';
+import * as categoriesActionCreators from '../../../state/categories/action-creators';
 
 export class CategoriesList extends Component {
   render() {

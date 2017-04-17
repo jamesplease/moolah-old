@@ -1,4 +1,4 @@
-import store from '../../../../client-src/redux/store';
+import store from '../../../../client-src/state/store';
 
 describe('redux store', () => {
   it('should have the right shape', () => {

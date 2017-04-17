@@ -18,7 +18,7 @@ import Contact from './meta/components/contact';
 import Privacy from './meta/components/privacy';
 import Terms from './meta/components/terms';
 import SignIn from './meta/components/sign-in';
-import store from './redux/store';
+import store from './state/store';
 import generateAuthCheck from './common/services/auth-check';
 import {getYearMonthStringFromDate} from './transactions/services/format-date';
 

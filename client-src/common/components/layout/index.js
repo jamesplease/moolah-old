@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Header from '../header';
 import Footer from '../footer';
 import Alerts from '../alerts';
-import * as connectionActionCreators from '../../../redux/connection/action-creators';
+import * as connectionActionCreators from '../../../state/connection/action-creators';
 
 export class Layout extends Component {
   render() {

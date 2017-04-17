@@ -1,6 +1,6 @@
-import reducer from '../../../../../client-src/redux/contact/reducer';
-import initialState from '../../../../../client-src/redux/contact/initial-state';
-import actionTypes from '../../../../../client-src/redux/contact/action-types';
+import reducer from '../../../../../client-src/state/contact/reducer';
+import initialState from '../../../../../client-src/state/contact/initial-state';
+import actionTypes from '../../../../../client-src/state/contact/action-types';
 
 describe('connection/reducers', () => {
   describe('An action with no type', () => {

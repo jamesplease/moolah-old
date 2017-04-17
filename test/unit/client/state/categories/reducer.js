@@ -1,6 +1,6 @@
-import reducer from '../../../../../client-src/redux/categories/reducer';
-import initialState from '../../../../../client-src/redux/categories/initial-state';
-import actionTypes from '../../../../../client-src/redux/categories/action-types';
+import reducer from '../../../../../client-src/state/categories/reducer';
+import initialState from '../../../../../client-src/state/categories/initial-state';
+import actionTypes from '../../../../../client-src/state/categories/action-types';
 
 describe('categories/reducer', function() {
   describe('An action with no type', () => {

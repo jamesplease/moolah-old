@@ -1,5 +1,5 @@
-import * as actionCreators from '../../../../../client-src/redux/connection/action-creators';
-import actionTypes from '../../../../../client-src/redux/connection/action-types';
+import * as actionCreators from '../../../../../client-src/state/connection/action-creators';
+import actionTypes from '../../../../../client-src/state/connection/action-types';
 
 describe('connection/action-creators', () => {
   describe('userOnline', () => {

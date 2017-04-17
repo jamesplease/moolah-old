@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import * as actionCreators from '../../../../../client-src/redux/alerts/action-creators';
-import actionTypes from '../../../../../client-src/redux/alerts/action-types';
+import * as actionCreators from '../../../../../client-src/state/alerts/action-creators';
+import actionTypes from '../../../../../client-src/state/alerts/action-types';
 
 describe('alerts/action-creators', function() {
   beforeEach(() => {
