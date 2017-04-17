@@ -2,9 +2,9 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {
   Alerts, __Rewire__, __ResetDependency__, __get__
-} from '../../../../../client-src/common/components/alerts';
-import Alert from '../../../../../client-src/common/components/alert';
-import ReactCSSTransitionGroup from '../../../../../client-src/vendor/css-transition-group';
+} from '../../../../../client/common/components/alerts';
+import Alert from '../../../../../client/common/components/alert';
+import ReactCSSTransitionGroup from '../../../../../client/vendor/css-transition-group';
 
 const mapStateToProps = __get__('mapStateToProps');
 const mapDispatchToProps = __get__('mapDispatchToProps');

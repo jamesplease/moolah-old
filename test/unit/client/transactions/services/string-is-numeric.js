@@ -1,4 +1,4 @@
-import stringIsNumeric from '../../../../../client-src/transactions/services/string-is-numeric';
+import stringIsNumeric from '../../../../../client/transactions/services/string-is-numeric';
 
 describe('stringIsNumeric', function() {
   it('should return false for empty strings', () => {

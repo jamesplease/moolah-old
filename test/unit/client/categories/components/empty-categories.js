@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import EmptyCategories from '../../../../../client-src/categories/components/empty-categories';
+import EmptyCategories from '../../../../../client/categories/components/empty-categories';
 
 describe('EmptyCategories', function() {
   describe('rendering', () => {

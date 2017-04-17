@@ -1,4 +1,4 @@
-import * as formatDate from '../../../../../client-src/transactions/services/format-date';
+import * as formatDate from '../../../../../client/transactions/services/format-date';
 
 describe('formatDate', function() {
   describe('formatDate', () => {

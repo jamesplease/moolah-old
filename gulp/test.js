@@ -5,7 +5,7 @@ const mochaGlobals = require('../test/setup/.globals');
 
 const $ = loadPlugins();
 
-const watchFiles = ['client-src/**/*', 'test/**/*', 'package.json', '**/.eslintrc'];
+const watchFiles = ['client/**/*', 'test/**/*', 'package.json', '**/.eslintrc'];
 
 function _registerBabelForTests() {
   require('babel-register')({
@@ -33,9 +33,9 @@ exports.test = () => {
 exports.coverage = (done) => {
   _registerBabelForTests();
   gulp.src([
-    'client-src/**/*.js',
+    'client/**/*.js',
     'server/**/*.js',
-    '!client-src/vendor/**/*.js',
+    '!client/vendor/**/*.js',
   ])
     .pipe($.istanbul({
       instrumenter: Instrumenter,

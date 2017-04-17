@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import DropdownOverlay from '../../../../../client-src/common/components/dropdown-overlay';
+import DropdownOverlay from '../../../../../client/common/components/dropdown-overlay';
 
 describe('DropdownOverlay', function() {
   describe('rendering with no `onClick` prop', () => {

@@ -1,4 +1,4 @@
-import loadInitialData from '../../../../../client-src/common/services/load-initial-data';
+import loadInitialData from '../../../../../client/common/services/load-initial-data';
 
 describe('loadInitialData', function() {
   it('should return {} when there is no initial data element', () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {
   Contact, __Rewire__, __ResetDependency__, __GetDependency__
-} from '../../../../../client-src/meta/components/contact';
+} from '../../../../../client/meta/components/contact';
 
 const validate = __GetDependency__('validate');
 const mapStateToProps = __GetDependency__('mapStateToProps');

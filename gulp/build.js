@@ -19,7 +19,7 @@ exports.buildCss = () => {
     processors.push(cssnano());
   }
 
-  return gulp.src('./client-src/css/index.css')
+  return gulp.src('./client/css/index.css')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.postcss(processors, {parser: postcssSass}))

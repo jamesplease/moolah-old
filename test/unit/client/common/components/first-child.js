@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import FirstChild from '../../../../../client-src/common/components/first-child';
+import FirstChild from '../../../../../client/common/components/first-child';
 
 describe('FirstChild', function() {
   describe('rendering with no children', () => {

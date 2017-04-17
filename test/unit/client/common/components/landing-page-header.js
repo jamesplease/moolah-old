@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
-import LandingPageHeader from '../../../../../client-src/common/components/landing-page-header';
+import LandingPageHeader from '../../../../../client/common/components/landing-page-header';
 
 describe('LandingPageHeader', function() {
   describe('rendering', () => {

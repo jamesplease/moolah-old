@@ -3,7 +3,7 @@ const loadPlugins = require('gulp-load-plugins');
 
 const $ = loadPlugins();
 
-exports.lintCss = () => gulp.src('./client-src/**/*.css')
+exports.lintCss = () => gulp.src('./client/**/*.css')
   .pipe($.stylelint({
     reporters: [
       {formatter: 'string', console: true}
@@ -12,7 +12,7 @@ exports.lintCss = () => gulp.src('./client-src/**/*.css')
   }));
 
 exports.lintJs = () => gulp.src([
-  'client-src/**/*.js', '!client-src/vendor/**/*.js',
+  'client/**/*.js', '!client/vendor/**/*.js',
   'server/**/*.js', 'test/**/*.js', 'gulpfile.js',
   'gulp/**/*.js'
 ])

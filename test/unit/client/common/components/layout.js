@@ -2,10 +2,10 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {
   Layout, __Rewire__, __ResetDependency__, __get__
-} from '../../../../../client-src/common/components/layout';
-import Alerts from '../../../../../client-src/common/components/alerts';
-import Header from '../../../../../client-src/common/components/header';
-import Footer from '../../../../../client-src/common/components/footer';
+} from '../../../../../client/common/components/layout';
+import Alerts from '../../../../../client/common/components/alerts';
+import Header from '../../../../../client/common/components/header';
+import Footer from '../../../../../client/common/components/footer';
 
 const mapStateToProps = __get__('mapStateToProps');
 const mapDispatchToProps = __get__('mapDispatchToProps');

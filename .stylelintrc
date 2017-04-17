@@ -100,7 +100,7 @@
     "no-missing-end-of-source-newline": true
   },
   "ignoreFiles": [
-    "./client-src/css/hamburger-icon.css",
-    "./client-src/common/components/loading-indicator/loading-indicator.css"
+    "./client/css/hamburger-icon.css",
+    "./client/common/components/loading-indicator/loading-indicator.css"
   ]
 }

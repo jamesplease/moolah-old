@@ -1,8 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {Link} from 'react-router';
-import ProfileDropdown from '../../../../../client-src/common/components/profile-dropdown';
-import DropdownOverlay from '../../../../../client-src/common/components/dropdown-overlay';
+import ProfileDropdown from '../../../../../client/common/components/profile-dropdown';
+import DropdownOverlay from '../../../../../client/common/components/dropdown-overlay';
 
 describe('ProfileDropdown', function() {
   beforeEach(() => {

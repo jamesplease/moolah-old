@@ -1,8 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Header from '../../../../../client-src/common/components/header';
-import LoggedInHeader from '../../../../../client-src/common/components/logged-in-header';
-import LandingPageHeader from '../../../../../client-src/common/components/landing-page-header';
+import Header from '../../../../../client/common/components/header';
+import LoggedInHeader from '../../../../../client/common/components/logged-in-header';
+import LandingPageHeader from '../../../../../client/common/components/landing-page-header';
 
 describe('Header', function() {
   describe('rendering with a user', () => {

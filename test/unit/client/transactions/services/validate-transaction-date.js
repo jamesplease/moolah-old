@@ -1,4 +1,4 @@
-import validateTransactionDate from '../../../../../client-src/transactions/services/validate-transaction-date';
+import validateTransactionDate from '../../../../../client/transactions/services/validate-transaction-date';
 
 describe('validateTransactionDate', function() {
   it('should return false for undefined and null', () => {

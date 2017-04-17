@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
-import Footer from '../../../../../client-src/common/components/footer';
+import Footer from '../../../../../client/common/components/footer';
 
 describe('Footer', function() {
   describe('rendering', () => {
