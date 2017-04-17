@@ -191,13 +191,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  const {
-    deleteCategory, updateCategory, resetUpdateCategoryResolution
-  } = categoriesActionCreators;
-
-  return bindActionCreators({
-    deleteCategory, updateCategory, resetUpdateCategoryResolution
-  }, dispatch);
+  return bindActionCreators(categoriesActionCreators, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);

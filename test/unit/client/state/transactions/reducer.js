@@ -311,7 +311,7 @@ describe('transactions/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION,
-        transactionId: 2
+        resource: {id: 2}
       };
     });
 
@@ -337,7 +337,7 @@ describe('transactions/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION_SUCCESS,
-        transactionId: 2
+        resource: {id: 2}
       };
     });
 
@@ -359,7 +359,7 @@ describe('transactions/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION_FAILURE,
-        transactionId: 2
+        resource: {id: 2}
       };
     });
 
@@ -385,7 +385,7 @@ describe('transactions/reducer', function() {
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION_FAILURE,
-        transactionId: 2
+        resource: {id: 2}
       };
     });
 
