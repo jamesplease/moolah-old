@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Track your finances.",
   "main": "client-dist/app.js",
+  "private": true,
   "scripts": {
     "test": "gulp test",
     "lint": "gulp lint",
