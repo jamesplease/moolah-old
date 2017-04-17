@@ -66,7 +66,7 @@ describe('alerts/reducer', function() {
       const action = {
         type: categoryActionTypes.CREATE_CATEGORY_SUCCESS,
         category: {
-          label: 'sandwiches'
+          attributes: {label: 'sandwiches'}
         }
       };
       const newState = {
@@ -90,7 +90,7 @@ describe('alerts/reducer', function() {
       const action = {
         type: categoryActionTypes.CREATE_CATEGORY_FAILURE,
         category: {
-          label: 'pasta'
+          attributes: {label: 'pasta'}
         }
       };
       const newState = {
@@ -114,7 +114,7 @@ describe('alerts/reducer', function() {
       const action = {
         type: categoryActionTypes.UPDATE_CATEGORY_SUCCESS,
         category: {
-          label: 'oink'
+          attributes: {label: 'oink'}
         }
       };
       const newState = {
@@ -138,7 +138,7 @@ describe('alerts/reducer', function() {
       const action = {
         type: categoryActionTypes.UPDATE_CATEGORY_FAILURE,
         category: {
-          label: 'asdf'
+          attributes: {label: 'asdf'}
         }
       };
       const newState = {
@@ -162,7 +162,7 @@ describe('alerts/reducer', function() {
       const action = {
         type: categoryActionTypes.DELETE_CATEGORY_SUCCESS,
         category: {
-          label: 'sandwich'
+          attributes: {label: 'sandwich'}
         }
       };
       const newState = {
@@ -186,7 +186,7 @@ describe('alerts/reducer', function() {
       const action = {
         type: categoryActionTypes.DELETE_CATEGORY_FAILURE,
         category: {
-          label: 'pasta'
+          attributes: {label: 'pasta'}
         }
       };
       const newState = {

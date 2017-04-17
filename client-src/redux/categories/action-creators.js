@@ -9,17 +9,24 @@ export function resetCreateCategoryResolution() {
   };
 }
 
-export function createCategory(data) {
+export function createCategory(attributes) {
+  const categoryResource = {
+    type: 'categories',
+    attributes
+  };
+
   return dispatch => {
     dispatch({
       type: actionTypes.CREATE_CATEGORY,
-      category: data
+      category: categoryResource
     });
 
     const req = xhr.post(
       '/api/categories',
       {
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          data: categoryResource
+        }),
         headers: {
           'Content-Type': 'application/vnd.api+json'
         }
@@ -28,14 +35,14 @@ export function createCategory(data) {
         if (req.aborted) {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_ABORTED,
-            category: data
+            category: categoryResource
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.CREATE_CATEGORY_FAILURE,
-            category: data
+            category: categoryResource
           });
         } else {
           dispatch({
@@ -94,39 +101,50 @@ export function resetUpdateCategoryResolution(categoryId) {
   };
 }
 
-export function updateCategory(category) {
-  return dispatch => {
+export function updateCategory(categoryResource) {
+  categoryResource.type = 'categories';
+
+  return (dispatch, getState) => {
+    const {id} = categoryResource;
+
+    const categoryList = getState().categories.categories;
+    const categoryToUpdate = _.find(categoryList, {id});
+
     dispatch({
       type: actionTypes.UPDATE_CATEGORY,
-      category
+      category: categoryResource
     });
 
-    const {id} = category;
     const req = xhr.patch(
       `/api/categories/${id}`,
       {
-        body: JSON.stringify(category),
+        body: JSON.stringify({data: categoryResource}),
         headers: {
           'Content-Type': 'application/vnd.api+json'
         }
       },
-      (err, res, body) => {
+      (err, res) => {
         if (req.aborted) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_ABORTED,
-            category
+            category: categoryResource
           });
         } else if (res.statusCode === 401) {
           dispatch({type: authActionTypes.UNAUTHORIZED});
         } else if (err || res.statusCode >= 400) {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_FAILURE,
-            category
+            category: categoryResource
           });
         } else {
           dispatch({
             type: actionTypes.UPDATE_CATEGORY_SUCCESS,
-            category: JSON.parse(body).data
+            category: {
+              // Fortune's JSON API implementation returns a 204, so we must
+              // merge the existing resource with the one that we sent over
+              ...categoryToUpdate,
+              ...categoryResource
+            }
           });
         }
       }

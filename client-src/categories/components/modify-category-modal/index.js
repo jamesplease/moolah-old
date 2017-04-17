@@ -161,7 +161,7 @@ function validate(values, props) {
     if (c.id === _.result(props.category, 'id')) {
       return;
     }
-    return c.label.toLowerCase() === _.result(newLabel, 'toLowerCase');
+    return c.attributes.label.toLowerCase() === _.result(newLabel, 'toLowerCase');
   });
 
   // Prevent empty labels
