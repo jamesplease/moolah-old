@@ -14,7 +14,7 @@
     "work": "gulp work",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
     "sync": "node migrate.js",
-    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build && npm run sync:force; fi",
+    "postinstall": "if [ $BUILD_ASSETS ]; then npm run build && npm run sync; fi",
     "release": "heroku pipelines:promote -r staging",
     "minify-emoji": "imagemin server/static/sheet_apple_64.png --plugin=pngquant --out-dir=server/static"
   },
