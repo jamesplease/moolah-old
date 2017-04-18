@@ -5,8 +5,6 @@
 [![Dependency Status](https://david-dm.org/jmeas/moolah.svg)](https://david-dm.org/jmeas/moolah)
 [![devDependency Status](https://david-dm.org/jmeas/moolah/dev-status.svg)](https://david-dm.org/jmeas/moolah#info=devDependencies)
 
-[![Build Status](https://saucelabs.com/browser-matrix/jmeas.svg)](https://saucelabs.com/beta/builds/f6d6ae67b7584e34b2e53ddf7aa48227)
-
 Track your finances.
 
 ### Deploying
