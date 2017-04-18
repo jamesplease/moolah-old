@@ -6,6 +6,12 @@ const baseSql = require('./base-sql');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+// This is copy+pasted from Fortune's source, for now
+function createId() {
+  // eslint-disable-next-line
+  return Date.now() + '-' + ('00000000' + Math.floor(Math.random() * Math.pow(2, 32)).toString(16)).slice(-8);
+}
+
 function findUser(db, googleId) {
   return db.one(`SELECT * FROM user_account WHERE google_id=$[googleId]`, {googleId});
 }
@@ -24,8 +30,8 @@ module.exports = function(db) {
           const errorKey = _.findKey(queryErrorCode, c => c === err.code);
 
           if (errorKey === 'noData') {
-            const query = baseSql.create('user_account', ['google_id']);
-            db.one(query, {google_id: googleId})
+            const query = baseSql.create('user_account', ['id', 'google_id']);
+            db.one(query, {google_id: googleId, id: createId()})
               .then(result => {
                 return done(null, result);
               }, () => {
