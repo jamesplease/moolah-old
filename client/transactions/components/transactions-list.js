@@ -4,15 +4,15 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import ReactCSSTransitionGroup from '../../vendor/css-transition-group';
 import TransactionListItem from './transaction-list-item';
+import ModifyTransactionModal from './modify-transaction-modal';
 import DeleteTransactionModal from './delete-transaction-modal';
 import * as transactionsActionCreators from '../../state/transactions/action-creators';
 import {getDayFromDate} from '../services/format-date';
 import Modal from '../../common/components/modal';
 
-
 export class TransactionsList extends Component {
   render() {
-    const {transactions, updateTransaction} = this.props;
+    const {transactions} = this.props;
 
     const sortedTransactions = _.sortBy(
       transactions,
@@ -21,6 +21,7 @@ export class TransactionsList extends Component {
     );
 
     const deleteModal = this.state.transactionToDelete ? this.getDeleteModal() : null;
+    const editModal = this.state.transactionToUpdate ? this.getEditModal() : null;
 
     const transitionGroupProps = {
       transitionName: 'resourceListItem',
@@ -32,6 +33,7 @@ export class TransactionsList extends Component {
 
     return (
       <div className="resourceListContainer">
+        {editModal}
         {deleteModal}
         <ReactCSSTransitionGroup {...transitionGroupProps}>
           {sortedTransactions.map(t => (
@@ -39,7 +41,7 @@ export class TransactionsList extends Component {
               key={t.id}
               transaction={t}
               onClickDelete={this.onClickDelete}
-              onClickEdit={updateTransaction}/>
+              onClickEdit={this.onClickEdit}/>
           ))}
         </ReactCSSTransitionGroup>
       </div>
@@ -67,6 +69,30 @@ export class TransactionsList extends Component {
     );
   }
 
+  getEditModal = () => {
+    const {transactionsMeta} = this.props;
+
+    const transactionId = this.state.transactionToUpdate.id;
+    const transactionBeingUpdatedMeta = _.find(transactionsMeta, {id: transactionId});
+    const isUpdating = transactionBeingUpdatedMeta.updatingStatus === 'PENDING';
+
+    const childrenProps = {
+      categories: this.props.categories,
+      onClickCancel: this.onClickModalCancel,
+      onSubmit: this.onConfirmEditModal,
+      transaction: this.state.transactionToUpdate,
+      confirmInProgress: isUpdating,
+      initialValues: this.state.transactionToUpdate,
+      isEditMode: true
+    };
+
+    return (
+      <Modal modalClassName="modifyTransactionModal-container">
+        <ModifyTransactionModal {...childrenProps}/>
+      </Modal>
+    );
+  }
+
   state = {
     transactionToDelete: null,
     transactionToUpdate: null
@@ -76,6 +102,7 @@ export class TransactionsList extends Component {
   // If there was, then we close the modal.
   componentWillReceiveProps(nextProps) {
     this.checkForSuccessfulDelete(nextProps);
+    this.checkForSuccessfulUpdate(nextProps);
   }
 
   checkForSuccessfulDelete = (nextProps) => {
@@ -95,9 +122,36 @@ export class TransactionsList extends Component {
     }
   }
 
+  checkForSuccessfulUpdate(nextProps) {
+    // If the modal isn't open, then there's nothing to check
+    if (!this.state.transactionToUpdate) {
+      return;
+    }
+
+    const {transactionsMeta} = nextProps;
+    const {id} = this.state.transactionToUpdate;
+    const updatingTransactionMeta = _.find(transactionsMeta, {id});
+
+    if (updatingTransactionMeta.updatingStatus === 'SUCCESS') {
+      this.setState({
+        transactionToUpdate: null
+      });
+
+      this.props.resetUpdateTransactionResolution({
+        transactionId: id
+      });
+    }
+  }
+
   onClickDelete = (transaction) => {
     this.setState({
       transactionToDelete: transaction
+    });
+  }
+
+  onClickEdit = (transaction) => {
+    this.setState({
+      transactionToUpdate: transaction
     });
   }
 
@@ -112,6 +166,15 @@ export class TransactionsList extends Component {
     const {deleteTransaction} = this.props;
     const transaction = this.state.transactionToDelete;
     deleteTransaction(transaction.id);
+  }
+
+  onConfirmEditModal = (fields) => {
+    const {updateTransaction} = this.props;
+    const transactionId = this.state.transactionToUpdate.id;
+    updateTransaction({
+      id: transactionId,
+      attributes: {...fields}
+    });
   }
 }
 
