@@ -20,6 +20,13 @@ db.query(query)
     process.exit(0);
   })
   .catch(err => {
-    console.log('There was an error running the migrations.', err);
-    process.exit(1);
+    // 42P07 = duplicate table. This means the database already has this
+    // table, so we do not need to run it again
+    if (err.code === '42P07') {
+      console.log('This table already exists, so it will not be created again. The Postgres "error" is:', err);
+      process.exit(0);
+    } else {
+      console.log('There was an error running the migrations.', err);
+      process.exit(1);
+    }
   });
