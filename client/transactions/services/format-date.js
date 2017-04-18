@@ -5,7 +5,7 @@ export function getYearFromDate(date) {
 }
 
 export function getMonthFromDate(date) {
-  return date.split('-')[0];
+  return date.split('-')[1];
 }
 
 export function getDayFromDate(date) {
@@ -20,7 +20,7 @@ export function formatDate(date) {
 }
 
 export function formatDateForTransactionList(date) {
-  return getDayFromDate(date);
+  return `${getMonthFromDate(date)}/${getDayFromDate(date)}`;
 }
 
 // "2015-10" => {
