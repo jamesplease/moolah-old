@@ -9,14 +9,14 @@ const resources = {
     label: String,
     emoji: String,
     transactions: [Array('transaction'), 'category'],
-    user: ['user_account']
+    user: 'user_account'
   },
   transaction: {
     description: String,
     value: Number,
     date: String,
     category: ['category', 'transactions'],
-    user: ['user_account']
+    user: 'user_account'
   },
   user_account: {
     google_id: String
