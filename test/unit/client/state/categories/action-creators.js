@@ -22,15 +22,37 @@ describe('categories/actionCreators', function() {
   });
 
   describe('createCategory', () => {
+    beforeEach(() => {
+      this.getState = function() {
+        return {
+          auth: {
+            user: {
+              id: 100
+            }
+          },
+          categories: {
+            resources: [
+              {id: 2, type: 'categories', attributes: {label: 'pizza'}},
+              {id: 10, type: 'categories', attributes: {label: 'what'}}
+            ]
+          }
+        };
+      };
+    });
+
+    afterEach(() => {
+      this.getState = null;
+    });
+
     it('should dispatch a begin action before making the request', () => {
       const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
-      thunk(this.dispatch);
+      thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.CREATE_CATEGORY,
         resource: {
           type: 'categories',
-          attributes: {label: 'pizza'}
+          attributes: {label: 'pizza', user: 100}
         }
       });
       expect(this.dispatch).to.have.been.calledBefore(xhr.post);
@@ -38,14 +60,15 @@ describe('categories/actionCreators', function() {
 
     it('should generate the expected request', () => {
       const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/categories');
       expect(req.method).to.equal('POST');
       const expectedBody = JSON.stringify({
         data: {
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           },
           type: 'categories',
         }
@@ -55,13 +78,14 @@ describe('categories/actionCreators', function() {
 
     it('should respond appropriately when there are no errors', () => {
       const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       const respBody = JSON.stringify({
         data: {
           id: 10,
           type: 'categories',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -73,7 +97,8 @@ describe('categories/actionCreators', function() {
           id: 10,
           type: 'categories',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -83,7 +108,8 @@ describe('categories/actionCreators', function() {
           id: 10,
           type: 'categories',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -91,42 +117,42 @@ describe('categories/actionCreators', function() {
 
     it('should respond appropriately when aborted', () => {
       const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY,
         resource: {
           type: 'categories',
-          attributes: {label: 'pizza'}
+          attributes: {label: 'pizza', user: 100}
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_ABORTED,
         resource: {
           type: 'categories',
-          attributes: {label: 'pizza'}
+          attributes: {label: 'pizza', user: 100}
         }
       });
     });
 
     it('should respond appropriately when a error status code is returned', () => {
       const thunk = actionCreators.createCategory({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_SUCCESS,
         resource: {
           type: 'categories',
-          attributes: {label: 'pizza'}
+          attributes: {label: 'pizza', user: 100}
         }
       });
       expect(this.dispatch).to.have.been.calledWith({
         type: actionTypes.CREATE_CATEGORY_FAILURE,
         resource: {
           type: 'categories',
-          attributes: {label: 'pizza'}
+          attributes: {label: 'pizza', user: 100}
         }
       });
     });
@@ -142,9 +168,31 @@ describe('categories/actionCreators', function() {
   });
 
   describe('retrieveCategories', () => {
+    beforeEach(() => {
+      this.getState = function() {
+        return {
+          auth: {
+            user: {
+              id: 100
+            }
+          },
+          categories: {
+            resources: [
+              {id: 2, type: 'categories', attributes: {label: 'pizza'}},
+              {id: 10, type: 'categories', attributes: {label: 'what'}}
+            ]
+          }
+        };
+      };
+    });
+
+    afterEach(() => {
+      this.getState = null;
+    });
+
     it('should dispatch a begin action before making the request', () => {
       const thunk = actionCreators.retrieveCategories();
-      thunk(this.dispatch);
+      thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.RETRIEVE_CATEGORIES
@@ -154,15 +202,15 @@ describe('categories/actionCreators', function() {
 
     it('should generate the expected request', () => {
       const thunk = actionCreators.retrieveCategories();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/categories');
+      expect(req.url).to.equal('/api/categories?filter[user]=100');
       expect(req.method).to.equal('GET');
     });
 
     it('should respond appropriately when there are no errors', () => {
       const thunk = actionCreators.retrieveCategories();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       const respBody = JSON.stringify({
         data: [
           {id: 1},
@@ -185,7 +233,7 @@ describe('categories/actionCreators', function() {
 
     it('should respond appropriately when aborted', () => {
       const thunk = actionCreators.retrieveCategories();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
@@ -198,7 +246,7 @@ describe('categories/actionCreators', function() {
 
     it('should respond appropriately when a error status code is returned', () => {
       const thunk = actionCreators.retrieveCategories();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({

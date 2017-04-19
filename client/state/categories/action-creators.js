@@ -10,9 +10,10 @@ export function resetCreateCategoryResolution() {
 }
 
 export function createCategory(resource) {
-  resource.type = 'categories';
-
-  return dispatch => {
+  return (dispatch, getState) => {
+    const userId = getState().auth.user.id;
+    resource.attributes.user = userId;
+    resource.type = 'categories';
     dispatch({
       type: actionTypes.CREATE_CATEGORY,
       resource
@@ -61,11 +62,13 @@ export function resetRetrieveCategoriesResolution() {
 }
 
 export function retrieveCategories() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const {auth} = getState();
+    const userId = auth.user.id;
     dispatch({type: actionTypes.RETRIEVE_CATEGORIES});
 
     const req = xhr.get(
-      '/api/categories',
+      `/api/categories?filter[user]=${userId}`,
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'

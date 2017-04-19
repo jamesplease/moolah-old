@@ -10,9 +10,11 @@ export function resetCreateTransactionResolution() {
 }
 
 export function createTransaction(resource) {
-  resource.type = 'transactions';
+  return (dispatch, getState) => {
+    const userId = getState().auth.user.id;
+    resource.attributes.user = userId;
+    resource.type = 'transactions';
 
-  return dispatch => {
     dispatch({
       type: actionTypes.CREATE_TRANSACTION,
       resource
@@ -58,11 +60,13 @@ export function resetRetrieveTransactionsResolution() {
 }
 
 export function retrieveTransactions() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const {auth} = getState();
+    const userId = auth.user.id;
     dispatch({type: actionTypes.RETRIEVE_TRANSACTIONS});
 
     const req = xhr.get(
-      '/api/transactions',
+      `/api/transactions?filter[user]=${userId}`,
       {
         headers: {
           'Content-Type': 'application/vnd.api+json'

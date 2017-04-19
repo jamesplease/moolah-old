@@ -22,16 +22,39 @@ describe('transactions/actionCreators', function() {
   });
 
   describe('createTransaction', () => {
+    beforeEach(() => {
+      this.getState = function() {
+        return {
+          auth: {
+            user: {
+              id: 100
+            }
+          },
+          transactions: {
+            resources: [
+              {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
+              {id: 10, type: 'transactions', attributes: {label: 'what'}}
+            ]
+          }
+        };
+      };
+    });
+
+    afterEach(() => {
+      this.getState = null;
+    });
+
     it('should dispatch a begin action before making the request', () => {
       const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
-      thunk(this.dispatch);
+      thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.CREATE_TRANSACTION,
         resource: {
           type: 'transactions',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -40,14 +63,15 @@ describe('transactions/actionCreators', function() {
 
     it('should generate the expected request', () => {
       const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/transactions');
       expect(req.method).to.equal('POST');
       const expectedBody = JSON.stringify({
         data: {
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           },
           type: 'transactions',
         }
@@ -57,12 +81,13 @@ describe('transactions/actionCreators', function() {
 
     it('should respond appropriately when there are no errors', () => {
       const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       const respBody = JSON.stringify({
         data: {
           id: 10,
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -73,7 +98,8 @@ describe('transactions/actionCreators', function() {
         resource: {
           id: 10,
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -84,7 +110,7 @@ describe('transactions/actionCreators', function() {
 
     it('should respond appropriately when aborted', () => {
       const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
@@ -92,7 +118,8 @@ describe('transactions/actionCreators', function() {
         resource: {
           type: 'transactions',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -101,7 +128,8 @@ describe('transactions/actionCreators', function() {
         resource: {
           type: 'transactions',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -109,7 +137,7 @@ describe('transactions/actionCreators', function() {
 
     it('should respond appropriately when a error status code is returned', () => {
       const thunk = actionCreators.createTransaction({attributes: {label: 'pizza'}});
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
@@ -117,7 +145,8 @@ describe('transactions/actionCreators', function() {
         resource: {
           type: 'transactions',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -126,7 +155,8 @@ describe('transactions/actionCreators', function() {
         resource: {
           type: 'transactions',
           attributes: {
-            label: 'pizza'
+            label: 'pizza',
+            user: 100
           }
         }
       });
@@ -143,9 +173,31 @@ describe('transactions/actionCreators', function() {
   });
 
   describe('retrieveTransactions', () => {
+    beforeEach(() => {
+      this.getState = function() {
+        return {
+          auth: {
+            user: {
+              id: 100
+            }
+          },
+          transactions: {
+            resources: [
+              {id: 2, type: 'transactions', attributes: {label: 'pizza'}},
+              {id: 10, type: 'transactions', attributes: {label: 'what'}}
+            ]
+          }
+        };
+      };
+    });
+
+    afterEach(() => {
+      this.getState = null;
+    });
+
     it('should dispatch a begin action before making the request', () => {
       const thunk = actionCreators.retrieveTransactions();
-      thunk(this.dispatch);
+      thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
         type: actionTypes.RETRIEVE_TRANSACTIONS
@@ -155,15 +207,15 @@ describe('transactions/actionCreators', function() {
 
     it('should generate the expected request', () => {
       const thunk = actionCreators.retrieveTransactions();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
-      expect(req.url).to.equal('/api/transactions');
+      expect(req.url).to.equal('/api/transactions?filter[user]=100');
       expect(req.method).to.equal('GET');
     });
 
     it('should respond appropriately when there are no errors', () => {
       const thunk = actionCreators.retrieveTransactions();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       const respBody = JSON.stringify({
         data: [
           {id: 1},
@@ -186,7 +238,7 @@ describe('transactions/actionCreators', function() {
 
     it('should respond appropriately when aborted', () => {
       const thunk = actionCreators.retrieveTransactions();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.have.been.calledWith({
@@ -199,7 +251,7 @@ describe('transactions/actionCreators', function() {
 
     it('should respond appropriately when a error status code is returned', () => {
       const thunk = actionCreators.retrieveTransactions();
-      const req = thunk(this.dispatch);
+      const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;
       expect(this.dispatch).to.not.have.been.calledWith({
