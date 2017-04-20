@@ -154,7 +154,7 @@ const reduxFormOptions = {
 };
 
 function reduxFormInitialState(state, nextProps) {
-  let initialValues = _.get(nextProps.transaction, 'attributes');
+  let initialValues = _.get(nextProps.transaction, 'attributes', {});
   // We also grab the relationship information for this transaction
   initialValues.category = _.get(nextProps.transaction, 'relationships.category.data.id');
   return {initialValues};
