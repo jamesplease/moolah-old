@@ -129,7 +129,7 @@
     "react-redux": "4.4.5",
     "react-router": "2.8.1",
     "redux": "3.6.0",
-    "redux-form": "5.3.3",
+    "redux-form": "6.0.3",
     "redux-thunk": "2.1.0",
     "serve-favicon": "2.3.0",
     "throng": "4.0.0",
