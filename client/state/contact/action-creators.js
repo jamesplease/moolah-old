@@ -1,6 +1,7 @@
 import xhr from 'xhr';
 import actionTypes from './action-types';
 import authActionTypes from '../auth/action-types';
+import defaultXhrHeaders from '../../common/services/default-xhr-headers';
 
 export function sendMessage(data) {
   return (dispatch) => {
@@ -10,9 +11,7 @@ export function sendMessage(data) {
       '/help/messages',
       {
         body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res) => {
         if (req.aborted) {
