@@ -16,7 +16,7 @@
       "value": "false"
     },
     "BUILD_ASSETS": {
-      "description": "Ensures that Heroku builds the app on deploy.",
+      "description": "Don't change this! Ensures that Heroku builds the app on deploy.",
       "value": "true"
     },
     "SESSION_SECRET": {
@@ -24,10 +24,36 @@
       "generator": "secret"
     },
     "GOOGLE_CLIENT_ID": {
-      "description": "The ClientID of your Google app. Enables Google logins."
+      "description": "The ClientID of your Google app. Enables Google logins.",
+      "required": false
     },
     "GOOGLE_CLIENT_SECRET": {
-      "description": "The Client Secret of your Google app. Enables Google logins."
+      "description": "The Client Secret of your Google app. Enables Google logins.",
+      "required": false
+    },
+    "GITHUB_CLIENT_ID": {
+      "description": "The ClientID of your GitHub app. Enables GitHub logins.",
+      "required": false
+    },
+    "GITHUB_CLIENT_SECRET": {
+      "description": "The Client Secret of your GitHub app. Enables GitHub logins.",
+      "required": false
+    },
+    "FACEBOOK_CLIENT_ID": {
+      "description": "The ClientID of your Facebook app. Enables Facebook logins.",
+      "required": false
+    },
+    "FACEBOOK_CLIENT_SECRET": {
+      "description": "The Client Secret of your Facebook app. Enables Facebook logins.",
+      "required": false
+    },
+    "TWITTER_CLIENT_ID": {
+      "description": "The ClientID of your Twitter app. Enables Twitter logins.",
+      "required": false
+    },
+    "TWITTER_CLIENT_SECRET": {
+      "description": "The Client Secret of your Twitter app. Enables Twitter logins.",
+      "required": false
     }
   }
 }
