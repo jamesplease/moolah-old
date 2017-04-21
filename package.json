@@ -118,7 +118,7 @@
     "js-emoji": "git+https://github.com/jmeas/js-emoji.git#3e987214b915a2960024c5b43678ce186332a562",
     "kapow": "1.0.0",
     "keymirror": "0.1.1",
-    "lodash": "4.16.4",
+    "lodash": "4.17.0",
     "passport": "0.3.2",
     "passport-google-oauth20": "1.0.0",
     "pg-promise": "^5.2.6",
