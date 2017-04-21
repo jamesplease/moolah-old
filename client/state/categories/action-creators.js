@@ -2,6 +2,7 @@ import _ from 'lodash';
 import xhr from 'xhr';
 import actionTypes from './action-types';
 import authActionTypes from '../auth/action-types';
+import defaultXhrHeaders from '../../common/services/default-xhr-headers';
 
 export function resetCreateCategoryResolution() {
   return {
@@ -25,9 +26,7 @@ export function createCategory(resource) {
         body: JSON.stringify({
           data: resource
         }),
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res, body) => {
         if (req.aborted) {
@@ -70,9 +69,7 @@ export function retrieveCategories() {
     const req = xhr.get(
       `/api/categories?filter[user]=${userId}`,
       {
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res, body) => {
         if (req.aborted) {
@@ -119,9 +116,7 @@ export function updateCategory(resource) {
       `/api/categories/${id}`,
       {
         body: JSON.stringify({data: resource}),
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res) => {
         if (req.aborted) {
@@ -167,9 +162,7 @@ export function deleteCategory(categoryId) {
     const req = xhr.del(
       `/api/categories/${categoryId}`,
       {
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res) => {
         if (req.aborted) {

@@ -7,6 +7,8 @@ const express = require('express');
 const passport = require('passport');
 const addRequestId = require('express-request-id');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
 const compress = require('compression');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
@@ -40,6 +42,7 @@ module.exports = function() {
 
   app.set('env', NODE_ENV);
 
+  // We set up some security stuff first
   app.use(helmet({
     // This application should never appear in an iFrame
     frameguard: {action: 'deny'},
@@ -79,6 +82,28 @@ module.exports = function() {
       }
     }
   }));
+  // We need cookie support before we can register CSRF
+  app.use(cookieParser());
+  app.use(csrf({
+    cookie: true,
+    value(req) {
+      return req.headers['x-csrf-token'];
+    }
+  }));
+
+  app.use((req, res, next) => {
+    // We ensure the anti-CSRF token is sent along with all GET requests. We
+    // don't read this cookie in write requests (that would defeat the purpose!),
+    // but instead attach include it under the `x-csrf-token` header for write
+    // requests.
+    if (req.method === 'GET') {
+      res.cookie('antiCsrfToken', req.csrfToken(), {sameSite: true, path: '/'});
+    }
+
+    return next();
+  });
+
+  // Alright, security is done. Now for other configuration
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(compress());

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import xhr from 'xhr';
 import actionTypes from './action-types';
 import authActionTypes from '../auth/action-types';
+import defaultXhrHeaders from '../../common/services/default-xhr-headers';
 
 export function resetCreateTransactionResolution() {
   return {
@@ -26,9 +27,7 @@ export function createTransaction(resource) {
         body: JSON.stringify({
           data: resource
         }),
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res, body) => {
         if (req.aborted) {
@@ -68,9 +67,7 @@ export function retrieveTransactions() {
     const req = xhr.get(
       `/api/transactions?filter[user]=${userId}`,
       {
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res, body) => {
         if (req.aborted) {
@@ -117,9 +114,7 @@ export function updateTransaction(resource) {
       `/api/transactions/${id}`,
       {
         body: JSON.stringify({data: resource}),
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res) => {
         if (req.aborted) {
@@ -163,9 +158,7 @@ export function deleteTransaction(id) {
     const req = xhr.del(
       `/api/transactions/${id}`,
       {
-        headers: {
-          'Content-Type': 'application/vnd.api+json'
-        }
+        headers: {...defaultXhrHeaders}
       },
       (err, res) => {
         if (req.aborted) {
