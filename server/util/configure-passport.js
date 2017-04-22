@@ -13,7 +13,7 @@ function createId() {
 }
 
 function findUser(db, googleId) {
-  return db.one(`SELECT * FROM user_account WHERE google_id=$[googleId]`, {googleId});
+  return db.one(`SELECT * FROM profile WHERE google_id=$[googleId]`, {googleId});
 }
 
 module.exports = function(db) {
@@ -30,8 +30,11 @@ module.exports = function(db) {
           const errorKey = _.findKey(queryErrorCode, c => c === err.code);
 
           if (errorKey === 'noData') {
-            const query = baseSql.create('user_account', ['id', 'google_id']);
-            db.one(query, {google_id: googleId, id: createId()})
+            const query = baseSql.create('profile', ['id', 'google_id']);
+            db.one(query, {
+              google_token: accessToken,
+              google_id: googleId, id: createId()
+            })
               .then(result => {
                 return done(null, result);
               }, () => {
@@ -61,7 +64,7 @@ module.exports = function(db) {
 
   // Retrieves a user account from the DB
   passport.deserializeUser((id, done) => {
-    const readQuery = baseSql.read('user_account', ['id'], {
+    const readQuery = baseSql.read('profile', ['id'], {
       singular: true
     });
     db.one(readQuery, {id})
