@@ -20,6 +20,7 @@ const infoLogs = require('./logging/info-logs');
 const serveApp = require('./serve-app');
 const store = require('./store');
 const db = require('./util/db');
+const baseSql = require('./base-sql');
 
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
@@ -175,69 +176,50 @@ module.exports = function() {
     failureRedirect: '/login'
   };
 
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google', redirects),
-    (req, res) => {
-      // Explicitly save the session before redirecting!
-      req.session.save((err) => {
-        if (err) {
-          errorLogs.loginError(req, res, err);
-          res.redirect('/login');
-        } else {
-          res.redirect('/');
-        }
-      });
-    }
-  );
+  const socialMediaServices = [
+    'google',
+    'twitter',
+    'facebook',
+    'github'
+  ];
 
-  app.get(
-    '/auth/twitter/callback',
-    passport.authenticate('twitter', redirects),
-    (req, res) => {
-      // Explicitly save the session before redirecting!
-      req.session.save((err) => {
-        if (err) {
-          errorLogs.loginError(req, res, err);
-          res.redirect('/login');
-        } else {
-          res.redirect('/');
-        }
-      });
-    }
-  );
+  socialMediaServices.forEach(serviceName => {
+    app.get(
+      `/auth/${serviceName}/callback`,
+      passport.authenticate(serviceName, redirects),
+      (req, res) => {
+        // Explicitly save the session before redirecting!
+        req.session.save((err) => {
+          if (err) {
+            errorLogs.loginError(req, res, err);
+            res.redirect('/login');
+          } else {
+            res.redirect('/');
+          }
+        });
+      }
+    );
 
-  app.get(
-    '/auth/github/callback',
-    passport.authenticate('github', redirects),
-    (req, res) => {
-      // Explicitly save the session before redirecting!
-      req.session.save((err) => {
-        if (err) {
-          errorLogs.loginError(req, res, err);
-          res.redirect('/login');
-        } else {
-          res.redirect('/');
-        }
-      });
-    }
-  );
-
-  app.get(
-    '/auth/facebook/callback',
-    passport.authenticate('facebook', redirects),
-    (req, res) => {
-      // Explicitly save the session before redirecting!
-      req.session.save((err) => {
-        if (err) {
-          errorLogs.loginError(req, res, err);
-          res.redirect('/login');
-        } else {
-          res.redirect('/');
-        }
-      });
-    }
-  );
+    // This allows user to unlink their accounts
+    app.post(`/unlink/${serviceName}`, (req, res, next) => {
+      if (req.isAuthenticated()) {
+        const {id} = req.user;
+        const tokenField = `${serviceName}_token`;
+        const query = baseSql.update('profile', [tokenField]);
+        db.one(query, {
+          // Delete the existing token, if there is one
+          [tokenField]: '',
+          id
+        })
+          .then(
+            () => res.status(204).end(),
+            () => res.status(500).end()
+          );
+      } else {
+        next();
+      }
+    });
+  });
 
   app.get('/logout', (req, res) => {
     req.logout();
