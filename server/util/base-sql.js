@@ -15,7 +15,7 @@ exports.create = function(table, fields) {
   return `INSERT INTO ${tableName} (${columns}) VALUES (${setters}) RETURNING *`;
 };
 
-// `columns` are the columns to return
+// `fields` are the columns to return
 exports.read = function(table, fields, options) {
   options = options ? options : {};
 

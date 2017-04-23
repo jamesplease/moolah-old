@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Subheader from './subheader';
 import loginServices from '../../common/services/login-services';
 
@@ -9,7 +10,8 @@ function getLoginServiceImgUrl(serviceName) {
   return `/${serviceName.toLowerCase()}-logo@2x.png`;
 }
 
-export default function Account() {
+export function Account({user}) {
+  const {name, email} = user;
   return (
     <div>
       <Subheader/>
@@ -25,11 +27,11 @@ export default function Account() {
         </div>
         <div className="account-form-row">
           <label className="account-label">Name</label>
-          <input type="text" className="text-input" value="Aradhya Singhal"/>
+          <input type="text" className="text-input" value={name}/>
         </div>
         <div className="account-form-row">
           <label className="account-label">Email</label>
-          <input type="text" className="text-input" value="asinghal@gmail.com"/>
+          <input type="text" className="text-input" value={email}/>
         </div>
         <div className="resource-list-header">
           <div className="resource-list-header-text">
@@ -53,3 +55,11 @@ export default function Account() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user
+  };
+}
+
+export default connect(mapStateToProps)(Account);

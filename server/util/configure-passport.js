@@ -30,13 +30,13 @@ module.exports = function(db) {
       // If ther user is already logged in, then we add this service to their
       // account.
       if (user) {
-        user[idField] = id;
-        user[tokenField] = accessToken;
+        const query = baseSql.update('profile', [idField, tokenField, 'name']);
 
-        const query = baseSql.update('profile', [idField, tokenField]);
         db.one(query, {
           [tokenField]: accessToken,
           [idField]: id,
+          // Add a name if there isn't already one
+          name: user.name || profile.displayName,
           id: user.id
         })
           .then(
@@ -57,9 +57,10 @@ module.exports = function(db) {
               // means that this account has been disconnected. We reconnect it,
               // then log them back in.
               if (!result[tokenField]) {
-                const query = baseSql.update('profile', [tokenField]);
+                const query = baseSql.update('profile', [tokenField, 'name']);
                 db.one(query, {
                   [tokenField]: accessToken,
+                  name: result.name || profile.displayName,
                   id: result.id
                 })
                   .then(
@@ -80,10 +81,11 @@ module.exports = function(db) {
 
               // This means the user does not exist. We create a new user.
               if (errorKey === 'noData') {
-                const query = baseSql.create('profile', ['id', idField, tokenField]);
+                const query = baseSql.create('profile', ['id', idField, tokenField, 'name']);
                 db.one(query, {
                   [tokenField]: accessToken,
                   [idField]: id,
+                  name: profile.displayName,
                   id: createId()
                 })
                   .then(
@@ -144,7 +146,7 @@ module.exports = function(db) {
 
   // Retrieves a user account from the DB
   passport.deserializeUser((id, done) => {
-    const readQuery = baseSql.read('profile', ['id'], {
+    const readQuery = baseSql.read('profile', ['id', 'name', 'email'], {
       singular: true
     });
     db.one(readQuery, {id})

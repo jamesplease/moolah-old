@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import preventScroll from 'prevent-scroll';
@@ -7,6 +9,7 @@ import ProfileDropdown from './profile-dropdown';
 
 export class LoggedInHeader extends Component {
   render() {
+    const {displayName} = this.props;
     const overlayNavToggleClass = classNames({
       'is-active': this.state.isOverlayNavVisible,
       'hamburger hamburger--squeeze': true,
@@ -49,7 +52,7 @@ export class LoggedInHeader extends Component {
               className={accountLinkClass}
               onClick={this.showProfileDropdown}>
               <span className="appHeader-userName">
-                James S.
+                {displayName}
               </span>
               <img className="appHeader-profilePicture"/>
             </div>
@@ -104,4 +107,10 @@ export class LoggedInHeader extends Component {
   }
 }
 
-export default LoggedInHeader;
+function mapStateToProps(state) {
+  return {
+    displayName: _.get(state.auth, 'user.name')
+  };
+}
+
+export default connect(mapStateToProps, null, null, {pure: false})(LoggedInHeader);
