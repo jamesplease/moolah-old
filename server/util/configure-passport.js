@@ -21,37 +21,84 @@ function findUser(db, idType, id) {
 
 module.exports = function(db) {
   function generateCallback(service) {
-    return function(accessToken, refreshToken, profile, done) {
+    return function(req, accessToken, refreshToken, profile, done) {
       const id = profile.id;
       const idField = `${service}_id`;
       const tokenField = `${service}_token`;
+      const {user} = req;
 
-      findUser(db, idField, id)
-        .then(
-          result => {
-            done(null, result);
-          },
-          err => {
-            const queryErrorCode = pgp.errors.queryResultErrorCode;
-            const errorKey = _.findKey(queryErrorCode, c => c === err.code);
+      // If ther user is already logged in, then we add this service to their
+      // account.
+      if (user) {
+        user[idField] = id;
+        user[tokenField] = accessToken;
 
-            if (errorKey === 'noData') {
-              const query = baseSql.create('profile', ['id', idField, tokenField]);
-              db.one(query, {
-                [tokenField]: accessToken,
-                [idField]: id,
-                id: createId()
-              })
-                .then(result => {
-                  return done(null, result);
-                }, () => {
-                  return done(null, false);
-                });
-            } else {
-              return done(null, false);
+        const query = baseSql.update('profile', [idField, tokenField]);
+        db.one(query, {
+          [tokenField]: accessToken,
+          [idField]: id,
+          id: user.id
+        })
+          .then(
+            (result) => done(null, result),
+            () => done(null, false)
+          );
+      }
+
+      // This handles if the user is not logged in
+      else {
+        // Start by trying to find the user by their service's ID
+        findUser(db, idField, id)
+          .then(
+            // This handles the situation where the user has already logged in
+            // with this social account before.
+            result => {
+              // If we have a user by the serviceID, but no token, then that
+              // means that this account has been disconnected. We reconnect it,
+              // then log them back in.
+              if (!result[tokenField]) {
+                const query = baseSql.update('profile', [tokenField]);
+                db.one(query, {
+                  [tokenField]: accessToken,
+                  id: result.id
+                })
+                  .then(
+                    (result) => done(null, result),
+                    () => done(null, false)
+                  );
+              }
+              // This means we have an account, and a token, so this is a
+              // existing and already-connected account.
+              else {
+                done(null, result);
+              }
+            },
+            // Let's handle errors with that search for the user...
+            err => {
+              const queryErrorCode = pgp.errors.queryResultErrorCode;
+              const errorKey = _.findKey(queryErrorCode, c => c === err.code);
+
+              // This means the user does not exist. We create a new user.
+              if (errorKey === 'noData') {
+                const query = baseSql.create('profile', ['id', idField, tokenField]);
+                db.one(query, {
+                  [tokenField]: accessToken,
+                  [idField]: id,
+                  id: createId()
+                })
+                  .then(
+                    (result) => done(null, result),
+                    () => done(null, false)
+                  );
+              }
+              // This handles generic query errors. Maybe the DB is down, or
+              // something.
+              else {
+                return done(null, false);
+              }
             }
-          }
-        );
+          );
+      }
     };
   }
 
@@ -61,25 +108,29 @@ module.exports = function(db) {
   const googleStrategy = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${appUrlBase}/auth/google/callback`
+    callbackURL: `${appUrlBase}/auth/google/callback`,
+    passReqToCallback: true
   }, generateCallback('google'));
 
   const twitterStrategy = new TwitterStrategy({
     consumerKey: process.env.TWITTER_CLIENT_ID,
     consumerSecret: process.env.TWITTER_CLIENT_SECRET,
-    callbackURL: `${appUrlBase}/auth/twitter/callback`
+    callbackURL: `${appUrlBase}/auth/twitter/callback`,
+    passReqToCallback: true
   }, generateCallback('twitter'));
 
   const facebookStrategy = new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${appUrlBase}/auth/facebook/callback`
+    callbackURL: `${appUrlBase}/auth/facebook/callback`,
+    passReqToCallback: true
   }, generateCallback('facebook'));
 
   const gitHubStrategy = new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: `${appUrlBase}/auth/github/callback`
+    callbackURL: `${appUrlBase}/auth/github/callback`,
+    passReqToCallback: true
   }, generateCallback('github'));
 
   passport.use('google', googleStrategy);
@@ -98,12 +149,8 @@ module.exports = function(db) {
     });
     db.one(readQuery, {id})
       .then(
-        result => {
-          done(null, result);
-        },
-        () => {
-          done(null, false);
-        }
+        (result) => done(null, result),
+        () => done(null, false)
       );
   });
 };
