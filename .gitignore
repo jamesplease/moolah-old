@@ -32,3 +32,4 @@ client-dist
 # Users Environment Variables
 .lock-wscript
 webpack-assets.json
+.notes
