@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
 import preventScroll from 'prevent-scroll';
-import LoggedInHeader from '../../../../../client/common/components/logged-in-header';
+import {LoggedInHeader} from '../../../../../client/common/components/logged-in-header';
 import ProfileDropdown from '../../../../../client/common/components/profile-dropdown';
 import Nav from '../../../../../client/common/components/nav';
 
@@ -53,9 +53,9 @@ describe('LoggedInHeader', function() {
 
   describe('the account container', () => {
     it('should have the name of the user', () => {
-      const wrapper = shallow(<LoggedInHeader/>);
+      const wrapper = shallow(<LoggedInHeader displayName="Sandwich"/>);
       const userName = wrapper.find('.appHeader-userName');
-      expect(userName.text()).to.equal('James S.');
+      expect(userName.text()).to.equal('Sandwich');
     });
 
     it('should have the profile picture', () => {
