@@ -145,13 +145,6 @@ module.exports = function() {
   const port = process.env.PORT || 5000;
   app.set('port', port);
 
-  const googleSettings = {scope: ['profile']};
-  app.get('/login/google', passport.authenticate('google', googleSettings));
-
-  const redirects = {
-    failureRedirect: '/login'
-  };
-
   // Enforce HTTPS in production
   if (app.get('env') === 'production') {
     app.use((req, res, next) => {
@@ -173,9 +166,66 @@ module.exports = function() {
     });
   }
 
+  app.get('/login/google', passport.authenticate('google', {scope: ['profile']}));
+  app.get('/login/twitter', passport.authenticate('twitter'));
+  app.get('/login/github', passport.authenticate('github', {scope: ['user:email']}));
+  app.get('/login/facebook', passport.authenticate('facebook', {scope: ['email']}));
+
+  const redirects = {
+    failureRedirect: '/login'
+  };
+
   app.get(
     '/auth/google/callback',
     passport.authenticate('google', redirects),
+    (req, res) => {
+      // Explicitly save the session before redirecting!
+      req.session.save((err) => {
+        if (err) {
+          errorLogs.loginError(req, res, err);
+          res.redirect('/login');
+        } else {
+          res.redirect('/');
+        }
+      });
+    }
+  );
+
+  app.get(
+    '/auth/twitter/callback',
+    passport.authenticate('twitter', redirects),
+    (req, res) => {
+      // Explicitly save the session before redirecting!
+      req.session.save((err) => {
+        if (err) {
+          errorLogs.loginError(req, res, err);
+          res.redirect('/login');
+        } else {
+          res.redirect('/');
+        }
+      });
+    }
+  );
+
+  app.get(
+    '/auth/github/callback',
+    passport.authenticate('github', redirects),
+    (req, res) => {
+      // Explicitly save the session before redirecting!
+      req.session.save((err) => {
+        if (err) {
+          errorLogs.loginError(req, res, err);
+          res.redirect('/login');
+        } else {
+          res.redirect('/');
+        }
+      });
+    }
+  );
+
+  app.get(
+    '/auth/facebook/callback',
+    passport.authenticate('facebook', redirects),
     (req, res) => {
       // Explicitly save the session before redirecting!
       req.session.save((err) => {
