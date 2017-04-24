@@ -61,6 +61,10 @@ module.exports = function() {
           // The LiveReload server is located here
           isDevelopmentEnv && 'localhost:35729'
         ],
+        connectSrc: [
+          // Allow connections to Livereload in development
+          isDevelopmentEnv ? 'ws://localhost:35729/livereload' : ''
+        ],
         styleSrc: [
           "'self'",
           // Normalize, Material design iconic font
