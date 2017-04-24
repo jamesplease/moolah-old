@@ -62,6 +62,7 @@ module.exports = function() {
           isDevelopmentEnv && 'localhost:35729'
         ],
         connectSrc: [
+          "'self'",
           // Allow connections to Livereload in development
           isDevelopmentEnv ? 'ws://localhost:35729/livereload' : ''
         ],
