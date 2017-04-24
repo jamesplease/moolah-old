@@ -38,6 +38,11 @@
   }
 }
 
+.profileDropdown-btn {
+  width: 100%;
+  text-align: left;
+}
+
 .profileDropdown-icon {
   margin-right: 10px;
 }

@@ -42,32 +42,6 @@ describe('ProfileDropdown', function() {
       });
     });
 
-    describe('the dropdown: second link', () => {
-      it('should have the right class', () => {
-        const wrapper = shallow(<ProfileDropdown closeDropdown={this.closeDropdown}/>);
-        const dropdownLink = wrapper.find('a');
-        expect(dropdownLink.hasClass('profileDropdown-link')).to.be.true;
-      });
-
-      it('should have the right text', () => {
-        const wrapper = shallow(<ProfileDropdown closeDropdown={this.closeDropdown}/>);
-        const dropdownLink = wrapper.find('a');
-        expect(dropdownLink.text()).to.equal('Sign out');
-      });
-
-      it('should have the right `to` prop', () => {
-        const wrapper = shallow(<ProfileDropdown closeDropdown={this.closeDropdown}/>);
-        const dropdownLink = wrapper.find('a');
-        expect(dropdownLink.prop('href')).to.equal('/logout');
-      });
-
-      it('should have an icon', () => {
-        const wrapper = shallow(<ProfileDropdown closeDropdown={this.closeDropdown}/>);
-        const dropdownLink = wrapper.find('a');
-        expect(dropdownLink.find('.profileDropdown-icon')).to.have.length(1);
-      });
-    });
-
     describe('the overlay', () => {
       it('should pass the `closeDropdown` prop as the `onClick` prop', () => {
         const wrapper = shallow(<ProfileDropdown closeDropdown={this.closeDropdown}/>);
