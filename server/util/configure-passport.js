@@ -16,7 +16,7 @@ function createId() {
 }
 
 function findUser(db, idType, id) {
-  return db.one(`SELECT * FROM profile WHERE ${idType}=$[id]`, {id});
+  return db.one(`SELECT * FROM profile WHERE ${pgp.as.name(idType)}=$[id]`, {id});
 }
 
 module.exports = function(db) {
