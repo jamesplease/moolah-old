@@ -16,7 +16,7 @@ function createId() {
 }
 
 function findUser(db, idType, id) {
-  return db.one(`SELECT * FROM profile WHERE ${idType}=$[id]`, {id});
+  return db.one(`SELECT * FROM profile WHERE ${pgp.as.name(idType)}=$[id]`, {id});
 }
 
 module.exports = function(db) {
@@ -146,7 +146,11 @@ module.exports = function(db) {
 
   // Retrieves a user account from the DB
   passport.deserializeUser((id, done) => {
-    const readQuery = baseSql.read('profile', ['id', 'name', 'email'], {
+    const profileFields = [
+      'id', 'name', 'email',
+      'facebook_token', 'github_token', 'twitter_token', 'google_token'
+    ];
+    const readQuery = baseSql.read('profile', profileFields, {
       singular: true
     });
     db.one(readQuery, {id})

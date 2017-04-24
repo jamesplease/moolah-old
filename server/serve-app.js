@@ -13,11 +13,23 @@ function getAssetPaths(devMode) {
 module.exports = function serveApp(req, res) {
   const devMode = res.app.get('env') === 'development';
   const assets = getAssetPaths(devMode);
+  const reqUser = req.user || {};
+
+  const user = {
+    id: reqUser.id,
+    name: reqUser.name,
+    email: reqUser.email,
+    logins: {
+      local: false,
+      facebook: Boolean(reqUser.facebook_token),
+      google: Boolean(reqUser.google_token),
+      gitHub: Boolean(reqUser.github_token),
+      twitter: Boolean(reqUser.twitter_token),
+    }
+  };
 
   const initialData = JSON.stringify({
-    auth: {
-      user: req.user
-    }
+    auth: {user}
   });
 
   let lrSnippet = '';
