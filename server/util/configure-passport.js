@@ -25,11 +25,11 @@ module.exports = function(db) {
       const id = profile.id;
       const idField = `${service}_id`;
       const tokenField = `${service}_token`;
-      const {user} = req;
 
       // If ther user is already logged in, then we add this service to their
       // account.
-      if (user) {
+      if (req.isAuthenticated()) {
+        const {user} = req;
         const query = baseSql.update('profile', [idField, tokenField, 'name']);
 
         db.one(query, {
