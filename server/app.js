@@ -20,7 +20,7 @@ const infoLogs = require('./logging/info-logs');
 const serveApp = require('./serve-app');
 const store = require('./store');
 const db = require('./util/db');
-const baseSql = require('./base-sql');
+const baseSql = require('./util/base-sql');
 
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
