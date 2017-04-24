@@ -1,9 +1,9 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Subheader from './subheader';
 import * as authActionCreators from '../../state/auth/action-creators';
-import loginServices from '../../common/services/login-services';
 
 function getLoginServiceImgUrl(serviceName) {
   return `/${serviceName.toLowerCase()}-logo@2x.png`;
@@ -12,7 +12,13 @@ function getLoginServiceImgUrl(serviceName) {
 export class Account extends Component {
   render() {
     const {user} = this.props;
-    const {name, email} = user;
+    const {name, email, logins} = user;
+
+    const linkedServices = _.chain(logins)
+      .map((isLinked, serviceName) => ({isLinked, serviceName}))
+      .filter(service => service.isLinked)
+      .value();
+
     return (
       <div>
         <Subheader/>
@@ -39,15 +45,16 @@ export class Account extends Component {
             </div>
           </div>
           <ul className="resource-list">
-            {loginServices.map(service => (
-              <li className="resourceListItem" key={service.name}>
+            {linkedServices.map((service) => (
+              <li className="resourceListItem" key={service.serviceName}>
                 <img
                   className="resource-list-account-icon"
-                  src={getLoginServiceImgUrl(service.name)}/>
-                {service.name}
+                  src={getLoginServiceImgUrl(service.serviceName.toLowerCase())}/>
+                {_.capitalize(service.serviceName)}
                 <button
                   className="resourceListItem-deleteBtn"
-                  onClick={() => this.logout(service.name)}>
+                  onClick={() => this.logout(service.serviceName.toLowerCase())}
+                  disabled={linkedServices.length === 1}>
                   Remove
                 </button>
               </li>
