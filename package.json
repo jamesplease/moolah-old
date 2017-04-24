@@ -13,6 +13,7 @@
     "analyze-build": "NODE_ENV=production ANALYZE_BUILD=true webpack -p --bail",
     "coverage": "BABEL_ENV=tests gulp coverage",
     "work": "gulp work",
+    "watch": "webpack -p -w",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
     "sync": "node migrate.js",
     "postinstall": "if [ $BUILD_ASSETS ]; then npm run build && npm run sync; fi",
