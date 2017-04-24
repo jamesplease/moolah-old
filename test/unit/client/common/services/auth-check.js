@@ -18,7 +18,9 @@ describe('generateAuthCheck', function() {
           getState() {
             return {
               auth: {
-                user: {}
+                user: {
+                  id: 'asdf'
+                }
               }
             };
           }
@@ -39,7 +41,7 @@ describe('generateAuthCheck', function() {
           getState() {
             return {
               auth: {
-                user: null
+                user: {}
               }
             };
           }
@@ -66,7 +68,9 @@ describe('generateAuthCheck', function() {
           getState() {
             return {
               auth: {
-                user: {}
+                user: {
+                  id: 'asdf'
+                }
               }
             };
           }
@@ -91,7 +95,7 @@ describe('generateAuthCheck', function() {
           getState() {
             return {
               auth: {
-                user: null
+                user: {}
               }
             };
           }

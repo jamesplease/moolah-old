@@ -8,11 +8,9 @@ const _ = require('lodash');
 // of most controllers will likely use these, though they may
 // also author their own, more complex versions.
 
-exports.create = function(table, fields) {
-  const columns = fields.map(pgp.as.name).join(',');
-  const setters = fields.map(field => `$[${field}]`).join(',');
-  const tableName = pgp.as.name(table);
-  return `INSERT INTO ${tableName} (${columns}) VALUES (${setters}) RETURNING *`;
+exports.create = function({tableName, attrs, db}) {
+  const baseQuery = db.$config.pgp.helpers.insert(attrs, null, tableName);
+  return `${baseQuery} RETURNING *`;
 };
 
 // `fields` are the columns to return
