@@ -8,7 +8,9 @@ describe('Header', function() {
   describe('rendering with a user', () => {
     it('should render the LoggedInHeader', () => {
       const props = {
-        user: {}
+        user: {
+          id: 'asdf'
+        }
       };
       const wrapper = shallow(<Header {...props}/>);
       expect(wrapper.type()).to.equal(LoggedInHeader);
@@ -18,7 +20,7 @@ describe('Header', function() {
   describe('rendering with no user', () => {
     it('should render the LandingPageHeader', () => {
       const props = {
-        user: null
+        user: {}
       };
       const wrapper = shallow(<Header {...props}/>);
       expect(wrapper.type()).to.equal(LandingPageHeader);

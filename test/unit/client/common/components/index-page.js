@@ -26,7 +26,9 @@ describe('IndexPage', function() {
   describe('rendering with a user', () => {
     it('should render the Dashboard', () => {
       const props = {
-        user: {}
+        user: {
+          id: 'asdf'
+        }
       };
       const wrapper = shallow(<IndexPage {...props}/>);
       expect(wrapper.type()).to.equal(Dashboard);
@@ -36,7 +38,7 @@ describe('IndexPage', function() {
   describe('rendering with no user', () => {
     it('should render the LandingPage', () => {
       const props = {
-        user: null
+        user: {}
       };
       const wrapper = shallow(<IndexPage {...props}/>);
       expect(wrapper.type()).to.equal(LandingPage);

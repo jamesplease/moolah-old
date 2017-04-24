@@ -8,6 +8,10 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
+const defaultCategories = require('./default-categories');
+
+// I can delete this once I refactor to use async/await
+/* eslint max-nested-callbacks:off */
 
 // This is copy+pasted from Fortune's source, for now
 function createId() {
@@ -81,15 +85,40 @@ module.exports = function(db) {
 
               // This means the user does not exist. We create a new user.
               if (errorKey === 'noData') {
-                const query = baseSql.create('profile', ['id', idField, tokenField, 'name']);
-                db.one(query, {
-                  [tokenField]: accessToken,
-                  [idField]: id,
-                  name: profile.displayName,
-                  id: createId()
-                })
+                const query = baseSql.create({
+                  tableName: 'profile',
+                  attrs: {
+                    [tokenField]: accessToken,
+                    [idField]: id,
+                    name: profile.displayName,
+                    id: createId()
+                  },
+                  db
+                });
+
+                db.one(query)
                   .then(
-                    (result) => done(null, result),
+                    async (result) => {
+                      // Attempt to create some default categories. If it errors,
+                      // then that's OK. We can add in better error handling
+                      // later.
+                      // eslint-disable-next-line
+                      await db.tx(t => {
+                        const queries = defaultCategories.map(category => t.one(baseSql.create({
+                          tableName: 'category',
+                          attrs: {
+                            label: category.label,
+                            emoji: category.emoji,
+                            user: result.id,
+                            id: createId()
+                          },
+                          db
+                        })));
+                        return t.batch(queries);
+                      }).catch(r => r);
+
+                      done(null, result);
+                    },
                     () => done(null, false)
                   );
               }

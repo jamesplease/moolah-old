@@ -1,6 +1,8 @@
+import isLoggedIn from './is-logged-in';
+
 function redirect({requireLoggedIn, nextState, replace, store, location}) {
-  const isLoggedIn = Boolean(store.getState().auth.user);
-  const meetsRequirement = requireLoggedIn ? isLoggedIn : !isLoggedIn;
+  const loggedIn = isLoggedIn(store.getState().auth.user);
+  const meetsRequirement = requireLoggedIn ? loggedIn : !loggedIn;
 
   if (meetsRequirement) {
     return true;
