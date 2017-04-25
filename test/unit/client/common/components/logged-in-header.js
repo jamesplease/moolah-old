@@ -58,12 +58,6 @@ describe('LoggedInHeader', function() {
       expect(userName.text()).to.equal('Sandwich');
     });
 
-    it('should have the profile picture', () => {
-      const wrapper = shallow(<LoggedInHeader/>);
-      const profilePic = wrapper.find('.appHeader-profilePicture');
-      expect(profilePic).to.have.length(1);
-    });
-
     it('should not have the dropdown', () => {
       const wrapper = shallow(<LoggedInHeader/>);
       expect(wrapper.find(ProfileDropdown)).to.have.length(0);
