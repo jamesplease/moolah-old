@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
+import validateEmoji from '../../common/services/validate-emoji';
 
 export class ModifyCategoryModal extends Component {
   render() {
@@ -24,7 +25,8 @@ export class ModifyCategoryModal extends Component {
     }
 
     const labelIsInvalid = label.error && label.touched;
-    const treatFormInvalid = labelIsInvalid && !this.state.cancelBegun;
+    const emojiIsInvalid = emoji.error && emoji.touched;
+    const treatFormInvalid = (emojiIsInvalid || labelIsInvalid) && !this.state.cancelBegun;
 
     const labelClass = classNames({
       'text-input': true,
@@ -46,6 +48,8 @@ export class ModifyCategoryModal extends Component {
       errorMsg = 'A name is required';
     } else if (treatFormInvalid && label.error === 'duplicate') {
       errorMsg = 'Category already exists';
+    } else if (treatFormInvalid && emoji.error === 'invalid') {
+      errorMsg = 'Invalid emoji entered';
     }
 
     let errorEl;
@@ -134,10 +138,12 @@ export class ModifyCategoryModal extends Component {
 
   mouseDownCancel = () => {
     const {
-      fields: {label}
+      fields: {label, emoji}
     } = this.props;
 
     const labelIsInvalid = label.error && label.touched;
+    const emojiIsInvalid = emoji.error && emoji.touched;
+    const formIsInvalid = labelIsInvalid || emojiIsInvalid;
 
     // redux-form is quick to the draw on making the form invalid. In fact,
     // it happens so fast that simply mousing down on the cancel can cause
@@ -147,7 +153,7 @@ export class ModifyCategoryModal extends Component {
     // redux-form know to wait a second if the form isn't already invalid.
     // If, on the other hand, it's already invalid, then we don't need to do
     // this check at all.
-    if (!labelIsInvalid) {
+    if (!formIsInvalid) {
       this.setState({
         cancelBegun: true
       });
@@ -163,6 +169,7 @@ export class ModifyCategoryModal extends Component {
 
 function validate(values, props) {
   const newLabel = _.result(values.label, 'trim');
+  const newEmoji = _.result(values.emoji, 'trim');
 
   const errors = {};
 
@@ -182,6 +189,10 @@ function validate(values, props) {
   // Catch duplicates
   else if (duplicate) {
     errors.label = 'duplicate';
+  }
+
+  if (newEmoji && !validateEmoji(newEmoji)) {
+    errors.emoji = 'invalid';
   }
 
   return errors;

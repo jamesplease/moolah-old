@@ -72,7 +72,8 @@ describe('ModifyCategoryModal', function() {
 
       this.defaultProps = {
         fields: {
-          label: {}
+          label: {},
+          emoji: {}
         },
         handleSubmit: this.handleSubmit,
         confirmInProgress: false,
@@ -119,7 +120,8 @@ describe('ModifyCategoryModal', function() {
           label: {
             error: 'sorry',
             touched: false
-          }
+          },
+          emoji: {}
         }
       };
       const wrapper = this.generator.shallow(props);
@@ -132,7 +134,8 @@ describe('ModifyCategoryModal', function() {
           label: {
             error: 'empty',
             touched: true
-          }
+          },
+          emoji: {}
         }
       };
       const wrapper = this.generator.shallow(props);
@@ -147,7 +150,8 @@ describe('ModifyCategoryModal', function() {
           label: {
             error: 'duplicate',
             touched: true
-          }
+          },
+          emoji: {}
         }
       };
       const wrapper = this.generator.shallow(props);
@@ -202,7 +206,8 @@ describe('ModifyCategoryModal', function() {
               label: {
                 error: 'sorry',
                 touched: true
-              }
+              },
+              emoji: {}
             }
           };
           const wrapper = this.generator.shallow(props);
@@ -258,7 +263,8 @@ describe('ModifyCategoryModal', function() {
               label: {
                 error: 'sorry',
                 touched: false
-              }
+              },
+              emoji: {}
             }
           };
           const wrapper = this.generator.shallow(props);
@@ -272,7 +278,8 @@ describe('ModifyCategoryModal', function() {
               label: {
                 error: 'sorry',
                 touched: true
-              }
+              },
+              emoji: {}
             }
           };
           const wrapper = this.generator.shallow(props);
