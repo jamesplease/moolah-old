@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import alertsActionTypes from './action-types';
 import categoriesActionTypes from '../categories/action-types';
-import contactActionTypes from '../contact/action-types';
 import initialState from './initial-state';
 import {truncateAt} from '../../common/services/string-util';
 
@@ -137,24 +136,6 @@ export default (state = initialState, action) => {
             id,
             style: 'danger',
             text: `There was an error while deleting the "${categoryLabel}" category`,
-            isDismissable: true,
-            persistent: false
-          }
-        ]
-      };
-    }
-
-    case contactActionTypes.SEND_MESSAGE_FAILURE: {
-      const clonedAlerts = _.cloneDeep(state.alerts);
-      const id = _.uniqueId('alert-');
-      return {
-        ...state,
-        alerts: [
-          ...clonedAlerts,
-          {
-            id,
-            style: 'danger',
-            text: `Oops – there was an error while sending your message. Try submitting it one more time?`,
             isDismissable: true,
             persistent: false
           }

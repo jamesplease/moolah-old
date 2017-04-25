@@ -3,7 +3,6 @@ import reducer from '../../../../../client/state/alerts/reducer';
 import initialState from '../../../../../client/state/alerts/initial-state';
 import alertsActionTypes from '../../../../../client/state/alerts/action-types';
 import categoryActionTypes from '../../../../../client/state/categories/action-types';
-import contactActionTypes from '../../../../../client/state/contact/action-types';
 
 describe('alerts/reducer', function() {
   beforeEach(() => {
@@ -194,27 +193,6 @@ describe('alerts/reducer', function() {
           id: 'asdf',
           style: 'danger',
           text: 'There was an error while deleting the "pasta" category',
-          isDismissable: true,
-          persistent: false
-        }]
-      };
-      expect(reducer(state, action)).to.deep.equal(newState);
-    });
-  });
-
-  describe('SEND_MESSAGE_FAILURE', () => {
-    it('should add a new alert to the queue', () => {
-      const state = {
-        alerts: [{id: 1}, {id: 2}, {id: 3}]
-      };
-      const action = {
-        type: contactActionTypes.SEND_MESSAGE_FAILURE
-      };
-      const newState = {
-        alerts: [{id: 1}, {id: 2}, {id: 3}, {
-          id: 'asdf',
-          style: 'danger',
-          text: 'Oops – there was an error while sending your message. Try submitting it one more time?',
           isDismissable: true,
           persistent: false
         }]
