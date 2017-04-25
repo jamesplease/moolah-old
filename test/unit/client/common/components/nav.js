@@ -55,20 +55,16 @@ describe('Nav', function() {
         const wrapper = shallow(<Nav {...this.defaultProps}/>);
         const links = wrapper.find(Link);
         const linkListItems = wrapper.find('.mainNav-listItem');
-        expect(links).to.have.length(3);
-        expect(linkListItems).to.have.length(3);
+        expect(links).to.have.length(2);
+        expect(linkListItems).to.have.length(2);
 
-        expect(links.at(0).prop('children')).to.equal('Dashboard');
-        expect(links.at(0).prop('to')).to.equal('/');
-        expect(linkListItems.at(0).hasClass('mainNav-listItem-smallScreenOnly')).to.be.true;
+        expect(links.at(0).prop('children')).to.equal('Transactions');
+        expect(links.at(0).prop('to')).to.equal('/transactions');
+        expect(linkListItems.at(0).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
 
-        expect(links.at(1).prop('children')).to.equal('Transactions');
-        expect(links.at(1).prop('to')).to.equal('/transactions');
+        expect(links.at(1).prop('children')).to.equal('Categories');
+        expect(links.at(1).prop('to')).to.equal('/categories');
         expect(linkListItems.at(1).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
-
-        expect(links.at(2).prop('children')).to.equal('Categories');
-        expect(links.at(2).prop('to')).to.equal('/categories');
-        expect(linkListItems.at(2).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
       });
     });
 

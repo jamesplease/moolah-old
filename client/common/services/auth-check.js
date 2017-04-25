@@ -1,6 +1,6 @@
 import isLoggedIn from './is-logged-in';
 
-function redirect({requireLoggedIn, nextState, replace, store, location}) {
+function redirect({requireLoggedIn, nextState, replace, store, location, navigate}) {
   const loggedIn = isLoggedIn(store.getState().auth.user);
   const meetsRequirement = requireLoggedIn ? loggedIn : !loggedIn;
 
@@ -15,10 +15,12 @@ function redirect({requireLoggedIn, nextState, replace, store, location}) {
     };
   }
 
-  replace({
-    pathname: location,
-    state
-  });
+  if (navigate) {
+    replace({
+      pathname: location,
+      state
+    });
+  }
 
   return false;
 }
@@ -28,17 +30,17 @@ function redirect({requireLoggedIn, nextState, replace, store, location}) {
 // will be redirected to `/login`
 export default function generateRequireAuth(store) {
   return {
-    mustBeLoggedIn(nextState, replace) {
+    mustBeLoggedIn(nextState, replace, navigate = true) {
       return redirect({
-        store, nextState, replace,
+        store, nextState, replace, navigate,
         location: '/login',
         requireLoggedIn: true
       });
     },
 
-    mustBeLoggedOut(nextState, replace) {
+    mustBeLoggedOut(nextState, replace, navigate = true) {
       return redirect({
-        store, nextState, replace,
+        store, nextState, replace, navigate,
         location: '/',
         requireLoggedIn: false
       });

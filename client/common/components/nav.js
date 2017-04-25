@@ -20,11 +20,6 @@ export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
     'mainNav-listItem': true,
   });
 
-  const overlayNavOnlyListItemClass = classNames({
-    [listItemClass]: true,
-    'mainNav-listItem-smallScreenOnly': true
-  });
-
   const transitionGroupProps = {
     transitionName: 'overlayNav',
     transitionAppear: true,
@@ -45,15 +40,6 @@ export default function Nav({isOverlayNavVisible, toggleOverlayNav}) {
     <div>
       <nav className={mainNavClass}>
         <ul className="mainNav-list">
-          <li className={overlayNavOnlyListItemClass}>
-            <Link
-              to="/"
-              onClick={onClickNavItem}
-              className="mainNav-listItem-link"
-              activeClassName="active">
-              Dashboard
-            </Link>
-          </li>
           <li className={listItemClass}>
             <Link
               to="/transactions"
