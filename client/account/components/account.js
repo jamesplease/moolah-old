@@ -24,14 +24,6 @@ export class Account extends Component {
         <Subheader/>
         <div className="account container container-bottomSpaced">
           <div className="account-form-row">
-            <label className="account-label">Profile Photo</label>
-            <div className="photo-input">
-              <img
-                className="account-photo"/>
-              <button className="link-text change-photo-text">Change photo</button>
-            </div>
-          </div>
-          <div className="account-form-row">
             <label className="account-label">Name</label>
             <input type="text" className="text-input" value={name}/>
           </div>

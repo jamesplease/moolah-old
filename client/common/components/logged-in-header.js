@@ -54,7 +54,7 @@ export class LoggedInHeader extends Component {
               <span className="appHeader-userName">
                 {displayName}
               </span>
-              <img className="appHeader-profilePicture"/>
+              <i className="zmdi zmdi-caret-down"/>
             </div>
             {profileDropdown}
           </div>

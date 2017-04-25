@@ -15,23 +15,6 @@
     max-width: 400px;
   }
 
-  .photo-input {
-    display: flex;
-    align-content: center;
-  }
-
-  .account-photo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin-right: 15px;
-    cursor: pointer;
-  }
-
-  .change-photo-text {
-    font-size: 15px;
-  }
-
   .resource-list-account-icon {
     margin-right: 15px;
     width: 21px;

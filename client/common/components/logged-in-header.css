@@ -108,13 +108,5 @@
 .appHeader-userName {
   @mixin ellipsis;
   max-width: 150px;
-  margin-right: 10px;
-}
-
-.appHeader-profilePicture {
-  width: 31px;
-  height: 31px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  background-size: cover;
+  margin-right: 5px;
 }
