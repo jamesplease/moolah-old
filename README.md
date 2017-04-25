@@ -7,36 +7,6 @@
 
 Track your finances.
 
-### Deploying
-
-#### The Production App
-
-The [production version](https://moolah-app-prod.herokuapp.com/) of this app is
-deployed as part of a Heroku pipeline. Only users with access to the Heroku
-app will be able to deploy it.
-
-The release flow is as follows:
-
-- Opening a PR automatically creates a [Review App](https://devcenter.heroku.com/articles/github-integration-review-apps)
-- Merging to the `master` branch will automatically deploy the staging app
-- Running `npm run release` will promote the staging app to production\*
-
-\* _Note: the name of the Heroku remote must be `staging` for this command to work._
-
-#### Custom
-
-You can deploy your own version of Moolah, too. This app is in very early
-development, so it doesn't fully function. Keep that in mind if you wish to
-deploy it!
-
-The preferred method to deploy this app is through Heroku. To enable logging in,
-you'll need to set up a Google project with
-[the Google+ API](https://developers.google.com/+/web/api/rest/?hl=en_US) enabled.
-
-Once you've got your Google ClientID and Secret, just click the button below:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/jmeas/moolah/tree/master)
-
 ### Developing
 
 #### Pre-requisites
@@ -85,6 +55,15 @@ The values are:
 - `SESSION_SECRET`: the secret used by [express-session](https://github.com/expressjs/session#secret)
 - `GOOGLE_CLIENT_ID`: the ClientID of [a Google project](https://console.developers.google.com/)
 - `GOOGLE_CLIENT_SECRET`: the secret of the above project
+- `GITHUB_CLIENT_ID`: the ClientID of a GitHub application
+- `GITHUB_CLIENT_SECRET`: the secret of the above project
+- `FACEBOOK_CLIENT_ID`: the ClientID of a Facebook application
+- `FACEBOOK_CLIENT_SECRET`: the secret of the above project
+- `TWITTER_CLIENT_ID`: the ClientID of a Twitter application
+- `TWITTER_CLIENT_SECRET`: the secret of the above project
+
+The different social media IDs and Secrets enable logging in via those social
+networks. Right now, they are *all* necessary to run a fully functioning app.
 
 An example snippet from an `.env` file is:
 
@@ -93,7 +72,8 @@ DATABASE_URL='postgres://whatevs'
 SESSION_SECRET='cookies_are_delicious'
 ```
 
-The `.env` file is not used when deploying the app to Heroku.
+The `.env` file is not used when deploying the app to Heroku. Instead, use the
+Heroku Dashboard to modify the environment variables of the deployed webapp.
 
 #### Getting the database URL
 
@@ -108,13 +88,15 @@ you're ready to run the app locally. Follow these steps:
 
 1. Start up Postgres
 2. Run `npm run local-server` to start the Express app
-2. Run `npm run work` to build the local assets, and set up the file watcher
+2. Run `npm run watch-js` to build the JS app, and set up the file watcher
+2. Run `npm run watch-css` to build the CSS files, and set up the file watcher
 
 The app should now be available in your browser at `http://localhost:5000`.
 
 #### Developer Scripts
 
-- `npm run work`: Builds the client-side assets, and sets up a watcher for them.
+- `npm run watch-js`: Build the JavaScript, and set up a watcher
+- `npm run watch-css`: Build the CSS, and set up a watcher
 - `npm run local-server`: Starts the development web server. Restarts the server if it dies.
 - `npm run test`: Lint JS & CSS, then run all unit tests
 - `npm run lint`: Lint the JavaScript and CSS files
@@ -126,6 +108,38 @@ The app should now be available in your browser at `http://localhost:5000`.
 - `npm run release`: Release a new version of the production app by syncing
   production with staging
 - `npm run minify-emoji`: Compress the file located at `server/static/sheet_apple_64.png`
+
+### Deploying
+
+#### The Production App
+
+The [production version](https://moolah-app-prod.herokuapp.com/) of this app is
+deployed as part of a Heroku pipeline. Only users with access to the Heroku
+app will be able to deploy it.
+
+The release flow is as follows:
+
+- Opening a PR automatically creates a [Review App](https://devcenter.heroku.com/articles/github-integration-review-apps)
+- Merging to the `master` branch will automatically deploy the staging app
+- Running `npm run release` will promote the staging app to production\*
+
+\* _Note: the name of the Heroku remote must be `staging` for this command to work._
+
+#### Custom
+
+You can deploy your own version of Moolah, too. This app is in very early
+development, so it doesn't fully function. Keep that in mind if you wish to
+deploy it!
+
+The preferred method to deploy this app is through Heroku. To enable logging in,
+you'll need to set up a Google project with
+[the Google+ API](https://developers.google.com/+/web/api/rest/?hl=en_US) enabled.
+
+You'll then need to a similar process for Twitter, Facebook, and GitHub.
+
+Once you've gotten all of your ClientIDs and Secrets, click the button below:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/jmeas/moolah/tree/master)
 
 ### Target browser support
 
@@ -145,8 +159,3 @@ First, download the updated assets from `js-emoji`. Then, copy the
 `sheet_apple_64.png` file into the `server/assets` directly. Lastly, run:
 
 `npm run minify-emoji`
-
-##### Acknowledgements
-
-I'll be trying out using [BrowserStack](https://www.browserstack.com/)'s free
-account for open source projects to run this application's integration tests.

@@ -12,7 +12,6 @@
     "build": "gulp build && webpack -p --bail",
     "analyze-build": "NODE_ENV=production ANALYZE_BUILD=true webpack -p --bail",
     "coverage": "BABEL_ENV=tests gulp coverage",
-    "work": "gulp work",
     "watch-js": "webpack -p -w",
     "watch-css": "WATCH=true gulp build-css",
     "local-server": "nodemon --watch server server/index.js | bunyan -o short",
