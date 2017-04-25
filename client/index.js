@@ -7,13 +7,13 @@ import {
   Redirect, applyRouterMiddleware
 } from 'react-router';
 import {useScroll} from 'react-router-scroll';
-import IndexPage from './common/components/index-page';
 import FirstChild from './common/components/first-child';
 import Categories from './categories/components/content';
 import Account from './account/components/account';
 import Transactions from './transactions/components/content';
 import Layout from './common/components/layout';
 import NotFound from './common/components/not-found';
+import LandingPage from './meta/components/landing-page';
 import About from './meta/components/about';
 import Contact from './meta/components/contact';
 import Privacy from './meta/components/privacy';
@@ -29,11 +29,19 @@ if (process.NODE_ENV !== 'production') {
 
 const authCheck = generateAuthCheck(store);
 
+function onIndexEnter(nextState, redirect) {
+  if (authCheck.mustBeLoggedOut(nextState, redirect, false)) {
+    return;
+  }
+
+  redirect('/transactions');
+}
+
 // When we enter `/transactions/this-month`, we dynamically redirect them to a
 // URL with the current month and year in it. This way, the URL in the nav bar
 // can remain constant, even if the user keeps the app open as the dates change.
 function onTransactionsEnter(nextState, redirect) {
-  if (!authCheck.mustBeLoggedIn()) {
+  if (!authCheck.mustBeLoggedIn(nextState, redirect)) {
     return;
   }
 
@@ -45,7 +53,9 @@ render((
   <Provider store={store}>
     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
-        <IndexRoute component={IndexPage}/>
+        <IndexRoute
+          component={LandingPage}
+           onEnter={onIndexEnter}/>
         <Route path="/transactions" component={FirstChild}>
           <IndexRoute onEnter={onTransactionsEnter}/>
           <Route
