@@ -1,11 +1,15 @@
 .date-menu {
+  background-color: #fcfcfc;
+  height: 59px;
+  border-bottom: 1px solid #eee;
+}
+
+.date-menu-contents {
   @mixin content-padding;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fcfcfc;
   height: 59px;
-  border-bottom: 1px solid #eee;
 }
 
 .date-menu-current-date {
