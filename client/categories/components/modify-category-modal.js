@@ -75,22 +75,6 @@ export class ModifyCategoryModal extends Component {
           <div className="form-row">
             <input
               type="text"
-              className="text-input"
-              placeholder="Enter emoji"
-              autoComplete="off"
-              autoCorrect={true}
-              disabled={confirmInProgress}
-              spellCheck={true}
-              inputMode="verbatim"
-              maxLength={35}
-              {...emoji}/>
-          </div>
-          <div className="form-row">
-            <div className="createCategoryModal-emojiSelect">
-              🙃
-            </div>
-            <input
-              type="text"
               className={labelClass}
               placeholder="Enter name"
               autoComplete="off"
@@ -101,6 +85,19 @@ export class ModifyCategoryModal extends Component {
               ref={node => {this.labelInput = node;}}
               maxLength={35}
               {...label}/>
+          </div>
+          <div className="form-row">
+            <input
+              type="text"
+              className="text-input"
+              placeholder="Enter emoji"
+              autoComplete="off"
+              autoCorrect={true}
+              disabled={confirmInProgress}
+              spellCheck={true}
+              inputMode="verbatim"
+              maxLength={35}
+              {...emoji}/>
           </div>
         </form>
         <div className="modal-footer">
