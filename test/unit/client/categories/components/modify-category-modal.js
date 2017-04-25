@@ -157,11 +157,6 @@ describe('ModifyCategoryModal', function() {
     });
 
     describe('the form', () => {
-      it('should contain an emoji picker', () => {
-        const form = this.generator.shallow().find('form');
-        expect(form.find('.createCategoryModal-emojiSelect')).to.have.length(1);
-      });
-
       it('should contain a label input with the right props', () => {
         const form = this.generator.shallow().find('form');
         const labelInput = form.find('.newCategoryName');
