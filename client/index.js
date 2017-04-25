@@ -8,6 +8,7 @@ import {
 } from 'react-router';
 import {useScroll} from 'react-router-scroll';
 import IndexPage from './common/components/index-page';
+import FirstChild from './common/components/first-child';
 import Categories from './categories/components/content';
 import Account from './account/components/account';
 import Transactions from './transactions/components/content';
@@ -45,11 +46,13 @@ render((
     <Router history={browserHistory} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={Layout}>
         <IndexRoute component={IndexPage}/>
-        <Route path="/transactions" onEnter={onTransactionsEnter}/>
-        <Route
-          path="/transactions/:transactionDate"
-          component={Transactions}
-          onEnter={authCheck.mustBeLoggedIn}/>
+        <Route path="/transactions" component={FirstChild}>
+          <IndexRoute onEnter={onTransactionsEnter}/>
+          <Route
+            path=":transactionDate"
+            component={Transactions}
+            onEnter={authCheck.mustBeLoggedIn}/>
+        </Route>
         <Route path="/categories" component={Categories} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/account" component={Account} onEnter={authCheck.mustBeLoggedIn}/>
         <Route path="/contact" component={Contact}/>
