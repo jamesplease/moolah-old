@@ -36,7 +36,7 @@ export class Account extends Component {
               Logins
             </div>
           </div>
-          <ul className="resource-list">
+          <ul className="resourceList">
             {linkedServices.map((service) => (
               <li className="resourceListItem" key={service.serviceName}>
                 <img
