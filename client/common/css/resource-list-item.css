@@ -64,5 +64,6 @@
 
   &[disabled] {
     color: #dfdfdf;
+    cursor: not-allowed;
   }
 }

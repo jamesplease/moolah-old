@@ -40,7 +40,26 @@ const resources = {
 
 const hooks = {
   profile: [
-    null,
+    (context, record, update) => {
+      const {method} = context.request;
+      // Only allow updates to name and email
+      if (method === 'update') {
+        if (update.replace) {
+          const {name, email} = update.replace;
+
+          // Because we're PATCHing, we only append the updates that the user
+          // sent over. If we set a value as an empty string or null, it might
+          // override a previously-set value.
+          update.replace = {};
+          if (name) {
+            update.replace.name = name;
+          }
+          if (email) {
+            update.replace.email = email;
+          }
+        }
+      }
+    },
     // Output hook: ensures only "name" and "email" are returned for the user
     (context, record) => {
       delete record.password;
@@ -68,8 +87,10 @@ store.request = function(options) {
   const {type, method, ids} = options;
 
   const isReadOne = method === 'find' && ids;
-  // Users are only permitted to read a single profile at a time (their own!)
-  if (type === 'profile' && !isReadOne) {
+  const isUpdateOne = method === 'update' && ids && ids.length === 1;
+  // Users are only permitted to read or update a single profile at a time –
+  // their own!
+  if (type === 'profile' && (!isReadOne && !isUpdateOne)) {
     const err = new fortune.errors.MethodError('Method not permitted.');
     return Promise.reject(err);
   }
