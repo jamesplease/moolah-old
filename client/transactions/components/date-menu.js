@@ -29,22 +29,24 @@ export default function DateMenu({date}) {
   });
 
   return (
-    <div className="date-menu container">
-      <Link className="date-menu-prev" to={prevMonthLinkTo}>
-        <i className="zmdi zmdi-caret-left"/>
-        {" "}
-        Prev
-      </Link>
-      <div className="date-menu-current-date">
-        <i className="zmdi zmdi-calendar date-menu-icon-calendar"/>
-        {" "}
-        {formattedDate}
+    <div className="date-menu">
+      <div className="date-menu-contents container">
+        <Link className="date-menu-prev" to={prevMonthLinkTo}>
+          <i className="zmdi zmdi-caret-left"/>
+          {" "}
+          Prev
+        </Link>
+        <div className="date-menu-current-date">
+          <i className="zmdi zmdi-calendar date-menu-icon-calendar"/>
+          {" "}
+          {formattedDate}
+        </div>
+        <Link className={nextMonthLinkClass} to={nextMonthLinkTo}>
+          Next
+          {" "}
+          <i className="zmdi zmdi-caret-right"/>
+        </Link>
       </div>
-      <Link className={nextMonthLinkClass} to={nextMonthLinkTo}>
-        Next
-        {" "}
-        <i className="zmdi zmdi-caret-right"/>
-      </Link>
     </div>
   );
 }
