@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
 import validateTransactionDate from '../services/validate-transaction-date';
@@ -11,7 +12,8 @@ export class ModifyTransactionModal extends Component {
       handleSubmit,
       confirmInProgress,
       onClickCancel,
-      isEditMode
+      isEditMode,
+      categories
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -121,17 +123,16 @@ export class ModifyTransactionModal extends Component {
               {...date}/>
           </div>
           <div className="form-row">
-            <input
-              type="text"
-              className="text-input"
-              placeholder="Category"
-              autoComplete="off"
-              autoCorrect={true}
-              disabled={confirmInProgress}
-              spellCheck={true}
-              inputMode="verbatim"
-              maxLength={35}
-              {...category}/>
+            <select {...category} value={category.value || ''}>
+              <option value="">
+                Select a category...
+              </option>
+              {_.map(categories, category => (
+                <option value={category.id}>
+                  {category.attributes.label}
+                </option>
+              ))}
+            </select>
           </div>
         </form>
         <div className="modal-footer">
@@ -195,6 +196,14 @@ export class ModifyTransactionModal extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    categories: state.categories.resources
+  };
+}
+
+const ConnectedModifyTransactionModal = connect(mapStateToProps)(ModifyTransactionModal);
+
 function validate(values) {
   // Sometimes, redux-form converts values into a number...
   const newDescription = _.result(String(values.description), 'trim');
@@ -234,4 +243,4 @@ function reduxFormInitialState(state, nextProps) {
   return {initialValues};
 }
 
-export default reduxForm(reduxFormOptions, reduxFormInitialState)(ModifyTransactionModal);
+export default reduxForm(reduxFormOptions, reduxFormInitialState)(ConnectedModifyTransactionModal);
