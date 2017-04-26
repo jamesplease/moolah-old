@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import {formatDateForTransactionList} from '../services/format-date';
 import emoji from '../../common/services/js-emoji';
