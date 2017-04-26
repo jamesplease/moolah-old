@@ -87,7 +87,7 @@ export class TransactionsList extends Component {
     };
 
     return (
-      <Modal modalClassName="modifyTransactionModal-container">
+      <Modal modalClassName="modifyCategoryModal-container">
         <ModifyTransactionModal {...childrenProps}/>
       </Modal>
     );
