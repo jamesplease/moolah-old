@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
+import validateTransactionDate from '../services/validate-transaction-date';
 
 export class ModifyTransactionModal extends Component {
   render() {
@@ -51,6 +52,8 @@ export class ModifyTransactionModal extends Component {
       errorMsg = 'A value is required';
     } else if (treatFormInvalid && date.error === 'empty') {
       errorMsg = 'A date is required';
+    } else if (treatFormInvalid && date.error === 'invalid') {
+      errorMsg = 'An invalid date was entered';
     }
 
     let errorEl;
@@ -106,7 +109,7 @@ export class ModifyTransactionModal extends Component {
           </div>
           <div className="form-row">
             <input
-              type="text"
+              type="date"
               className="text-input"
               placeholder="Date"
               autoComplete="off"
@@ -210,6 +213,8 @@ function validate(values) {
 
   if (!newDate) {
     errors.date = 'empty';
+  } else if (!validateTransactionDate(newDate, {includeDay: true})) {
+    errors.date = 'invalid';
   }
 
   return errors;
