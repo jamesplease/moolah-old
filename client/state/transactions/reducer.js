@@ -157,9 +157,10 @@ export default (state = initialState, action) => {
 
     case actionTypes.UPDATE_TRANSACTION_ABORTED:
     case actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION: {
+      const id = action.resource ? action.resource.id : action.resourceId;
       const clonedMeta = _.cloneDeep(state.resourcesMeta);
       const resourcesMeta = clonedMeta.map(c => {
-        if (c.id !== action.resource.id) {
+        if (c.id !== id) {
           return {...c};
         } else {
           return {
