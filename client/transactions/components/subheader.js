@@ -73,13 +73,30 @@ export class TransactionsSubheader extends Component {
   onClickModalCreate = (fields) => {
     const {createTransaction} = this.props;
 
-    const attributes = _.defaults(fields, {
-      description: '',
-      label: '',
-    });
+    const attributes = _.chain(fields)
+      .defaults({
+        description: '',
+        label: '',
+      })
+      .omit('category')
+      .value();
+
+    let categoryRelationshipObject = null;
+    if (fields.category) {
+      categoryRelationshipObject = {
+        type: 'categories',
+        id: fields.category
+      };
+    }
+
+    const categoryRelationship = {
+      data: categoryRelationshipObject
+    };
+
+    const relationships = {category: categoryRelationship};
 
     attributes.description = attributes.description.trim();
-    createTransaction({attributes});
+    createTransaction({attributes, relationships});
   }
 
   onClickModalCancel = () => {

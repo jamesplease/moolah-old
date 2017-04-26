@@ -176,9 +176,26 @@ export class TransactionsList extends Component {
   onConfirmEditModal = (fields) => {
     const {updateTransaction} = this.props;
     const transactionId = this.state.transactionToUpdate.id;
+
+    let categoryRelationshipObject = null;
+    if (fields.category) {
+      categoryRelationshipObject = {
+        type: 'categories',
+        id: fields.category
+      };
+    }
+
+    const categoryRelationship = {
+      data: categoryRelationshipObject
+    };
+
+    const relationships = {category: categoryRelationship};
+    const attributes = _.omit(fields, 'category');
+
     updateTransaction({
       id: transactionId,
-      attributes: {...fields}
+      attributes,
+      relationships
     });
   }
 }

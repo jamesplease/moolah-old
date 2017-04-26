@@ -165,8 +165,8 @@ export class ModifyCategoryModal extends Component {
 }
 
 function validate(values, props) {
-  const newLabel = _.result(values.label, 'trim');
-  const newEmoji = _.result(values.emoji, 'trim');
+  const newLabel = _.result(String(values.label), 'trim');
+  const newEmoji = _.result(String(values.emoji), 'trim');
 
   const errors = {};
 

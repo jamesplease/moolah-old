@@ -196,9 +196,10 @@ export class ModifyTransactionModal extends Component {
 }
 
 function validate(values) {
-  const newDescription = _.result(values.description, 'trim');
-  const newValue = _.result(values.value, 'trim');
-  const newDate = _.result(values.date, 'trim');
+  // Sometimes, redux-form converts values into a number...
+  const newDescription = _.result(String(values.description), 'trim');
+  const newValue = _.result(String(values.value), 'trim');
+  const newDate = _.result(String(values.date), 'trim');
 
   const errors = {};
 

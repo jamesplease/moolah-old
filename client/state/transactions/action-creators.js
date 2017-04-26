@@ -130,6 +130,11 @@ export function updateTransaction(resource) {
             resource
           });
         } else {
+          console.log('success via', {
+            ...resourceToUpdate,
+            ...resource
+          });
+
           dispatch({
             type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
             resource: {
