@@ -23,14 +23,16 @@ export class ModifyTransactionModal extends Component {
       handleSubmit();
     }
 
-    // const labelIsInvalid = label.error && label.touched;
-    // const treatFormInvalid = labelIsInvalid && !this.state.cancelBegun;
-    const treatFormInvalid = false;
+    const descriptionIsInvalid = description.error && description.touched;
+    const valueIsInvalid = value.error && value.touched;
+    const dateIsInvalid = date.error && date.touched;
+    const invalidField = descriptionIsInvalid || valueIsInvalid || dateIsInvalid;
+    const treatFormInvalid = invalidField && !this.state.cancelBegun;
 
     const labelClass = classNames({
       'text-input': true,
       newTransactionName: true,
-      // 'invalid-input': treatFormInvalid
+      'invalid-input': treatFormInvalid
     });
 
     const modalTitle = isEditMode ? 'Edit transaction' : 'Create new transaction';
@@ -42,13 +44,31 @@ export class ModifyTransactionModal extends Component {
       confirmText = confirmInProgress ? 'Creating...' : 'Create';
     }
 
+    let errorMsg;
+    if (treatFormInvalid && description.error === 'empty') {
+      errorMsg = 'A description is required';
+    } else if (treatFormInvalid && value.error === 'empty') {
+      errorMsg = 'A value is required';
+    } else if (treatFormInvalid && date.error === 'empty') {
+      errorMsg = 'A date is required';
+    }
+
+    let errorEl;
+    if (treatFormInvalid) {
+      errorEl = (
+        <div className="modal-error form-error">
+          {errorMsg}
+        </div>
+      );
+    }
+
     const modalClass = classNames({
       createTransactionModal: true,
       'modal-form-invalid': treatFormInvalid
     });
 
     return (
-      <div className={modalClass}>
+      <div className={modalClass} onMouseUp={this.mouseUpOnComponent}>
         <h1 className="modal-title">
           {modalTitle}
         </h1>
@@ -56,6 +76,7 @@ export class ModifyTransactionModal extends Component {
           onSubmit={onFormSubmit}
           id="modify-transaction-modal-form"
           className="modal-body">
+          {errorEl}
           <div className="form-row">
             <input
               type="text"
@@ -115,7 +136,8 @@ export class ModifyTransactionModal extends Component {
             type="button"
             onClick={onClickCancelBtn}
             className="btn btn-secondary createTransactionModal-cancelBtn"
-            disabled={confirmInProgress}>
+            disabled={confirmInProgress}
+            onMouseDown={this.mouseDownCancel}>
             Cancel
           </button>
           <button
@@ -130,21 +152,67 @@ export class ModifyTransactionModal extends Component {
     );
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      cancelBegun: false
-    };
+  state = {
+    cancelBegun: false
   }
 
   componentDidMount = () => {
     this.descriptionInput.focus();
   }
+
+  mouseDownCancel = () => {
+    const {
+      fields: {description, value, date}
+    } = this.props;
+
+    const descriptionIsInvalid = description.error && description.touched;
+    const valueIsInvalid = value.error && value.touched;
+    const dateIsInvalid = date.error && date.touched;
+    const formIsInvalid = descriptionIsInvalid || valueIsInvalid || dateIsInvalid;
+
+    // redux-form is quick to the draw on making the form invalid. In fact,
+    // it happens so fast that simply mousing down on the cancel can cause
+    // the error message to appear. The error message physically moves the
+    // cancel button, making the click miss the button entirely. Not good. This
+    // callback is called before that ever happens, so we set some state to let
+    // redux-form know to wait a second if the form isn't already invalid.
+    // If, on the other hand, it's already invalid, then we don't need to do
+    // this check at all.
+    if (!formIsInvalid) {
+      this.setState({
+        cancelBegun: true
+      });
+    }
+  }
+
+  mouseUpOnComponent = () => {
+    this.setState({
+      cancelBegun: false
+    });
+  }
 }
 
-function validate() {
-  // Validation will come soon
-  return {};
+function validate(values) {
+  const newDescription = _.result(values.description, 'trim');
+  const newValue = _.result(values.value, 'trim');
+  const newDate = _.result(values.date, 'trim');
+
+  const errors = {};
+
+  // Prevent empty labels
+  if (!newDescription) {
+    errors.description = 'empty';
+  }
+
+  if (!newValue) {
+    errors.value = 'empty';
+  }
+
+  if (!newDate) {
+    errors.date = 'empty';
+  }
+
+  return errors;
 }
 
 const reduxFormOptions = {
