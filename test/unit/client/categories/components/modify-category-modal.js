@@ -26,7 +26,7 @@ describe('ModifyCategoryModal', function() {
 
       it('should not error when there is text', () => {
         const errors = validate(
-          {label: ' a   '},
+          {label: ' a   ', emoji: ':smile:'},
           {categories: []}
         );
         expect(errors).to.be.empty;
@@ -50,7 +50,7 @@ describe('ModifyCategoryModal', function() {
 
       it('should not error when the label matches itself', () => {
         const errors = validate(
-          {label: 'sandwich'},
+          {label: 'sandwich', emoji: ':smile:'},
           {
             category: {id: 1, attributes: {label: 'sandwich'}},
             categories: [

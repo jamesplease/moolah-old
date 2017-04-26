@@ -9,7 +9,7 @@ import * as transactionsActionsCreators from '../../state/transactions/action-cr
 export class TransactionsSubheader extends Component {
   render() {
     const {
-      isOnline, transactions, creatingCategoryStatus
+      isOnline, transactions, creatingTransactionStatus
     } = this.props;
     const {isModalOpen} = this.state;
     const disabled = !isOnline;
@@ -19,8 +19,8 @@ export class TransactionsSubheader extends Component {
       const childrenProps = {
         onClickCancel: this.onClickModalCancel,
         onSubmit: this.onClickModalCreate,
-        confirmInProgress: creatingCategoryStatus === 'PENDING',
-        actionFailure: creatingCategoryStatus === 'FAILURE',
+        confirmInProgress: creatingTransactionStatus === 'PENDING',
+        actionFailure: creatingTransactionStatus === 'FAILURE',
         isEditMode: false,
         transactions
       };
@@ -73,13 +73,30 @@ export class TransactionsSubheader extends Component {
   onClickModalCreate = (fields) => {
     const {createTransaction} = this.props;
 
-    const attributes = _.defaults(fields, {
-      description: '',
-      label: '',
-    });
+    const attributes = _.chain(fields)
+      .defaults({
+        description: '',
+        label: '',
+      })
+      .omit('category')
+      .value();
+
+    let categoryRelationshipObject = null;
+    if (fields.category) {
+      categoryRelationshipObject = {
+        type: 'categories',
+        id: fields.category
+      };
+    }
+
+    const categoryRelationship = {
+      data: categoryRelationshipObject
+    };
+
+    const relationships = {category: categoryRelationship};
 
     attributes.description = attributes.description.trim();
-    createTransaction({attributes});
+    createTransaction({attributes, relationships});
   }
 
   onClickModalCancel = () => {

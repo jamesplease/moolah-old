@@ -12,7 +12,7 @@ import Modal from '../../common/components/modal';
 
 export class TransactionsList extends Component {
   render() {
-    const {transactions} = this.props;
+    const {transactions, categories} = this.props;
 
     const sortedTransactions = _.sortBy(
       transactions,
@@ -36,13 +36,18 @@ export class TransactionsList extends Component {
         {editModal}
         {deleteModal}
         <ReactCSSTransitionGroup {...transitionGroupProps}>
-          {sortedTransactions.map(t => (
-            <TransactionListItem
-              key={t.id}
-              transaction={t}
-              onClickDelete={this.onClickDelete}
-              onClickEdit={this.onClickEdit}/>
-          ))}
+          {sortedTransactions.map(t => {
+            const categoryId = _.get(t.relationships.category.data, 'id');
+            const category = _.find(categories, {id: categoryId});
+            return (
+              <TransactionListItem
+                key={t.id}
+                transaction={t}
+                category={category}
+                onClickDelete={this.onClickDelete}
+                onClickEdit={this.onClickEdit}/>
+            );
+          })}
         </ReactCSSTransitionGroup>
       </div>
     );
@@ -87,7 +92,7 @@ export class TransactionsList extends Component {
     };
 
     return (
-      <Modal modalClassName="modifyTransactionModal-container">
+      <Modal modalClassName="modifyCategoryModal-container">
         <ModifyTransactionModal {...childrenProps}/>
       </Modal>
     );
@@ -171,15 +176,33 @@ export class TransactionsList extends Component {
   onConfirmEditModal = (fields) => {
     const {updateTransaction} = this.props;
     const transactionId = this.state.transactionToUpdate.id;
+
+    let categoryRelationshipObject = null;
+    if (fields.category) {
+      categoryRelationshipObject = {
+        type: 'categories',
+        id: fields.category
+      };
+    }
+
+    const categoryRelationship = {
+      data: categoryRelationshipObject
+    };
+
+    const relationships = {category: categoryRelationship};
+    const attributes = _.omit(fields, 'category');
+
     updateTransaction({
       id: transactionId,
-      attributes: {...fields}
+      attributes,
+      relationships
     });
   }
 }
 
 function mapStateToProps(state) {
   return {
+    categories: state.categories.resources,
     isOnline: state.connection,
     transactionsMeta: state.transactions.resourcesMeta
   };
