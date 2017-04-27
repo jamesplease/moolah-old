@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function LoadingIndicator() {
+export default function LoadingIndicator({className}) {
   // HTML generated from SpinKit
   // http://tobiasahlin.com/spinkit/
   return (
-    <div className="sk-fading-circle">
+    <div className={`sk-fading-circle ${className}`}>
       <div className="sk-circle1 sk-circle"/>
       <div className="sk-circle2 sk-circle"/>
       <div className="sk-circle3 sk-circle"/>

@@ -34,5 +34,5 @@ input[type='checkbox'] {
 
 button[disabled],
 input[disabled] {
-  cursor: default;
+  cursor: not-allowed;
 }

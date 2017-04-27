@@ -7,4 +7,10 @@ export default keyMirror({
   UNLINK_ACCOUNT_SUCCEED: null,
   UNLINK_ACCOUNT_ABORT: null,
   UNLINK_ACCOUNT_RESET: null,
+
+  UPDATE_PROFILE: null,
+  UPDATE_PROFILE_ABORT: null,
+  UPDATE_PROFILE_FAIL: null,
+  UPDATE_PROFILE_SUCCEED: null,
+  UPDATE_PROFILE_RESET: null,
 });

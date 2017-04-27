@@ -19,6 +19,11 @@
 .text-input {
   @mixin base-text-input;
   height: 34px;
+
+  &:disabled {
+    color: #444;
+    background-color: #f8f8f8;
+  }
 }
 
 .textarea-input {
