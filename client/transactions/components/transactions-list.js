@@ -68,7 +68,7 @@ export class TransactionsList extends Component {
     };
 
     return (
-      <Modal modalClassName="deleteTransactionModal-container">
+      <Modal modalClassName="deleteCategoryModal-container">
         <DeleteTransactionModal {...childrenProps}/>
       </Modal>
     );

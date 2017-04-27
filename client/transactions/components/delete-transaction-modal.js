@@ -16,7 +16,7 @@ export default function DeleteTransactionModal(props) {
   }
 
   return (
-    <div className="deleteTransactionModal">
+    <div className="deleteCategoryModal">
       <h1 className="modal-title">
         Delete "{displayText}"?
       </h1>
