@@ -5,12 +5,13 @@
     max-width: 600px;
   }
 
-  .account-label {
+  .account-label-container {
     margin-bottom: 10px;
+  }
+
+  .account-label {
     font-size: 17px;
     color: #868686;
-    display: block;
-    max-width: 400px;
   }
 
   .account-field-container {

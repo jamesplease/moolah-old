@@ -28,9 +28,12 @@ export class Account extends Component {
         <Subheader/>
         <div className="account container container-bottomSpaced">
           <div className="account-form-row">
-            <label className="account-label">Name</label>
+            <div className="account-label-container">
+              <label htmlFor="user-name" className="account-label">Name</label>
+            </div>
             <div className="account-field-container">
               <input
+                id="user-name"
                 type="text"
                 autoCapitalize="words"
                 autoComplete="name"
@@ -48,9 +51,12 @@ export class Account extends Component {
             </div>
           </div>
           <div className="account-form-row">
-            <label className="account-label">Email</label>
+            <div className="account-label-container">
+              <label htmlFor="user-email" className="account-label">Email</label>
+            </div>
             <div className="account-field-container">
               <input
+                id="user-email"
                 type="email"
                 autoCapitalize="none"
                 autoComplete="email"
