@@ -20,10 +20,11 @@ module.exports = function serveApp(req, res) {
     name: reqUser.name,
     email: reqUser.email,
     logins: {
+      // Note: these must all be lowercase!
       local: false,
       facebook: Boolean(reqUser.facebook_token),
       google: Boolean(reqUser.google_token),
-      gitHub: Boolean(reqUser.github_token),
+      github: Boolean(reqUser.github_token),
       twitter: Boolean(reqUser.twitter_token),
     }
   };
