@@ -88,7 +88,6 @@ store.request = function(options) {
 
   const isReadOne = method === 'find' && ids;
   const isUpdateOne = method === 'update' && ids && ids.length === 1;
-  console.log('what', isUpdateOne);
   // Users are only permitted to read or update a single profile at a time –
   // their own!
   if (type === 'profile' && (!isReadOne && !isUpdateOne)) {

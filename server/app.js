@@ -90,12 +90,7 @@ module.exports = function() {
   }));
   // We need cookie support before we can register CSRF
   app.use(cookieParser());
-  app.use(csrf({
-    cookie: true,
-    value(req) {
-      return req.headers['x-csrf-token'];
-    }
-  }));
+  app.use(csrf({cookie: true}));
 
   app.use((req, res, next) => {
     // We ensure the anti-CSRF token is sent along with all GET requests. We
@@ -109,7 +104,7 @@ module.exports = function() {
     return next();
   });
 
-  // Alright, security is done. Now for other configuration
+  // Alright, the security measures should be set up. Now for other configuration
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(compress());
@@ -226,17 +221,14 @@ module.exports = function() {
     });
   });
 
-  app.get('/logout', (req, res) => {
+  app.post('/logout', (req, res) => {
     req.logout();
     req.session.save((err) => {
       if (err) {
         errorLogs.logoutError(req, res, err);
-        // Redirect to the dashboard if the logout fails. Perhaps in the future
-        // some state could be passed letting users know that
-        // it did not succeed?
-        res.redirect('/');
+        res.status(500).end();
       } else {
-        res.redirect('/login');
+        res.status(204).end();
       }
     });
   });
