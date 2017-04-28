@@ -51,9 +51,11 @@
   padding: 0;
   height: 22px;
   position: relative;
-  z-index: $zIndex-fg1;
+  z-index: $zIndex-bg1;
 
   &.is-active {
+    z-index: $zIndex-fg1;
+
     .hamburger-inner,
     .hamburger-inner:after,
     .hamburger-inner:before {
