@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Subheader from './subheader';
 import LoadingIndicator from '../../common/components/loading-indicator';
+import loginServices from '../../common/services/login-services';
 import * as authActionCreators from '../../state/auth/action-creators';
 
 function getLoginServiceImgUrl(serviceName) {
@@ -79,20 +80,36 @@ export class Account extends Component {
             </div>
           </div>
           <ul className="resourceList">
-            {linkedServices.map((service) => (
-              <li className="resourceListItem" key={service.serviceName}>
-                <img
-                  className="resource-list-account-icon"
-                  src={getLoginServiceImgUrl(service.serviceName.toLowerCase())}/>
-                {_.capitalize(service.serviceName)}
-                <button
-                  className="resourceListItem-deleteBtn"
-                  onClick={() => this.logout(service.serviceName.toLowerCase())}
-                  disabled={linkedServices.length === 1}>
-                  Remove
-                </button>
-              </li>
-            ))}
+            {loginServices.map((service) => {
+              const lowerCaseServiceName = service.name.toLowerCase();
+              const isLinked = _.find(linkedServices, (service) => (
+                service.serviceName.toLowerCase() === lowerCaseServiceName
+              ));
+              return (
+                <li className="resourceListItem" key={service.name}>
+                  <img
+                    className="resource-list-account-icon"
+                    src={getLoginServiceImgUrl(lowerCaseServiceName)}/>
+                  {_.capitalize(service.name)}
+                  {isLinked && (
+                    <button
+                      className="resourceListItem-deleteBtn"
+                      onClick={() => this.logout(lowerCaseServiceName)}
+                      disabled={linkedServices.length === 1}>
+                      Remove
+                    </button>
+                  )}
+                  {!isLinked && (
+                    <a
+                      className="resourceListItem-primaryBtn"
+                      href={`/login/${lowerCaseServiceName}`}>
+                      Link
+                    </a>
+                  )}
+                </li>
+              );
+            }
+            )}
           </ul>
         </div>
       </div>
@@ -105,7 +122,7 @@ export class Account extends Component {
 
     this.state = {
       email: user.email,
-      name: user.name
+      name: user.name,
     };
   }
 

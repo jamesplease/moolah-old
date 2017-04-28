@@ -42,6 +42,14 @@
   }
 }
 
+.resourceListItem-primaryBtn {
+  color: #29aeff;
+  font-size: 15px;
+  margin-left: auto;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .resourceListItem-deleteBtn {
   font-size: 15px;
   color: #b5b5b5;
