@@ -3,7 +3,6 @@ import {Link} from 'react-router';
 import {shallow} from 'enzyme';
 import preventScroll from 'prevent-scroll';
 import {LoggedInHeader} from '../../../../../client/common/components/logged-in-header';
-import ProfileDropdown from '../../../../../client/common/components/profile-dropdown';
 import Nav from '../../../../../client/common/components/nav';
 
 describe('LoggedInHeader', function() {
@@ -58,39 +57,12 @@ describe('LoggedInHeader', function() {
       expect(userName.text()).to.equal('Sandwich');
     });
 
-    it('should not have the dropdown', () => {
-      const wrapper = shallow(<LoggedInHeader/>);
-      expect(wrapper.find(ProfileDropdown)).to.have.length(0);
-    });
-
-    it('should show the dropdown once the accountLink is clicked', () => {
-      const wrapper = shallow(<LoggedInHeader/>);
-      const accountLink = wrapper.find('.appHeader-accountLink');
-      accountLink.simulate('click');
-      wrapper.update();
-      const profileDropdown = wrapper.find(ProfileDropdown);
-      expect(profileDropdown).to.have.length(1);
-      expect(profileDropdown.prop('closeDropdown')).to.equal(wrapper.instance().hideProfileDropdown);
-    });
-
     it('should disable scroll when clicked', () => {
       const wrapper = shallow(<LoggedInHeader/>);
       const accountLink = wrapper.find('.appHeader-accountLink');
       accountLink.simulate('click');
       expect(preventScroll.on).to.have.been.calledOnce;
       expect(preventScroll.off).to.not.have.been.called;
-    });
-
-    it('should enable scrolling and hide the dropdown when `closeDropdown` prop is called', () => {
-      const wrapper = shallow(<LoggedInHeader/>);
-      const accountLink = wrapper.find('.appHeader-accountLink');
-      accountLink.simulate('click');
-      wrapper.update();
-      wrapper.instance().hideProfileDropdown();
-      wrapper.update();
-      const profileDropdown = wrapper.find(ProfileDropdown);
-      expect(profileDropdown).to.have.length(0);
-      expect(preventScroll.off).to.have.been.calledOnce;
     });
   });
 

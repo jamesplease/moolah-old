@@ -10,20 +10,16 @@ import ProfileDropdown from './profile-dropdown';
 export class LoggedInHeader extends Component {
   render() {
     const {displayName} = this.props;
+    const {isProfileDropdownVisible} = this.state;
     const overlayNavToggleClass = classNames({
       'is-active': this.state.isOverlayNavVisible,
       'hamburger hamburger--squeeze': true,
       'appHeader-overlayNavToggle': true
     });
 
-    let profileDropdown;
-    if (this.state.isProfileDropdownVisible) {
-      profileDropdown = <ProfileDropdown closeDropdown={this.hideProfileDropdown}/>;
-    }
-
     const accountLinkClass = classNames({
       'appHeader-accountLink': true,
-      'appHeader-accountLink-active': this.state.isProfileDropdownVisible
+      'appHeader-accountLink-active': isProfileDropdownVisible
     });
 
     return (
@@ -56,7 +52,9 @@ export class LoggedInHeader extends Component {
               </span>
               <i className="zmdi zmdi-caret-down"/>
             </div>
-            {profileDropdown}
+            <ProfileDropdown
+              closeDropdown={this.hideProfileDropdown}
+              isOpen={isProfileDropdownVisible}/>
           </div>
         </div>
       </header>
