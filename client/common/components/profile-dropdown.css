@@ -1,13 +1,35 @@
 .profileDropdown {
   position: absolute;
-  top: 45px;
+  top: 40px;
   right: 0;
   width: 235px;
+  z-index: $zIndex-fg1;
   background-color: #fff;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
-  z-index: $zIndex-fg1;
   overflow: hidden;
+  transition: transform 130ms ease-in, opacity 130ms ease-in;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.profileDropdown-enter .profileDropdown,
+.profileDropdown-appear .profileDropdown {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.profileDropdown-enter.profileDropdown-enter-active .profileDropdown,
+.profileDropdown-appear.profileDropdown-appear-active .profileDropdown,
+.profileDropdown-leave .profileDropdown {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 130ms ease-out, opacity 130ms ease-out;
+}
+
+.profileDropdown-leave.profileDropdown-leave-active .profileDropdown {
+  transform: translateY(-10px);
+  opacity: 0;
 }
 
 .profileDropdown-listItem {
