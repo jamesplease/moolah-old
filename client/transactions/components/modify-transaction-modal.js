@@ -26,6 +26,9 @@ export class ModifyTransactionModal extends Component {
       handleSubmit();
     }
 
+    // Case-insensitive sort by the category's label
+    const sortedCategories = _.sortBy(categories, c => c.attributes.label.toLowerCase());
+
     const descriptionIsInvalid = description.error && description.touched;
     const valueIsInvalid = value.error && value.touched;
     const dateIsInvalid = date.error && date.touched;
@@ -127,7 +130,7 @@ export class ModifyTransactionModal extends Component {
               <option value="">
                 Select a category...
               </option>
-              {_.map(categories, category => (
+              {_.map(sortedCategories, category => (
                 <option value={category.id}>
                   {category.attributes.label}
                 </option>
