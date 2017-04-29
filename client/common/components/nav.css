@@ -85,12 +85,12 @@
 }
 
 .overlayNav {
-  position: fixed;
+  position: absolute;
   z-index: $zIndex-overlay;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   -webkit-backdrop-filter: blur(2px);
   transition: opacity 0.15s linear;
   background-color: rgba(40, 27, 45, 0.95);
