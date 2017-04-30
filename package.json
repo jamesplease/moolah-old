@@ -137,6 +137,7 @@
     "redux": "3.6.0",
     "redux-form": "5.3.3",
     "redux-thunk": "2.1.0",
+    "revalidate": "1.1.0",
     "serve-favicon": "2.3.0",
     "throng": "4.0.0",
     "xhr": "2.2.2"

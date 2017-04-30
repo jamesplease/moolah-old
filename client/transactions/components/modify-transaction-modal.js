@@ -3,18 +3,19 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
-import validateTransactionDate from '../services/validate-transaction-date';
+import transactionValidator from '../services/transaction-validator';
 
 export class ModifyTransactionModal extends Component {
   render() {
     const {
-      fields: {description, value, date, category},
+      fields,
       handleSubmit,
       confirmInProgress,
       onClickCancel,
       isEditMode,
       categories
     } = this.props;
+    const {description, value, date, category} = fields;
 
     function onClickCancelBtn(e) {
       e.preventDefault();
@@ -29,16 +30,12 @@ export class ModifyTransactionModal extends Component {
     // Case-insensitive sort by the category's label
     const sortedCategories = _.sortBy(categories, c => c.attributes.label.toLowerCase());
 
-    const descriptionIsInvalid = description.error && description.touched;
-    const valueIsInvalid = value.error && value.touched;
-    const dateIsInvalid = date.error && date.touched;
-    const invalidField = descriptionIsInvalid || valueIsInvalid || dateIsInvalid;
-    const treatFormInvalid = invalidField && !this.state.cancelBegun;
+    const isFormInvalid = this.isFormInvalid();
 
     const labelClass = classNames({
       'text-input': true,
       newTransactionName: true,
-      'invalid-input': treatFormInvalid
+      'invalid-input': isFormInvalid
     });
 
     const modalTitle = isEditMode ? 'Edit transaction' : 'Create new transaction';
@@ -51,18 +48,16 @@ export class ModifyTransactionModal extends Component {
     }
 
     let errorMsg;
-    if (treatFormInvalid && description.error === 'empty') {
-      errorMsg = 'A description is required';
-    } else if (treatFormInvalid && value.error === 'empty') {
-      errorMsg = 'A value is required';
-    } else if (treatFormInvalid && date.error === 'empty') {
-      errorMsg = 'A date is required';
-    } else if (treatFormInvalid && date.error === 'invalid') {
-      errorMsg = 'An invalid date was entered';
+    if (isFormInvalid && description.error) {
+      errorMsg = description.error;
+    } else if (isFormInvalid && value.error) {
+      errorMsg = value.error;
+    } else if (isFormInvalid && date.error) {
+      errorMsg = date.error;
     }
 
     let errorEl;
-    if (treatFormInvalid) {
+    if (isFormInvalid) {
       errorEl = (
         <div className="modal-error form-error">
           {errorMsg}
@@ -72,7 +67,7 @@ export class ModifyTransactionModal extends Component {
 
     const modalClass = classNames({
       createTransactionModal: true,
-      'modal-form-invalid': treatFormInvalid
+      'modal-form-invalid': isFormInvalid
     });
 
     return (
@@ -151,7 +146,7 @@ export class ModifyTransactionModal extends Component {
             form="modify-transaction-modal-form"
             type="submit"
             className="btn btn-info createTransactionModal-confirmBtn"
-            disabled={confirmInProgress || treatFormInvalid}>
+            disabled={confirmInProgress || isFormInvalid}>
             {confirmText}
           </button>
         </div>
@@ -168,14 +163,7 @@ export class ModifyTransactionModal extends Component {
   }
 
   mouseDownCancel = () => {
-    const {
-      fields: {description, value, date}
-    } = this.props;
-
-    const descriptionIsInvalid = description.error && description.touched;
-    const valueIsInvalid = value.error && value.touched;
-    const dateIsInvalid = date.error && date.touched;
-    const formIsInvalid = descriptionIsInvalid || valueIsInvalid || dateIsInvalid;
+    const isFormInvalid = this.isFormInvalid();
 
     // redux-form is quick to the draw on making the form invalid. In fact,
     // it happens so fast that simply mousing down on the cancel can cause
@@ -185,7 +173,7 @@ export class ModifyTransactionModal extends Component {
     // redux-form know to wait a second if the form isn't already invalid.
     // If, on the other hand, it's already invalid, then we don't need to do
     // this check at all.
-    if (!formIsInvalid) {
+    if (!isFormInvalid) {
       this.setState({
         cancelBegun: true
       });
@@ -197,6 +185,15 @@ export class ModifyTransactionModal extends Component {
       cancelBegun: false
     });
   }
+
+  isFormInvalid = () => {
+    const {fields} = this.props;
+    const {cancelBegun} = this.state;
+
+    const formTouched = !_.every(fields, {touched: false});
+    const invalidField = formTouched && _.find(fields, 'error');
+    return invalidField && !cancelBegun;
+  }
 }
 
 function mapStateToProps(state) {
@@ -205,32 +202,19 @@ function mapStateToProps(state) {
   };
 }
 
-const ConnectedModifyTransactionModal = connect(mapStateToProps)(ModifyTransactionModal);
+const ConnectedModifyTransactionModal = connect(mapStateToProps, null, null, {pure: false})(ModifyTransactionModal);
 
 function validate(values) {
   // Sometimes, redux-form converts values into a number...
-  const newDescription = _.result(String(values.description), 'trim');
-  const newValue = _.result(String(values.value), 'trim');
-  const newDate = _.result(String(values.date), 'trim');
+  const description = _.result(String(values.description), 'trim');
+  const date = _.result(String(values.date), 'trim');
 
-  const errors = {};
+  const result = transactionValidator({
+    ...values,
+    description, date
+  });
 
-  // Prevent empty labels
-  if (!newDescription) {
-    errors.description = 'empty';
-  }
-
-  if (!newValue) {
-    errors.value = 'empty';
-  }
-
-  if (!newDate) {
-    errors.date = 'empty';
-  } else if (!validateTransactionDate(newDate, {includeDay: true})) {
-    errors.date = 'invalid';
-  }
-
-  return errors;
+  return result;
 }
 
 const reduxFormOptions = {
