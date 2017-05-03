@@ -90,11 +90,13 @@ describe('CategoriesList', function() {
         {id: 2, attributes: {label: 'asdf'}},
         {id: 5, attributes: {label: 'zebras'}}
       ],
-      categoriesMeta: [
-        {id: 10},
-        {id: 2},
-        {id: 5, updatingStatus: 'PENDING'}
-      ],
+      categoriesMeta: {
+        10: {},
+        2: {},
+        5: {
+          updatingStatus: 'PENDING'
+        }
+      },
       isOnline: true,
       deleteCategory: this.deleteCategory,
       updateCategory: this.updateCategory,
@@ -206,11 +208,11 @@ describe('CategoriesList', function() {
     describe('calling `onClickDelete` with a category that has a delete in progress', () => {
       beforeEach(() => {
         this.wrapper = this.generator.shallow({
-          categoriesMeta: [
-            {id: 10},
-            {id: 2, isDeleting: true},
-            {id: 5}
-          ]
+          categoriesMeta: {
+            10: {},
+            2: {isDeleting: true},
+            5: {}
+          }
         });
         this.wrapper.instance().onClickDelete({id: 2, attributes: {label: 'asdf'}});
         this.wrapper.update();
@@ -269,11 +271,11 @@ describe('CategoriesList', function() {
 
       it('should close the modal when new props are passed in', () => {
         this.wrapper.setProps({
-          categoriesMeta: [
-            {id: 10},
-            {id: 2, updatingStatus: 'SUCCESS'},
-            {id: 5}
-          ]
+          categoriesMeta: {
+            10: {},
+            2: {updatingStatus: 'SUCCESS'},
+            5: {}
+          }
         });
         expect(this.wrapper.find(Modal)).to.have.length(0);
         expect(this.resetUpdateCategoryResolution).to.have.been.calledOnce;
@@ -298,11 +300,11 @@ describe('CategoriesList', function() {
     describe('calling `onClickEdit` with a category that has an update in progress', () => {
       beforeEach(() => {
         this.wrapper = this.generator.shallow({
-          categoriesMeta: [
-            {id: 10},
-            {id: 2, updatingStatus: 'PENDING'},
-            {id: 5}
-          ]
+          categoriesMeta: {
+            10: {},
+            2: {updatingStatus: 'PENDING'},
+            5: {}
+          }
         });
         this.wrapper.instance().onClickEdit({id: 2, attributes: {label: 'asdf'}});
         this.wrapper.update();

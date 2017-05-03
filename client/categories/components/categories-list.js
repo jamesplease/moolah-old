@@ -95,7 +95,7 @@ export class CategoriesList extends Component {
     const {categoriesMeta} = this.props;
 
     const categoryId = this.state.categoryToDelete.id;
-    const categoryBeingDeletedMeta = _.find(categoriesMeta, {id: categoryId});
+    const categoryBeingDeletedMeta = categoriesMeta[categoryId];
     const isDeletingCategory = categoryBeingDeletedMeta.isDeleting;
 
     const childrenProps = {
@@ -116,7 +116,7 @@ export class CategoriesList extends Component {
     const {categoriesMeta} = this.props;
 
     const categoryId = this.state.categoryToUpdate.id;
-    const categoryBeingUpdatedMeta = _.find(categoriesMeta, {id: categoryId});
+    const categoryBeingUpdatedMeta = categoriesMeta[categoryId];
     const isUpdating = categoryBeingUpdatedMeta.updatingStatus === 'PENDING';
 
     const childrenProps = {
@@ -161,7 +161,7 @@ export class CategoriesList extends Component {
 
     const {categoriesMeta} = nextProps;
     const {id} = this.state.categoryToUpdate;
-    const updatingCategoryMeta = _.find(categoriesMeta, {id});
+    const updatingCategoryMeta = categoriesMeta[id];
 
     if (updatingCategoryMeta.updatingStatus === 'SUCCESS') {
       this.setState({
