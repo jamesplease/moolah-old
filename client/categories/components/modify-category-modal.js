@@ -116,7 +116,7 @@ export class ModifyCategoryModal extends Component {
           <button
             form="modify-category-modal-form"
             type="submit"
-            className="btn btn-info createCategoryModal-confirmBtn"
+            className="btn createCategoryModal-confirmBtn"
             disabled={confirmInProgress || treatFormInvalid}>
             {confirmText}
           </button>

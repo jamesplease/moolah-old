@@ -150,7 +150,7 @@ export class ModifyTransactionModal extends Component {
           <button
             form="modify-transaction-modal-form"
             type="submit"
-            className="btn btn-info createTransactionModal-confirmBtn"
+            className="btn createTransactionModal-confirmBtn"
             disabled={confirmInProgress || treatFormInvalid}>
             {confirmText}
           </button>
