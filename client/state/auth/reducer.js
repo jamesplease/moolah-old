@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import actionTypes from './action-types';
 import initialState from './initial-state';
-import xhrStatuses from '../util/xhr-statuses';
+import xhrStatuses from '../utils/xhr-statuses';
 
 export default (state = initialState, action) => {
   switch (action.type) {
