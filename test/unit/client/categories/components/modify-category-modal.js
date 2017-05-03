@@ -168,7 +168,7 @@ describe('ModifyCategoryModal', function() {
         expect(labelInput.hasClass('text-input')).to.be.true;
         expect(labelInput.hasClass('invalid-input')).to.be.false;
         expect(labelInput.prop('type')).to.equal('text');
-        expect(labelInput.prop('placeholder')).to.equal('Enter name');
+        expect(labelInput.prop('placeholder')).to.equal('Groceries');
         expect(labelInput.prop('disabled')).to.be.falsey;
       });
 

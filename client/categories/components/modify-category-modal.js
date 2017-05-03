@@ -77,10 +77,11 @@ export class ModifyCategoryModal extends Component {
           className="modal-body">
           {errorEl}
           <div className="form-row">
+            <label className="form-label">Name</label>
             <input
               type="text"
               className={labelClass}
-              placeholder="Enter name"
+              placeholder="Groceries"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -91,10 +92,11 @@ export class ModifyCategoryModal extends Component {
               {...label}/>
           </div>
           <div className="form-row">
+            <label className="form-label">Emoji</label>
             <input
               type="text"
               className="text-input"
-              placeholder="Enter emoji"
+              placeholder=":smile:"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}

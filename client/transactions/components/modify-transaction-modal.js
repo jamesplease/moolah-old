@@ -86,10 +86,10 @@ export class ModifyTransactionModal extends Component {
           className="modal-body">
           {errorEl}
           <div className="form-row">
+            <label className="form-label">Description</label>
             <input
               type="text"
               className={labelClass}
-              placeholder="Description"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -100,10 +100,11 @@ export class ModifyTransactionModal extends Component {
               {...description}/>
           </div>
           <div className="form-row">
+            <label className="form-label">Value</label>
             <input
               type="text"
               className="text-input"
-              placeholder="Value"
+              placeholder="0.00"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -113,10 +114,11 @@ export class ModifyTransactionModal extends Component {
               {...value}/>
           </div>
           <div className="form-row">
+            <label className="form-label">Date</label>
             <input
               type="date"
               className="text-input"
-              placeholder="Date"
+              placeholder="04/10/2017"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -126,6 +128,7 @@ export class ModifyTransactionModal extends Component {
               {...date}/>
           </div>
           <div className="form-row">
+            <label className="form-label">Category</label>
             <select {...category} value={category.value || ''}>
               <option value="">
                 Select a category...
