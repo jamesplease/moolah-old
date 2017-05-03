@@ -121,7 +121,7 @@ export class ModifyTransactionModal extends Component {
             <RequiredInput
               type="date"
               className="text-input"
-              placeholder="04/10/2017"
+              placeholder="MM/DD/YYYY"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}

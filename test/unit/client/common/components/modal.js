@@ -29,18 +29,13 @@ describe('Modal', function() {
   });
 
   describe('rendering', () => {
-    it('should have the right class', () => {
-      const wrapper = shallow(<Modal/>);
-      expect(wrapper.hasClass('modal-overlay')).to.be.true;
-    });
-
     it('should render the modal as a child', () => {
-      const wrapper = shallow(<Modal/>);
+      const wrapper = shallow(<Modal isOpen={true}/>);
       expect(wrapper.find('.modal')).to.have.length(1);
     });
 
     it('should attach the `modalClassName` to the modal', () => {
-      const wrapper = shallow(<Modal modalClassName="sandwiches"/>);
+      const wrapper = shallow(<Modal modalClassName="sandwiches" isOpen={true}/>);
       const modal = wrapper.find('.modal');
       expect(modal.hasClass('sandwiches')).to.be.true;
     });
@@ -48,7 +43,7 @@ describe('Modal', function() {
     it('should render the children', () => {
       const child = (<div className="oink"/>);
       const wrapper = shallow(
-        <Modal>
+        <Modal isOpen={true}>
           {child}
         </Modal>
       );

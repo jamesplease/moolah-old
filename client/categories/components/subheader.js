@@ -9,7 +9,7 @@ import * as categoriesActionCreators from '../../state/categories/action-creator
 export class CategoriesSubheader extends Component {
   render() {
     const {isOnline} = this.props;
-    const modal = this.state.isModalOpen ? this.createModal() : null;
+    const modal = this.createModal();
 
     return (
       <div className="subheader listHeader">
@@ -64,11 +64,11 @@ export class CategoriesSubheader extends Component {
       categories: this.props.categories,
       confirmInProgress: this.props.creatingCategoryStatus === 'PENDING',
       actionFailure: this.props.creatingCategoryStatus === 'FAILURE',
-      isEditMode: false
+      isEditMode: false,
     };
 
     return (
-      <Modal modalClassName="modifyCategoryModal-container">
+      <Modal modalClassName="modifyCategoryModal-container" isOpen={this.state.isModalOpen}>
         <ModifyCategoryModal {...childrenProps}/>
       </Modal>
     );

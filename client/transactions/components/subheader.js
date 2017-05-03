@@ -14,23 +14,20 @@ export class TransactionsSubheader extends Component {
     const {isModalOpen} = this.state;
     const disabled = !isOnline;
 
-    let modal;
-    if (isModalOpen) {
-      const childrenProps = {
-        onClickCancel: this.onClickModalCancel,
-        onSubmit: this.onClickModalCreate,
-        confirmInProgress: creatingTransactionStatus === 'PENDING',
-        actionFailure: creatingTransactionStatus === 'FAILURE',
-        isEditMode: false,
-        transactions
-      };
+    const childrenProps = {
+      onClickCancel: this.onClickModalCancel,
+      onSubmit: this.onClickModalCreate,
+      confirmInProgress: creatingTransactionStatus === 'PENDING',
+      actionFailure: creatingTransactionStatus === 'FAILURE',
+      isEditMode: false,
+      transactions
+    };
 
-      modal = (
-        <Modal modalClassName="modifyCategoryModal-container">
-          <ModifyTransactionModal {...childrenProps}/>
-        </Modal>
-      );
-    }
+    const modal = (
+      <Modal modalClassName="modifyCategoryModal-container" isOpen={isModalOpen}>
+        <ModifyTransactionModal {...childrenProps}/>
+      </Modal>
+    );
 
     return (
       <div className="subheader listHeader">
