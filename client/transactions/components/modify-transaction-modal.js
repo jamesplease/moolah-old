@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
 import validateTransactionDate from '../utils/validate-transaction-date';
+import {getDateStringFromDate} from '../utils/format-date';
 import RequiredInput from '../../inputs/components/required-input';
 
 export class ModifyTransactionModal extends Component {
@@ -249,6 +250,11 @@ function reduxFormInitialState(state, nextProps) {
   let initialValues = _.get(nextProps.transaction, 'attributes', {});
   // We also grab the relationship information for this transaction
   initialValues.category = _.get(nextProps.transaction, 'relationships.category.data.id');
+
+  if (!nextProps.isEditMode) {
+    initialValues.date = getDateStringFromDate(new Date());
+  }
+
   return {initialValues};
 }
 

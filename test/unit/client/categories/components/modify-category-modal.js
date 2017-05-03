@@ -108,7 +108,11 @@ describe('ModifyCategoryModal', function() {
       const wrapper = this.generator.shallow();
       const focusStub = stub();
       wrapper.instance().labelInput = {
-        focus: focusStub
+        querySelector() {
+          return {
+            focus: focusStub
+          };
+        }
       };
       wrapper.instance().componentDidMount();
       expect(focusStub).to.have.been.calledOnce;
