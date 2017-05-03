@@ -5,7 +5,7 @@ import CategoryListItem from '../../../../../client/categories/components/catego
 import DeleteCategoryModal from '../../../../../client/categories/components/delete-category-modal';
 import Modal from '../../../../../client/common/components/modal';
 import ReactCSSTransitionGroup from '../../../../../client/vendor/css-transition-group';
-import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
+import generateWrapperGenerator from '../../../../utils/generate-wrapper-generator';
 
 const mapStateToProps = __get__('mapStateToProps');
 const mapDispatchToProps = __get__('mapDispatchToProps');

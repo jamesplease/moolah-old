@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Subheader from './subheader';
 import LoadingIndicator from '../../common/components/loading-indicator';
-import loginServices from '../../common/services/login-services';
+import loginServices from '../../common/utils/login-services';
 import * as authActionCreators from '../../state/auth/action-creators';
 
 function getLoginServiceImgUrl(serviceName) {

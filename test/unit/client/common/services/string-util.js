@@ -1,4 +1,4 @@
-import {truncateAt} from '../../../../../client/common/services/string-util';
+import {truncateAt} from '../../../../../client/common/utils/string-util';
 
 describe('stringUtil', () => {
   describe('truncateAt', () => {

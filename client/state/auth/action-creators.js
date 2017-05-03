@@ -1,6 +1,6 @@
 import xhr from 'xhr';
 import actionTypes from './action-types';
-import defaultXhrHeaders from '../../common/services/default-xhr-headers';
+import defaultXhrHeaders from '../../common/utils/default-xhr-headers';
 
 export function unlinkAccount(serviceName) {
   return (dispatch) => {

@@ -1,4 +1,4 @@
-import generateAuthCheck from '../../../../../client/common/services/auth-check';
+import generateAuthCheck from '../../../../../client/common/utils/auth-check';
 
 describe('generateAuthCheck', function() {
   beforeEach(() => {

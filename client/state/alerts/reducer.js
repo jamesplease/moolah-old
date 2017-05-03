@@ -3,7 +3,7 @@ import alertsActionTypes from './action-types';
 import categoriesActionTypes from '../categories/action-types';
 import transactionsActionTypes from '../transactions/action-types';
 import initialState from './initial-state';
-import {truncateAt} from '../../common/services/string-util';
+import {truncateAt} from '../../common/utils/string-util';
 
 const validActionProps = [
   'text', 'style', 'isDismissable', 'persistent',

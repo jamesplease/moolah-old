@@ -7,7 +7,7 @@ import CategoriesList from '../../../../../client/categories/components/categori
 import EmptyCategories from '../../../../../client/categories/components/empty-categories';
 import ErrorRetrieving from '../../../../../client/common/components/error-retrieving';
 import LoadingResourceList from '../../../../../client/common/components/loading-resource-list';
-import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
+import generateWrapperGenerator from '../../../../utils/generate-wrapper-generator';
 
 const mapStateToProps = __get__('mapStateToProps');
 const mapDispatchToProps = __get__('mapDispatchToProps');

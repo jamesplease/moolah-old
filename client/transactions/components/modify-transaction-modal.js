@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
-import validateTransactionDate from '../services/validate-transaction-date';
+import validateTransactionDate from '../utils/validate-transaction-date';
 
 export class ModifyTransactionModal extends Component {
   render() {

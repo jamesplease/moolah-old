@@ -1,5 +1,5 @@
 import DeleteCategoryModal from '../../../../../client/categories/components/delete-category-modal';
-import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
+import generateWrapperGenerator from '../../../../utils/generate-wrapper-generator';
 
 describe('DeleteCategoryModal', function() {
   describe('rendering', () => {

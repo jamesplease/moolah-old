@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import {formatDateForTransactionList} from '../services/format-date';
-import emoji from '../../common/services/js-emoji';
+import {formatDateForTransactionList} from '../utils/format-date';
+import emoji from '../../common/utils/js-emoji';
 
 export default function Transaction(props) {
   const {transaction, category, onClickDelete, onClickEdit} = props;

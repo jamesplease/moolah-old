@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
-import validateEmoji from '../../common/services/validate-emoji';
+import validateEmoji from '../../common/utils/validate-emoji';
 
 export class ModifyCategoryModal extends Component {
   render() {

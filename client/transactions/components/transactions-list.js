@@ -7,7 +7,7 @@ import TransactionListItem from './transaction-list-item';
 import ModifyTransactionModal from './modify-transaction-modal';
 import DeleteTransactionModal from './delete-transaction-modal';
 import * as transactionsActionCreators from '../../state/transactions/action-creators';
-import {getDayFromDate} from '../services/format-date';
+import {getDayFromDate} from '../utils/format-date';
 import Modal from '../../common/components/modal';
 
 export class TransactionsList extends Component {
