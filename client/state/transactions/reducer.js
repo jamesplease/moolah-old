@@ -20,13 +20,12 @@ export default (state = initialState, action) => {
     case actionTypes.CREATE_TRANSACTION_SUCCESS: {
       let resources = [...state.resources];
       resources.push(action.resource);
-      const resourcesMeta = [
+      const resourcesMeta = {
         ...state.resourcesMeta,
-        {
-          id: action.resource.id,
+        [action.resource.id]: {
           ...initialResourceMetaState
         }
-      ];
+      };
       return {
         ...state,
         creatingTransactionStatus: 'SUCCESS',
@@ -59,12 +58,10 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.RETRIEVE_TRANSACTIONS_SUCCESS: {
-      const resourcesMeta = action.resources.map(c => {
-        return {
-          id: c.id,
-          ...initialResourceMetaState
-        };
-      });
+      const resourcesMeta = action.resources.reduce((memo, c) => {
+        memo[c.id] = {...initialResourceMetaState};
+        return memo;
+      }, {});
 
       return {
         ...state,
@@ -91,16 +88,13 @@ export default (state = initialState, action) => {
 
     // Update transaction
     case actionTypes.UPDATE_TRANSACTION: {
-      const resourcesMeta = state.resourcesMeta.map(c => {
-        if (c.id !== action.resource.id) {
-          return {...c};
-        } else {
-          return {
-            ...c,
-            updatingStatus: 'PENDING'
-          };
+      const resourcesMeta = {
+        ...state.resourcesMeta,
+        [action.resource.id]: {
+          ...state.resourcesMeta[action.resource.id],
+          updatingStatus: 'PENDING'
         }
-      });
+      };
 
       return {
         ...state,
@@ -119,16 +113,13 @@ export default (state = initialState, action) => {
         }
       });
 
-      const resourcesMeta = state.resourcesMeta.map(c => {
-        if (c.id !== id) {
-          return {...c};
-        } else {
-          return {
-            ...c,
-            updatingStatus: 'SUCCESS'
-          };
+      const resourcesMeta = {
+        ...state.resourcesMeta,
+        [id]: {
+          ...state.resourcesMeta[id],
+          updatingStatus: 'SUCCESS'
         }
-      });
+      };
 
       return {
         ...state,
@@ -138,16 +129,13 @@ export default (state = initialState, action) => {
     }
 
     case actionTypes.UPDATE_TRANSACTION_FAILURE: {
-      const resourcesMeta = state.resourcesMeta.map(c => {
-        if (c.id !== action.resource.id) {
-          return {...c};
-        } else {
-          return {
-            ...c,
-            updatingStatus: 'FAILURE'
-          };
+      const resourcesMeta = {
+        ...state.resourcesMeta,
+        [action.resource.id]: {
+          ...state.resourcesMeta[action.resource.id],
+          updatingStatus: 'FAILURE'
         }
-      });
+      };
 
       return {
         ...state,
@@ -158,17 +146,13 @@ export default (state = initialState, action) => {
     case actionTypes.UPDATE_TRANSACTION_ABORTED:
     case actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION: {
       const id = action.resource ? action.resource.id : action.resourceId;
-      const clonedMeta = _.cloneDeep(state.resourcesMeta);
-      const resourcesMeta = clonedMeta.map(c => {
-        if (c.id !== id) {
-          return {...c};
-        } else {
-          return {
-            ...c,
-            updatingStatus: null
-          };
+      const resourcesMeta = {
+        ...state.resourcesMeta,
+        [id]: {
+          ...state.resourcesMeta[id],
+          updatingStatus: null
         }
-      });
+      };
 
       return {
         ...state,
@@ -178,17 +162,13 @@ export default (state = initialState, action) => {
 
     // Delete transaction
     case actionTypes.DELETE_TRANSACTION: {
-      const clonedMeta = _.cloneDeep(state.resourcesMeta);
-      const resourcesMeta = clonedMeta.map(c => {
-        if (c.id !== action.resource.id) {
-          return c;
-        } else {
-          return {
-            ...c,
-            isDeleting: c.id === action.resource.id
-          };
+      const resourcesMeta = {
+        ...state.resourcesMeta,
+        [action.resource.id]: {
+          ...state.resourcesMeta[action.resource.id],
+          isDeleting: true
         }
-      });
+      };
 
       return {
         ...state,
@@ -199,10 +179,13 @@ export default (state = initialState, action) => {
     case actionTypes.DELETE_TRANSACTION_SUCCESS: {
       const rejectionFn = val => val.id === action.resource.id;
       const clonedResources = _.cloneDeep(state.resources);
-      const clonedMeta = _.cloneDeep(state.resourcesMeta);
 
       let resources = _.reject(clonedResources, rejectionFn);
-      let resourcesMeta = _.reject(clonedMeta, rejectionFn);
+      const resourcesMeta = {
+        ...state.resourcesMeta,
+        [action.resource.id]: null
+      };
+
       return {
         ...state,
         resources,
@@ -212,17 +195,13 @@ export default (state = initialState, action) => {
 
     case actionTypes.DELETE_TRANSACTION_FAILURE:
     case actionTypes.DELETE_TRANSACTION_ABORTED: {
-      const clonedMeta = _.cloneDeep(state.resourcesMeta);
-      const resourcesMeta = clonedMeta.map(c => {
-        if (c.id !== action.resource.id) {
-          return c;
-        } else {
-          return {
-            ...c,
-            isDeleting: false
-          };
+      const resourcesMeta = {
+        ...state.resourcesMeta,
+        [action.resource.id]: {
+          ...state.resourcesMeta[action.resource.id],
+          isDeleting: false
         }
-      });
+      };
 
       return {
         ...state,

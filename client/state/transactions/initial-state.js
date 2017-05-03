@@ -1,6 +1,6 @@
 export default {
   resources: [],
-  resourcesMeta: [],
+  resourcesMeta: {},
   creatingTransactionStatus: null,
   retrievingTransactionsStatus: null
 };
