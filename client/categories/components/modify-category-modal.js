@@ -12,7 +12,8 @@ export class ModifyCategoryModal extends Component {
       handleSubmit,
       confirmInProgress,
       onClickCancel,
-      isEditMode
+      isEditMode,
+      invalid
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -119,7 +120,7 @@ export class ModifyCategoryModal extends Component {
             form="modify-category-modal-form"
             type="submit"
             className="btn createCategoryModal-confirmBtn"
-            disabled={confirmInProgress || treatFormInvalid}>
+            disabled={confirmInProgress || invalid}>
             {confirmText}
           </button>
         </div>
@@ -169,8 +170,8 @@ export class ModifyCategoryModal extends Component {
 }
 
 function validate(values, props) {
-  const newLabel = _.result(String(values.label), 'trim');
-  const newEmoji = _.result(String(values.emoji), 'trim');
+  const newLabel = values.label && _.result(String(values.label), 'trim');
+  const newEmoji = values.emoji && _.result(String(values.emoji), 'trim');
 
   const errors = {};
 

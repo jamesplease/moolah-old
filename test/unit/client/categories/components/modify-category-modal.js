@@ -275,15 +275,9 @@ describe('ModifyCategoryModal', function() {
           expect(confirmBtn.prop('disabled')).to.be.falsey;
         });
 
-        it('should be disabled when there is an error and the form has been touched', () => {
+        it('should be disabled when the form is invalid', () => {
           const props = {
-            fields: {
-              label: {
-                error: 'sorry',
-                touched: true
-              },
-              emoji: {}
-            }
+            invalid: true
           };
           const wrapper = this.generator.shallow(props);
           const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');

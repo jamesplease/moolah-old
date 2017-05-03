@@ -15,7 +15,8 @@ export class ModifyTransactionModal extends Component {
       confirmInProgress,
       onClickCancel,
       isEditMode,
-      categories
+      categories,
+      invalid
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -156,7 +157,7 @@ export class ModifyTransactionModal extends Component {
             form="modify-transaction-modal-form"
             type="submit"
             className="btn createTransactionModal-confirmBtn"
-            disabled={confirmInProgress || treatFormInvalid}>
+            disabled={confirmInProgress || invalid}>
             {confirmText}
           </button>
         </div>
@@ -216,9 +217,9 @@ const ConnectedModifyTransactionModal = connect(mapStateToProps)(ModifyTransacti
 
 function validate(values) {
   // Sometimes, redux-form converts values into a number...
-  const newDescription = _.result(String(values.description), 'trim');
-  const newValue = _.result(String(values.value), 'trim');
-  const newDate = _.result(String(values.date), 'trim');
+  const newDescription = values.description && _.result(String(values.description), 'trim');
+  const newValue = values.value && _.result(String(values.value), 'trim');
+  const newDate = values.date && _.result(String(values.date), 'trim');
 
   const errors = {};
 
