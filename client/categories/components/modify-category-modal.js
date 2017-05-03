@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
+import RequiredInput from '../../inputs/components/required-input';
 import validateEmoji from '../../common/utils/validate-emoji';
 
 export class ModifyCategoryModal extends Component {
@@ -78,10 +79,9 @@ export class ModifyCategoryModal extends Component {
           {errorEl}
           <div className="form-row">
             <label className="form-label">Name</label>
-            <input
+            <RequiredInput
               type="text"
               className={labelClass}
-              placeholder="Groceries"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -132,7 +132,9 @@ export class ModifyCategoryModal extends Component {
   }
 
   componentDidMount = () => {
-    this.labelInput.focus();
+    if (this.labelInput) {
+      this.labelInput.querySelector('input').focus();
+    }
   }
 
   mouseDownCancel = () => {

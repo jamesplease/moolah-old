@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
 import validateTransactionDate from '../utils/validate-transaction-date';
+import RequiredInput from '../../inputs/components/required-input';
 
 export class ModifyTransactionModal extends Component {
   render() {
@@ -87,7 +88,7 @@ export class ModifyTransactionModal extends Component {
           {errorEl}
           <div className="form-row">
             <label className="form-label">Description</label>
-            <input
+            <RequiredInput
               type="text"
               className={labelClass}
               autoComplete="off"
@@ -101,7 +102,7 @@ export class ModifyTransactionModal extends Component {
           </div>
           <div className="form-row">
             <label className="form-label">Value</label>
-            <input
+            <RequiredInput
               type="text"
               className="text-input"
               placeholder="0.00"
@@ -115,7 +116,7 @@ export class ModifyTransactionModal extends Component {
           </div>
           <div className="form-row">
             <label className="form-label">Date</label>
-            <input
+            <RequiredInput
               type="date"
               className="text-input"
               placeholder="04/10/2017"
@@ -167,7 +168,9 @@ export class ModifyTransactionModal extends Component {
   }
 
   componentDidMount = () => {
-    this.descriptionInput.focus();
+    if (this.descriptionInput) {
+      this.descriptionInput.querySelector('input').focus();
+    }
   }
 
   mouseDownCancel = () => {

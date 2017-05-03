@@ -1,0 +1,12 @@
+.requiredInput {
+  position: relative;
+}
+
+.requiredInput_requiredText {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  color: #999;
+  font-size: 13px;
+  pointer-events: none;
+}
