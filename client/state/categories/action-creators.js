@@ -60,7 +60,7 @@ export function resetRetrieveCategoriesResolution() {
   };
 }
 
-export function retrieveCategories() {
+export function readManyCategories() {
   return (dispatch, getState) => {
     const {auth} = getState();
     const userId = auth.user.id;

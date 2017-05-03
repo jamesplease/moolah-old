@@ -58,7 +58,7 @@ export function resetRetrieveTransactionsResolution() {
   };
 }
 
-export function retrieveTransactions() {
+export function readManyTransactions() {
   return (dispatch, getState) => {
     const {auth} = getState();
     const userId = auth.user.id;

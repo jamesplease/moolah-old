@@ -16,12 +16,12 @@ describe('TransactionsContent', function() {
       this.mockFetchTransactionsXhr = {abort: stub()};
 
       this.mockCategoriesActions = {
-        retrieveCategories: stub().returns(this.mockFetchCategoriesXhr),
+        readManyCategories: stub().returns(this.mockFetchCategoriesXhr),
       };
 
       this.mockTransactionsActions = {
         resetRetrieveCategoriesResolution: stub(),
-        retrieveTransactions: stub().returns(this.mockFetchTransactionsXhr),
+        readManyTransactions: stub().returns(this.mockFetchTransactionsXhr),
       };
 
       this.mockTransactions = [
@@ -43,9 +43,9 @@ describe('TransactionsContent', function() {
 
     it('should fetch resources before mounting', () => {
       shallow(<Content {...this.defaultProps}/>);
-      expect(this.mockCategoriesActions.retrieveCategories).to.have.been.calledOnce;
-      expect(this.mockTransactionsActions.retrieveTransactions).to.have.been.calledOnce;
-      expect(this.mockTransactionsActions.retrieveTransactions).to.have.been.calledWithExactly({
+      expect(this.mockCategoriesActions.readManyCategories).to.have.been.calledOnce;
+      expect(this.mockTransactionsActions.readManyTransactions).to.have.been.calledOnce;
+      expect(this.mockTransactionsActions.readManyTransactions).to.have.been.calledWithExactly({
         year: '2015',
         month: '07'
       });
@@ -53,16 +53,16 @@ describe('TransactionsContent', function() {
 
     it('should fetch resources when a new date is received that is different', () => {
       const wrapper = shallow(<Content {...this.defaultProps}/>);
-      this.mockCategoriesActions.retrieveCategories.reset();
-      this.mockTransactionsActions.retrieveTransactions.reset();
+      this.mockCategoriesActions.readManyCategories.reset();
+      this.mockTransactionsActions.readManyTransactions.reset();
       wrapper.setProps({
         params: {
           transactionDate: '2015-08'
         }
       });
-      expect(this.mockCategoriesActions.retrieveCategories).to.have.been.calledOnce;
-      expect(this.mockTransactionsActions.retrieveTransactions).to.have.been.calledOnce;
-      expect(this.mockTransactionsActions.retrieveTransactions).to.have.been.calledWithExactly({
+      expect(this.mockCategoriesActions.readManyCategories).to.have.been.calledOnce;
+      expect(this.mockTransactionsActions.readManyTransactions).to.have.been.calledOnce;
+      expect(this.mockTransactionsActions.readManyTransactions).to.have.been.calledWithExactly({
         year: '2015',
         month: '08'
       });
@@ -70,15 +70,15 @@ describe('TransactionsContent', function() {
 
     it('should not fetch resources when a new date is received that is the same', () => {
       const wrapper = shallow(<Content {...this.defaultProps}/>);
-      this.mockCategoriesActions.retrieveCategories.reset();
-      this.mockTransactionsActions.retrieveTransactions.reset();
+      this.mockCategoriesActions.readManyCategories.reset();
+      this.mockTransactionsActions.readManyTransactions.reset();
       wrapper.setProps({
         params: {
           transactionDate: '2015-07'
         }
       });
-      expect(this.mockCategoriesActions.retrieveCategories).to.not.have.been.called;
-      expect(this.mockTransactionsActions.retrieveTransactions).to.not.have.been.called;
+      expect(this.mockCategoriesActions.readManyCategories).to.not.have.been.called;
+      expect(this.mockTransactionsActions.readManyTransactions).to.not.have.been.called;
     });
 
     describe('unmounting', () => {

@@ -94,9 +94,9 @@ export class Content extends Component {
 
   fetchResources = (date) => {
     const {transactionsActions, categoriesActions} = this.props;
-    this.fetchCategoriesXhr = categoriesActions.retrieveCategories();
+    this.fetchCategoriesXhr = categoriesActions.readManyCategories();
     const transactionDate = date.split('-');
-    this.fetchTransactionsXhr = transactionsActions.retrieveTransactions({
+    this.fetchTransactionsXhr = transactionsActions.readManyTransactions({
       year: transactionDate[0],
       month: transactionDate[1]
     });
