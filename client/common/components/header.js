@@ -1,5 +1,5 @@
 import React from 'react';
-import isLoggedIn from '../services/is-logged-in';
+import isLoggedIn from '../utils/is-logged-in';
 import LoggedInHeader from './logged-in-header';
 import LandingPageHeader from './landing-page-header';
 

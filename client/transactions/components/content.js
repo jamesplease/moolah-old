@@ -11,9 +11,9 @@ import EmptyTransactions from './empty-transactions';
 import ErrorRetrieving from '../../common/components/error-retrieving';
 import LoadingResourceList from '../../common/components/loading-resource-list';
 import NotFound from '../../common/components/not-found';
-import {getYearMonthStringFromDate} from '../services/format-date';
-import validateTransactionDate from '../services/validate-transaction-date';
-import monthDiff from '../services/month-diff';
+import {getYearMonthStringFromDate} from '../utils/format-date';
+import validateTransactionDate from '../utils/validate-transaction-date';
+import monthDiff from '../utils/month-diff';
 
 export class Content extends Component {
   render() {
@@ -93,10 +93,10 @@ export class Content extends Component {
   }
 
   fetchResources = (date) => {
-    const {transactionsActions, categoriesActions} = this.props;
-    this.fetchCategoriesXhr = categoriesActions.retrieveCategories();
+    const {readManyTransactions, readManyCategories} = this.props;
+    this.fetchCategoriesXhr = readManyCategories();
     const transactionDate = date.split('-');
-    this.fetchTransactionsXhr = transactionsActions.retrieveTransactions({
+    this.fetchTransactionsXhr = readManyTransactions({
       year: transactionDate[0],
       month: transactionDate[1]
     });
@@ -112,10 +112,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    transactionsActions: bindActionCreators(transactionsActionCreators, dispatch),
-    categoriesActions: bindActionCreators(categoriesActionCreators, dispatch)
-  };
+  return bindActionCreators({
+    ...transactionsActionCreators,
+    ...categoriesActionCreators
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Content);

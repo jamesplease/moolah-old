@@ -13,13 +13,13 @@ describe('transactions/reducer', function() {
     it('should return a new state with `creatingTransactionStatus` set to PENDING', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: null
       };
       const action = {type: actionTypes.CREATE_TRANSACTION};
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: 'PENDING'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -30,7 +30,7 @@ describe('transactions/reducer', function() {
     it('should return a new state with `creatingTransactionStatus` set to SUCCESS and the transaction', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.CREATE_TRANSACTION_SUCCESS,
@@ -46,12 +46,12 @@ describe('transactions/reducer', function() {
           {id: 3},
           {id: 4, pasta: 'yum'}
         ],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2},
-          {id: 3},
-          {id: 4, updatingStatus: null, isDeleting: false}
-        ],
+        resourcesMeta: {
+          1: {},
+          2: {},
+          3: {},
+          4: {updatingStatus: null, isDeleting: false}
+        },
         creatingTransactionStatus: 'SUCCESS'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -62,13 +62,13 @@ describe('transactions/reducer', function() {
     it('should return a new state with `creatingTransactionStatus` set to FAILURE', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: 'PENDING'
       };
       const action = {type: actionTypes.CREATE_TRANSACTION_FAILURE};
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: 'FAILURE'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -79,13 +79,13 @@ describe('transactions/reducer', function() {
     it('should return a new state with `creatingTransactionStatus` set to null', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: 'PENDING'
       };
       const action = {type: actionTypes.CREATE_TRANSACTION_ABORTED};
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: null
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -96,13 +96,13 @@ describe('transactions/reducer', function() {
     it('should return a new state with `creatingTransactionStatus` set to null', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: 'PENDING'
       };
       const action = {type: actionTypes.CREATE_TRANSACTION_RESET_RESOLUTION};
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingTransactionStatus: null
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -131,10 +131,10 @@ describe('transactions/reducer', function() {
       var newState = {
         oink: true,
         resources: [{id: 2, name: 'pizza'}, {id: 5, name: 'sandwich'}],
-        resourcesMeta: [
-          {id: 2, updatingStatus: null, isDeleting: false},
-          {id: 5, updatingStatus: null, isDeleting: false}
-        ],
+        resourcesMeta: {
+          2: {updatingStatus: null, isDeleting: false},
+          5: {updatingStatus: null, isDeleting: false}
+        },
         retrievingTransactionsStatus: 'SUCCESS'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -181,7 +181,7 @@ describe('transactions/reducer', function() {
     it('should return a new state with `updatingStatus` set to PENDING for that transaction', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.UPDATE_TRANSACTION,
@@ -189,11 +189,11 @@ describe('transactions/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'PENDING'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'PENDING'},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -203,7 +203,7 @@ describe('transactions/reducer', function() {
     it('should return a new state with `updatingStatus` set to SUCCESS for that transaction', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.UPDATE_TRANSACTION_SUCCESS,
@@ -218,11 +218,11 @@ describe('transactions/reducer', function() {
           {id: 2, pasta: 'yum'},
           {id: 3}
         ],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'SUCCESS'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'SUCCESS'},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -232,7 +232,7 @@ describe('transactions/reducer', function() {
     it('should return a new state with `updatingStatus` set to FAILURE for that transaction', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.UPDATE_TRANSACTION_FAILURE,
@@ -240,11 +240,11 @@ describe('transactions/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'FAILURE'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'FAILURE'},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -254,11 +254,11 @@ describe('transactions/reducer', function() {
     it('should return a new state with `updatingStatus` set to `null` for that transaction', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'FAILURE'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'FAILURE'},
+          3: {}
+        }
       };
       const action = {
         type: actionTypes.UPDATE_TRANSACTION_ABORTED,
@@ -266,11 +266,11 @@ describe('transactions/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: null},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: null},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -280,11 +280,11 @@ describe('transactions/reducer', function() {
     it('should return a new state with `updatingStatus` set to `null` for that transaction', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'FAILURE'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'FAILURE'},
+          3: {}
+        }
       };
       const action = {
         type: actionTypes.UPDATE_TRANSACTION_RESET_RESOLUTION,
@@ -292,11 +292,11 @@ describe('transactions/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: null},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: null},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -307,7 +307,7 @@ describe('transactions/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION,
@@ -318,11 +318,11 @@ describe('transactions/reducer', function() {
     it('should return a new state with `isDeleting` set to true for that transaction', () => {
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, isDeleting: true},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {isDeleting: true},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -333,7 +333,7 @@ describe('transactions/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION_SUCCESS,
@@ -344,7 +344,7 @@ describe('transactions/reducer', function() {
     it('should return a new state without the transaction in transactions', () => {
       var newState = {
         resources: [{id: 1}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 3}]
+        resourcesMeta: {1: {}, 2: null, 3: {}}
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -355,7 +355,7 @@ describe('transactions/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION_FAILURE,
@@ -366,11 +366,11 @@ describe('transactions/reducer', function() {
     it('should return a new state with `isDeleting` set to false for that transaction', () => {
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, isDeleting: false},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {isDeleting: false},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -381,7 +381,7 @@ describe('transactions/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_TRANSACTION_FAILURE,
@@ -392,11 +392,11 @@ describe('transactions/reducer', function() {
     it('should return a new state with `isDeleting` set to false for that transaction', () => {
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, isDeleting: false},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {isDeleting: false},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });

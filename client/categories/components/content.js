@@ -12,14 +12,14 @@ export class Content extends Component {
   render() {
     let contents;
     const {
-      retrievingCategoriesStatus, categories, retrieveCategories
+      retrievingCategoriesStatus, categories, readManyCategories
     } = this.props;
 
     if (retrievingCategoriesStatus === 'PENDING') {
       contents = <LoadingResourceList/>;
     } else if (retrievingCategoriesStatus === 'FAILURE') {
       contents = (<ErrorRetrieving
-        retry={retrieveCategories}
+        retry={readManyCategories}
         resourceName="Categories"/>);
     } else if (!categories.length) {
       contents = <EmptyCategories/>;
@@ -36,8 +36,8 @@ export class Content extends Component {
   }
 
   componentDidMount = () => {
-    const {retrieveCategories} = this.props;
-    this.fetchingCategoriesXhr = retrieveCategories();
+    const {readManyCategories} = this.props;
+    this.fetchingCategoriesXhr = readManyCategories();
   }
 
   componentWillUnmount = () => {
@@ -56,7 +56,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    retrieveCategories: categoriesActionCreators.retrieveCategories
+    readManyCategories: categoriesActionCreators.readManyCategories
   }, dispatch);
 }
 

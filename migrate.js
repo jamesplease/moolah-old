@@ -4,7 +4,7 @@ const fs = require('fs');
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
 
-const db = require('./server/util/db');
+const db = require('./server/utils/db');
 
 const migrationsDirectory = path.join(__dirname, 'migrations');
 const migrations = fs.readdirSync(migrationsDirectory)

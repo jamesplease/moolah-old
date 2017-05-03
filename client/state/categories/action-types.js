@@ -1,5 +1,5 @@
 import keyMirror from 'keymirror';
-import createAsyncConstants from '../util/create-async-constants';
+import createAsyncConstants from '../utils/create-async-constants';
 
 const asyncActions = createAsyncConstants(
   'CREATE_CATEGORY',

@@ -43,20 +43,13 @@
 }
 
 .form-row {
-  margin-bottom: 20px;
-  display: flex;
+  margin-bottom: 15px;
+}
 
-  &:last-child {
-    margin: 0;
-  }
-
-  > .btn {
-    margin-right: 16px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #868686;
 }
 
 .form-error {

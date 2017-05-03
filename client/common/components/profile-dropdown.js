@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import xhr from 'xhr';
 import ReactCSSTransitionGroup from '../../vendor/css-transition-group';
-import defaultXhrHeaders from '../services/default-xhr-headers';
+import defaultXhrHeaders from '../utils/default-xhr-headers';
 import DropdownOverlay from './dropdown-overlay';
 
 export default class ProfileDropdown extends Component {

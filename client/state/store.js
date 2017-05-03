@@ -6,7 +6,7 @@ import connection from './connection/reducer';
 import categories from './categories/reducer';
 import transactions from './transactions/reducer';
 import alerts from './alerts/reducer';
-import loadInitialData from '../common/services/load-initial-data';
+import loadInitialData from '../common/utils/load-initial-data';
 
 const initialData = loadInitialData();
 

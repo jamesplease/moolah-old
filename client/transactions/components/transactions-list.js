@@ -7,7 +7,7 @@ import TransactionListItem from './transaction-list-item';
 import ModifyTransactionModal from './modify-transaction-modal';
 import DeleteTransactionModal from './delete-transaction-modal';
 import * as transactionsActionCreators from '../../state/transactions/action-creators';
-import {getDayFromDate} from '../services/format-date';
+import {getDayFromDate} from '../utils/format-date';
 import Modal from '../../common/components/modal';
 
 export class TransactionsList extends Component {
@@ -57,7 +57,7 @@ export class TransactionsList extends Component {
     const {transactionsMeta} = this.props;
 
     const transactionId = this.state.transactionToDelete.id;
-    const transactionBeingDeletedMeta = _.find(transactionsMeta, {id: transactionId});
+    const transactionBeingDeletedMeta = transactionsMeta[transactionId];
     const isDeletingTransaction = transactionBeingDeletedMeta.isDeleting;
 
     const childrenProps = {
@@ -78,7 +78,7 @@ export class TransactionsList extends Component {
     const {transactionsMeta} = this.props;
 
     const transactionId = this.state.transactionToUpdate.id;
-    const transactionBeingUpdatedMeta = _.find(transactionsMeta, {id: transactionId});
+    const transactionBeingUpdatedMeta = transactionsMeta[transactionId];
     const isUpdating = transactionBeingUpdatedMeta.updatingStatus === 'PENDING';
 
     const childrenProps = {
@@ -135,7 +135,7 @@ export class TransactionsList extends Component {
 
     const {transactionsMeta} = nextProps;
     const {id} = this.state.transactionToUpdate;
-    const updatingTransactionMeta = _.find(transactionsMeta, {id});
+    const updatingTransactionMeta = transactionsMeta[id];
 
     if (updatingTransactionMeta.updatingStatus === 'SUCCESS') {
       this.setState({

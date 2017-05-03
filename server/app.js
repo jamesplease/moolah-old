@@ -19,13 +19,13 @@ const errorLogs = require('./logging/error-logs');
 const infoLogs = require('./logging/info-logs');
 const serveApp = require('./serve-app');
 const store = require('./store');
-const db = require('./util/db');
-const baseSql = require('./util/base-sql');
+const db = require('./utils/db');
+const baseSql = require('./utils/base-sql');
 
 const envPath = global.ENV_PATH ? global.ENV_PATH : '.env';
 require('dotenv').config({path: envPath});
 
-const configurePassport = require('./util/configure-passport');
+const configurePassport = require('./utils/configure-passport');
 const dbConfig = require('../config/db-config');
 
 // Heroku sets NODE_ENV to production by default. So if we're not

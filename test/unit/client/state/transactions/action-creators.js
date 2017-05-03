@@ -172,7 +172,7 @@ describe('transactions/actionCreators', function() {
     });
   });
 
-  describe('retrieveTransactions', () => {
+  describe('readManyTransactions', () => {
     beforeEach(() => {
       this.getState = function() {
         return {
@@ -196,7 +196,7 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.retrieveTransactions();
+      const thunk = actionCreators.readManyTransactions();
       thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
@@ -206,7 +206,7 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.retrieveTransactions();
+      const thunk = actionCreators.readManyTransactions();
       const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/transactions?filter[user]=100');
@@ -214,7 +214,7 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.retrieveTransactions();
+      const thunk = actionCreators.readManyTransactions();
       const req = thunk(this.dispatch, this.getState);
       const respBody = JSON.stringify({
         data: [
@@ -237,7 +237,7 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.retrieveTransactions();
+      const thunk = actionCreators.readManyTransactions();
       const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
@@ -250,7 +250,7 @@ describe('transactions/actionCreators', function() {
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.retrieveTransactions();
+      const thunk = actionCreators.readManyTransactions();
       const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;

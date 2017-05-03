@@ -2,7 +2,7 @@ import _ from 'lodash';
 import xhr from 'xhr';
 import actionTypes from './action-types';
 import authActionTypes from '../auth/action-types';
-import defaultXhrHeaders from '../../common/services/default-xhr-headers';
+import defaultXhrHeaders from '../../common/utils/default-xhr-headers';
 
 export function resetCreateCategoryResolution() {
   return {
@@ -60,7 +60,7 @@ export function resetRetrieveCategoriesResolution() {
   };
 }
 
-export function retrieveCategories() {
+export function readManyCategories() {
   return (dispatch, getState) => {
     const {auth} = getState();
     const userId = auth.user.id;

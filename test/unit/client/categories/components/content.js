@@ -7,7 +7,7 @@ import CategoriesList from '../../../../../client/categories/components/categori
 import EmptyCategories from '../../../../../client/categories/components/empty-categories';
 import ErrorRetrieving from '../../../../../client/common/components/error-retrieving';
 import LoadingResourceList from '../../../../../client/common/components/loading-resource-list';
-import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
+import generateWrapperGenerator from '../../../../utils/generate-wrapper-generator';
 
 const mapStateToProps = __get__('mapStateToProps');
 const mapDispatchToProps = __get__('mapDispatchToProps');
@@ -31,9 +31,9 @@ describe('CategoriesContent', function() {
 
   describe('mapDispatchToProps', () => {
     beforeEach(() => {
-      this.retrieveCategories = stub().returns({pasta: true});
+      this.readManyCategories = stub().returns({pasta: true});
       __Rewire__('categoriesActionCreators', {
-        retrieveCategories: this.retrieveCategories
+        readManyCategories: this.readManyCategories
       });
 
       this.dispatch = stub();
@@ -45,12 +45,12 @@ describe('CategoriesContent', function() {
     });
 
     it('returns the right props', () => {
-      expect(this.props).to.have.keys(['retrieveCategories']);
+      expect(this.props).to.have.keys(['readManyCategories']);
     });
 
-    it('returns a functioning `retrieveCategories`', () => {
-      this.props.retrieveCategories();
-      expect(this.retrieveCategories).to.have.been.calledOnce;
+    it('returns a functioning `readManyCategories`', () => {
+      this.props.readManyCategories();
+      expect(this.readManyCategories).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({pasta: true});
     });
@@ -65,21 +65,21 @@ describe('CategoriesContent', function() {
 
       this.mockCategories = [{id: 1}, {id: 2}];
 
-      this.retrieveCategories = stub().returns(this.mockXhr);
+      this.readManyCategories = stub().returns(this.mockXhr);
 
       this.defaultProps = {
-        retrieveCategories: this.retrieveCategories,
+        readManyCategories: this.readManyCategories,
         categories: this.mockCategories,
-        retrieveCategoriesStatus: null
+        readManyCategoriesStatus: null
       };
 
       this.generator = generateWrapperGenerator(this.defaultProps, Content);
     });
 
-    it('should call `retrieveCategories` on mount', () => {
+    it('should call `readManyCategories` on mount', () => {
       const wrapper = this.generator.shallow();
       wrapper.instance().componentDidMount();
-      expect(this.retrieveCategories).to.have.been.calledOnce;
+      expect(this.readManyCategories).to.have.been.calledOnce;
     });
 
     describe('unmounting', () => {
@@ -109,7 +109,7 @@ describe('CategoriesContent', function() {
       });
       const errorRetrieving = (
         <ErrorRetrieving
-          retry={this.retrieveCategories}
+          retry={this.readManyCategories}
           resourceName="Categories"/>
       );
       expect(wrapper.contains(errorRetrieving)).to.be.true;

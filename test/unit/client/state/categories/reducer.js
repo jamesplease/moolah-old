@@ -13,13 +13,13 @@ describe('categories/reducer', function() {
     it('should return a new state with `creatingCategoryStatus` set to PENDING', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: null
       };
       const action = {type: actionTypes.CREATE_CATEGORY};
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: 'PENDING'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -30,7 +30,7 @@ describe('categories/reducer', function() {
     it('should return a new state with `creatingCategoryStatus` set to SUCCESS and the category', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.CREATE_CATEGORY_SUCCESS,
@@ -46,12 +46,12 @@ describe('categories/reducer', function() {
           {id: 3},
           {id: 4, pasta: 'yum'}
         ],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2},
-          {id: 3},
-          {id: 4, updatingStatus: null, isDeleting: false}
-        ],
+        resourcesMeta: {
+          1: {},
+          2: {},
+          3: {},
+          4: {updatingStatus: null, isDeleting: false}
+        },
         creatingCategoryStatus: 'SUCCESS'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -62,7 +62,7 @@ describe('categories/reducer', function() {
     it('should return a new state with `creatingCategoryStatus` set to FAILURE', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: 'PENDING'
       };
       const action = {
@@ -74,7 +74,7 @@ describe('categories/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: 'FAILURE'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -85,7 +85,7 @@ describe('categories/reducer', function() {
     it('should return a new state with `creatingCategoryStatus` set to null', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: 'PENDING'
       };
       const action = {
@@ -97,7 +97,7 @@ describe('categories/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: null
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -108,13 +108,13 @@ describe('categories/reducer', function() {
     it('should return a new state with `creatingCategoryStatus` set to null', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: 'PENDING'
       };
       const action = {type: actionTypes.CREATE_CATEGORY_RESET_RESOLUTION};
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}],
+        resourcesMeta: {1: {}, 2: {}, 3: {}},
         creatingCategoryStatus: null
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -143,10 +143,10 @@ describe('categories/reducer', function() {
       var newState = {
         oink: true,
         resources: [{id: 2, name: 'pizza'}, {id: 5, name: 'sandwich'}],
-        resourcesMeta: [
-          {id: 2, updatingStatus: null, isDeleting: false},
-          {id: 5, updatingStatus: null, isDeleting: false}
-        ],
+        resourcesMeta: {
+          2: {updatingStatus: null, isDeleting: false},
+          5: {updatingStatus: null, isDeleting: false}
+        },
         retrievingCategoriesStatus: 'SUCCESS'
       };
       expect(reducer(state, action)).to.deep.equal(newState);
@@ -193,7 +193,7 @@ describe('categories/reducer', function() {
     it('should return a new state with `updatingStatus` set to PENDING for that category', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY,
@@ -203,11 +203,11 @@ describe('categories/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'PENDING'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'PENDING'},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -217,7 +217,7 @@ describe('categories/reducer', function() {
     it('should return a new state with `updatingStatus` set to SUCCESS for that category', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_SUCCESS,
@@ -232,11 +232,11 @@ describe('categories/reducer', function() {
           {id: 2, pasta: 'yum'},
           {id: 3}
         ],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'SUCCESS'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'SUCCESS'},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -246,7 +246,7 @@ describe('categories/reducer', function() {
     it('should return a new state with `updatingStatus` set to FAILURE for that category', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_FAILURE,
@@ -256,11 +256,11 @@ describe('categories/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'FAILURE'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'FAILURE'},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -270,11 +270,11 @@ describe('categories/reducer', function() {
     it('should return a new state with `updatingStatus` set to `null` for that category', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'FAILURE'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'FAILURE'},
+          3: {}
+        }
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_ABORTED,
@@ -284,11 +284,11 @@ describe('categories/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: null},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: null},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -298,11 +298,11 @@ describe('categories/reducer', function() {
     it('should return a new state with `updatingStatus` set to `null` for that category', () => {
       const state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: 'FAILURE'},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: 'FAILURE'},
+          3: {}
+        }
       };
       const action = {
         type: actionTypes.UPDATE_CATEGORY_RESET_RESOLUTION,
@@ -312,11 +312,11 @@ describe('categories/reducer', function() {
       };
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, updatingStatus: null},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {updatingStatus: null},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -327,7 +327,7 @@ describe('categories/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_CATEGORY,
@@ -340,11 +340,11 @@ describe('categories/reducer', function() {
     it('should return a new state with `isDeleting` set to true for that category', () => {
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, isDeleting: true},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {isDeleting: true},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -355,7 +355,7 @@ describe('categories/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_SUCCESS,
@@ -368,7 +368,7 @@ describe('categories/reducer', function() {
     it('should return a new state without the category in categories', () => {
       var newState = {
         resources: [{id: 1}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 3}]
+        resourcesMeta: {1: {}, 2: null, 3: {}}
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -379,7 +379,7 @@ describe('categories/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_FAILURE,
@@ -392,11 +392,11 @@ describe('categories/reducer', function() {
     it('should return a new state with `isDeleting` set to false for that category', () => {
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, isDeleting: false},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {isDeleting: false},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });
@@ -407,7 +407,7 @@ describe('categories/reducer', function() {
     beforeEach(() => {
       state = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [{id: 1}, {id: 2}, {id: 3}]
+        resourcesMeta: {1: {}, 2: {}, 3: {}}
       };
       action = {
         type: actionTypes.DELETE_CATEGORY_FAILURE,
@@ -420,11 +420,11 @@ describe('categories/reducer', function() {
     it('should return a new state with `isDeleting` set to false for that category', () => {
       var newState = {
         resources: [{id: 1}, {id: 2}, {id: 3}],
-        resourcesMeta: [
-          {id: 1},
-          {id: 2, isDeleting: false},
-          {id: 3}
-        ]
+        resourcesMeta: {
+          1: {},
+          2: {isDeleting: false},
+          3: {}
+        }
       };
       expect(reducer(state, action)).to.deep.equal(newState);
     });

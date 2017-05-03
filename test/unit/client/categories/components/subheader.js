@@ -2,7 +2,7 @@ import {
   CategoriesSubheader, __Rewire__, __ResetDependency__, __get__
 } from '../../../../../client/categories/components/subheader';
 import Modal from '../../../../../client/common/components/modal';
-import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
+import generateWrapperGenerator from '../../../../utils/generate-wrapper-generator';
 
 const mapStateToProps = __get__('mapStateToProps');
 const mapDispatchToProps = __get__('mapDispatchToProps');

@@ -167,7 +167,7 @@ describe('categories/actionCreators', function() {
     });
   });
 
-  describe('retrieveCategories', () => {
+  describe('readManyCategories', () => {
     beforeEach(() => {
       this.getState = function() {
         return {
@@ -191,7 +191,7 @@ describe('categories/actionCreators', function() {
     });
 
     it('should dispatch a begin action before making the request', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.readManyCategories();
       thunk(this.dispatch, this.getState);
       expect(this.dispatch).to.have.been.calledOnce;
       expect(this.dispatch).to.have.been.calledWithExactly({
@@ -201,7 +201,7 @@ describe('categories/actionCreators', function() {
     });
 
     it('should generate the expected request', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.readManyCategories();
       const req = thunk(this.dispatch, this.getState);
       expect(req).to.be.instanceof(this.FakeXMLHttpRequest);
       expect(req.url).to.equal('/api/categories?filter[user]=100');
@@ -209,7 +209,7 @@ describe('categories/actionCreators', function() {
     });
 
     it('should respond appropriately when there are no errors', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.readManyCategories();
       const req = thunk(this.dispatch, this.getState);
       const respBody = JSON.stringify({
         data: [
@@ -232,7 +232,7 @@ describe('categories/actionCreators', function() {
     });
 
     it('should respond appropriately when aborted', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.readManyCategories();
       const req = thunk(this.dispatch, this.getState);
       req.abort();
       expect(this.dispatch).to.have.been.calledTwice;
@@ -245,7 +245,7 @@ describe('categories/actionCreators', function() {
     });
 
     it('should respond appropriately when a error status code is returned', () => {
-      const thunk = actionCreators.retrieveCategories();
+      const thunk = actionCreators.readManyCategories();
       const req = thunk(this.dispatch, this.getState);
       req.respond(500);
       expect(this.dispatch).to.have.been.calledTwice;

@@ -2,7 +2,8 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
-import validateEmoji from '../../common/services/validate-emoji';
+import RequiredInput from '../../inputs/components/required-input';
+import validateEmoji from '../../common/utils/validate-emoji';
 
 export class ModifyCategoryModal extends Component {
   render() {
@@ -11,7 +12,8 @@ export class ModifyCategoryModal extends Component {
       handleSubmit,
       confirmInProgress,
       onClickCancel,
-      isEditMode
+      isEditMode,
+      invalid
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -77,10 +79,10 @@ export class ModifyCategoryModal extends Component {
           className="modal-body">
           {errorEl}
           <div className="form-row">
-            <input
+            <label className="form-label">Name</label>
+            <RequiredInput
               type="text"
               className={labelClass}
-              placeholder="Enter name"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -91,10 +93,11 @@ export class ModifyCategoryModal extends Component {
               {...label}/>
           </div>
           <div className="form-row">
+            <label className="form-label">Emoji</label>
             <input
               type="text"
               className="text-input"
-              placeholder="Enter emoji"
+              placeholder=":smile:"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -116,8 +119,8 @@ export class ModifyCategoryModal extends Component {
           <button
             form="modify-category-modal-form"
             type="submit"
-            className="btn btn-info createCategoryModal-confirmBtn"
-            disabled={confirmInProgress || treatFormInvalid}>
+            className="btn createCategoryModal-confirmBtn"
+            disabled={confirmInProgress || invalid}>
             {confirmText}
           </button>
         </div>
@@ -130,7 +133,9 @@ export class ModifyCategoryModal extends Component {
   }
 
   componentDidMount = () => {
-    this.labelInput.focus();
+    if (this.labelInput) {
+      this.labelInput.querySelector('input').focus();
+    }
   }
 
   mouseDownCancel = () => {
@@ -165,8 +170,8 @@ export class ModifyCategoryModal extends Component {
 }
 
 function validate(values, props) {
-  const newLabel = _.result(String(values.label), 'trim');
-  const newEmoji = _.result(String(values.emoji), 'trim');
+  const newLabel = values.label && _.result(String(values.label), 'trim');
+  const newEmoji = values.emoji && _.result(String(values.emoji), 'trim');
 
   const errors = {};
 

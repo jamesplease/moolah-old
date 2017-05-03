@@ -49,6 +49,15 @@ export function getYearMonthStringFromDate(date) {
   return `${year}-${monthString}`;
 }
 
+// Returns a string of the form "2016-10-02" from a JS Date obj
+export function getDateStringFromDate(date) {
+  const month = date.getMonth() + 1;
+  const monthString = ensureLeadingZero(month);
+  const year = date.getFullYear();
+  const day = ensureLeadingZero(date.getDay());
+  return `${year}-${monthString}-${day}`;
+}
+
 export function getNextMonth(date) {
   let newDate;
   if (date.getMonth() === 11) {

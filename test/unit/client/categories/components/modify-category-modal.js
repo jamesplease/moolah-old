@@ -1,7 +1,7 @@
 import {
   ModifyCategoryModal, __GetDependency__
 } from '../../../../../client/categories/components/modify-category-modal';
-import generateWrapperGenerator from '../../../../services/generate-wrapper-generator';
+import generateWrapperGenerator from '../../../../utils/generate-wrapper-generator';
 
 const validate = __GetDependency__('validate');
 
@@ -108,7 +108,11 @@ describe('ModifyCategoryModal', function() {
       const wrapper = this.generator.shallow();
       const focusStub = stub();
       wrapper.instance().labelInput = {
-        focus: focusStub
+        querySelector() {
+          return {
+            focus: focusStub
+          };
+        }
       };
       wrapper.instance().componentDidMount();
       expect(focusStub).to.have.been.calledOnce;
@@ -168,7 +172,6 @@ describe('ModifyCategoryModal', function() {
         expect(labelInput.hasClass('text-input')).to.be.true;
         expect(labelInput.hasClass('invalid-input')).to.be.false;
         expect(labelInput.prop('type')).to.equal('text');
-        expect(labelInput.prop('placeholder')).to.equal('Enter name');
         expect(labelInput.prop('disabled')).to.be.falsey;
       });
 
@@ -272,15 +275,9 @@ describe('ModifyCategoryModal', function() {
           expect(confirmBtn.prop('disabled')).to.be.falsey;
         });
 
-        it('should be disabled when there is an error and the form has been touched', () => {
+        it('should be disabled when the form is invalid', () => {
           const props = {
-            fields: {
-              label: {
-                error: 'sorry',
-                touched: true
-              },
-              emoji: {}
-            }
+            invalid: true
           };
           const wrapper = this.generator.shallow(props);
           const confirmBtn = wrapper.find('.createCategoryModal-confirmBtn');

@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import classNames from 'classnames';
-import validateTransactionDate from '../services/validate-transaction-date';
+import validateTransactionDate from '../utils/validate-transaction-date';
+import {getDateStringFromDate} from '../utils/format-date';
+import RequiredInput from '../../inputs/components/required-input';
 
 export class ModifyTransactionModal extends Component {
   render() {
@@ -13,7 +15,8 @@ export class ModifyTransactionModal extends Component {
       confirmInProgress,
       onClickCancel,
       isEditMode,
-      categories
+      categories,
+      invalid
     } = this.props;
 
     function onClickCancelBtn(e) {
@@ -86,10 +89,10 @@ export class ModifyTransactionModal extends Component {
           className="modal-body">
           {errorEl}
           <div className="form-row">
-            <input
+            <label className="form-label">Description</label>
+            <RequiredInput
               type="text"
               className={labelClass}
-              placeholder="Description"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -100,10 +103,11 @@ export class ModifyTransactionModal extends Component {
               {...description}/>
           </div>
           <div className="form-row">
-            <input
+            <label className="form-label">Value</label>
+            <RequiredInput
               type="text"
               className="text-input"
-              placeholder="Value"
+              placeholder="0.00"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -113,10 +117,11 @@ export class ModifyTransactionModal extends Component {
               {...value}/>
           </div>
           <div className="form-row">
-            <input
+            <label className="form-label">Date</label>
+            <RequiredInput
               type="date"
               className="text-input"
-              placeholder="Date"
+              placeholder="04/10/2017"
               autoComplete="off"
               autoCorrect={true}
               disabled={confirmInProgress}
@@ -126,6 +131,7 @@ export class ModifyTransactionModal extends Component {
               {...date}/>
           </div>
           <div className="form-row">
+            <label className="form-label">Category</label>
             <select {...category} value={category.value || ''}>
               <option value="">
                 Select a category...
@@ -150,8 +156,8 @@ export class ModifyTransactionModal extends Component {
           <button
             form="modify-transaction-modal-form"
             type="submit"
-            className="btn btn-info createTransactionModal-confirmBtn"
-            disabled={confirmInProgress || treatFormInvalid}>
+            className="btn createTransactionModal-confirmBtn"
+            disabled={confirmInProgress || invalid}>
             {confirmText}
           </button>
         </div>
@@ -164,7 +170,9 @@ export class ModifyTransactionModal extends Component {
   }
 
   componentDidMount = () => {
-    this.descriptionInput.focus();
+    if (this.descriptionInput) {
+      this.descriptionInput.querySelector('input').focus();
+    }
   }
 
   mouseDownCancel = () => {
@@ -209,9 +217,9 @@ const ConnectedModifyTransactionModal = connect(mapStateToProps)(ModifyTransacti
 
 function validate(values) {
   // Sometimes, redux-form converts values into a number...
-  const newDescription = _.result(String(values.description), 'trim');
-  const newValue = _.result(String(values.value), 'trim');
-  const newDate = _.result(String(values.date), 'trim');
+  const newDescription = values.description && _.result(String(values.description), 'trim');
+  const newValue = values.value && _.result(String(values.value), 'trim');
+  const newDate = values.date && _.result(String(values.date), 'trim');
 
   const errors = {};
 
@@ -243,6 +251,11 @@ function reduxFormInitialState(state, nextProps) {
   let initialValues = _.get(nextProps.transaction, 'attributes', {});
   // We also grab the relationship information for this transaction
   initialValues.category = _.get(nextProps.transaction, 'relationships.category.data.id');
+
+  if (!nextProps.isEditMode) {
+    initialValues.date = getDateStringFromDate(new Date());
+  }
+
   return {initialValues};
 }
 
