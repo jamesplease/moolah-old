@@ -19,7 +19,7 @@ export default function Transaction(props) {
 
   return (
     <li className="resourceListItem">
-      <button className="transactionListItem-btn" onClick={() => onClickEdit(transaction)}>
+      <button className="resourceListItem_btn transactionListItem-btn" onClick={() => onClickEdit(transaction)}>
         <div className="transactionListItem-editBtn-container">
           <span className="categoryListItem-emoji" dangerouslySetInnerHTML={categoryEmojiHtml}/>
           <span className="transactionListItem-description">
