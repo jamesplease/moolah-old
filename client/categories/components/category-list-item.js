@@ -19,7 +19,7 @@ export default function CategoryListItem(props) {
 
   return (
     <li className="resourceListItem categoryListItem">
-      <button className="categoryListItem-labelBtn" onClick={() => onClickEdit(category)}>
+      <button className="resourceListItem_btn categoryListItem-labelBtn" onClick={() => onClickEdit(category)}>
         <div className="categoryListItem-labelBtn-container">
           <span className="categoryListItem-emoji" dangerouslySetInnerHTML={categoryEmojiHtml}/>
           <span className="categoryListItem-label">

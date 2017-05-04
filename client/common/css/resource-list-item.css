@@ -42,6 +42,15 @@
   }
 }
 
+.resourceListItem_btn {
+  color: inherit;
+
+  &:active,
+  &:hover {
+    color: inherit;
+  }
+}
+
 .resourceListItem-primaryBtn {
   color: #29aeff;
   font-size: 15px;
