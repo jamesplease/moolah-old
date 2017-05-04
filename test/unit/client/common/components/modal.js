@@ -1,33 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import preventScroll from 'prevent-scroll';
 import Modal from '../../../../../client/common/components/modal';
 
 describe('Modal', function() {
-  describe('mounting', () => {
-    beforeEach(() => {
-      stub(preventScroll, 'on');
-    });
-
-    it('should disable scrolling', () => {
-      const wrapper = shallow(<Modal/>);
-      wrapper.instance().componentDidMount();
-      expect(preventScroll.on).to.have.been.calledOnce;
-    });
-  });
-
-  describe('unmounting', () => {
-    beforeEach(() => {
-      stub(preventScroll, 'off');
-    });
-
-    it('should disable scrolling', () => {
-      const wrapper = shallow(<Modal/>);
-      wrapper.instance().componentWillUnmount();
-      expect(preventScroll.off).to.have.been.calledOnce;
-    });
-  });
-
   describe('rendering', () => {
     it('should render the modal as a child', () => {
       const wrapper = shallow(<Modal isOpen={true}/>);

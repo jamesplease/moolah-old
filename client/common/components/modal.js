@@ -33,11 +33,12 @@ export default class Modal extends Component {
     );
   }
 
-  componentDidMount() {
-    preventScroll.on();
-  }
-
-  componentWillUnmount() {
-    preventScroll.off();
+  componentWillReceiveProps(nextProps) {
+    const {isOpen} = this.props;
+    if (nextProps.isOpen && !isOpen) {
+      preventScroll.on();
+    } else if (!nextProps.isOpen && isOpen) {
+      preventScroll.off();
+    }
   }
 }
