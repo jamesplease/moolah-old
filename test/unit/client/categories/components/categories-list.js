@@ -115,11 +115,6 @@ describe('CategoriesList', function() {
       expect(wrapper.hasClass('categoriesList resourceListContainer')).to.be.true;
     });
 
-    it('should not have any modal', () => {
-      const wrapper = this.generator.shallow();
-      expect(wrapper.find(Modal)).to.have.length(0);
-    });
-
     it('should have a CSSTransitionGroup with the right props', () => {
       const wrapper = this.generator.shallow();
       const transitionGroup = wrapper.find(ReactCSSTransitionGroup);
@@ -161,12 +156,6 @@ describe('CategoriesList', function() {
         this.wrapper.update();
       });
 
-      it('should show the modal', () => {
-        const modal = this.wrapper.find(Modal);
-        expect(modal).to.have.length(1);
-        expect(modal.prop('modalClassName')).to.equal('deleteCategoryModal-container');
-      });
-
       it('should render a ModifyCategoryModal within the modal', () => {
         const modal = this.wrapper.find(Modal);
         const deleteCategoryModal = modal.find(DeleteCategoryModal);
@@ -180,22 +169,6 @@ describe('CategoriesList', function() {
         expect(deleteCategoryModal.prop('onClickDelete')).to.equal(this.wrapper.instance().onConfirmDeleteModal);
         expect(deleteCategoryModal.prop('category')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(deleteCategoryModal.prop('deletingCategory')).to.be.falsey;
-      });
-
-      it('should close the modal when `onClickModalCancel` is called', () => {
-        this.wrapper.instance().onClickModalCancel();
-        this.wrapper.update();
-        expect(this.wrapper.find(Modal)).to.have.length(0);
-      });
-
-      it('should close the modal when new props are passed in', () => {
-        this.wrapper.setProps({
-          categories: [
-            {id: 10, attributes: {label: 'pizza'}},
-            {id: 5, attributes: {label: 'zebras'}}
-          ]
-        });
-        expect(this.wrapper.find(Modal)).to.have.length(0);
       });
 
       it('should call `deleteCategory` when `onConfirmDeleteModal` is called', () => {
@@ -235,12 +208,6 @@ describe('CategoriesList', function() {
         this.wrapper.update();
       });
 
-      it('should show the modal', () => {
-        const modal = this.wrapper.find(Modal);
-        expect(modal).to.have.length(1);
-        expect(modal.prop('modalClassName')).to.equal('modifyCategoryModal-container');
-      });
-
       it('should render a ModifyCategoryModal within the modal', () => {
         const modal = this.wrapper.find(Modal);
         const modifyCategoryModal = modal.find(this.ModifyCategoryModal);
@@ -261,27 +228,6 @@ describe('CategoriesList', function() {
         expect(modifyCategoryModal.prop('confirmInProgress')).to.be.false;
         expect(modifyCategoryModal.prop('initialValues')).to.deep.equal({id: 2, attributes: {label: 'asdf'}});
         expect(modifyCategoryModal.prop('isEditMode')).to.be.true;
-      });
-
-      it('should close the modal when `onClickModalCancel` is called', () => {
-        this.wrapper.instance().onClickModalCancel();
-        this.wrapper.update();
-        expect(this.wrapper.find(Modal)).to.have.length(0);
-      });
-
-      it('should close the modal when new props are passed in', () => {
-        this.wrapper.setProps({
-          categoriesMeta: {
-            10: {},
-            2: {updatingStatus: 'SUCCESS'},
-            5: {}
-          }
-        });
-        expect(this.wrapper.find(Modal)).to.have.length(0);
-        expect(this.resetUpdateCategoryResolution).to.have.been.calledOnce;
-        expect(this.resetUpdateCategoryResolution).to.have.been.calledWithExactly({
-          categoryId: 2
-        });
       });
 
       it('should call `updateCategory` when `onConfirmEditModal` is called', () => {

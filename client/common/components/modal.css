@@ -10,6 +10,33 @@
   display: flex;
 }
 
+.modalTransition-enter .modal,
+.modalTransition-appear .modal {
+  transform: scale(0.94);
+  opacity: 0;
+}
+
+.modalTransition-enter.modalTransition-enter-active .modal,
+.modalTransition-appear.modalTransition-appear-active .modal,
+.modalTransition-leave .modal {
+  opacity: 1;
+  transition: transform 100ms ease-out, opacity 100ms ease-out;
+}
+
+.modalTransition-enter.modalTransition-enter-active .modal,
+.modalTransition-appear.modalTransition-appear-active .modal {
+  transform: scale(1.02);
+}
+
+.modalTransition-leave .modal {
+  transform: scale(1);
+}
+
+.modalTransition-leave.modalTransition-leave-active .modal {
+  transform: scale(0.88);
+  opacity: 0;
+}
+
 .modal {
   border-radius: 6px;
   background: #fff;
@@ -17,6 +44,10 @@
   min-height: 50px;
   max-width: 85%;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.25);
+
+  transition: transform 70ms ease-in, opacity 70ms ease-in;
+  transform: scale(1);
+  opacity: 1;
 
   .modal-container {
     width: 320px;

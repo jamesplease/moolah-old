@@ -20,8 +20,8 @@ export class TransactionsList extends Component {
       'amount'
     );
 
-    const deleteModal = this.state.transactionToDelete ? this.getDeleteModal() : null;
-    const editModal = this.state.transactionToUpdate ? this.getEditModal() : null;
+    const deleteModal = this.getDeleteModal();
+    const editModal = this.getEditModal();
 
     const transitionGroupProps = {
       transitionName: 'resourceListItem',
@@ -56,8 +56,8 @@ export class TransactionsList extends Component {
   getDeleteModal = () => {
     const {transactionsMeta} = this.props;
 
-    const transactionId = this.state.transactionToDelete.id;
-    const transactionBeingDeletedMeta = transactionsMeta[transactionId];
+    const transactionId = _.get(this.state.transactionToDelete, 'id');
+    const transactionBeingDeletedMeta = _.get(transactionsMeta, `${transactionId}`, {});
     const isDeletingTransaction = transactionBeingDeletedMeta.isDeleting;
 
     const childrenProps = {
@@ -68,7 +68,7 @@ export class TransactionsList extends Component {
     };
 
     return (
-      <Modal modalClassName="deleteCategoryModal-container">
+      <Modal modalClassName="deleteCategoryModal-container" isOpen={this.state.transactionToDelete}>
         <DeleteTransactionModal {...childrenProps}/>
       </Modal>
     );
@@ -77,8 +77,8 @@ export class TransactionsList extends Component {
   getEditModal = () => {
     const {transactionsMeta} = this.props;
 
-    const transactionId = this.state.transactionToUpdate.id;
-    const transactionBeingUpdatedMeta = transactionsMeta[transactionId];
+    const transactionId = _.get(this.state.transactionToUpdate, 'id');
+    const transactionBeingUpdatedMeta = _.get(transactionsMeta, `${transactionId}`, {});
     const isUpdating = transactionBeingUpdatedMeta.updatingStatus === 'PENDING';
 
     const childrenProps = {
@@ -92,7 +92,7 @@ export class TransactionsList extends Component {
     };
 
     return (
-      <Modal modalClassName="modifyCategoryModal-container">
+      <Modal modalClassName="modifyCategoryModal-container" isOpen={this.state.transactionToUpdate}>
         <ModifyTransactionModal {...childrenProps}/>
       </Modal>
     );

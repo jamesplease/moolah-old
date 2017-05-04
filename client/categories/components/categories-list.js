@@ -15,8 +15,8 @@ export class CategoriesList extends Component {
       categories, isOnline
     } = this.props;
 
-    const deleteModal = this.state.categoryToDelete ? this.getDeleteModal() : null;
-    const editModal = this.state.categoryToUpdate ? this.getEditModal() : null;
+    const deleteModal = this.getDeleteModal();
+    const editModal = this.getEditModal();
 
     // Case-insensitive sort by the category's label
     const sortedCategories = _.sortBy(categories, c => c.attributes.label.toLowerCase());
@@ -94,19 +94,19 @@ export class CategoriesList extends Component {
   getDeleteModal = () => {
     const {categoriesMeta} = this.props;
 
-    const categoryId = this.state.categoryToDelete.id;
-    const categoryBeingDeletedMeta = categoriesMeta[categoryId];
+    const categoryId = _.get(this.state.categoryToDelete, 'id');
+    const categoryBeingDeletedMeta = _.get(categoriesMeta, `${categoryId}`, {});
     const isDeletingCategory = categoryBeingDeletedMeta.isDeleting;
 
     const childrenProps = {
       onClickCancel: this.onClickModalCancel,
       onClickDelete: this.onConfirmDeleteModal,
       category: this.state.categoryToDelete,
-      deletingCategory: isDeletingCategory
+      deletingCategory: isDeletingCategory,
     };
 
     return (
-      <Modal modalClassName="deleteCategoryModal-container">
+      <Modal modalClassName="deleteCategoryModal-container" isOpen={this.state.categoryToDelete}>
         <DeleteCategoryModal {...childrenProps}/>
       </Modal>
     );
@@ -115,8 +115,8 @@ export class CategoriesList extends Component {
   getEditModal = () => {
     const {categoriesMeta} = this.props;
 
-    const categoryId = this.state.categoryToUpdate.id;
-    const categoryBeingUpdatedMeta = categoriesMeta[categoryId];
+    const categoryId = _.get(this.state.categoryToUpdate, 'id');
+    const categoryBeingUpdatedMeta = _.get(categoriesMeta, `${categoryId}`, {});
     const isUpdating = categoryBeingUpdatedMeta.updatingStatus === 'PENDING';
 
     const childrenProps = {
@@ -126,11 +126,11 @@ export class CategoriesList extends Component {
       category: this.state.categoryToUpdate,
       confirmInProgress: isUpdating,
       initialValues: this.state.categoryToUpdate,
-      isEditMode: true
+      isEditMode: true,
     };
 
     return (
-      <Modal modalClassName="modifyCategoryModal-container">
+      <Modal modalClassName="modifyCategoryModal-container" isOpen={this.state.categoryToUpdate}>
         <ModifyCategoryModal {...childrenProps}/>
       </Modal>
     );

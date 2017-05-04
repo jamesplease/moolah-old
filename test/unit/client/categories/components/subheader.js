@@ -84,9 +84,9 @@ describe('CategoriesSubheader', function() {
       expect(wrapper.find('.subheader-title').text()).to.equal('Categories');
     });
 
-    it('does not render the modal', () => {
+    it('does not render the modal with `isOpen`', () => {
       const wrapper = this.generator.shallow();
-      expect(wrapper.find(Modal)).to.have.length(0);
+      expect(wrapper.find(Modal).prop('isOpen')).to.be.false;
     });
 
     describe('create button', () => {
@@ -119,8 +119,7 @@ describe('CategoriesSubheader', function() {
 
       it('shows the modal', () => {
         const modal = this.wrapper.find(Modal);
-        expect(modal).to.have.length(1);
-        expect(modal.prop('modalClassName')).to.equal('modifyCategoryModal-container');
+        expect(modal.prop('isOpen')).to.be.true;
       });
 
       it('has a ModifyCategoryModal', () => {
@@ -143,14 +142,14 @@ describe('CategoriesSubheader', function() {
       it('closes the modal when `onClickModalCancel` is called', () => {
         this.wrapper.instance().onClickModalCancel();
         this.wrapper.update();
-        expect(this.wrapper.find(Modal)).to.have.length(0);
+        expect(this.wrapper.find(Modal).prop('isOpen')).to.be.false;
       });
 
       it('closes the modal when new props are passed in', () => {
         this.wrapper.setProps({
           creatingCategoryStatus: 'SUCCESS'
         });
-        expect(this.wrapper.find(Modal)).to.have.length(0);
+        expect(this.wrapper.find(Modal).prop('isOpen')).to.be.false;
       });
     });
 
