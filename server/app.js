@@ -77,6 +77,8 @@ module.exports = function() {
           "'self'",
           // User profile pictures from Google
           '*.googleusercontent.com',
+          // Data URLs in CSS
+          'data:'
         ],
         fontSrc: [
           "'self'",
