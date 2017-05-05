@@ -59,13 +59,23 @@
   color: #c71818;
 }
 
-select:not([multi]) {
+.selectable {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
   width: 100%;
   height: 34px;
   padding: 0 10px;
   border: 1px solid #bbb;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+}
+
+.selectInput {
   -webkit-appearance: none;
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKCAYAAAC9vt6cAAAABGdBTUEAALGPC/xhBQAAAMxJREFUKBWFUDESwiAQBIoUWvEfG2utLJixTZMX5BW+IF+gsEpKxydRaWGDuwEcA2FyMwfH3u5yIARiGIYDcsd6K8gjP/EUDicp5QPAuGUS+yP51NFEIVvvfYP9iKyaJDF5kd+iFkprfcU+8YBYNfkXB5qYok5IAtbaxjl3RzmPhf2JPHdd966IL8aYDzjBgEXFxLCF5GQM3vwTE5gnYMHITfBZL7x3H7qlmPjCgEBuQgxR3BzgFQM2MpOqmNxiAoKMaNLjzbf0YaGzXL8J4Gf39tRqLQAAAABJRU5ErkJggg==') right 8px center no-repeat;
   background-size: 10px 6px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
 }

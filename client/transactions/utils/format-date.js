@@ -12,6 +12,15 @@ export function getDayFromDate(date) {
   return date.split('-')[2];
 }
 
+// Generate a reliable JS Date object from dateString
+export function createDateFromString(dateString) {
+  return new Date(
+    getYearFromDate(dateString),
+    getMonthFromDate(dateString) - 1,
+    getDayFromDate(dateString)
+  );
+}
+
 // "2016-10" => "October 2016"
 export function formatDate(date) {
   const dateArr = date.split('-');
@@ -54,7 +63,7 @@ export function getDateStringFromDate(date) {
   const month = date.getMonth() + 1;
   const monthString = ensureLeadingZero(month);
   const year = date.getFullYear();
-  const day = ensureLeadingZero(date.getDay());
+  const day = ensureLeadingZero(date.getDate());
   return `${year}-${monthString}-${day}`;
 }
 

@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import validateTransactionDate from '../utils/validate-transaction-date';
 import {getDateStringFromDate} from '../utils/format-date';
 import RequiredInput from '../../inputs/components/required-input';
+import DatePicker from '../../inputs/components/date-picker';
 
 export class ModifyTransactionModal extends Component {
   render() {
@@ -118,21 +119,11 @@ export class ModifyTransactionModal extends Component {
           </div>
           <div className="form-row">
             <label className="form-label">Date</label>
-            <RequiredInput
-              type="date"
-              className="text-input"
-              placeholder="MM/DD/YYYY"
-              autoComplete="off"
-              autoCorrect={true}
-              disabled={confirmInProgress}
-              spellCheck={true}
-              inputMode="verbatim"
-              maxLength={35}
-              {...date}/>
+            <DatePicker date={date} disabled={confirmInProgress}/>
           </div>
           <div className="form-row">
             <label className="form-label">Category</label>
-            <select {...category} value={category.value || ''}>
+            <select {...category} value={category.value || ''} className="selectInput">
               <option value="">
                 Select a category...
               </option>
@@ -166,7 +157,8 @@ export class ModifyTransactionModal extends Component {
   }
 
   state = {
-    cancelBegun: false
+    cancelBegun: false,
+    date: null
   }
 
   componentDidMount = () => {
