@@ -8,6 +8,25 @@
   align-items: center;
   justify-content: center;
   display: flex;
+  transition: opacity 70ms ease-in;
+  background-color: rgba(17, 6, 36, 0.43);
+  opacity: 1;
+}
+
+.modalTransition-enter,
+.modalTransition-appear {
+  opacity: 0;
+}
+
+.modalTransition-enter.modalTransition-enter-active,
+.modalTransition-appear.modalTransition-appear-active,
+.modalTransition-leave {
+  opacity: 1;
+}
+
+.modalTransition-leave,
+.modalTransition-leave.modalTransition-leave-active {
+  opacity: 0;
 }
 
 .modalTransition-enter .modal,
