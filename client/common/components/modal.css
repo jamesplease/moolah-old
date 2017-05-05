@@ -5,12 +5,16 @@
   bottom: 0;
   left: 0;
   z-index: $zIndex-overlay;
-  align-items: center;
-  justify-content: center;
-  display: flex;
   transition: opacity 70ms ease-in;
   background-color: rgba(17, 6, 36, 0.43);
   opacity: 1;
+  display: block;
+
+  @media screen and (width < $md-screen) {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
 }
 
 .modalTransition-enter,
@@ -67,6 +71,10 @@
   transition: transform 70ms ease-in, opacity 70ms ease-in;
   transform: scale(1);
   opacity: 1;
+
+  @media screen and (width >= $md-screen) {
+    margin: 17vh auto 0;
+  }
 
   .modal-container {
     width: 320px;
