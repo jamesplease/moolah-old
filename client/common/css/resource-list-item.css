@@ -4,37 +4,59 @@
   border-bottom: 1px solid #eee;
   height: 40px;
   line-height: 40px;
-  transition: height 0.25s, opacity 0.25s;
+  transition: opacity 3.5s 3.5s;
   overflow: hidden;
   display: flex;
   opacity: 1;
   align-items: center;
+  position: static;
+  background: #fff;
 
   @media screen and (width >= $md-screen) {
     padding: 0;
   }
 
-  &.alert-enter,
-  &.alert-leave {
-    will-change: opacity, height;
+  &.resourceListItem-enter,
+  &.resourceListItem-leave {
+    will-change: opacity;
   }
 
   &.resourceListItem-enter,
   &.resourceListItem-appear {
     opacity: 0.01;
-    height: 0;
+    position: absolute;
+
+    ~ .resourceListItem {
+      will-change: transform;
+      transition: transform 7s;
+      transform: translateY(0);
+    }
   }
+
 
   &.resourceListItem-enter.resourceListItem-enter-active,
   &.resourceListItem-appear.resourceListItem-appear-active,
   &.resourceListItem-leave {
     opacity: 1;
-    height: 40px;
+
+    ~ .resourceListItem {
+      transform: translateY(40px);
+    }
+  }
+
+  &.resourceListItem-leave {
+    transition-delay: 0s;
   }
 
   &.resourceListItem-leave.resourceListItem-leave-active {
     opacity: 0.01;
-    height: 0;
+    position: absolute;
+
+    ~ .resourceListItem {
+      will-change: transform;
+      transition: transform 7s;
+      transform: translateY(0);
+    }
   }
 
   &:first-child {
