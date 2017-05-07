@@ -3,9 +3,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import classNames from 'classnames';
-import preventScroll from 'prevent-scroll';
 import Nav from './nav';
 import ProfileDropdown from './profile-dropdown';
+import preventScroll from '../../common/utils/prevent-scroll';
 
 export class LoggedInHeader extends Component {
   render() {

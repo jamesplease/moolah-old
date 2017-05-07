@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
-import preventScroll from 'prevent-scroll';
+import preventScroll from '../utils/prevent-scroll';
 import ReactCSSTransitionGroup from '../../vendor/css-transition-group';
 
 export default class Modal extends Component {

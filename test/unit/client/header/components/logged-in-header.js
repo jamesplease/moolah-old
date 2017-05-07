@@ -1,13 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
-import preventScroll from 'prevent-scroll';
-import {LoggedInHeader} from '../../../../../client/common/components/logged-in-header';
-import Nav from '../../../../../client/common/components/nav';
+import preventScroll from '../../../../../client/common/utils/prevent-scroll';
+import {LoggedInHeader} from '../../../../../client/header/components/logged-in-header';
+import Nav from '../../../../../client/header/components/nav';
 
 describe('LoggedInHeader', function() {
   beforeEach(() => {
-    stub(preventScroll);
+    stub(preventScroll, 'on');
+    stub(preventScroll, 'off');
   });
 
   it('should have the right class name', () => {
