@@ -2,22 +2,17 @@
 
 const _ = require('lodash');
 const pgp = require('pg-promise');
-const baseSql = require('./base-sql');
 const passport = require('passport');
+const uuid = require('uuid/v4');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 const defaultCategories = require('./default-categories');
+const baseSql = require('./base-sql');
 
 // I can delete this once I refactor to use async/await
 /* eslint max-nested-callbacks:off */
-
-// This is copy+pasted from Fortune's source, for now
-function createId() {
-  // eslint-disable-next-line
-  return Date.now() + '-' + ('00000000' + Math.floor(Math.random() * Math.pow(2, 32)).toString(16)).slice(-8);
-}
 
 function findUser(db, idType, id) {
   return db.one(`SELECT * FROM profile WHERE ${pgp.as.name(idType)}=$[id]`, {id});
@@ -91,7 +86,7 @@ module.exports = function(db) {
                     [tokenField]: accessToken,
                     [idField]: id,
                     name: profile.displayName,
-                    id: createId()
+                    id: uuid()
                   },
                   db
                 });
@@ -110,7 +105,7 @@ module.exports = function(db) {
                             label: category.label,
                             emoji: category.emoji,
                             user: result.id,
-                            id: createId()
+                            id: uuid()
                           },
                           db
                         })));
