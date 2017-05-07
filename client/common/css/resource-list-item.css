@@ -2,9 +2,10 @@
   @mixin content-padding;
   font-size: 16px;
   border-bottom: 1px solid #eee;
+  border-top: 1px solid #eee;
   height: 40px;
   line-height: 40px;
-  transition: opacity 3.5s 3.5s;
+  transition: opacity 4.5s 1.5s;
   overflow: hidden;
   display: flex;
   opacity: 1;
@@ -14,6 +15,10 @@
 
   @media screen and (width >= $md-screen) {
     padding: 0;
+  }
+
+  ~ .resourceListItem {
+    margin-top: -1px;
   }
 
   &.resourceListItem-enter,
@@ -28,7 +33,7 @@
 
     ~ .resourceListItem {
       will-change: transform;
-      transition: transform 7s;
+      transition: transform 6s;
       transform: translateY(0);
     }
   }
@@ -40,11 +45,12 @@
     opacity: 1;
 
     ~ .resourceListItem {
-      transform: translateY(40px);
+      transform: translateY(39px);
     }
   }
 
   &.resourceListItem-leave {
+    transition-duration: 2.5s;
     transition-delay: 0s;
   }
 
@@ -54,7 +60,7 @@
 
     ~ .resourceListItem {
       will-change: transform;
-      transition: transform 7s;
+      transition: transform 6s;
       transform: translateY(0);
     }
   }

@@ -23,8 +23,8 @@ export class CategoriesList extends Component {
 
     const transitionGroupProps = {
       transitionName: 'resourceListItem',
-      transitionEnterTimeout: 7000,
-      transitionLeaveTimeout: 7000,
+      transitionEnterTimeout: 6000,
+      transitionLeaveTimeout: 6000,
       component: 'ul',
       className: 'resourceList'
     };
