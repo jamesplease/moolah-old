@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Header from './header';
 import Footer from './footer';
 import Alerts from './alerts';
+import Header from '../../header/components/header';
 import * as connectionActionCreators from '../../state/connection/action-creators';
 
 export class Layout extends Component {
