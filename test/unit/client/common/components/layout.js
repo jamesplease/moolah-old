@@ -4,7 +4,7 @@ import {
   Layout, __Rewire__, __ResetDependency__, __get__
 } from '../../../../../client/common/components/layout';
 import Alerts from '../../../../../client/common/components/alerts';
-import Header from '../../../../../client/common/components/header';
+import Header from '../../../../../client/header/components/header';
 import Footer from '../../../../../client/common/components/footer';
 
 const mapStateToProps = __get__('mapStateToProps');
