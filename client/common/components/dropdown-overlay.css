@@ -5,4 +5,10 @@
   right: 0;
   bottom: 0;
   z-index: $zIndex-overlay;
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+.dropdownOverlay-visible {
+  pointer-events: all;
 }
