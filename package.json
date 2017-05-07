@@ -129,7 +129,6 @@
     "passport-twitter": "1.0.4",
     "pg-promise": "^5.2.6",
     "pikaday": "1.5.1",
-    "prevent-scroll": "2.0.0",
     "react": "15.3.2",
     "react-addons-transition-group": "15.3.2",
     "react-dom": "15.3.2",

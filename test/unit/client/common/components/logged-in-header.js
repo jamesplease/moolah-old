@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
-import preventScroll from 'prevent-scroll';
+import preventScroll from '../../common/utils/prevent-scroll';
 import {LoggedInHeader} from '../../../../../client/common/components/logged-in-header';
 import Nav from '../../../../../client/common/components/nav';
 

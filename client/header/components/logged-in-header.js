@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import classNames from 'classnames';
-import preventScroll from 'prevent-scroll';
+import preventScroll from '../../common/utils/prevent-scroll';
 import Nav from './nav';
 import ProfileDropdown from './profile-dropdown';
 
