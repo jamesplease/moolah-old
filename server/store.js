@@ -2,6 +2,7 @@
 
 const fortune = require('fortune');
 const postgresAdapter = require('fortune-postgres');
+const uuid = require('uuid/v4');
 const dbConfig = require('../config/db-config');
 
 const resources = {
@@ -76,7 +77,15 @@ const hooks = {
 };
 
 const options = {
-  adapter: [postgresAdapter, {url: dbConfig}],
+  adapter: [
+    postgresAdapter,
+    {
+      url: dbConfig,
+      generatePrimaryKey() {
+        return uuid();
+      }
+    }
+  ],
   hooks
 };
 
