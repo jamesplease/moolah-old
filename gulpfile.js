@@ -3,6 +3,7 @@ const {cleanDist, cleanTmp} = require('./gulp/clean');
 const {lintJs, lintCss} = require('./gulp/lint');
 const {buildCss, build, work} = require('./gulp/build');
 const {test, coverage, watchTests} = require('./gulp/test');
+const {all, js, css} = require('./gulp/livereload');
 
 gulp.task('clean', cleanDist);
 gulp.task('clean-tmp', cleanTmp);
@@ -17,6 +18,10 @@ gulp.task('build-css', buildCss);
 
 // Set up the application to be developed
 gulp.task('work', work);
+
+gulp.task('livereload-css', css);
+gulp.task('livereload-js', js);
+gulp.task('livereload', ['build-css'], all);
 
 // Runs the unit tests
 gulp.task('test', ['lint'], test);
