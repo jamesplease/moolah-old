@@ -63,7 +63,7 @@ The values are:
 - `TWITTER_CLIENT_SECRET`: the secret of the above project
 
 The different social media IDs and Secrets enable logging in via those social
-networks. Right now, they are *all* necessary to run a fully functioning app.
+networks. Right now, they are *all* necessary to run this app locally.
 
 An example snippet from an `.env` file is:
 
@@ -88,15 +88,13 @@ you're ready to run the app locally. Follow these steps:
 
 1. Start up Postgres
 2. Run `npm run local-server` to start the Express app
-2. Run `npm run watch-js` to build the JS app, and set up the file watcher
-2. Run `npm run watch-css` to build the CSS files, and set up the file watcher
+2. Run `npm run watch` to build the JS & CSS, and set up the file watcher
 
 The app should now be available in your browser at `http://localhost:5000`.
 
 #### Developer Scripts
 
-- `npm run watch-js`: Build the JavaScript, and set up a watcher
-- `npm run watch-css`: Build the CSS, and set up a watcher
+- `npm run watch`: Build the JavaScript & CSS, and set up a watcher
 - `npm run local-server`: Starts the development web server. Restarts the server if it dies.
 - `npm run test`: Lint JS & CSS, then run all unit tests
 - `npm run lint`: Lint the JavaScript and CSS files
