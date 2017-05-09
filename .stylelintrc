@@ -21,7 +21,7 @@
     "string-no-newline": true,
     "string-quotes": "single",
     "length-zero-no-unit": true,
-    "unit-blacklist": ["em", "rem"],
+    "unit-blacklist": ["em"],
     "unit-case": "lower",
     "unit-no-unknown": true,
     "value-keyword-case": "lower",

@@ -1,4 +1,4 @@
-import EmojiConverter from 'js-emoji';
+import EmojiConverter from 'emoji-js';
 
 //
 // This file exports an instance of `js-emoji`. It is used
