@@ -4,13 +4,13 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: $zIndex-overlay;
+  z-index: var(--z-index-overlay);
   transition: opacity 70ms ease-in;
   background-color: rgba(17, 6, 36, 0.43);
   opacity: 1;
   display: block;
 
-  @media screen and (width < $md-screen) {
+  @media screen and (width < var(--md-screen)) {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -72,7 +72,7 @@
   transform: scale(1);
   opacity: 1;
 
-  @media screen and (width >= $md-screen) {
+  @media screen and (width >= var(--md-screen)) {
     margin: 17vh auto 0;
   }
 

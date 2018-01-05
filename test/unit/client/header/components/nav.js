@@ -60,11 +60,9 @@ describe('Nav', function() {
 
         expect(links.at(0).prop('children')).to.equal('Transactions');
         expect(links.at(0).prop('to')).to.equal('/transactions');
-        expect(linkListItems.at(0).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
 
         expect(links.at(1).prop('children')).to.equal('Categories');
         expect(links.at(1).prop('to')).to.equal('/categories');
-        expect(linkListItems.at(1).hasClass('mainNav-listItem-smallScreenOnly')).to.be.false;
       });
     });
 

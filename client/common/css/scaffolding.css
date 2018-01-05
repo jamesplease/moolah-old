@@ -16,13 +16,13 @@ body {
 
 body {
   // This is the size of the header
-  padding-top: $headerHeight;
+  padding-top: var(--header-height);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
 .container {
-  max-width: $appWidth;
+  max-width: var(--app-width);
   margin: 0 auto;
 }
 
@@ -37,7 +37,7 @@ body {
 .content-container {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - $headerHeight);
+  min-height: calc(100vh - var(--header-height));
 }
 
 main {

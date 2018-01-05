@@ -1,25 +1,33 @@
 // These should only be variables used in items in the `common` pod or across multiple pods.
 // Pod-specific variables should go in a variables file in that pod.
 
-// This is the width of the ".container" element. All content in the app,
-// aside from borders, will be contrained to this width.
-$appWidth: 800px;
-// This is padding that is visible on small desktop-sized screens. It prevents
-// the app's content from smooshing against the side of the browser window.
-$appPadding: 20px;
+:root {
+  // This is the width of the ".container" element. All content in the app,
+  // aside from borders, will be contrained to this width.
+  --app-width: 800px;
+  // This is padding that is visible on small desktop-sized screens. It prevents
+  // the app's content from smooshing against the side of the browser window.
+  --app-padding: 20px;
 
-$rootFontSize: 16px;
-$textColor: #000;
-$lightTextColor: #aaa;
-$linkColor: #c45184;
+  --root-font-size: 16px;
+  --text-color: #000;
 
-$borderColor: #e7e7e7;
+  --light-text-color: #aaa;
+  --link-color: #c45184;
 
-// Responsive values. Pass these into the responsive mixins
-// to target the different screen sizes.
-$lg-screen: 1024px;
-$md-screen: 768px;
+  --border-color: #e7e7e7;
 
-$headerHeight: 50px;
-$footerHeight: 65px;
-$expandedFooterHeight: 47px;
+  // Responsive values. Pass these into the responsive mixins
+  // to target the different screen sizes.
+  --lg-screen: 1024px;
+  --md-screen: 768px;
+
+  --footer-height: 65px;
+  --expanded-footer-height: 47px;
+
+  --header-height: 50px;
+
+  @media screen and (width < var(--md-screen)) {
+    --header-height: 30px;
+  }
+}

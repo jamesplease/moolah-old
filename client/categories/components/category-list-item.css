@@ -23,7 +23,7 @@
   text-align: center;
   display: inline-block;
 
-  @media screen and (width >= $md-screen) {
+  @media screen and (width >= var(--md-screen)) {
     padding-left: 0;
   }
 }

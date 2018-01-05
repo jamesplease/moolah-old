@@ -11,11 +11,6 @@ export class LoggedInHeader extends Component {
   render() {
     const {displayName} = this.props;
     const {isProfileDropdownVisible} = this.state;
-    const overlayNavToggleClass = classNames({
-      'is-active': this.state.isOverlayNavVisible,
-      'hamburger hamburger--squeeze': true,
-      'appHeader-overlayNavToggle': true
-    });
 
     const accountLinkClass = classNames({
       'appHeader-accountLink': true,
@@ -29,20 +24,8 @@ export class LoggedInHeader extends Component {
             <Link to="/" className="appHeader-appLogo-Link">
               Moolah
             </Link>
-            <div className="appHeader_alphaRelease">
-              Alpha
-            </div>
           </h1>
-          <button
-            className={overlayNavToggleClass}
-            onClick={() => this.toggleOverlayNav()}>
-            <span className="hamburger-box">
-              <span className="hamburger-inner"/>
-            </span>
-          </button>
-          <Nav
-            isOverlayNavVisible={this.state.isOverlayNavVisible}
-            toggleOverlayNav={() => this.toggleOverlayNav(false)}/>
+          <Nav toggleOverlayNav={() => this.toggleOverlayNav(false)}/>
           <div className="appHeader-accountContainer">
             <div
               className={accountLinkClass}

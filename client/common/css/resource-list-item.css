@@ -10,7 +10,7 @@
   opacity: 1;
   align-items: center;
 
-  @media screen and (width >= $md-screen) {
+  @media screen and (width >= var(--md-screen)) {
     padding: 0;
   }
 
@@ -75,7 +75,7 @@
     color: #555;
   }
 
-  @media screen and (width >= $md-screen) {
+  @media screen and (width >= var(--md-screen)) {
     margin-right: 0;
   }
 

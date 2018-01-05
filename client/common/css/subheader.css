@@ -20,7 +20,7 @@
 }
 
 .subheader-title {
-  color: $linkColor;
+  color: var(--link-color);
   font-size: 19px;
   margin: 0;
   padding: 0;

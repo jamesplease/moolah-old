@@ -9,7 +9,6 @@
 @import './z-index';
 @import './mixins';
 @import './reset';
-@import './hamburger-icon';
 
 // Import all deeply nested css files. We've already gotten things
 // in this directory, so we ignore them.

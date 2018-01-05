@@ -3,8 +3,8 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: $zIndex-bg1;
-  height: $headerHeight;
+  z-index: var(--z-index-bg1);
+  height: var(--header-height);
   background-color: #fafafa;
   border-bottom: 1px solid #eee;
 }
@@ -13,18 +13,18 @@
   display: flex;
   align-items: center;
   height: 100%;
+
+  @media screen and (width < var(--md-screen)) {
+    justify-content: center;
+  }
 }
 
 .appHeader-appLogo {
-  display: none;
   margin: 0;
   margin-right: 24px;
   padding: 0;
   font-weight: bold;
-
-  @media screen and (width >= $md-screen) {
-    display: flex;
-  }
+  display: flex;
 }
 
 .appHeader_alphaRelease {
@@ -47,51 +47,13 @@
   margin-right: 4px;
 }
 
-.appHeader-overlayNavToggle {
-  padding: 0;
-  height: 22px;
-  position: relative;
-  z-index: $zIndex-bg1;
-
-  &.is-active {
-    z-index: $zIndex-fg1;
-
-    .hamburger-inner,
-    .hamburger-inner:after,
-    .hamburger-inner:before {
-      background: #fff;
-    }
-  }
-
-  .hamburger-box {
-    height: 22px;
-    width: 20.25px;
-  }
-
-  .hamburger-inner,
-  .hamburger-inner:after,
-  .hamburger-inner:before {
-    width: 20.25px;
-    height: 2.25px;
-    @mixin primary-gradient-fill;
-  }
-
-  .hamburger-inner:before {
-    top: -6px;
-  }
-
-  .hamburger-inner:after {
-    bottom: -6px;
-  }
-
-  @media screen and (width >= $md-screen) {
-    display: none;
-  }
-}
-
 .appHeader-accountContainer {
   margin-left: auto;
   position: relative;
+
+  @media screen and (width < var(--md-screen)) {
+    display: none;
+  }
 }
 
 .appHeader-accountLink {

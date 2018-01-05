@@ -1,5 +1,5 @@
 .mainNav {
-  @media screen and (width < $md-screen) {
+  @media screen and (width < var(--md-screen)) {
     position: relative;
     // We can't display:none this, or else it won't animate with transitions.
     // So instead we just scoot it way off screen.
@@ -24,12 +24,6 @@
   }
 }
 
-.mainNav-listItem-smallScreenOnly {
-  @media screen and (width >= $md-screen) {
-    display: none;
-  }
-}
-
 .mainNav-listItem-link {
   text-decoration: none;
   font-size: 16px;
@@ -45,7 +39,7 @@
 
   &.active,
   &.active:focus {
-    color: $linkColor;
+    color: var(--link-color);
   }
 }
 
@@ -57,7 +51,7 @@
   opacity: 1;
   position: absolute;
   top: 54px;
-  z-index: $zIndex-fg1;
+  z-index: var(--z-index-fg1);
   width: 100%;
 
   .mainNav-list {
@@ -86,7 +80,7 @@
 
 .overlayNav {
   position: absolute;
-  z-index: $zIndex-overlay;
+  z-index: var(--z-index-overlay);
   top: 0;
   left: 0;
   width: 100vw;

@@ -1,7 +1,9 @@
 const gulp = require('gulp');
 const loadPlugins = require('gulp-load-plugins');
-const precss = require('precss');
 const cssnano = require('cssnano');
+const mixins = require('postcss-mixins');
+const nested = require('postcss-nested');
+const minmax = require('postcss-media-minmax');
 const postcssSass = require('postcss-scss');
 const easyImport = require('postcss-easy-import');
 const runSequence = require('run-sequence');
@@ -11,7 +13,10 @@ const productionMode = process.env.NODE_ENV === 'production';
 
 const processors = [
   easyImport({glob: true}),
-  precss({import: {prefix: ''}}),
+  mixins,
+  nested,
+  // minmax,
+  // precss({import: {prefix: ''}}),
 ];
 
 if (productionMode) {

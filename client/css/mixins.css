@@ -7,7 +7,7 @@
 @define-mixin content-padding {
   padding: 0 15px;
 
-  @media screen and (width > $md-screen) {
+  @media screen and (width > var(--md-screen)) {
     padding: 0 20px;
   }
 }

@@ -5,14 +5,14 @@ footer {
   min-width: 320px;
   background-color: #fafafa;
   border-top: 1px solid #e4e4e4;
-  height: $footerHeight;
+  height: var(--footer-height);
 
   > .container {
     padding: 12px 15px;
   }
 
-  @media screen and (width >= $md-screen) {
-    height: $expandedFooterHeight;
+  @media screen and (width >= var(--md-screen)) {
+    height: var(--expanded-footer-height);
 
     > .container {
       display: flex;
@@ -25,7 +25,7 @@ footer {
   }
 
   .footer-nav {
-    @media screen and (width >= $md-screen) {
+    @media screen and (width >= var(--md-screen)) {
       margin-left: auto;
     }
   }
