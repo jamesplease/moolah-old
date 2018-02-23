@@ -1,9 +1,9 @@
 # moolah
 
-[![Travis build status](http://img.shields.io/travis/jmeas/moolah.svg?style=flat)](https://travis-ci.org/jmeas/moolah)
+[![Travis build status](http://img.shields.io/travis/jamesplease/moolah.svg?style=flat)](https://travis-ci.org/jamesplease/moolah)
 [![Test Coverage](https://codeclimate.com/github/jmeas/moolah/badges/coverage.svg)](https://codeclimate.com/github/jmeas/moolah)
-[![Dependency Status](https://david-dm.org/jmeas/moolah.svg)](https://david-dm.org/jmeas/moolah)
-[![devDependency Status](https://david-dm.org/jmeas/moolah/dev-status.svg)](https://david-dm.org/jmeas/moolah#info=devDependencies)
+[![Dependency Status](https://david-dm.org/jamesplease/moolah.svg)](https://david-dm.org/jamesplease/moolah)
+[![devDependency Status](https://david-dm.org/jamesplease/moolah/dev-status.svg)](https://david-dm.org/jamesplease/moolah#info=devDependencies)
 
 Track your finances.
 
